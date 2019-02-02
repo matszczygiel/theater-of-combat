@@ -22,6 +22,10 @@ class Hex_site : public Map_site {
     virtual ~Hex_site() = default;
     virtual void draw(sf::RenderTarget &target) const override;
 
+    bool contains(const sf::Vector2f &vec) const;
+    void set_highlighted(bool highlighted) override;
+    void set_shape(float x, float y, float radius);
+
     inline Map_site *get_side(const Directions &side) const override {
         return _sides[static_cast<int>(side)];
     }
@@ -37,10 +41,6 @@ class Hex_site : public Map_site {
     inline auto get_position() const {
         return _shape.getPosition();
     }
-
-    bool contains(const sf::Vector2f &vec) const;
-    void set_highlighted(bool highlighted) override;
-    void set_shape(float x, float y, float radius);
 
    protected:
     void set_side_this(const Directions &side, Map_site *site) override;

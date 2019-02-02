@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "hex_site.h"
+#include "map/hex_site.h"
 
 class Unit {
    public:

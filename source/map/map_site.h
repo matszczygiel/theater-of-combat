@@ -22,12 +22,12 @@ class Map_site {
     virtual Map_site* get_side(const Directions& side) const = 0;
 
     inline bool is_highlighted() const { return _highlighted; }
-    inline auto get_number() const { return _hex_number; }
+    inline auto get_number() const { return _number; }
 
     virtual Site_type get_type() const = 0;
 
    protected:
     virtual void set_side_this(const Directions& side, Map_site* site) = 0;
     bool _highlighted;
-    int _hex_number;
+    int _number;
 };

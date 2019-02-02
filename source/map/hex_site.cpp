@@ -4,7 +4,7 @@
 
 void Hex_site::set_shape(float x, float y, float radius) {
     _shape = Hex_shape(radius);
-    _shape.setFillColor(sf::Color::White);
+    set_color();
     _shape.setPosition(x, y);
     _shape.setOutlineThickness(-0.05 * radius);
     _shape.setOutlineColor(sf::Color::Black);

@@ -3,8 +3,8 @@
 #include <unordered_set>
 #include <vector>
 
-#include "map_site.h"
-#include "unit.h"
+#include "map/map_site.h"
+#include "unit/unit.h"
 
 class Mover {
    public:

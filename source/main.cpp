@@ -2,8 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "application.h"
-#include "game_app.h"
+#include "application/game_app.h"
 #include "log.h"
 
 int main() {

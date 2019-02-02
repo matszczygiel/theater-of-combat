@@ -3,9 +3,9 @@
 #include <vector>
 
 #include "application.h"
-#include "map.h"
-#include "unit.h"
-#include "mover.h"
+#include "map/map.h"
+#include "unit/unit.h"
+#include "mover/mover.h"
 
 class Game : public Application {
    private:

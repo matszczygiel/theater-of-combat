@@ -1,5 +1,6 @@
 #include "map.h"
 
+#include "concrete_hex.h"
 #include "log.h"
 
 void Map::draw(sf::RenderTarget& target) const {
@@ -20,7 +21,11 @@ Map Map::create_test_map(const float& size) {
     for (int x = 0; x < dim; ++x)
         for (int y = 0; y < dim; ++y) {
             const int no = 10 * x + y;
-            res._map[x].emplace_back(new Hex_site(no));
+            if (x < 4 && y < 6) {
+                res._map[x].emplace_back(new Forest(no));
+            } else {
+                res._map[x].emplace_back(new Field(no));
+            }
             if (y % 2 == 0) {
                 res._map[x][y]->set_shape(100 + 2 * x * smr, 100 + 1.5 * y * size, size);
             } else {

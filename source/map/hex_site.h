@@ -7,9 +7,9 @@
 
 class Hex_site : public Map_site {
    public:
-    Hex_site(const int& hex_number = 0) {
+    explicit Hex_site(const int &hex_number = 0) {
         _highlighted = false;
-        _hex_number  = hex_number;
+        _number      = hex_number;
         _sides       = {
             nullptr,
             nullptr,
@@ -19,11 +19,10 @@ class Hex_site : public Map_site {
             nullptr};
     }
 
-    virtual void set_shape(float x, float y, float radius);
+    virtual ~Hex_site() = default;
+    virtual void draw(sf::RenderTarget &target) const override;
 
-    virtual void draw(sf::RenderTarget& target) const override;
-
-    inline Map_site* get_side(const Directions& side) const override {
+    inline Map_site *get_side(const Directions &side) const override {
         return _sides[static_cast<int>(side)];
     }
 
@@ -39,16 +38,16 @@ class Hex_site : public Map_site {
         return _shape.getPosition();
     }
 
-    bool contains(const sf::Vector2f& vec) const;
-
+    bool contains(const sf::Vector2f &vec) const;
     void set_highlighted(bool highlighted) override;
-
-    virtual Site_type get_type() const override { return Site_type::none; }
+    void set_shape(float x, float y, float radius);
 
    protected:
-    void set_side_this(const Directions& side, Map_site* site) override;
+    void set_side_this(const Directions &side, Map_site *site) override;
+    virtual void set_color() = 0;
+
+    Hex_shape _shape;
 
    private:
-    std::array<Map_site*, 6> _sides;
-    Hex_shape _shape;
+    std::array<Map_site *, 6> _sides;
 };

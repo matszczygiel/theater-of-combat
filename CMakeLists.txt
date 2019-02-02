@@ -6,22 +6,23 @@ add_executable(toc
                 source/main.cpp
                 source/log.cpp
                 source/log.h
-                source/hex_shape.cpp
-                source/hex_shape.h
-                source/map_site.h
-                source/hex_site.h 
-                source/hex_site.cpp
-                source/unit.h
-                source/unit.cpp
-                source/map.h
-                source/map.cpp
-                source/directions.h
-                source/mover.h
-                source/mover.cpp
-                source/application.h
-                source/application.cpp
-                source/game_app.h
-                source/game_app.cpp
+                source/map/hex_shape.cpp
+                source/map/hex_shape.h
+                source/map/map_site.h
+                source/map/hex_site.h 
+                source/map/hex_site.cpp
+                source/map/map.h
+                source/map/map.cpp
+                source/map/directions.h
+                source/map/concrete_hex.h
+                source/unit/unit.h
+                source/unit/unit.cpp
+                source/mover/mover.h
+                source/mover/mover.cpp
+                source/application/application.h
+                source/application/application.cpp
+                source/application/game_app.h
+                source/application/game_app.cpp
                 )
 
 target_include_directories(toc PUBLIC 

@@ -1,0 +1,34 @@
+MECHANIKA GRY
+Etap= 8h
+Skala= kompania 
+Heks= 1km
+
+Etap:
+Faza pogody - losowanie pogody, w zależności od scenariusza- wpływ na lotnictwo wojsk lądowych, lotnictwo sił powietrznych i desanty oraz rozpoznanie obrazowe 
+Faza gracza A
+- rozpoznanie lądowe - tutaj poruszamy się patrolami rozpoznawczymi oraz środkami rozpoznania obrazowego (drony itd) i odkrywamy oddziały przeciwnika, które będą widoczne (możliwy rzut kostką sprawdzający czy  rozpoznanie się udało)
+- ruch oddziałów lądowych (w tym desant powietrzny)
+- samodzielny ostrzał środków ogniowych (SO)- artyleria i lotnictwo wojsk lądowych
+- atak (w tym wsparcie artylerii i lotnictwa wojsk lądowych)
+- zapatrzenie i odtworzenie zdolności bojowej- sprawdzenie zaopatrzenia i zdolności bojowej pododdziałów
+- walka elektroniczna
+Faza gracza B - analogicznie 
+
+
+Rodzaje jednostek:
+
+- rozpoznanie ogólne: żetony w skali patrolu/ plutonu rozp., głowne zadanie rozpoznanie przeciwnika (nie działają w skali kompanii)+ mogą brać udział w walce bezpośredniej z ukrycia
+- środki  rozpoznania obrazowego (drony itd)
+- rozpoznanie osobowe (humint, wywiad itd.)
+- zmech/zmot/panc/aero/ desant/ piechota morska- biorą udział w walce bezpośredniej oraz mogą prowadzić samodzielny ostrzał
+- OT/specjalsi/ Straż Graniczna/ dywersanci- biorą udział w walce bezpośredniej, mogą działać z ukrycia 
+- artyleria lufowa+ SO + wsparcie
+- artyleria rakietowa+ SO+ wsparcie
+- artyleria wsparcia (moździerze)- SO+ wsparcie
+- lotnictwo wojsk lądowych- SO+ wsparcie
+- logistyka- biorą udział w walce bezpośrredniej + zaopatrz
+- dowodzenie/ łączność- biorą udział w walce bezpośredniej+ zapewniają łączność
+- saperzy- biorąz udział w wwalce bezp+ inż
+- pododdział zapasowy- uzupełnienie  strat 
+
+Jednostki będą miały PS (walka bezpośrednia)+ możliwość SO (zmechy, panc, zmot)

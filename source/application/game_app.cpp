@@ -24,8 +24,6 @@ void Game::initialize() {
 }
 
 void Game::handle_event(const sf::Event& event) {
-    const sf::Vector2f mouse_pos = _window.mapPixelToCoords(sf::Mouse::getPosition(_window));
-
     switch (event.type) {
         case sf::Event::Closed:
             _running = false;
@@ -49,14 +47,18 @@ void Game::handle_event(const sf::Event& event) {
 
         case sf::Event::MouseButtonPressed:
             switch (event.mouseButton.button) {
-                case sf::Mouse::Left:
-                    for (auto& u : _units)
+                case sf::Mouse::Left: {
+                    const sf::Vector2f mouse_pos =
+                        _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+
+                    for (auto& u : _units) {
                         if (u->token_contain(mouse_pos)) {
                             _mover.set_unit(u);
                             break;
                         }
+                    }
                     break;
-
+                }
                 default:
                     break;
             }
@@ -64,10 +66,14 @@ void Game::handle_event(const sf::Event& event) {
 
         case sf::Event::MouseButtonReleased:
             switch (event.mouseButton.button) {
-                case sf::Mouse::Left:
+                case sf::Mouse::Left: {
+                    const sf::Vector2f mouse_pos =
+                        _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+
+                    _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
                     _mover.move(mouse_pos);
                     break;
-
+                }
                 default:
                     break;
             }

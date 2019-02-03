@@ -2,6 +2,8 @@
 
 #include "log.h"
 
+#include "unit/heavy_unit.h"
+
 void Game::initialize() {
     ENGINE_TRACE("Creating a window.");
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
@@ -10,11 +12,13 @@ void Game::initialize() {
     _map = Map::create_test_map(token_size);
 
     GAME_INFO("Initializing units.");
-    _units.emplace_back(new Unit);
+    _units.emplace_back(new Mechanized());
+    _units.emplace_back(new Armoured_cavalary());
     for (auto& u : _units)
         u->init_token(token_size);
 
     _units[0]->place_on_hex(_map.get_hex(34));
+    _units[1]->place_on_hex(_map.get_hex(19));
 
     _running = true;
 }

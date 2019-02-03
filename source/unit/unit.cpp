@@ -8,7 +8,7 @@ void Unit::draw(sf::RenderTarget& window) {
 
 void Unit::init_token(const float& size) {
     _token.setSize(sf::Vector2f(size, size));
-    _token.setFillColor(sf::Color::Red);
+    set_color();
     _token.setOutlineThickness(-0.05 * size);
     _token.setOutlineColor(sf::Color::Black);
     GAME_TRACE("Unit token intialized of size: {0}.", size);

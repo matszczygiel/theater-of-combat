@@ -15,6 +15,8 @@ add_executable(toc
                 source/map/map.cpp
                 source/map/directions.h
                 source/map/concrete_hex.h
+                source/unit/heavy_unit.h
+                source/unit/unit_type.h
                 source/unit/unit.h
                 source/unit/unit.cpp
                 source/mover/mover.h

@@ -6,7 +6,6 @@
 #include "log.h"
 
 int main() {
-    ENGINE_INFO("Starting the engine.");
     Game app;
     app.run();
 

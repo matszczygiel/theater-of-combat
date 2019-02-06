@@ -6,6 +6,8 @@
 #include "map/hex_site.h"
 #include "unit_type.h"
 
+class Mover;
+
 class Unit {
    public:
     explicit Unit(const int& moving_pts)
@@ -16,6 +18,7 @@ class Unit {
     virtual void draw(sf::RenderTarget& window);
     virtual Unit_type get_type() const = 0;
     virtual void set_color()           = 0;
+    virtual Mover* get_mover()         = 0;
 
     void place_on_hex(Hex_site* hex);
     void reset_mv_points();

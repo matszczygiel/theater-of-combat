@@ -17,8 +17,10 @@ class Game : public Application {
 
     std::vector<Unit*> _units;
     Map _map;
-    Mover _mover;
+    Mover* _mover = nullptr;
 
 
     constexpr static float token_size = 30;
+
+    bool _moving = false;
 };

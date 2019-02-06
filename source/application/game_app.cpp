@@ -51,10 +51,14 @@ void Game::handle_event(const sf::Event& event) {
                     const sf::Vector2f mouse_pos =
                         _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
 
-                    for (auto& u : _units) {
-                        if (u->token_contain(mouse_pos)) {
-                            _mover.set_unit(u);
-                            break;
+                    if (!_moving) {
+                        for (auto& u : _units) {
+                            if (u->token_contain(mouse_pos)) {
+                                _mover = u->get_mover();
+                                _mover->find_paths();
+                                _moving = true;
+                                break;
+                            }
                         }
                     }
                     break;
@@ -69,9 +73,11 @@ void Game::handle_event(const sf::Event& event) {
                 case sf::Mouse::Left: {
                     const sf::Vector2f mouse_pos =
                         _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-
-                    _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-                    _mover.move(mouse_pos);
+                    if (_moving) {
+                        _mover->move(mouse_pos);
+                        _moving = false;
+                        delete _mover;
+                    }
                     break;
                 }
                 default:

@@ -21,6 +21,7 @@ add_executable(toc
                 source/unit/unit.cpp
                 source/mover/mover.h
                 source/mover/mover.cpp
+                source/mover/concrete_mover.h
                 source/application/application.h
                 source/application/application.cpp
                 source/application/game_app.h

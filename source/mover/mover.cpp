@@ -9,6 +9,8 @@
 void Mover::find_paths() {
     GAME_INFO("Initializing path finding algorithm.");
 
+    create_table();
+
     const auto ocup   = _unit->get_ocupation();
     const auto mv_pts = _unit->get_mv_points();
     _paths.resize(mv_pts);
@@ -19,14 +21,17 @@ void Mover::find_paths() {
     implement algorith which can distinguish between hex_sites and pure map_sites
     */
 
-    for (int i = 1; i < mv_pts; ++i) {
-        for (auto& x : _paths[i - 1]) {
+    for (int i = 0; i < mv_pts; ++i) {
+        for (auto& x : _paths[i]) {
             for (int j = 0; j < 6; ++j) {
                 auto side = x->get_side(static_cast<Directions>(j));
                 if (side != nullptr)
                     if (!side->is_highlighted()) {
-                        side->set_highlighted(true);
-                        _paths[i].insert(side);
+                        const auto mp_cost = i + _table[side->get_type()];
+                        if (mp_cost < mv_pts) {
+                            side->set_highlighted(true);
+                            _paths[mp_cost].insert(side);
+                        }
                     }
             }
         }
@@ -34,6 +39,7 @@ void Mover::find_paths() {
 }
 
 void Mover::move(const sf::Vector2f& mouse_pos) {
+    GAME_INFO("Moving unit.");
     for (int used_mp = 0; used_mp < _paths.size(); ++used_mp) {
         for (auto& x : _paths[used_mp]) {
             auto hex = static_cast<Hex_site*>(x);

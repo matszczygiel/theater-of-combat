@@ -18,4 +18,5 @@ class Map {
 
    private:
     Hex_matrix _map;
+    std::vector<
 };

@@ -22,7 +22,7 @@ class Map_site {
     virtual Site_type get_type() const                       = 0;
 
     inline bool is_highlighted() const { return _highlighted; }
-    inline auto get_number() const { return _number; }
+    inline const auto& get_number() const { return _number; }
 
    protected:
     virtual void set_side_this(const Directions& side, Map_site* site) = 0;

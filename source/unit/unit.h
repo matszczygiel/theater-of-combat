@@ -11,28 +11,26 @@ class Mover;
 class Unit {
    public:
     explicit Unit(const int& moving_pts)
-        : _moving_pts(moving_pts), _current_moving_pts(_moving_pts) {}
+        : _ocupation(), _token(), _moving_pts(moving_pts), _current_moving_pts(moving_pts) {}
 
-    virtual ~Unit() = default;
+    Unit()                   = delete;
+    virtual ~Unit() noexcept = default;
 
     virtual void draw(sf::RenderTarget& window);
-    virtual Unit_type get_type() const = 0;
-    virtual void set_color()           = 0;
-    virtual Mover* get_mover()         = 0;
+    inline virtual Unit_type get_type() const = 0;
+    inline virtual void set_color()           = 0;
+    inline virtual Mover* get_mover()                  = 0;
 
     void place_on_hex(Hex_site* hex);
-    void reset_mv_points();
+    void reset_mv_points() noexcept;
     void init_token(const float& size);
+    void reduce_mv_points(const int& points);
 
     inline auto get_ocupation() const { return _ocupation; }
     inline auto get_mv_points() const { return _current_moving_pts; }
 
     inline bool token_contain(const sf::Vector2f& vec) {
         return _token.getGlobalBounds().contains(vec);
-    }
-
-    inline void reduce_mv_points(int points) {
-        _current_moving_pts -= points;
     }
 
    protected:

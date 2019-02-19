@@ -7,6 +7,8 @@
 
 class Application {
    public:
+    virtual ~Application() = default;
+
     void run();
 
    protected:

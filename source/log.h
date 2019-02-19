@@ -23,10 +23,10 @@ class Log {
 #define ENGINE_INFO(...) ::Log::get_engine_logger()->info(__VA_ARGS__)
 #define ENGINE_WARN(...) ::Log::get_engine_logger()->warn(__VA_ARGS__)
 #define ENGINE_ERROR(...) ::Log::get_engine_logger()->error(__VA_ARGS__)
-#define ENGINE_FATAL(...) ::Log::get_engine_logger()->fatal(__VA_ARGS__)
+#define ENGINE_CRITICAL(...) ::Log::get_engine_logger()->critical(__VA_ARGS__)
 
 #define GAME_TRACE(...) ::Log::get_game_logger()->trace(__VA_ARGS__)
 #define GAME_INFO(...) ::Log::get_game_logger()->info(__VA_ARGS__)
 #define GAME_WARN(...) ::Log::get_game_logger()->warn(__VA_ARGS__)
 #define GAME_ERROR(...) ::Log::get_game_logger()->error(__VA_ARGS__)
-#define GAME_FATAL(...) ::Log::get_game_logger()->fatal(__VA_ARGS__)
+#define GAME_CRITICAL(...) ::Log::get_game_logger()->critical(__VA_ARGS__)

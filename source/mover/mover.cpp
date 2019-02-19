@@ -30,7 +30,7 @@ void Mover::find_paths() {
                         const auto mp_cost = i + _table[side->get_type()];
                         if (mp_cost < mv_pts) {
                             side->set_highlighted(true);
-                            _paths[mp_cost].insert(side);
+                            _paths[mp_cost].insert(static_cast<Hex_site*>(side));
                         }
                     }
             }

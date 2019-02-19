@@ -25,6 +25,6 @@ class Mover {
     void clear();
 
     Unit* _unit;
-    std::vector<std::unordered_set<Map_site*>> _paths;
+    std::vector<std::unordered_set<Hex_site*>> _paths;
     std::unordered_map<Site_type, int> _table;
 };

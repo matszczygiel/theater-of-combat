@@ -1,12 +1,16 @@
 #include "map.h"
 
 #include "concrete_hex.h"
+#include "concrete_passage.h"
 #include "log.h"
 
 void Map::draw(sf::RenderTarget& target) const {
     for (const auto& x : _map)
         for (const auto& y : x)
             y->draw(target);
+
+    for (const auto& x : _passages)
+        x->draw(target);
 }
 
 Map Map::create_test_map(const float& size) {
@@ -22,9 +26,9 @@ Map Map::create_test_map(const float& size) {
         for (int y = 0; y < dim; ++y) {
             const int no = 10 * x + y;
             if (x < 4 && y < 6) {
-                res._map[x].emplace_back(new Forest(no));
+                res._map[x].emplace_back(std::make_unique<Forest>(no));
             } else {
-                res._map[x].emplace_back(new Field(no));
+                res._map[x].emplace_back(std::make_unique<Field>(no));
             }
             if (y % 2 == 0) {
                 res._map[x][y]->set_shape(100 + 2 * x * smr, 100 + 1.5 * y * size, size);
@@ -37,18 +41,42 @@ Map Map::create_test_map(const float& size) {
         for (int y = 0; y < dim; ++y) {
             if (y % 2 == 0) {
                 if (y != 0) {
-                    res._map[x][y]->set_side(Directions::northeast, res._map[x][y - 1].get());
-                    if (x != 0)
-                        res._map[x][y]->set_side(Directions::northwest, res._map[x - 1][y - 1].get());
+                    res._map[x][y]
+                        ->set_side(Directions::northeast, res._map[x][y - 1].get());
+                    res._map[x][y - 1]
+                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                    if (x != 0) {
+                        res._map[x][y]
+                            ->set_side(Directions::northwest, res._map[x - 1][y - 1].get());
+                        res._map[x - 1][y - 1]
+                            ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                    }
                 }
             } else {
-                res._map[x][y]->set_side(Directions::northwest, res._map[x][y - 1].get());
-                if (x != dim - 1)
-                    res._map[x][y]->set_side(Directions::northeast, res._map[x + 1][y - 1].get());
+                res._map[x][y]
+                    ->set_side(Directions::northwest, res._map[x][y - 1].get());
+                res._map[x][y - 1]
+                    ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                if (x != dim - 1) {
+                    res._map[x][y]
+                        ->set_side(Directions::northeast, res._map[x + 1][y - 1].get());
+                    res._map[x + 1][y - 1]
+                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                }
             }
-            if (x != 0)
-                res._map[x][y]->set_side(Directions::west, res._map[x - 1][y].get());
+            if (x != 0) {
+                res._map[x][y]
+                    ->set_side(Directions::west, res._map[x - 1][y].get());
+                res._map[x - 1][y]
+                    ->set_side(Map_site::opposite_direction(Directions::west), res._map[x][y].get());
+            }
         }
+
+    res._passages.push_back(std::make_unique<River>(0));
+    res._passages[0]->set_sides(Directions::east,
+                                res._map[6][6].get(),
+                                Map_site::opposite_direction(Directions::east),
+                                static_cast<Hex_site*>(res._map[6][6]->get_side(Map_site::opposite_direction(Directions::east))));
 
     return res;
 }

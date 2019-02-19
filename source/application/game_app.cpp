@@ -17,7 +17,7 @@ void Game::initialize() {
     for (auto& u : _units)
         u->init_token(token_size);
 
-    _units[0]->place_on_hex(_map.get_hex(34));
+    _units[0]->place_on_hex(_map.get_hex(56));
     _units[1]->place_on_hex(_map.get_hex(19));
 
     _running = true;

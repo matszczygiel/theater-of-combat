@@ -24,7 +24,7 @@ void Unit::place_on_hex(Hex_site* hex) {
               _ocupation->get_position().y);
 }
 
-void Unit::reset_mv_points() {
+void Unit::reset_mv_points() noexcept {
     GAME_TRACE("Reseting moving points.");
     _current_moving_pts = _moving_pts;
 }
@@ -32,6 +32,6 @@ void Unit::reset_mv_points() {
 void Unit::reduce_mv_points(const int& points) {
     if (points > _current_moving_pts)
         throw std::domain_error("Trying to reduce mv points to negative value.");
-        
+
     _current_moving_pts -= points;
 }

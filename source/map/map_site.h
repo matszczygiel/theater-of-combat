@@ -7,26 +7,29 @@
 
 class Map_site {
    public:
-    static inline Directions opposite_direction(const Directions& dir) {
-        return Directions((static_cast<int>(dir) + 3) % 6);
-    }
+    explicit Map_site(const int& number = 0)
+        : _highlighted(false), _number(number) {}
 
-    virtual inline void set_side(const Directions& side, Map_site* site) {
-        set_side_this(side, site);
-        site->set_side_this(opposite_direction(side), this);
-    }
+    virtual ~Map_site() = default;
 
-    virtual void draw(sf::RenderTarget& target) const        = 0;
-    virtual void set_highlighted(bool highlighted)           = 0;
-    virtual Map_site* get_side(const Directions& side) const = 0;
-    virtual Site_type get_type() const                       = 0;
+    virtual void set_highlighted(bool highlighted) noexcept = 0;
+    virtual void draw(sf::RenderTarget& target) const       = 0;
+    virtual Site_type get_type() const                      = 0;
 
-    inline bool is_highlighted() const { return _highlighted; }
-    inline const auto& get_number() const { return _number; }
+    bool is_highlighted() const;
+    const auto& get_number() const;
+
+    static Directions opposite_direction(const Directions& dir);
 
    protected:
-    virtual void set_side_this(const Directions& side, Map_site* site) = 0;
-
     bool _highlighted;
     int _number;
 };
+
+inline bool Map_site::is_highlighted() const { return _highlighted; }
+
+inline const auto& Map_site::get_number() const { return _number; }
+
+inline Directions Map_site::opposite_direction(const Directions& dir) {
+    return Directions((static_cast<int>(dir) + 3) % 6);
+}

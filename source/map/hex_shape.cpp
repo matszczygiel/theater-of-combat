@@ -11,12 +11,8 @@ void Hex_shape::set_radius(const float& radius) {
     update();
 }
 
-const float& Hex_shape::get_radius() const {
-    return _radius;
-}
-
-const float Hex_shape::get_small_radius() const {
-    return _radius * std::cos(M_PI / 6.);
+float Hex_shape::get_small_radius() const {
+    return get_small_radius(_radius);
 }
 
 sf::Vector2f Hex_shape::getPoint(std::size_t index) const {

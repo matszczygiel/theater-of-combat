@@ -13,6 +13,8 @@ add_executable(toc
                 source/map/hex_site.cpp
                 source/map/passage_site.h
                 source/map/passage_site.cpp
+                source/map/concrete_passage.h
+                source/map/concrete_passage.cpp
                 source/map/map.h
                 source/map/map.cpp
                 source/map/directions.h
@@ -36,6 +38,9 @@ target_include_directories(toc PUBLIC
 
 target_compile_features(toc PUBLIC 
                         cxx_std_17)
+
+target_compile_options(toc PUBLIC 
+                        -Wall)
 
 target_link_libraries(toc PUBLIC 
                         sfml-window

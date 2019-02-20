@@ -9,7 +9,6 @@ class Passage_site : public Map_site {
 
     virtual ~Passage_site() noexcept = default;
 
-    virtual void draw(sf::RenderTarget &target) const override;
     virtual void set_highlighted(bool highlighted) noexcept override;
     void set_sides(const Directions &side1, Hex_site *site1,
                    const Directions &side2, Hex_site *site2);
@@ -19,7 +18,6 @@ class Passage_site : public Map_site {
    protected:
     virtual void set_shape() = 0;
 
-    sf::RectangleShape _shape;
     std::pair<Hex_site *, Hex_site *> _sides;
 
    private:

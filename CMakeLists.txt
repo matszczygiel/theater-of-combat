@@ -8,6 +8,8 @@ add_executable(toc
                 source/log.h
                 source/map/hex_shape.cpp
                 source/map/hex_shape.h
+                source/map/hex_border_shape.h
+                source/map/hex_border_shape.cpp
                 source/map/map_site.h
                 source/map/hex_site.h 
                 source/map/hex_site.cpp

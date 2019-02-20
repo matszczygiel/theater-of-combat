@@ -2,7 +2,7 @@
 #include "log.h"
 
 Passage_site::Passage_site(const int &number)
-    : Map_site(number), _shape(), _sides{nullptr, nullptr}, _sides_directions() {}
+    : Map_site(number), _sides{nullptr, nullptr}, _sides_directions() {}
 
 void Passage_site::set_sides(const Directions &side1, Hex_site *site1,
                              const Directions &side2, Hex_site *site2) {
@@ -38,9 +38,6 @@ Hex_site *Passage_site::other_side(Hex_site *adjacet_site) {
     }
 }
 
-void Passage_site::draw(sf::RenderTarget &target) const {
-    target.draw(_shape);
-}
 
 void Passage_site::set_highlighted(bool highlighted) noexcept {
     _highlighted = highlighted;

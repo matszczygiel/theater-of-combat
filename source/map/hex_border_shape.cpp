@@ -6,8 +6,8 @@ Hex_border_shape::Hex_border_shape(const float& length, const float& width_ratio
 }
 
 sf::Vector2f Hex_border_shape::getPoint(std::size_t index) const {
-    const float x = _length / 2.f;
-    const float y = x * _width_ratio;
+    const float y = _length / 2.f;
+    const float x = y * _width_ratio;
     switch (index) {
         case 0:
             return sf::Vector2f(-x, -y);

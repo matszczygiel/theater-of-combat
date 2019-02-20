@@ -5,7 +5,7 @@
 
 class Armoured_cavalary : public Unit {
    public:
-    Armoured_cavalary() : Unit(5) {}
+    Armoured_cavalary() : Unit(10) {}
 
     Unit_type get_type() const override;
     void set_color() override;
@@ -14,7 +14,7 @@ class Armoured_cavalary : public Unit {
 
 class Mechanized : public Unit {
    public:
-    Mechanized() : Unit(8) {}
+    Mechanized() : Unit(15) {}
 
     Unit_type get_type() const override;
     void set_color() override;

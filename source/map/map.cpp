@@ -72,11 +72,31 @@ Map Map::create_test_map(const float& size) {
             }
         }
 
-    res._passages.push_back(std::make_unique<River>(0));
-    res._passages[0]->set_sides(Directions::east,
-                                res._map[6][6].get(),
-                                Map_site::opposite_direction(Directions::east),
-                                static_cast<Hex_site*>(res._map[6][6]->get_side(Map_site::opposite_direction(Directions::east))));
+    for (int i = 0; i < 10; ++i) {
+        const Directions dir = Directions::east;
+        res._passages.push_back(std::make_unique<River>(i));
+        res._passages[i]->set_sides(dir,
+                                    res._map[6][i].get(),
+                                    Map_site::opposite_direction(dir),
+                                    static_cast<Hex_site*>(res._map[6][i]->get_side(Map_site::opposite_direction(dir))));
+    }
+    for (int i = 0; i < 5; ++i) {
+        const Directions dir = Directions::northeast;
+        res._passages.push_back(std::make_unique<River>(10 + i));
+        res._passages[10 + i]->set_sides(dir,
+                                         res._map[6][2 * i].get(),
+                                         Map_site::opposite_direction(dir),
+                                         static_cast<Hex_site*>(res._map[6][2 * i]->get_side(Map_site::opposite_direction(dir))));
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        const Directions dir = Directions::southeast;
+        res._passages.push_back(std::make_unique<River>(15 + i));
+        res._passages[15 + i]->set_sides(dir,
+                                         res._map[6][2 + 2 * i].get(),
+                                         Map_site::opposite_direction(dir),
+                                         static_cast<Hex_site*>(res._map[6][2 + 2 * i]->get_side(Map_site::opposite_direction(dir))));
+    }
 
     return res;
 }

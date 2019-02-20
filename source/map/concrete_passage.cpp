@@ -32,7 +32,7 @@ void River::set_shape() {
         throw std::runtime_error("Setting the shape of passage failled.");
     }
 
-    const auto angle = 180.f / M_PI * std::atan(vec.x / vec.y);
+    const auto angle = 180.f / M_PI * std::atan(vec.y / vec.x);
     const auto smr   = sid1->get_small_radius();
     _shape.set_length(smr);
     _shape.setPosition((pos1 + pos2) / 2.f);

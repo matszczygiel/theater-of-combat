@@ -22,32 +22,37 @@ void Mover::find_paths() {
     implement finding the most optimal route
     */
 
-    for (int i = 0; i <= mv_pts; ++i) {
-        for (auto& x : _paths[i]) {
+    for (int i = 0; i <= mv_pts; ++i)
+        for (auto& x : _paths[i])
             for (int j = 0; j < 6; ++j) {
                 auto side = x->get_side(static_cast<Directions>(j));
 
                 if (side != nullptr) {
                     if (!side->is_highlighted()) {
-                        const auto st = side->get_type();
-                        auto mp_cost  = i + _table[st];
+                        const auto st = side->get_site_type();
+                        auto mp_cost  = i;
 
-                        if (is_site_type_placeable(st)) {
+                        if (st == Site_type::hexagon) {
+                            auto side1 = static_cast<Hex_site*>(side);
+                            mp_cost += _hex_table[side1->get_hex_type()];
                             if (mp_cost <= mv_pts) {
-                                side->set_highlighted(true);
-                                _paths[mp_cost].insert(static_cast<Hex_site*>(side));
+                                side1->set_highlighted(true);
+                                _paths[mp_cost].insert(side1);
                             }
 
-                        } else {
-                            auto side2 = static_cast<Passage_site*>(side)->other_side(x);
+                        } else if (st == Site_type::passage) {
+                            auto side1 = static_cast<Passage_site*>(side);
+                            mp_cost += _pass_table[side1->get_passage_type()];
+
+                            auto side2 = side1->other_side(x);
 
                             if (!side2->is_highlighted()) {
-                                mp_cost += _table[side2->get_type()];
+                                mp_cost += _hex_table[side2->get_hex_type()];
 
                                 if (mp_cost <= mv_pts) {
-                                    side->set_highlighted(true);
+                                    side1->set_highlighted(true);
                                     side2->set_highlighted(true);
-                                    _passages.insert(static_cast<Passage_site*>(side));
+                                    _passages.insert(side1);
                                     _paths[mp_cost].insert(side2);
                                 }
                             }
@@ -55,8 +60,6 @@ void Mover::find_paths() {
                     }
                 }
             }
-        }
-    }
 }
 
 void Mover::move(const sf::Vector2f& mouse_pos) {

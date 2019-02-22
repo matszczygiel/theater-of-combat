@@ -10,7 +10,7 @@ class River : public Passage_site {
     explicit River(const int &number = 0) 
     : Passage_site(number), _shape(0, 0.2) {}
 
-    Site_type get_type() const final;
+    Passage_type get_passage_type() const final;
     void draw(sf::RenderTarget &target) const final;
 
    private:
@@ -19,4 +19,4 @@ class River : public Passage_site {
     Hex_border_shape _shape;
 };
 
-inline Site_type River::get_type() const { return Site_type::river; }
+inline Passage_type River::get_passage_type() const { return Passage_type::river; }

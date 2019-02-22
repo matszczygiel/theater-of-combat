@@ -10,6 +10,7 @@ void Game::initialize() {
     _window.setFramerateLimit(60);
 
     _map = Map::create_test_map(token_size);
+    _map.save_map("test_map.xml");
 
     GAME_INFO("Initializing units.");
     _units.emplace_back(new Mechanized());

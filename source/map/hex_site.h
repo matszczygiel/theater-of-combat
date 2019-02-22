@@ -5,6 +5,14 @@
 
 #include <array>
 
+enum class Hex_type {
+    field,
+    forest,
+    hills,
+    mountains,
+    swamp
+};
+
 class Hex_site : public Map_site {
    public:
     explicit Hex_site(const int &hnumber = 0);
@@ -12,6 +20,7 @@ class Hex_site : public Map_site {
     virtual ~Hex_site() = default;
 
     virtual void draw(sf::RenderTarget &target) const override;
+    virtual Hex_type get_hex_type() const = 0;
 
     bool contains(const sf::Vector2f &vec) const noexcept;
     void set_highlighted(bool highlighted) noexcept override;
@@ -21,6 +30,7 @@ class Hex_site : public Map_site {
     const auto &get_radius() const;
     auto get_small_radius() const;
     const auto &get_position() const;
+    Site_type get_site_type() const final;
 
     void set_side(const Directions &side, Map_site *site);
 
@@ -51,4 +61,8 @@ inline const auto &Hex_site::get_position() const {
 
 inline void Hex_site::set_side(const Directions &side, Map_site *site) {
     _sides[static_cast<int>(side)] = site;
+}
+
+inline Site_type Hex_site::get_site_type() const {
+    return Site_type::hexagon;
 }

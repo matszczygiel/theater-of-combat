@@ -3,7 +3,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "directions.h"
-#include "site_type.h"
+
+enum class Site_type {
+    hexagon,
+    passage
+};
 
 class Map_site {
    public:
@@ -14,7 +18,7 @@ class Map_site {
 
     virtual void set_highlighted(bool highlighted) noexcept = 0;
     virtual void draw(sf::RenderTarget& target) const       = 0;
-    virtual Site_type get_type() const                      = 0;
+    virtual Site_type get_site_type() const                 = 0;
 
     bool is_highlighted() const;
     const auto& get_number() const;

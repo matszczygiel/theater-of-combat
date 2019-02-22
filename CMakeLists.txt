@@ -47,4 +47,5 @@ target_compile_options(toc PUBLIC
 target_link_libraries(toc PUBLIC 
                         sfml-window
                         sfml-graphics
-                        sfml-system)                
+                        sfml-system
+                        pugixml)                

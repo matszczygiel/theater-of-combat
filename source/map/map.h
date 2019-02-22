@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -16,6 +17,9 @@ class Map {
     void draw(sf::RenderTarget& target) const;
     Hex_site* get_hex(const int& no);
     Passage_site* get_passage(const int& no);
+
+    void load_map(const std::string& path);
+    void save_map(const std::string& path);
 
     static Map create_test_map(const float& size);
 

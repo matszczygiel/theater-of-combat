@@ -1,0 +1,2163 @@
+<?xml version="1.0"?>
+<map>
+	<hexagons_set x_size="10" y_size="10">
+		<hex number="0" hex_type="forest">
+			<sides_array>
+				<side direction="east">
+					<site number="10" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="1" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="1" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="10" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="11" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="12" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="2" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="0" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="2" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="1" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="12" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="3" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="3" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="12" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="13" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="14" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="4" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="2" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="4" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="3" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="14" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="5" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="5" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="14" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="15" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="16" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="6" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="4" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="6" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="5" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="16" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="7" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="7" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="16" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="17" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="18" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="8" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="6" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="8" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="7" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="18" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="9" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="9" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="18" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="19" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="8" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="10" hex_type="forest">
+			<sides_array>
+				<side direction="east">
+					<site number="20" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="11" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="1" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="0" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="11" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="20" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="21" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="22" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="12" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="1" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="10" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="12" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="11" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="22" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="13" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="3" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="2" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="1" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="13" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="22" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="23" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="24" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="14" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="3" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="12" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="14" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="13" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="24" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="15" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="5" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="4" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="3" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="15" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="24" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="25" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="26" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="16" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="5" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="14" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="16" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="15" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="26" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="17" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="7" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="6" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="5" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="17" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="26" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="27" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="28" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="18" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="7" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="16" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="18" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="17" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="28" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="19" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="9" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="8" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="7" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="19" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="28" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="29" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="9" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="18" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="20" hex_type="forest">
+			<sides_array>
+				<side direction="east">
+					<site number="30" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="21" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="11" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="10" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="21" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="30" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="31" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="32" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="22" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="11" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="20" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="22" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="21" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="32" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="23" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="13" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="12" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="11" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="23" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="32" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="33" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="34" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="24" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="13" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="22" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="24" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="23" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="34" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="25" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="15" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="14" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="13" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="25" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="34" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="35" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="36" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="26" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="15" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="24" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="26" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="25" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="36" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="27" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="17" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="16" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="15" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="27" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="36" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="37" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="38" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="28" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="17" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="26" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="28" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="27" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="38" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="29" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="19" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="18" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="17" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="29" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="38" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="39" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="19" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="28" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="30" hex_type="forest">
+			<sides_array>
+				<side direction="east">
+					<site number="40" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="31" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="21" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="20" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="31" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="40" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="41" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="42" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="32" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="21" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="30" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="32" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="31" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="42" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="33" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="23" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="22" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="21" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="33" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="42" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="43" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="44" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="34" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="23" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="32" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="34" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="33" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="44" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="35" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="25" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="24" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="23" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="35" hex_type="forest">
+			<sides_array>
+				<side direction="northeast">
+					<site number="44" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="45" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="46" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="36" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="25" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="34" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="36" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="35" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="46" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="37" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="27" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="26" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="25" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="37" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="46" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="47" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="48" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="38" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="27" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="36" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="38" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="37" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="48" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="39" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="29" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="28" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="27" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="39" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="48" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="49" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="29" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="38" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="40" hex_type="field">
+			<sides_array>
+				<side direction="east">
+					<site number="50" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="41" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="31" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="30" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="41" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="50" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="51" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="52" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="42" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="31" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="40" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="42" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="41" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="52" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="43" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="33" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="32" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="31" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="43" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="52" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="53" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="54" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="44" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="33" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="42" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="44" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="43" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="54" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="45" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="35" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="34" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="33" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="45" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="54" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="55" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="56" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="46" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="35" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="44" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="46" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="45" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="56" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="47" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="37" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="36" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="35" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="47" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="56" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="57" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="58" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="48" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="37" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="46" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="48" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="47" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="58" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="49" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="39" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="38" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="37" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="49" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="58" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="59" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="39" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="48" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="50" hex_type="field">
+			<sides_array>
+				<side direction="east">
+					<site number="0" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="51" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="41" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="40" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="51" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="10" site_type="passage" />
+				</side>
+				<side direction="east">
+					<site number="1" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="15" site_type="passage" />
+				</side>
+				<side direction="southwest">
+					<site number="52" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="41" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="50" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="52" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="51" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="2" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="53" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="43" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="42" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="41" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="53" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="11" site_type="passage" />
+				</side>
+				<side direction="east">
+					<site number="3" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="16" site_type="passage" />
+				</side>
+				<side direction="southwest">
+					<site number="54" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="43" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="52" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="54" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="53" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="4" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="55" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="45" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="44" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="43" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="55" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="12" site_type="passage" />
+				</side>
+				<side direction="east">
+					<site number="5" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="17" site_type="passage" />
+				</side>
+				<side direction="southwest">
+					<site number="56" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="45" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="54" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="56" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="55" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="6" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="57" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="47" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="46" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="45" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="57" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="13" site_type="passage" />
+				</side>
+				<side direction="east">
+					<site number="7" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="18" site_type="passage" />
+				</side>
+				<side direction="southwest">
+					<site number="58" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="47" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="56" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="58" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="57" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="8" site_type="passage" />
+				</side>
+				<side direction="southeast">
+					<site number="59" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="49" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="48" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="47" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="59" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="14" site_type="passage" />
+				</side>
+				<side direction="east">
+					<site number="9" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="49" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="58" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="60" hex_type="field">
+			<sides_array>
+				<side direction="east">
+					<site number="70" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="61" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="10" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="0" site_type="passage" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="61" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="70" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="71" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="72" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="62" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="1" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="60" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="62" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="61" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="72" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="63" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="11" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="2" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="15" site_type="passage" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="63" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="72" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="73" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="74" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="64" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="3" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="62" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="64" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="63" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="74" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="65" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="12" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="4" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="16" site_type="passage" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="65" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="74" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="75" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="76" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="66" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="5" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="64" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="66" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="65" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="76" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="67" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="13" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="6" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="17" site_type="passage" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="67" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="76" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="77" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="78" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="68" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="7" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="66" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="68" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="67" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="78" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="69" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="14" site_type="passage" />
+				</side>
+				<side direction="west">
+					<site number="8" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="18" site_type="passage" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="69" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="78" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="79" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="9" site_type="passage" />
+				</side>
+				<side direction="northwest">
+					<site number="68" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="70" hex_type="field">
+			<sides_array>
+				<side direction="east">
+					<site number="80" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="71" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="61" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="60" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="71" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="80" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="81" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="82" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="72" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="61" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="70" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="72" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="71" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="82" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="73" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="63" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="62" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="61" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="73" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="82" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="83" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="84" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="74" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="63" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="72" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="74" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="73" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="84" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="75" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="65" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="64" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="63" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="75" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="84" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="85" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="86" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="76" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="65" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="74" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="76" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="75" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="86" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="77" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="67" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="66" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="65" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="77" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="86" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="87" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="88" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="78" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="67" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="76" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="78" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="77" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="88" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="79" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="69" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="68" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="67" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="79" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="88" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="89" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="69" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="78" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="80" hex_type="field">
+			<sides_array>
+				<side direction="east">
+					<site number="90" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="81" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="71" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="70" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="81" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="90" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="91" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="92" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="82" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="71" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="80" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="82" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="81" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="92" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="83" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="73" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="72" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="71" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="83" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="92" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="93" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="94" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="84" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="73" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="82" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="84" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="83" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="94" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="85" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="75" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="74" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="73" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="85" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="94" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="95" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="96" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="86" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="75" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="84" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="86" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="85" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="96" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="87" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="77" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="76" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="75" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="87" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="96" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="97" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="98" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="88" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="77" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="86" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="88" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="87" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="98" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="89" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="79" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="78" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="77" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="89" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="98" site_type="hexagon" />
+				</side>
+				<side direction="east">
+					<site number="99" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="79" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="88" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="90" hex_type="field">
+			<sides_array>
+				<side direction="southeast">
+					<site number="91" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="81" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="80" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="91" hex_type="field">
+			<sides_array>
+				<side direction="southwest">
+					<site number="92" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="81" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="90" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="92" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="91" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="93" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="83" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="82" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="81" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="93" hex_type="field">
+			<sides_array>
+				<side direction="southwest">
+					<site number="94" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="83" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="92" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="94" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="93" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="95" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="85" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="84" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="83" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="95" hex_type="field">
+			<sides_array>
+				<side direction="southwest">
+					<site number="96" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="85" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="94" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="96" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="95" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="97" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="87" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="86" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="85" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="97" hex_type="field">
+			<sides_array>
+				<side direction="southwest">
+					<site number="98" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="87" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="96" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="98" hex_type="field">
+			<sides_array>
+				<side direction="northeast">
+					<site number="97" site_type="hexagon" />
+				</side>
+				<side direction="southeast">
+					<site number="99" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="89" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="88" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="87" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+		<hex number="99" hex_type="field">
+			<sides_array>
+				<side direction="west">
+					<site number="89" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="98" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</hex>
+	</hexagons_set>
+	<passages_set size="19">
+		<passage number="0" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="60" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="50" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="1" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="61" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="51" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="2" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="62" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="52" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="3" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="63" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="53" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="4" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="64" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="54" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="5" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="65" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="55" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="6" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="66" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="56" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="7" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="67" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="57" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="8" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="68" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="58" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="9" passage_type="river">
+			<sides_array>
+				<side direction="east">
+					<site number="69" site_type="hexagon" />
+				</side>
+				<side direction="west">
+					<site number="59" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="10" passage_type="river">
+			<sides_array>
+				<side direction="northeast">
+					<site number="60" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="51" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="11" passage_type="river">
+			<sides_array>
+				<side direction="northeast">
+					<site number="62" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="53" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="12" passage_type="river">
+			<sides_array>
+				<side direction="northeast">
+					<site number="64" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="55" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="13" passage_type="river">
+			<sides_array>
+				<side direction="northeast">
+					<site number="66" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="57" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="14" passage_type="river">
+			<sides_array>
+				<side direction="northeast">
+					<site number="68" site_type="hexagon" />
+				</side>
+				<side direction="southwest">
+					<site number="59" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="15" passage_type="river">
+			<sides_array>
+				<side direction="southeast">
+					<site number="62" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="51" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="16" passage_type="river">
+			<sides_array>
+				<side direction="southeast">
+					<site number="64" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="53" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="17" passage_type="river">
+			<sides_array>
+				<side direction="southeast">
+					<site number="66" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="55" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+		<passage number="18" passage_type="river">
+			<sides_array>
+				<side direction="southeast">
+					<site number="68" site_type="hexagon" />
+				</side>
+				<side direction="northwest">
+					<site number="57" site_type="hexagon" />
+				</side>
+			</sides_array>
+		</passage>
+	</passages_set>
+</map>

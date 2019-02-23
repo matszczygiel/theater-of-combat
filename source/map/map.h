@@ -16,6 +16,7 @@ class Map {
 
     void draw(sf::RenderTarget& target) const;
     std::unique_ptr<Hex_site>& get_hex(const int& no);
+    std::unique_ptr<Hex_site>& get_hex(const int& x, const int& y);
     std::unique_ptr<Passage_site>& get_passage(const int& no);
 
     void load_map(const std::string& path, const float& size);
@@ -25,7 +26,11 @@ class Map {
 
    private:
     void recompute_geometry(const float& size);
+    void resize(const int& x, const int& y);
 
     Hex_matrix _map;
     Passage_vec _passages;
+
+    int x_dim;
+    int y_dim;
 };

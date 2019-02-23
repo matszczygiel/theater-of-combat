@@ -27,6 +27,14 @@ std::unique_ptr<Passage_site> Map_site_factory::create_passage(const Passage_typ
 }
 
 std::unique_ptr<Hex_site> Map_site_factory::create_hex(pugi::xml_node& node) {
+    const auto no   = node.attribute("number").as_int();
+    const auto type = string_to_hex_type(node.attribute("hex_type").value());
+    return create_hex(type, no);
 }
+
 std::unique_ptr<Passage_site> Map_site_factory::create_passage(pugi::xml_node& node) {
+    const auto no   = node.attribute("number").as_int();
+    const auto type = string_to_passage_type(node.attribute("passage_type").value());
+    return create_passage(type, no);
+
 }

@@ -1,9 +1,12 @@
 #pragma once
 
+#include <array>
+#include <string>
+
 #include "hex_shape.h"
 #include "map_site.h"
 
-#include <array>
+#include <pugixml.hpp>
 
 enum class Hex_type {
     field,
@@ -12,6 +15,9 @@ enum class Hex_type {
     mountains,
     swamp
 };
+
+std::string type_to_string(const Hex_type &type);
+Hex_type string_to_hex_type(const std::string &str);
 
 class Hex_site : public Map_site {
    public:
@@ -33,6 +39,8 @@ class Hex_site : public Map_site {
     Site_type get_site_type() const final;
 
     void set_side(const Directions &side, Map_site *site);
+
+    void write(pugi::xml_node &node);
 
    protected:
     virtual void set_color() = 0;

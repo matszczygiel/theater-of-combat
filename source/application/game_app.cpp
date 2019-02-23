@@ -11,6 +11,7 @@ void Game::initialize() {
 
     _map = Map::create_test_map(token_size);
     _map.save_map("test_map.xml");
+//    _map.load_map("test_map.xml", token_size);
 
     GAME_INFO("Initializing units.");
     _units.emplace_back(new Mechanized());
@@ -18,8 +19,8 @@ void Game::initialize() {
     for (auto& u : _units)
         u->init_token(token_size);
 
-    _units[0]->place_on_hex(_map.get_hex(56));
-    _units[1]->place_on_hex(_map.get_hex(19));
+    _units[0]->place_on_hex(_map.get_hex(56).get());
+    _units[1]->place_on_hex(_map.get_hex(19).get());
 
     _running = true;
 }

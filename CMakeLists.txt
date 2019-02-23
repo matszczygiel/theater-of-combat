@@ -11,6 +11,7 @@ add_executable(toc
                 source/map/hex_border_shape.h
                 source/map/hex_border_shape.cpp
                 source/map/map_site.h
+                source/map/map_site.cpp
                 source/map/hex_site.h 
                 source/map/hex_site.cpp
                 source/map/passage_site.h
@@ -21,6 +22,8 @@ add_executable(toc
                 source/map/map.cpp
                 source/map/directions.h
                 source/map/concrete_hex.h
+                source/map/site_factory.h
+                source/map/site_factory.cpp
                 source/unit/heavy_unit.h
                 source/unit/unit_type.h
                 source/unit/unit.h

@@ -1,13 +1,18 @@
 #pragma once
 
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <pugixml.hpp>
 
 #include "directions.h"
+#include "log.h"
 
 enum class Site_type {
     hexagon,
     passage
 };
+
+std::string type_to_string(const Site_type& type);
+Site_type string_to_site_type(const std::string& str);
 
 class Map_site {
    public:
@@ -22,6 +27,7 @@ class Map_site {
 
     bool is_highlighted() const;
     const auto& get_number() const;
+    void write(pugi::xml_node& node);
 
     static Directions opposite_direction(const Directions& dir);
 
@@ -37,3 +43,4 @@ inline const auto& Map_site::get_number() const { return _number; }
 inline Directions Map_site::opposite_direction(const Directions& dir) {
     return Directions((static_cast<int>(dir) + 3) % 6);
 }
+

@@ -11,6 +11,9 @@ enum class Passage_type {
     road
 };
 
+std::string type_to_string(const Passage_type &type);
+Passage_type string_to_passage_type(const std::string &str);
+
 class Passage_site : public Map_site {
    public:
     explicit Passage_site(const int &number = 0);
@@ -27,6 +30,8 @@ class Passage_site : public Map_site {
     Hex_site *other_side(Hex_site *adjacet_site);
     const auto &get_sides() const;
     const auto &get_sides_directions() const;
+
+    void write(pugi::xml_node &node);
 
    protected:
     virtual void set_shape() = 0;

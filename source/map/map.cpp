@@ -11,9 +11,12 @@
 
 void Map::draw(sf::RenderTarget& target) const {
     for (const auto& x : _map)
-        for (const auto& y : x)
+        for (const auto& y : x) {
             y->draw(target);
-
+            if (_draw_numbers) {
+                y->draw_number(target, _numbers_font);
+            }
+        }
     for (const auto& x : _passages)
         x->draw(target);
 }
@@ -25,8 +28,8 @@ void Map::recompute_geometry(const float& size) {
 
     const auto smr = Hex_shape::get_small_radius(size);
 
-    for (int x = 0; x < x_dim; ++x)
-        for (int y = 0; y < y_dim; ++y) {
+    for (int x = 0; x < _x_dim; ++x)
+        for (int y = 0; y < _y_dim; ++y) {
             if (y % 2 == 0) {
                 get_hex(x, y)->set_shape(map_offset + 2 * x * smr, map_offset + 1.5 * y * size, size);
             } else {
@@ -40,8 +43,8 @@ void Map::resize(const int& x, const int& y) {
     for (auto& vec : _map)
         vec.resize(y);
 
-    x_dim = x;
-    y_dim = y;
+    _x_dim = x;
+    _y_dim = y;
 }
 
 // do something with this function
@@ -134,7 +137,7 @@ Map Map::create_test_map(const float& size) {
 }
 
 std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
-    if (x >= x_dim || y >= y_dim) {
+    if (x >= _x_dim || y >= _y_dim) {
         GAME_ERROR("Invalid hex number requested! x: {0} y; {1}.", x, y);
         assert(true);
     }
@@ -143,9 +146,9 @@ std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
 }
 
 std::unique_ptr<Hex_site>& Map::get_hex(const int& no) {
-    const int y = no % y_dim;
-    const int x = (no - y) / x_dim;
-    if (x >= x_dim || y >= y_dim) {
+    const int y = no % _y_dim;
+    const int x = (no - y) / _x_dim;
+    if (x >= _x_dim || y >= _y_dim) {
         GAME_ERROR("Invalid hex number requested!: {0}", no);
         assert(true);
     }
@@ -246,11 +249,11 @@ void Map::save_map(const std::string& path) {
     auto hexes = map_node.append_child("hexagons_set");
     GAME_TRACE("Writing hexagons set.");
 
-    hexes.append_attribute("x_size").set_value(x_dim);
-    hexes.append_attribute("y_size").set_value(y_dim);
+    hexes.append_attribute("x_size").set_value(_x_dim);
+    hexes.append_attribute("y_size").set_value(_y_dim);
 
-    for (int x = 0; x < x_dim; ++x)
-        for (int y = 0; y < y_dim; ++y) {
+    for (int x = 0; x < _x_dim; ++x)
+        for (int y = 0; y < _y_dim; ++y) {
             const auto& hex = get_hex(x, y);
             hex->write(hexes);
         }
@@ -268,4 +271,9 @@ void Map::save_map(const std::string& path) {
     if (!doc.save_file(path.c_str())) {
         GAME_ERROR("Could not save map file.");
     }
+}
+
+void Map::set_numbers_drawing(const std::string& font_filename) {
+    _numbers_font.loadFromFile(font_filename);
+    _draw_numbers = true;
 }

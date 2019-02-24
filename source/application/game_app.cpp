@@ -9,9 +9,10 @@ void Game::initialize() {
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
 
-//    _map = Map::create_test_map(token_size);
-//    _map.save_map("resources/maps/test_map.xml");
+    //    _map = Map::create_test_map(token_size);
+    //    _map.save_map("resources/maps/test_map.xml");
     _map.load_map("resources/maps/test_map.xml", token_size);
+    _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
     GAME_INFO("Initializing units.");
     _units.emplace_back(new Mechanized());

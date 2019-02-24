@@ -26,6 +26,7 @@ class Hex_site : public Map_site {
     virtual ~Hex_site() = default;
 
     virtual void draw(sf::RenderTarget &target) const override;
+    void draw_number(sf::RenderTarget &target, const sf::Font& font) const;
     virtual Hex_type get_hex_type() const = 0;
 
     bool contains(const sf::Vector2f &vec) const noexcept;

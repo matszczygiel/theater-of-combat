@@ -53,6 +53,13 @@ void Hex_site::draw(sf::RenderTarget& target) const {
     target.draw(_shape);
 }
 
+void Hex_site::draw_number(sf::RenderTarget& target, const sf::Font& font) const {
+    sf::Text num_text(std::to_string(_number), font, 10);
+    num_text.setPosition(_shape.getPosition());
+    num_text.setFillColor(sf::Color::Black);
+    target.draw(num_text);
+}
+
 bool Hex_site::contains(const sf::Vector2f& vec) const noexcept {
     const auto rel_pos = vec - _shape.getPosition();
     return std::sqrt(std::pow(rel_pos.x, 2) + std::pow(rel_pos.y, 2)) < get_small_radius();

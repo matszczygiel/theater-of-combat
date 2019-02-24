@@ -24,6 +24,8 @@ class Map {
 
     static Map create_test_map(const float& size);
 
+    void set_numbers_drawing(const std::string& font_filename);
+
    private:
     void recompute_geometry(const float& size);
     void resize(const int& x, const int& y);
@@ -31,6 +33,9 @@ class Map {
     Hex_matrix _map;
     Passage_vec _passages;
 
-    int x_dim;
-    int y_dim;
+    int _x_dim;
+    int _y_dim;
+
+    sf::Font _numbers_font;
+    bool _draw_numbers = false;
 };

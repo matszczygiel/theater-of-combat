@@ -51,4 +51,5 @@ target_link_libraries(toc PUBLIC
                         sfml-window
                         sfml-graphics
                         sfml-system
-                        pugixml)                
+                        pugixml
+                        tgui)                

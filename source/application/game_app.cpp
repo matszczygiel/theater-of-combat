@@ -43,6 +43,34 @@ void Game::handle_event(const sf::Event& event) {
                         u->reset_mv_points();
                     break;
 
+                case sf::Keyboard::Up: {
+                    auto view = _window.getView();
+                    view.move(0.f, -1.f);
+                    _window.setView(view);
+                    break;
+                }
+
+                case sf::Keyboard::Down: {
+                    auto view = _window.getView();
+                    view.move(0.f, 1.f);
+                    _window.setView(view);
+                    break;
+                }
+
+                case sf::Keyboard::Right: {
+                    auto view = _window.getView();
+                    view.move(1.f, 0.f);
+                    _window.setView(view);
+                    break;
+                }
+
+                case sf::Keyboard::Left: {
+                    auto view = _window.getView();
+                    view.move(-1.f, 0.f);
+                    _window.setView(view);
+                    break;
+                }
+
                 default:
                     break;
             }
@@ -87,6 +115,11 @@ void Game::handle_event(const sf::Event& event) {
                     break;
             }
             break;
+        case sf::Event::Resized: {
+            sf::FloatRect visible_area(0.f, 0.f, event.size.width, event.size.height);
+            _window.setView(sf::View(visible_area));
+            break;
+        }
 
         default:
             break;

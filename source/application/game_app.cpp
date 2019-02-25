@@ -126,9 +126,21 @@ void Game::handle_event(const sf::Event& event) {
                     break;
             }
             break;
+
         case sf::Event::Resized: {
             sf::FloatRect visible_area(0.f, 0.f, event.size.width, event.size.height);
             _window.setView(sf::View(visible_area));
+            break;
+        }
+
+        case sf::Event::MouseWheelScrolled: {
+            auto view = _window.getView();
+            if (event.mouseWheelScroll.delta > 0)
+                view.zoom(0.95);
+            else if (event.mouseWheelScroll.delta < 0)
+                view.zoom(1.05);
+
+            _window.setView(view);
             break;
         }
 

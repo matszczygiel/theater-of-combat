@@ -43,33 +43,44 @@ void Game::handle_event(const sf::Event& event) {
                         u->reset_mv_points();
                     break;
 
-                case sf::Keyboard::Up: {
-                    auto view = _window.getView();
-                    view.move(0.f, -1.f);
-                    _window.setView(view);
+                case sf::Keyboard::Up:
+                    _moving_view_up = true;
                     break;
-                }
 
-                case sf::Keyboard::Down: {
-                    auto view = _window.getView();
-                    view.move(0.f, 1.f);
-                    _window.setView(view);
+                case sf::Keyboard::Down:
+                    _moving_view_down = true;
                     break;
-                }
 
-                case sf::Keyboard::Right: {
-                    auto view = _window.getView();
-                    view.move(1.f, 0.f);
-                    _window.setView(view);
+                case sf::Keyboard::Right:
+                    _moving_view_right = true;
                     break;
-                }
 
-                case sf::Keyboard::Left: {
-                    auto view = _window.getView();
-                    view.move(-1.f, 0.f);
-                    _window.setView(view);
+                case sf::Keyboard::Left:
+                    _moving_view_left = true;
                     break;
-                }
+
+                default:
+                    break;
+            }
+            break;
+
+        case sf::Event::KeyReleased:
+            switch (event.key.code) {
+                case sf::Keyboard::Up:
+                    _moving_view_up = false;
+                    break;
+
+                case sf::Keyboard::Down:
+                    _moving_view_down = false;
+                    break;
+
+                case sf::Keyboard::Right:
+                    _moving_view_right = false;
+                    break;
+
+                case sf::Keyboard::Left:
+                    _moving_view_left = false;
+                    break;
 
                 default:
                     break;
@@ -126,7 +137,23 @@ void Game::handle_event(const sf::Event& event) {
     }
 }
 
-void Game::update() {}
+void Game::update(const sf::Time& elapsed_time) {
+    auto view = _window.getView();
+    sf::Vector2f moving_view(0, 0);
+    if (_moving_view_down)
+        moving_view += sf::Vector2f(0, 1);
+    if (_moving_view_up)
+        moving_view += sf::Vector2f(0, -1);
+    if (_moving_view_right)
+        moving_view += sf::Vector2f(1, 0);
+    if (_moving_view_left)
+        moving_view += sf::Vector2f(-1, 0);
+
+    moving_view *= elapsed_time.asMilliseconds() * _view_moving_speed;
+
+    view.move(moving_view);
+    _window.setView(view);
+}
 
 void Game::render() {
     _window.clear(sf::Color::Blue);

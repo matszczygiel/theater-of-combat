@@ -14,7 +14,7 @@ class Application {
    protected:
     virtual void initialize()                         = 0;
     virtual void handle_event(const sf::Event& event) = 0;
-    virtual void update()                             = 0;
+    virtual void update(const sf::Time& elapsed_time) = 0;
     virtual void render()                             = 0;
     virtual void finalize()                           = 0;
 

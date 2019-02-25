@@ -8,6 +8,7 @@ void Application::run() {
     ENGINE_INFO("Initializing application.");
     initialize();
 
+    sf::Clock clock;
     while (_running) {
 
         sf::Event event;
@@ -15,7 +16,8 @@ void Application::run() {
             handle_event(event);
         }
 
-        update();
+        const auto elapsed_time = clock.restart();
+        update(elapsed_time);
         render();
     }
 

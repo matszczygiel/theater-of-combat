@@ -30,8 +30,7 @@ void Unit::reset_mv_points() noexcept {
 }
 
 void Unit::reduce_mv_points(const int& points) {
-    if (points > _current_moving_pts)
-        throw std::domain_error("Trying to reduce mv points to negative value.");
+    assert(points <= _current_moving_pts);
 
     _current_moving_pts -= points;
 }

@@ -24,6 +24,23 @@ void Game::initialize() {
     _units[1]->place_on_hex(_map.get_hex(19).get());
 
     _running = true;
+
+    auto panel = tgui::Panel::create();
+    panel->setPosition(0, 0);
+    panel->setSize(300, 300);
+    panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
+    _gui.add(panel, "panel");
+
+    auto chatbox = tgui::ChatBox::create();
+    chatbox->setSize("20%", "20%");
+    chatbox->setTextSize(18);
+    chatbox->setPosition(0, 0);
+    chatbox->setLinesStartFromTop();
+    chatbox->addLine("texus: Hey, this is TGUI!", sf::Color::Green);
+    chatbox->addLine("Me: Looks awesome! ;)", sf::Color::Yellow);
+    chatbox->addLine("texus: Thanks! :)", sf::Color::Green);
+    chatbox->addLine("Me: The widgets rock ^^", sf::Color::Yellow);
+    panel->add(chatbox);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -45,13 +62,9 @@ void Game::update(const sf::Time& elapsed_time) {
 }
 
 void Game::render() {
-    _window.clear(sf::Color::Blue);
-
     _map.draw(_window);
     for (auto& u : _units)
         u->draw(_window);
-
-    _window.display();
 }
 
 void Game::finalize() {

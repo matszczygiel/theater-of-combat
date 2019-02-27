@@ -4,6 +4,8 @@
 
 void Application::run() {
     ENGINE_INFO("Initializing application.");
+    _gui.setTarget(_window);
+
     initialize();
 
     sf::Clock clock;
@@ -15,7 +17,10 @@ void Application::run() {
 
         const auto elapsed_time = clock.restart();
         update(elapsed_time);
+        _window.clear();
         render();
+        _gui.draw();
+        _window.display();
     }
 
     _window.close();
@@ -48,11 +53,11 @@ void Application::handle_event(const sf::Event& event) {
                                         _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
             break;
 
-        case sf::Event::Resized: 
+        case sf::Event::Resized:
             window_resize_event(event.size.width, event.size.height);
-            break; 
-            
-        case sf::Event::MouseWheelScrolled: 
+            break;
+
+        case sf::Event::MouseWheelScrolled:
             mouse_wheel_scrolled_event(event.mouseWheelScroll.delta);
 
         default:

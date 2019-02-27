@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <TGUI/TGUI.hpp>
+
 class Application {
    public:
     virtual ~Application() = default;
@@ -29,5 +31,7 @@ class Application {
     void handle_event(const sf::Event& event);
 
     sf::RenderWindow _window;
+    tgui::Gui _gui;
+
     bool _running = false;
 };

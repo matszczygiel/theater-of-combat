@@ -28,6 +28,8 @@ add_executable(toc
                 source/unit/unit_type.h
                 source/unit/unit.h
                 source/unit/unit.cpp
+                source/unit/stack.h
+                source/unit/stack.cpp
                 source/mover/mover.h
                 source/mover/mover.cpp
                 source/mover/concrete_mover.h

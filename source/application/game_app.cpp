@@ -26,129 +26,6 @@ void Game::initialize() {
     _running = true;
 }
 
-void Game::handle_event(const sf::Event& event) {
-    switch (event.type) {
-        case sf::Event::Closed:
-            _running = false;
-            break;
-
-        case sf::Event::KeyPressed:
-            switch (event.key.code) {
-                case sf::Keyboard::Escape:
-                    _running = false;
-                    break;
-
-                case sf::Keyboard::R:
-                    for (auto& u : _units)
-                        u->reset_mv_points();
-                    break;
-
-                case sf::Keyboard::Up:
-                    _moving_view_up = true;
-                    break;
-
-                case sf::Keyboard::Down:
-                    _moving_view_down = true;
-                    break;
-
-                case sf::Keyboard::Right:
-                    _moving_view_right = true;
-                    break;
-
-                case sf::Keyboard::Left:
-                    _moving_view_left = true;
-                    break;
-
-                default:
-                    break;
-            }
-            break;
-
-        case sf::Event::KeyReleased:
-            switch (event.key.code) {
-                case sf::Keyboard::Up:
-                    _moving_view_up = false;
-                    break;
-
-                case sf::Keyboard::Down:
-                    _moving_view_down = false;
-                    break;
-
-                case sf::Keyboard::Right:
-                    _moving_view_right = false;
-                    break;
-
-                case sf::Keyboard::Left:
-                    _moving_view_left = false;
-                    break;
-
-                default:
-                    break;
-            }
-            break;
-
-        case sf::Event::MouseButtonPressed:
-            switch (event.mouseButton.button) {
-                case sf::Mouse::Left: {
-                    const sf::Vector2f mouse_pos =
-                        _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-
-                    if (!_moving) {
-                        for (auto& u : _units) {
-                            if (u->token_contain(mouse_pos)) {
-                                _mover = u->get_mover();
-                                _mover->find_paths();
-                                _moving = true;
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            break;
-
-        case sf::Event::MouseButtonReleased:
-            switch (event.mouseButton.button) {
-                case sf::Mouse::Left: {
-                    const sf::Vector2f mouse_pos =
-                        _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-                    if (_moving) {
-                        _mover->move(mouse_pos);
-                        _moving = false;
-                        delete _mover;
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            break;
-
-        case sf::Event::Resized: {
-            sf::FloatRect visible_area(0.f, 0.f, event.size.width, event.size.height);
-            _window.setView(sf::View(visible_area));
-            break;
-        }
-
-        case sf::Event::MouseWheelScrolled: {
-            auto view = _window.getView();
-            if (event.mouseWheelScroll.delta > 0)
-                view.zoom(0.95);
-            else if (event.mouseWheelScroll.delta < 0)
-                view.zoom(1.05);
-
-            _window.setView(view);
-            break;
-        }
-
-        default:
-            break;
-    }
-}
-
 void Game::update(const sf::Time& elapsed_time) {
     auto view = _window.getView();
     sf::Vector2f moving_view(0, 0);
@@ -180,4 +57,111 @@ void Game::render() {
 void Game::finalize() {
     for (auto& u : _units)
         delete u;
+}
+
+void Game::key_pressed_event(const sf::Keyboard::Key& key) {
+    switch (key) {
+        case sf::Keyboard::Escape:
+            _running = false;
+            break;
+
+        case sf::Keyboard::R:
+            for (auto& u : _units)
+                u->reset_mv_points();
+            break;
+
+        case sf::Keyboard::Up:
+            _moving_view_up = true;
+            break;
+
+        case sf::Keyboard::Down:
+            _moving_view_down = true;
+            break;
+
+        case sf::Keyboard::Right:
+            _moving_view_right = true;
+            break;
+
+        case sf::Keyboard::Left:
+            _moving_view_left = true;
+            break;
+
+        default:
+            break;
+    }
+}
+
+void Game::key_released_event(const sf::Keyboard::Key& key) {
+    switch (key) {
+        case sf::Keyboard::Up:
+            _moving_view_up = false;
+            break;
+
+        case sf::Keyboard::Down:
+            _moving_view_down = false;
+            break;
+
+        case sf::Keyboard::Right:
+            _moving_view_right = false;
+            break;
+
+        case sf::Keyboard::Left:
+            _moving_view_left = false;
+            break;
+
+        default:
+            break;
+    }
+}
+
+void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
+                                      const sf::Vector2f& position) {
+    switch (button) {
+        case sf::Mouse::Left:
+            if (!_moving) {
+                for (auto& u : _units) {
+                    if (u->token_contain(position)) {
+                        _mover = u->get_mover();
+                        _mover->find_paths();
+                        _moving = true;
+                        break;
+                    }
+                }
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+void Game::mouse_button_released_event(const sf::Mouse::Button& button,
+                                       const sf::Vector2f& position) {
+    switch (button) {
+        case sf::Mouse::Left:
+            if (_moving) {
+                _mover->move(position);
+                _moving = false;
+                delete _mover;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+void Game::mouse_wheel_scrolled_event(const float& delta) {
+    auto view = _window.getView();
+    if (delta > 0)
+        view.zoom(0.95);
+    else if (delta < 0)
+        view.zoom(1.05);
+
+    _window.setView(view);
+}
+
+void Game::window_resize_event(const unsigned& width, const unsigned& height) {
+    sf::FloatRect visible_area(0.f, 0.f, width, height);
+    _window.setView(sf::View(visible_area));
 }

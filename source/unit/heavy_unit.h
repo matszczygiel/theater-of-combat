@@ -7,18 +7,18 @@ class Armoured_cavalary : public Unit {
    public:
     Armoured_cavalary() : Unit(10) {}
 
-    Unit_type get_type() const override;
-    void set_color() override;
-    Mover* get_mover() override;
+    Unit_type get_type() const final;
+    void set_color() final;
+    Mover* get_mover() final;
 };
 
 class Mechanized : public Unit {
    public:
     Mechanized() : Unit(15) {}
 
-    Unit_type get_type() const override;
-    void set_color() override;
-    Mover* get_mover() override;
+    Unit_type get_type() const final;
+    void set_color() final;
+    Mover* get_mover() final;
 };
 
 inline Unit_type Armoured_cavalary::get_type() const { return Unit_type::armoured_cavalary; }

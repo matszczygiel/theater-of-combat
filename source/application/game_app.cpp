@@ -9,6 +9,10 @@ void Game::initialize() {
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
 
+    auto view = _window.getView();
+    view.setViewport(sf::FloatRect(0.25, 0, 1, 1));
+    _window.setView(view);
+
     //    _map = Map::create_test_map(token_size);
     //    _map.save_map("resources/maps/test_map.xml");
     _map.load_map("resources/maps/test_map.xml", token_size);
@@ -26,21 +30,14 @@ void Game::initialize() {
     _running = true;
 
     auto panel = tgui::Panel::create();
-    panel->setPosition(0, 0);
-    panel->setSize(300, 300);
-    panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
     _gui.add(panel, "panel");
+    panel->setPosition(0, 0);
+    panel->setSize("25%", "100%");
+    panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
 
-    auto chatbox = tgui::ChatBox::create();
-    chatbox->setSize("20%", "20%");
-    chatbox->setTextSize(18);
-    chatbox->setPosition(0, 0);
-    chatbox->setLinesStartFromTop();
-    chatbox->addLine("texus: Hey, this is TGUI!", sf::Color::Green);
-    chatbox->addLine("Me: Looks awesome! ;)", sf::Color::Yellow);
-    chatbox->addLine("texus: Thanks! :)", sf::Color::Green);
-    chatbox->addLine("Me: The widgets rock ^^", sf::Color::Yellow);
-    panel->add(chatbox);
+    auto label = tgui::Label::create("dupa");
+    _gui.add(label, "label");
+    label->setTextSize(25);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -175,6 +172,7 @@ void Game::mouse_wheel_scrolled_event(const float& delta) {
 }
 
 void Game::window_resize_event(const unsigned& width, const unsigned& height) {
-    sf::FloatRect visible_area(0.f, 0.f, width, height);
-    _window.setView(sf::View(visible_area));
+    auto view = _window.getView();
+    view.setSize(width, height);
+    _window.setView(view);
 }

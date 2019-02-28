@@ -4,9 +4,9 @@
 
 void Application::run() {
     ENGINE_INFO("Initializing application.");
-    _gui.setTarget(_window);
 
     initialize();
+    _gui.setTarget(_window);
 
     sf::Clock clock;
     while (_running) {

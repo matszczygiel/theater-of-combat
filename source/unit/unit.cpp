@@ -34,3 +34,9 @@ void Unit::reduce_mv_points(const int& points) {
 
     _current_moving_pts -= points;
 }
+
+void Unit::draw_token_at(sf::RenderTarget& window, const sf::Vector2f& position) const {
+    sf::RectangleShape token_copy = _token;
+    token_copy.setPosition(position);
+    window.draw(token_copy);
+}

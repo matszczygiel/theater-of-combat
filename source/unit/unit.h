@@ -16,9 +16,12 @@ class Unit {
     virtual ~Unit() noexcept = default;
 
     virtual void draw(sf::RenderTarget& window);
+    
     virtual Unit_type get_type() const = 0;
     virtual void set_color()           = 0;
     virtual Mover* get_mover()         = 0;
+
+    void draw_token_at(sf::RenderTarget& window, const sf::Vector2f& position) const;
 
     void place_on_hex(Hex_site* hex);
     void reset_mv_points() noexcept;

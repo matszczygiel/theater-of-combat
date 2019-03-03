@@ -29,11 +29,11 @@ void Game::initialize() {
 
     _running = true;
 
-    auto panel = tgui::Panel::create();
-    _gui.add(panel, "panel");
-    panel->setPosition(0, 0);
-    panel->setSize("25%", "100%");
-    panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
+    _panel = tgui::Panel::create();
+    _gui.add(_panel, "panel");
+    _panel->setPosition(0, 0);
+    _panel->setSize("25%", "100%");
+    _panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
 
     auto label = tgui::Label::create("dupa");
     _gui.add(label, "label");
@@ -133,10 +133,16 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                     if (u->token_contain(position)) {
                         _mover = u->get_mover();
                         _mover->find_paths();
-                        _moving = true;
+                        _moving    = true;
+                        u->create_displayer(_panel, "unit info");
                         break;
                     }
                 }
+            } else {
+                _mover->move(position);
+                _moving = false;
+                _panel->remove(_panel->get("unit info"));
+                delete _mover;
             }
             break;
 
@@ -147,18 +153,6 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
 
 void Game::mouse_button_released_event(const sf::Mouse::Button& button,
                                        const sf::Vector2f& position) {
-    switch (button) {
-        case sf::Mouse::Left:
-            if (_moving) {
-                _mover->move(position);
-                _moving = false;
-                delete _mover;
-            }
-            break;
-
-        default:
-            break;
-    }
 }
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {

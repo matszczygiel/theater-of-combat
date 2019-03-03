@@ -40,3 +40,14 @@ void Unit::draw_token_at(sf::RenderTarget& window, const sf::Vector2f& position)
     token_copy.setPosition(position);
     window.draw(token_copy);
 }
+
+void Unit::create_displayer(tgui::Panel::Ptr& target, const std::string& name) const {
+    auto box = tgui::BitmapButton::create();
+    sf::RenderTexture rt;
+    rt.create(_token.getLocalBounds().width, _token.getLocalBounds().height);
+    rt.draw(_token);
+    
+    box->setImage(rt.getTexture());
+    box->setText("unit");
+    target->add(box, name);
+}

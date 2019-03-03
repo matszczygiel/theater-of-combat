@@ -13,6 +13,7 @@ void Application::run() {
         sf::Event event;
         while (_window.pollEvent(event)) {
             handle_event(event);
+            _gui.handleEvent(event);
         }
 
         const auto elapsed_time = clock.restart();

@@ -11,7 +11,7 @@ class Stack : public Unit {
     void draw(sf::RenderTarget& window) override;
     Unit_type get_type() const override;
     void set_color() override;
-    Mover* get_mover() override;
+    Mover* get_mover() override {}
 
 
    private:

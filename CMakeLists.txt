@@ -28,6 +28,8 @@ add_executable(toc
                 source/unit/unit_type.h
                 source/unit/unit.h
                 source/unit/unit.cpp
+                source/unit/tokenizable.h
+                source/unit/tokenizable.cpp
                 source/unit/stack.h
                 source/unit/stack.cpp
                 source/mover/mover.h

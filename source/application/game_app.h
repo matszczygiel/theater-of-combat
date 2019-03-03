@@ -34,6 +34,8 @@ class Game : public Application {
     bool _moving_view_right = false;
     bool _moving_view_left  = false;
 
+    tgui::Panel::Ptr _panel;
+
     constexpr static float token_size         = 30;
     constexpr static float _view_moving_speed = 0.3f;
 };

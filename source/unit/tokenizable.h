@@ -8,6 +8,7 @@ class Tokenizable {
 
     void set_token_postion(const sf::Vector2f& position);
     sf::Vector2f get_token_position() const;
+    float get_token_size() const;
 
     virtual void draw(sf::RenderTarget& target) const;
     bool token_contains(const sf::Vector2f& vec);

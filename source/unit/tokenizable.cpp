@@ -56,3 +56,7 @@ void Tokenizable::init_token(const float& size) {
 
     GAME_TRACE("Token intialized of size: {0}.", size);
 }
+
+float Tokenizable::get_token_size() const {
+    return _token.getSize().x;
+}

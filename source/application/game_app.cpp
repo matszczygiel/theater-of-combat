@@ -15,16 +15,16 @@ void Game::initialize() {
 
     //    _map = Map::create_test_map(token_size);
     //    _map.save_map("resources/maps/test_map.xml");
-    _map.load_map("resources/maps/test_map.xml", token_size);
+    _map.load_map("resources/maps/test_map.xml", _token_size);
     _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
     Tokenizable::load_textures("resources/textures/units.png");
 
     GAME_INFO("Initializing units.");
-    _units.emplace_back(new Mechanized());
-    _units.emplace_back(new Armoured_cavalary());
+    _units.emplace_back(std::make_unique<Mechanized>());
+    _units.emplace_back(std::make_unique<Armoured_cavalary>());
     for (auto& u : _units)
-        u->init_token(token_size);
+        u->init_token(_token_size);
 
     _units[0]->place_on_hex(_map.get_hex(56).get());
     _units[1]->place_on_hex(_map.get_hex(19).get());
@@ -58,17 +58,20 @@ void Game::update(const sf::Time& elapsed_time) {
 
     view.move(moving_view);
     _window.setView(view);
+
+    resolve_stacks_and_units();
 }
 
 void Game::render() {
     _map.draw(_window);
-    for (auto& u : _units)
+    for (auto& u : _units_to_draw)
         u->draw(_window);
+
+    for (auto& s : _stacks)
+        s.draw(_window);
 }
 
 void Game::finalize() {
-    for (auto& u : _units)
-        delete u;
 }
 
 void Game::key_pressed_event(const sf::Keyboard::Key& key) {
@@ -133,9 +136,9 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             if (!_moving) {
                 for (auto& u : _units) {
                     if (u->token_contains(position)) {
-                        _mover = u->get_mover();
+                        _mover.reset(u->get_mover());
                         _mover->find_paths();
-                        _moving    = true;
+                        _moving = true;
                         u->create_displayer(_panel, "unit info");
                         break;
                     }
@@ -144,7 +147,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _mover->move(position);
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
-                delete _mover;
+                _mover.reset(nullptr);
             }
             break;
 
@@ -171,4 +174,34 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
     view.setSize(width, height);
     _window.setView(view);
+}
+
+void Game::resolve_stacks_and_units() {
+    _stacks.clear();
+    _units_to_draw.clear();
+
+    for (auto& u : _units) {
+        auto occ           = u->get_ocupation();
+        bool stack_created = false;
+
+        for (auto it = _units_to_draw.begin(); it != _units_to_draw.end();) {
+            auto unit = *it;
+            if (unit->get_ocupation() == occ) {
+                if (!stack_created) {
+                    _stacks.emplace_back(Stack());
+                    _stacks.back().add_unit(u.get());
+                    _stacks.back().init_token(_token_size);
+                    _stacks.back().set_token_postion(occ->get_position());
+                    stack_created = true;
+                }
+                _stacks.back().add_unit(unit);
+                it = _units_to_draw.erase(it);
+            } else {
+                ++it;
+            }
+        }
+
+        if (!stack_created)
+            _units_to_draw.insert(u.get());
+    }
 }

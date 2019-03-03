@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <set>
 
 #include "application.h"
 #include "map/map.h"
 #include "mover/mover.h"
 #include "unit/unit.h"
+#include "unit/stack.h"
 
 class Game : public Application {
    private:
@@ -23,9 +25,15 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
-    std::vector<Unit*> _units;
+    void resolve_stacks_and_units();
+
+
+    std::vector<std::unique_ptr<Unit>> _units;    
+    std::set<Unit*> _units_to_draw;
+    std::vector<Stack> _stacks;
+
     Map _map;
-    Mover* _mover = nullptr;
+    std::unique_ptr<Mover> _mover = nullptr;
 
     bool _moving = false;
 
@@ -36,6 +44,6 @@ class Game : public Application {
 
     tgui::Panel::Ptr _panel;
 
-    constexpr static float token_size         = 30;
+    constexpr static float _token_size         = 30;
     constexpr static float _view_moving_speed = 0.3f;
 };

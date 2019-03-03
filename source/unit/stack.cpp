@@ -1,7 +1,7 @@
 #include "stack.h"
 
-void Stack::draw(sf::RenderTarget& window) {
-    window.draw(_token);
+void Stack::draw(sf::RenderTarget& window) const  {
+/*    window.draw(_token);
 
     if (_display_content) {
         sf::Vector2f start = _token.getPosition();
@@ -14,5 +14,5 @@ void Stack::draw(sf::RenderTarget& window) {
             u->draw_token_at(window, start);
             start += displacement;
         }
-    }
+    }*/
 }

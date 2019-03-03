@@ -9,11 +9,12 @@ class Tokenizable {
     void set_token_postion(const sf::Vector2f& position);
     sf::Vector2f get_token_position() const;
 
-    void draw(sf::RenderTarget& target) const;
+    virtual void draw(sf::RenderTarget& target) const;
     bool token_contains(const sf::Vector2f& vec);
 
-   protected:
     virtual void init_token(const float& size);
+
+   protected:
     virtual int texture_offset() const = 0;
 
    private:

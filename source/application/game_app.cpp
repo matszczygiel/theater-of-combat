@@ -18,6 +18,8 @@ void Game::initialize() {
     _map.load_map("resources/maps/test_map.xml", token_size);
     _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
+    Tokenizable::load_textures("resources/textures/units.png");
+
     GAME_INFO("Initializing units.");
     _units.emplace_back(new Mechanized());
     _units.emplace_back(new Armoured_cavalary());
@@ -130,7 +132,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
         case sf::Mouse::Left:
             if (!_moving) {
                 for (auto& u : _units) {
-                    if (u->token_contain(position)) {
+                    if (u->token_contains(position)) {
                         _mover = u->get_mover();
                         _mover->find_paths();
                         _moving    = true;

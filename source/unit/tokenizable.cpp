@@ -3,6 +3,7 @@
 #include "log.h"
 
 bool Tokenizable::_texture_loaded = false;
+sf::Texture Tokenizable::_tokens_texture;
 
 void Tokenizable::load_textures(const std::string& filename) {
     GAME_INFO("Loading tokens texture, from: {0}", filename);
@@ -44,13 +45,13 @@ void Tokenizable::init_token(const float& size) {
     _token.setSize(sf::Vector2f(size, size));
     _token.setTexture(&_tokens_texture);
     const auto text_size = _tokens_texture.getSize();
-    const int offset     = text_size.x * texture_offset();
+    const int offset     = text_size.y * texture_offset();
 
-    if (offset >= text_size.y) {
+    if (offset >= text_size.x) {
         GAME_ERROR("Token initialized with too much texture offset. offset: {0}, texture width: {1}", offset, text_size.x);
     }
 
-    sf::IntRect texture_rect(offset, 0, text_size.x, text_size.x);
+    sf::IntRect texture_rect(offset, 0, text_size.y, text_size.y);
     _token.setTextureRect(texture_rect);
 
     GAME_TRACE("Token intialized of size: {0}.", size);

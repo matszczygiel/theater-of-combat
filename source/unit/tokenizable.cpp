@@ -60,3 +60,7 @@ void Tokenizable::init_token(const float& size) {
 float Tokenizable::get_token_size() const {
     return _token.getSize().x;
 }
+
+const sf::RectangleShape& Tokenizable::get_token() const {
+    return _token;
+}

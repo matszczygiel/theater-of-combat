@@ -22,14 +22,14 @@ void Unit::reduce_mv_points(const int& points) {
     _current_moving_pts -= points;
 }
 
-
 void Unit::create_displayer(tgui::Panel::Ptr& target, const std::string& name) const {
-    auto box = tgui::BitmapButton::create();
-    //sf::RenderTexture rt;
-    //rt.create(_token.getLocalBounds().width, _token.getLocalBounds().height);
-    //rt.draw(_token);
-    //
-    //box->setImage(rt.getTexture());
-    //box->setText("unit");
-    //target->add(box, name);
+    auto canvas = tgui::Canvas::create({"80%", "10%"});
+    canvas->setPosition({"10%", "10%"});
+
+    canvas->clear();
+    auto token = get_token();
+    token.setPosition(0, 0);
+    canvas->draw(token);
+    canvas->display();
+    target->add(canvas, name);
 }

@@ -38,7 +38,7 @@ void Game::initialize() {
     _panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
 
     auto label = tgui::Label::create("dupa");
-    _gui.add(label, "label");
+    _panel->add(label, "label");
     label->setTextSize(25);
 }
 

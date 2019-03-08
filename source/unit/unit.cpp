@@ -23,13 +23,13 @@ void Unit::reduce_mv_points(const int& points) {
 }
 
 void Unit::create_displayer(tgui::Panel::Ptr& target, const std::string& name) const {
-    auto canvas = tgui::Canvas::create({"80%", "10%"});
+    auto canvas = tgui::Canvas::create();
+    target->add(canvas, name);
     canvas->setPosition({"10%", "10%"});
-
-    canvas->clear();
+    canvas->setSize({"80%", "10%"});
+    canvas->clear(sf::Color::Green);
     auto token = get_token();
     token.setPosition(0, 0);
     canvas->draw(token);
     canvas->display();
-    target->add(canvas, name);
 }

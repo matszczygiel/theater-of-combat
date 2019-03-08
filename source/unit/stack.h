@@ -7,11 +7,12 @@
 
 class Stack : public Tokenizable {
    public:
-    void set_display_content(bool display);
+    virtual ~Stack()=default;
 
+    void set_display_content(bool display);
     void draw(sf::RenderTarget& target) const override;
+    int texture_offset() const override;
     Mover* get_mover();
-    int texture_offset() const final;
     int size() const;
 
     void add_unit(Unit* unit);

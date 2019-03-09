@@ -20,7 +20,7 @@ class Unit : public Tokenizable {
     virtual Unit_type get_type() const = 0;
     virtual Mover* get_mover()         = 0;
 
-    void create_displayer(tgui::Panel::Ptr& target, const std::string& name) const;
+    tgui::Canvas::Ptr create_displayer() const;
 
     void place_on_hex(Hex_site* hex);
     void reset_mv_points() noexcept;
@@ -39,4 +39,3 @@ class Unit : public Tokenizable {
 inline const auto& Unit::get_ocupation() const { return _ocupation; }
 
 inline const auto& Unit::get_mv_points() const { return _current_moving_pts; }
-

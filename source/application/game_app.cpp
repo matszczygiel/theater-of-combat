@@ -1,5 +1,7 @@
 #include "game_app.h"
 
+#include <functional>
+
 #include "log.h"
 
 #include "unit/heavy_unit.h"
@@ -134,13 +136,19 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     switch (button) {
         case sf::Mouse::Left:
             if (!_moving) {
-                for (auto& u : _units) {
+                for (auto& u : _units_to_draw) {
                     if (u->token_contains(position)) {
-                        _mover.reset(u->get_mover());
-                        _mover->find_paths();
-                        _moving = true;
-                        u->create_displayer(_panel, "unit info");
+                        init_mover_and_info_for_unit(u);
                         break;
+                    }
+                }
+                if (!_moving) {
+                    for (auto& s : _stacks) {
+                        if (s.token_contains(position)) {
+                            _panel->add(s.create_displayer([=](Unit* u) { this->init_mover_and_info_for_unit(u); }),
+                                        "unit info");
+                            break;
+                        }
                     }
                 }
             } else {
@@ -204,4 +212,12 @@ void Game::resolve_stacks_and_units() {
         if (!stack_created)
             _units_to_draw.insert(u.get());
     }
+}
+
+void Game::init_mover_and_info_for_unit(Unit* unit) {
+    _panel->remove(_panel->get("unit info"));
+    _mover.reset(unit->get_mover());
+    _mover->find_paths();
+    _moving = true;
+    _panel->add(unit->create_displayer(), "unit info");
 }

@@ -26,6 +26,7 @@ class Game : public Application {
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
     void resolve_stacks_and_units();
+    void init_mover_and_info_for_unit(Unit* unit);
 
 
     std::vector<std::unique_ptr<Unit>> _units;    

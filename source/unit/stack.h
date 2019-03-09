@@ -2,18 +2,21 @@
 
 #include <unordered_set>
 
+#include <TGUI/TGUI.hpp>
+
 #include "tokenizable.h"
 #include "unit.h"
 
 class Stack : public Tokenizable {
    public:
-    virtual ~Stack()=default;
+    virtual ~Stack() = default;
 
     void set_display_content(bool display);
     void draw(sf::RenderTarget& target) const override;
     int texture_offset() const override;
     Mover* get_mover();
     int size() const;
+    tgui::Grid::Ptr create_displayer(const std::function<void(Unit*)>& widget_callback) const;
 
     void add_unit(Unit* unit);
     void remove_unit(Unit* unit);

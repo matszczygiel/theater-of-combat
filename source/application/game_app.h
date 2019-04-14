@@ -8,6 +8,8 @@
 #include "mover/mover.h"
 #include "unit/unit.h"
 #include "unit/stack.h"
+#include "player.h"
+
 
 class Game : public Application {
    private:
@@ -25,13 +27,17 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
-    void resolve_stacks_and_units();
+    void resolve_stacks_and_units(std::set<Unit*>& unit_set);
     void init_mover_and_info_for_unit(Unit* unit);
 
 
     std::vector<std::unique_ptr<Unit>> _units;    
     std::set<Unit*> _units_to_draw;
     std::vector<Stack> _stacks;
+
+    std::array<Player, 2> _players;
+    std::array<Player, 2>::iterator _current_player;
+    
 
     Map _map;
     std::unique_ptr<Mover> _mover = nullptr;
@@ -42,6 +48,8 @@ class Game : public Application {
     bool _moving_view_down  = false;
     bool _moving_view_right = false;
     bool _moving_view_left  = false;
+
+    bool _resolve_units = false;
 
     tgui::Panel::Ptr _panel;
 

@@ -1,20 +1,20 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <set>
+#include <string>
 
 #include "unit/unit.h"
-#include "unit/stack.h"
 
 class Player {
    public:
+    std::set<Unit*>& get_players_units();
+    void set_name(const std::string& name);
+    void add_unit(Unit* unit);
 
-   
    private:
     std::string _name;
-
-    std::vector<std::unique_ptr<Unit>> _units;
-    std::set<Unit*> _units_to_draw;
-    std::vector<Stack> _stacks;
+    std::set<Unit*> _units;
 };
+
+inline std::set<Unit*>& Player::get_players_units() { return _units; }
+inline void Player::set_name(const std::string& name) { _name = name; }

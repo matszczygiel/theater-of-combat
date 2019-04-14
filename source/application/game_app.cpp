@@ -25,11 +25,22 @@ void Game::initialize() {
     GAME_INFO("Initializing units.");
     _units.emplace_back(std::make_unique<Mechanized>());
     _units.emplace_back(std::make_unique<Armoured_cavalary>());
+    _units.emplace_back(std::make_unique<Armoured_cavalary>());
     for (auto& u : _units)
         u->init_token(_token_size);
 
     _units[0]->place_on_hex(_map.get_hex(56).get());
     _units[1]->place_on_hex(_map.get_hex(19).get());
+    _units[2]->place_on_hex(_map.get_hex(4).get());
+
+    _players[0].set_name("Player 0");
+    _players[1].set_name("Player 1");
+
+    _players[0].add_unit(_units[0].get());
+    _players[0].add_unit(_units[1].get());
+    _players[1].add_unit(_units[2].get());
+    _current_player = _players.begin();
+    _resolve_units  = true;
 
     _running = true;
 
@@ -39,7 +50,7 @@ void Game::initialize() {
     _panel->setSize("25%", "100%");
     _panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
 
-    auto label = tgui::Label::create("dupa");
+    auto label = tgui::Label::create("Selected units");
     _panel->add(label, "label");
     label->setTextSize(25);
 }
@@ -61,7 +72,10 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    resolve_stacks_and_units();
+    if (_resolve_units) {
+        resolve_stacks_and_units(_current_player->get_players_units());
+        _resolve_units = false;
+    }
 }
 
 void Game::render() {
@@ -83,8 +97,11 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
             break;
 
         case sf::Keyboard::R:
-            for (auto& u : _units)
-                u->reset_mv_points();
+            if (++_current_player == _players.end()) {
+                _current_player = _players.begin();
+                std::for_each(_units.begin(), _units.end(), [](auto& u) { u->reset_mv_points(); });
+            }
+            _resolve_units = true;
             break;
 
         case sf::Keyboard::Up:
@@ -156,6 +173,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
+                _resolve_units = true;
             }
             break;
 
@@ -184,11 +202,11 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     _window.setView(view);
 }
 
-void Game::resolve_stacks_and_units() {
+void Game::resolve_stacks_and_units(std::set<Unit*>& unit_set) {
     _stacks.clear();
     _units_to_draw.clear();
 
-    for (auto& u : _units) {
+    for (auto& u : unit_set) {
         auto occ           = u->get_ocupation();
         bool stack_created = false;
 
@@ -197,7 +215,7 @@ void Game::resolve_stacks_and_units() {
             if (unit->get_ocupation() == occ) {
                 if (!stack_created) {
                     _stacks.emplace_back(Stack());
-                    _stacks.back().add_unit(u.get());
+                    _stacks.back().add_unit(u);
                     _stacks.back().init_token(_token_size);
                     _stacks.back().set_token_postion(occ->get_position());
                     stack_created = true;
@@ -210,7 +228,7 @@ void Game::resolve_stacks_and_units() {
         }
 
         if (!stack_created)
-            _units_to_draw.insert(u.get());
+            _units_to_draw.insert(u);
     }
 }
 

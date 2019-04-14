@@ -39,6 +39,8 @@ add_executable(toc
                 source/application/application.cpp
                 source/application/game_app.h
                 source/application/game_app.cpp
+                source/application/player.h
+                source/application/player.cpp
                 )
 
 target_include_directories(toc PUBLIC 

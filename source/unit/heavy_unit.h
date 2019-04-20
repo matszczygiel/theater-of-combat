@@ -5,7 +5,7 @@
 
 class Armoured_cavalary : public Unit {
    public:
-    Armoured_cavalary() : Unit(10) {}
+    Armoured_cavalary() : Unit(10, 10) {}
 
     Unit_type get_type() const final;
     Mover* get_mover() final;
@@ -14,7 +14,7 @@ class Armoured_cavalary : public Unit {
 
 class Mechanized : public Unit {
    public:
-    Mechanized() : Unit(15) {}
+    Mechanized() : Unit(15, 10) {}
 
     Unit_type get_type() const final;
     int texture_offset() const final;

@@ -21,6 +21,7 @@ void Game::initialize() {
     _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
     Tokenizable::load_textures("resources/textures/units.png");
+    Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
 
     GAME_INFO("Initializing units.");
     _units.emplace_back(std::make_unique<Mechanized>());

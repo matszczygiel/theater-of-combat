@@ -41,6 +41,8 @@ add_executable(toc
                 source/application/game_app.cpp
                 source/application/player.h
                 source/application/player.cpp
+                source/battlefield/battlefield.h
+                source/battlefield/battlefield.cpp
                 )
 
 target_include_directories(toc PUBLIC 

@@ -12,8 +12,8 @@ class Mover;
 
 class Unit : public Tokenizable {
    public:
-    explicit Unit(const int& moving_pts)
-        : Tokenizable(), _ocupation(), _moving_pts(moving_pts), _current_moving_pts(moving_pts) {}
+    explicit Unit(const int& moving_pts, const int& strength_pts)
+        : Tokenizable(), _ocupation(), _moving_pts(moving_pts), _current_moving_pts(moving_pts), _strength_pts(strength_pts) {}
 
     virtual ~Unit() noexcept = default;
 
@@ -28,14 +28,23 @@ class Unit : public Tokenizable {
 
     const auto& get_ocupation() const;
     const auto& get_mv_points() const;
+    const auto& get_strength_points() const;
+
+    static void load_font_file(const std::string& filename);
 
    protected:
     Hex_site* _ocupation;
 
     const int _moving_pts;
     int _current_moving_pts;
+    int _strength_pts;
+
+   private:
+    static sf::Font _font;
 };
 
 inline const auto& Unit::get_ocupation() const { return _ocupation; }
 
 inline const auto& Unit::get_mv_points() const { return _current_moving_pts; }
+
+inline const auto& Unit::get_strength_points() const { return _strength_pts; }

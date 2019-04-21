@@ -43,6 +43,10 @@ add_executable(toc
                 source/application/player.cpp
                 source/battlefield/battlefield.h
                 source/battlefield/battlefield.cpp
+                source/networking/server.h
+                source/networking/server.cpp
+                source/networking/client.h
+                source/networking/client.cpp
                 )
 
 target_include_directories(toc PUBLIC 

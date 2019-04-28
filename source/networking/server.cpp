@@ -2,6 +2,9 @@
 
 #include "log.h"
 
+sf::TcpSocket Server::_socket;
+sf::TcpListener Server::_listener;
+
 void Server::listen_at_port(const unsigned short& port) {
     ENGINE_INFO("Server listening port: {0}", port);
     if (_listener.listen(port) != sf::Socket::Status::Done) {
@@ -16,13 +19,13 @@ void Server::accept_client() {
     }
 }
 
-sf::IpAddress Server::get_local_ip() const {
+sf::IpAddress Server::get_local_ip() {
     return sf::IpAddress::getLocalAddress();
 }
-unsigned short Server::get_port() const {
+unsigned short Server::get_port() {
     return _listener.getLocalPort();
 }
 
-sf::IpAddress Server::get_public_ip() const {
+sf::IpAddress Server::get_public_ip() {
     return sf::IpAddress::getPublicAddress();
 }

@@ -4,9 +4,11 @@
 
 class Client {
    public:
-    void connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
-    void disconnect();
+    Client() = delete;
+
+    static void connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
+    static void disconnect();
 
    private:
-    sf::TcpSocket _socket;
+    static sf::TcpSocket _socket;
 };

@@ -1,9 +1,12 @@
 #include "game_app.h"
 
 #include <functional>
+#include <iostream>
 
 #include "log.h"
 
+#include "networking/client.h"
+#include "networking/server.h"
 #include "unit/heavy_unit.h"
 
 void Game::initialize() {
@@ -54,6 +57,30 @@ void Game::initialize() {
     auto label = tgui::Label::create("Selected units");
     _panel->add(label, "label");
     label->setTextSize(25);
+
+    char c;
+    std::cout << "server [s] or client [c] ?\n";
+    std::cin >> c;
+    if (c == 's') {
+        unsigned short port;
+        std::cout << "enter port\n";
+        std::cin >> port;
+        Server::listen_at_port(port);
+        std::cout << "local ip  :" << Server::get_local_ip() << '\n';
+        std::cout << "public ip :" << Server::get_public_ip() << '\n';
+        std::cout << "port      :" << Server::get_port() << '\n';
+        std::cout << "Accepting client.\n";
+        Server::accept_client();
+        std::cout << "Client accepted.\n";
+    } else if (c == 'c') {
+        unsigned short port;
+        std::string ip;
+        std::cout << "enter port\n";
+        std::cin >> port;
+        std::cout << "enter ip\n";
+        std::cin >> ip;
+        Client::connect_to_server(sf::IpAddress(ip), port);
+    }
 }
 
 void Game::update(const sf::Time& elapsed_time) {

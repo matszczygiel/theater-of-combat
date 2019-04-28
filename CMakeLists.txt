@@ -63,5 +63,6 @@ target_link_libraries(toc PUBLIC
                         sfml-window
                         sfml-graphics
                         sfml-system
+                        sfml-network
                         pugixml
                         tgui)                

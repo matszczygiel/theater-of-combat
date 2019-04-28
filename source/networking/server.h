@@ -4,15 +4,14 @@
 
 class Server {
    public:
-    void listen_at_port(const unsigned short& port);
-    void accept_client();
+    static void listen_at_port(const unsigned short& port);
+    static void accept_client();
 
-    sf::IpAddress get_local_ip() const;
-    sf::IpAddress get_public_ip() const;
-    unsigned short get_port() const;
-
+    static sf::IpAddress get_local_ip();
+    static sf::IpAddress get_public_ip();
+    static unsigned short get_port();
 
    private:
-    sf::TcpSocket _socket;
-    sf::TcpListener _listener;
+    static sf::TcpSocket _socket;
+    static sf::TcpListener _listener;
 };

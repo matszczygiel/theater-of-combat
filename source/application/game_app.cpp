@@ -57,7 +57,7 @@ void Game::initialize() {
     auto label = tgui::Label::create("Selected units");
     _panel->add(label, "label");
     label->setTextSize(25);
-
+    /*
     char c;
     std::cout << "server [s] or client [c] ?\n";
     std::cin >> c;
@@ -81,6 +81,15 @@ void Game::initialize() {
         std::cin >> ip;
         Client::connect_to_server(sf::IpAddress(ip), port);
     }
+    */
+
+        auto menu = tgui::MenuBar::create();
+        _gui.add(menu, "menu");
+        menu->setSize("100%", "7%");
+        menu->addMenu("Network");
+        menu->addMenuItem("Create server");
+        menu->addMenuItem("Connect to server");
+        menu->connectMenuItem("Network", "Create server", [](){std::cout << "Boom!\n";});
 }
 
 void Game::update(const sf::Time& elapsed_time) {

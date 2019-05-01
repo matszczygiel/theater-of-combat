@@ -83,13 +83,13 @@ void Game::initialize() {
     }
     */
 
-        auto menu = tgui::MenuBar::create();
-        _gui.add(menu, "menu");
-        menu->setSize("100%", "7%");
-        menu->addMenu("Network");
-        menu->addMenuItem("Create server");
-        menu->addMenuItem("Connect to server");
-        menu->connectMenuItem("Network", "Create server", [](){std::cout << "Boom!\n";});
+    auto menu = tgui::MenuBar::create();
+    _gui.add(menu, "menu");
+    menu->setSize("100%", "7%");
+    menu->addMenu("Network");
+    menu->addMenuItem("Create server");
+    menu->addMenuItem("Connect to server");
+    menu->connectMenuItem("Network", "Create server", [&]() { _gui.add(Server::create_prompt_window()); });
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -199,7 +199,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 if (!_moving) {
                     for (auto& s : _stacks) {
                         if (s.token_contains(position)) {
-                            _panel->add(s.create_displayer([=](Unit* u) { this->init_mover_and_info_for_unit(u); }),
+                            _panel->add(s.create_displayer([&](Unit* u) { this->init_mover_and_info_for_unit(u); }),
                                         "unit info");
                             break;
                         }
@@ -237,6 +237,7 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
     view.setSize(width, height);
     _window.setView(view);
+    _gui.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(height))));
 }
 
 void Game::resolve_stacks_and_units(std::set<Unit*>& unit_set) {

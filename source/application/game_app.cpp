@@ -90,6 +90,7 @@ void Game::initialize() {
     menu->addMenuItem("Create server");
     menu->addMenuItem("Connect to server");
     menu->connectMenuItem("Network", "Create server", [&]() { _gui.add(Server::create_prompt_window()); });
+    menu->connectMenuItem("Network", "Connect to server", [&]() { _gui.add(Client::create_prompt_window()); });
 }
 
 void Game::update(const sf::Time& elapsed_time) {

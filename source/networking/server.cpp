@@ -56,17 +56,19 @@ tgui::ChildWindow::Ptr Server::create_prompt_window() {
     window->add(edit_box, "port box");
 
     auto button = tgui::Button::create();
-    button->setSize("30%", "20%");
-    button->setPosition("35%", "75%");
+    button->setSize("50%", "20%");
+    button->setPosition("25%", "75%");
     button->setText("Create");
 
-    button->connect("pressed", [](tgui::EditBox::Ptr port_box) {
+    button->connect("pressed", [](tgui::EditBox::Ptr port_box, tgui::Button::Ptr this_button) {
         std::string port_str = port_box->getText().toAnsiString();
         const auto port      = static_cast<unsigned short>(std::stoul(port_str));
         listen_at_port(port);
+
+        this_button->setText("Waiting for player...");
         accept_client();
     },
-                    edit_box);
+                    edit_box, button);
 
     window->add(button);
 

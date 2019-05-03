@@ -1,15 +1,18 @@
 #pragma once
 
-#include <vector>
 #include <set>
+#include <vector>
+#include <variant>
 
 #include "application.h"
 #include "map/map.h"
 #include "mover/mover.h"
-#include "unit/unit.h"
-#include "unit/stack.h"
 #include "player.h"
-
+#include "unit/stack.h"
+#include "unit/unit.h"
+#include "networking/netwoking_status.h"
+#include "networking/client.h"
+#include "networking/server.h"
 
 class Game : public Application {
    private:
@@ -30,14 +33,13 @@ class Game : public Application {
     void resolve_stacks_and_units(std::set<Unit*>& unit_set);
     void init_mover_and_info_for_unit(Unit* unit);
 
-
-    std::vector<std::unique_ptr<Unit>> _units;    
+   private:
+    std::vector<std::unique_ptr<Unit>> _units;
     std::set<Unit*> _units_to_draw;
     std::vector<Stack> _stacks;
 
     std::array<Player, 2> _players;
     std::array<Player, 2>::iterator _current_player;
-    
 
     Map _map;
     std::unique_ptr<Mover> _mover = nullptr;
@@ -53,6 +55,9 @@ class Game : public Application {
 
     tgui::Panel::Ptr _panel;
 
-    constexpr static float _token_size         = 30;
+    constexpr static float _token_size        = 30;
     constexpr static float _view_moving_speed = 0.3f;
+
+    Network_status _network_status = Network_status::unspecified;
+    std::variant<Server, Client> _network;
 };

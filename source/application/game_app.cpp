@@ -57,31 +57,7 @@ void Game::initialize() {
     auto label = tgui::Label::create("Selected units");
     _panel->add(label, "label");
     label->setTextSize(25);
-    /*
-    char c;
-    std::cout << "server [s] or client [c] ?\n";
-    std::cin >> c;
-    if (c == 's') {
-        unsigned short port;
-        std::cout << "enter port\n";
-        std::cin >> port;
-        Server::listen_at_port(port);
-        std::cout << "local ip  :" << Server::get_local_ip() << '\n';
-        std::cout << "public ip :" << Server::get_public_ip() << '\n';
-        std::cout << "port      :" << Server::get_port() << '\n';
-        std::cout << "Accepting client.\n";
-        Server::accept_client();
-        std::cout << "Client accepted.\n";
-    } else if (c == 'c') {
-        unsigned short port;
-        std::string ip;
-        std::cout << "enter port\n";
-        std::cin >> port;
-        std::cout << "enter ip\n";
-        std::cin >> ip;
-        Client::connect_to_server(sf::IpAddress(ip), port);
-    }
-    */
+ 
 
     auto menu = tgui::MenuBar::create();
     _gui.add(menu, "menu");
@@ -89,8 +65,18 @@ void Game::initialize() {
     menu->addMenu("Network");
     menu->addMenuItem("Create server");
     menu->addMenuItem("Connect to server");
-    menu->connectMenuItem("Network", "Create server", [&]() { _gui.add(Server::create_prompt_window()); });
-    menu->connectMenuItem("Network", "Connect to server", [&]() { _gui.add(Client::create_prompt_window()); });
+
+    menu->connectMenuItem("Network", "Create server", [&]() {
+        _network_status = Network_status::unspecified;
+        _network.emplace<Server>();
+        _gui.add(std::get<Server>(_network).create_prompt_window(_network_status));
+    });
+
+    menu->connectMenuItem("Network", "Connect to server", [&]() {
+        _network_status = Network_status::unspecified;
+        _network.emplace<Client>();
+        _gui.add(std::get<Client>(_network).create_prompt_window(_network_status));
+    });
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -113,6 +99,18 @@ void Game::update(const sf::Time& elapsed_time) {
     if (_resolve_units) {
         resolve_stacks_and_units(_current_player->get_players_units());
         _resolve_units = false;
+    }
+
+    //Networking
+    switch (_network_status) {
+        case Network_status::sever_accepting:
+            if (std::get<Server>(_network).accept_client()) {
+                _network_status = Network_status::server;
+                GAME_INFO("Connected client.");
+            }
+            break;
+        default:
+            break;
     }
 }
 

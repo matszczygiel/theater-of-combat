@@ -3,15 +3,15 @@
 #include <SFML/Network.hpp>
 #include <TGUI/TGUI.hpp>
 
+#include "netwoking_status.h"
+
 class Client {
    public:
-    Client() = delete;
+    bool connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
+    void disconnect();
 
-    static void connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
-    static void disconnect();
-
-    static tgui::ChildWindow::Ptr create_prompt_window();
+    tgui::ChildWindow::Ptr create_prompt_window(Network_status& status);
 
    private:
-    static sf::TcpSocket _socket;
+    sf::TcpSocket _socket;
 };

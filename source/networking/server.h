@@ -3,18 +3,20 @@
 #include <SFML/Network.hpp>
 #include <TGUI/TGUI.hpp>
 
+#include "netwoking_status.h"
+
 class Server {
    public:
-    static void listen_at_port(const unsigned short& port);
-    static void accept_client();
+    bool listen_at_port(const unsigned short& port);
+    bool accept_client();
 
     static sf::IpAddress get_local_ip();
     static sf::IpAddress get_public_ip();
-    static unsigned short get_port();
+    unsigned short get_port();
 
-    static tgui::ChildWindow::Ptr create_prompt_window();
+    tgui::ChildWindow::Ptr create_prompt_window(Network_status& status);
 
    private:
-    static sf::TcpSocket _socket;
-    static sf::TcpListener _listener;
+    sf::TcpSocket _socket;
+    sf::TcpListener _listener;
 };

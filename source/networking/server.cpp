@@ -2,22 +2,22 @@
 
 #include "log.h"
 
-sf::TcpSocket Server::_socket;
-sf::TcpListener Server::_listener;
-
-void Server::listen_at_port(const unsigned short& port) {
+bool Server::listen_at_port(const unsigned short& port) {
+    _listener.setBlocking(false);
     ENGINE_INFO("Server listening port: {0}", port);
     if (_listener.listen(port) != sf::Socket::Status::Done) {
         ENGINE_WARN("Listener failed.");
+        return false;
     }
+    return true;
 }
 
-void Server::accept_client() {
-    ENGINE_INFO("Server is accepting client");
-    //_listener.setBlocking(false);
+bool Server::accept_client() {
     if (_listener.accept(_socket) != sf::Socket::Status::Done) {
-        ENGINE_WARN("Failed to accept client.");
+        return false;
     }
+    ENGINE_INFO("Server accepted client.");
+    return true;
 }
 
 sf::IpAddress Server::get_local_ip() {
@@ -31,11 +31,10 @@ sf::IpAddress Server::get_public_ip() {
     return sf::IpAddress::getPublicAddress();
 }
 
-tgui::ChildWindow::Ptr Server::create_prompt_window() {
+tgui::ChildWindow::Ptr Server::create_prompt_window(Network_status& status) {
     auto window = tgui::ChildWindow::create("Server");
     window->setSize("50%", "30%");
     window->setPosition("35%", "35%");
-
 
     auto label_loc = tgui::Label::create();
     auto label_pub = tgui::Label::create();
@@ -60,18 +59,20 @@ tgui::ChildWindow::Ptr Server::create_prompt_window() {
     button->setPosition("25%", "75%");
     button->setText("Create");
 
-    button->connect("pressed", [](tgui::EditBox::Ptr port_box, tgui::Button::Ptr this_button) {
+    button->connect("pressed", [&](tgui::EditBox::Ptr port_box, tgui::Button::Ptr this_button, tgui::ChildWindow::Ptr parent_window) {
         std::string port_str = port_box->getText().toAnsiString();
         const auto port      = static_cast<unsigned short>(std::stoul(port_str));
-        listen_at_port(port);
-
-        this_button->setText("Waiting for player...");
-        accept_client();
+        if (listen_at_port(port)) {
+            this_button->setText("Waiting for player...");
+            status = Network_status::sever_accepting;
+            parent_window->destroy();
+        } else {
+            port_box->setText("Invalid port");
+        }
     },
-                    edit_box, button);
+                    edit_box, button, window);
 
     window->add(button);
-
 
     return window;
 }

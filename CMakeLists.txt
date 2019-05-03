@@ -47,6 +47,7 @@ add_executable(toc
                 source/networking/server.cpp
                 source/networking/client.h
                 source/networking/client.cpp
+                source/networking/netwoking_status.h
                 )
 
 target_include_directories(toc PUBLIC 

@@ -24,6 +24,12 @@ void Unit::reduce_mv_points(const int& points) {
     _current_moving_pts -= points;
 }
 
+void Unit::reduce_strength_points(const int& points) {
+    assert(points <= _strength_pts);
+
+    _strength_pts -= points;
+}
+
 tgui::Canvas::Ptr Unit::create_displayer() const {
     auto canvas = tgui::Canvas::create({150, 80});
     canvas->setPosition(10, 10);
@@ -37,7 +43,6 @@ tgui::Canvas::Ptr Unit::create_displayer() const {
 
     moving_info.setPosition(35, 10);
     strength_info.setPosition(35, 25);
-
 
     moving_info.setFillColor(sf::Color::Red);
     strength_info.setFillColor(sf::Color::Red);

@@ -25,6 +25,7 @@ class Unit : public Tokenizable {
     void place_on_hex(Hex_site* hex);
     void reset_mv_points() noexcept;
     void reduce_mv_points(const int& points);
+    void reduce_strength_points(const int& points);
 
     const auto& get_ocupation() const;
     const auto& get_mv_points() const;

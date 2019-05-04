@@ -48,6 +48,8 @@ add_executable(toc
                 source/networking/client.h
                 source/networking/client.cpp
                 source/networking/netwoking_status.h
+                source/randomizer.h
+                source/randomizer.cpp
                 )
 
 target_include_directories(toc PUBLIC 

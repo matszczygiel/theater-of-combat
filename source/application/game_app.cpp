@@ -210,6 +210,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
                 _resolve_units = true;
+                
             }
             break;
 

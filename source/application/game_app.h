@@ -13,6 +13,7 @@
 #include "networking/netwoking_status.h"
 #include "networking/client.h"
 #include "networking/server.h"
+#include "battlefield/battlefield.h"
 
 class Game : public Application {
    private:
@@ -40,6 +41,8 @@ class Game : public Application {
 
     std::array<Player, 2> _players;
     std::array<Player, 2>::iterator _current_player;
+
+    std::vector<Battlefield> _battlefields;
 
     Map _map;
     std::unique_ptr<Mover> _mover = nullptr;

@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include <functional>
 #include <list>
 #include <map>
@@ -11,9 +9,9 @@
 
 class Message {
    public:
-    using ptr                = std::shared_ptr<Message>;
+    using ptr                = std::unique_ptr<Message>;
     using create_method_type = std::function<std::unique_ptr<Message>(const std::string&)>;
-
+    using id_type            = std::string;
 
     template <class Derived>
     struct Registrar {
@@ -28,15 +26,6 @@ class Message {
     static std::unordered_map<std::string, create_method_type> _register;
 };
 
-typedef std::function<void(IEventDataPtr&)> EventDelegate;
-
-class Message_bus {
-   public:
-    virtual bool add_listener(IEventData::id_t id, EventDelegate proc)    = 0;
-    virtual bool remove_listener(IEventData::id_t id, EventDelegate proc) = 0;
-    virtual void queue_event(Message::ptr ev)                             = 0;
-    virtual void process_events()                                         = 0;
-};
 
 #define DECLARE_EVENT(type)                             \
     static IEventData::id_t ID() {                      \
@@ -46,31 +35,22 @@ class Message_bus {
         return ID();                                    \
     }
 
-class EventManager : public IEventManager {
+class Message_bus {
    public:
-    typedef std::list<EventDelegate> EventDelegateList;
+    using message_callback = std::function<void(std::unique_ptr<Message>&)>;
 
-    ~EventManager() {
-    }
-    //! Adds a listener to the event. The listener should invalidate itself when it needs to be removed.
-    virtual bool AddListener(IEventData::id_t id, EventDelegate proc) override;
-
-    //! Removes the specified delegate from the list
-    virtual bool RemoveListener(IEventData::id_t id, EventDelegate proc) override;
-
-    //! Queues an event to be processed during the next update
-    virtual void QueueEvent(IEventDataPtr ev) override;
-
-    //! Processes all events
-    virtual void ProcessEvents() override;
+    virtual bool add_listener(const Message::id_type& id, message_callback);
+    virtual bool remove_listener(const Message::id_type& id, message_callback);
+    virtual bool queue_message(Message::ptr message);
+    virtual void process_messages();
 
    private:
-    std::list<std::shared_ptr<IEventData>> mEventQueue;
-    std::map<IEventData::id_t, EventDelegateList> mEventListeners;
+    std::list<Message::ptr> _message_queue;
+    std::map<Message::id_type, std::list<message_callback>> _message_listeners;
 };
 
 //! Helper class that automatically handles removal of individual event listeners registered using OnEvent() member function upon destruction of an object derived from this class.
-class EventListener {
+class Message_listener {
    public:
     //! Template function that also converts the event into the right data type before calling the event listener.
     template <class T>

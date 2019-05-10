@@ -1,28 +1,28 @@
 #include "messaging.h"
 
-using namespace std; 
 
-bool EventManager::AddListener(IEventData::id_t id, EventDelegate proc){
-    auto i = mEventListeners.find(id); 
-    if(i == mEventListeners.end()){
-        mEventListeners[id] = list<EventDelegate>(); 
+
+bool Message_bus::add_listener(const Message::id_type& id, message_callback callback){
+    auto i = _listeners.find(id); 
+    if(i == _listeners.end()){
+        _listeners[id] = std::list<message_callback>(); 
     }
-    auto &list = mEventListeners[id]; 
-    for(auto i = list.begin(); i != list.end(); i++){
-        EventDelegate &func = *i; 
-        if(func.target<EventDelegate>() == proc.target<EventDelegate>()) 
+    auto &list = _listeners[id]; 
+    for(auto i = list.begin(); i != list.end(); ++i){
+        auto &func = *i; 
+        if(func.target<message_callback>() == callback.target<message_callback>()) 
             return false; 
     }
-    list.push_back(proc); 
+    list.push_back(callback); 
 }
 
-bool EventManager::RemoveListener(IEventData::id_t id, EventDelegate proc){
-    auto j = mEventListeners.find(id); 
-    if(j == mEventListeners.end()) return false; 
+bool Message_bus::remove_listener(const Message::id_type& id, message_callback callback){
+    auto j = _listeners.find(id); 
+    if(j == _listeners.end()) return false; 
     auto &list = j->second; 
     for(auto i = list.begin(); i != list.end(); ++i){
-        EventDelegate &func = *i; 
-        if(func.target<EventDelegate>() == proc.target<EventDelegate>()) {
+        auto &func = *i; 
+        if(func.target<message_callback>() == callback.target<message_callback>()) {
             list.erase(i); 
             return true; 
         }
@@ -30,25 +30,23 @@ bool EventManager::RemoveListener(IEventData::id_t id, EventDelegate proc){
     return false; 
 }
 
-void EventManager::QueueEvent(IEventDataPtr ev) {
-    mEventQueue.push_back(ev); 
+void Message_bus::queue_message(Message::ptr message) {
+    _queue.push_back(message); 
 }
 
-void EventManager::ProcessEvents(){
-    size_t count = mEventQueue.size(); 
-    for(auto it = mEventQueue.begin(); it != mEventQueue.end(); ++it){
-        printf("Processing event..\n"); 
+void Message_bus::distribute_messages(){
+    auto count = _queue.size(); 
+    for(auto it = _queue.begin(); it != _queue.end(); ++it){
         if(!count) break; 
         auto &i = *it; 
-        auto listeners = mEventListeners.find(i->GetID()); 
-        if(listeners != mEventListeners.end()){
-            // Call listeners
+        auto listeners = _listeners.find(i->name()); 
+        if(listeners != _listeners.end()){
             for(auto l : listeners->second){
                 l(i); 
             }
         }
-        // remove event
-        it = mEventQueue.erase(it); 
+
+        it = _queue.erase(it); 
         count--; 
     }
 }

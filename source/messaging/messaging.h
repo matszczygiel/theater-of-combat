@@ -13,6 +13,8 @@ class Message {
     using create_method_type = std::function<std::unique_ptr<Message>(const std::string&)>;
     using id_type            = std::string;
 
+    virtual id_type name() const = 0;
+
     template <class Derived>
     struct Registrar {
         Registrar() {
@@ -26,66 +28,55 @@ class Message {
     static std::unordered_map<std::string, create_method_type> _register;
 };
 
-
-#define DECLARE_EVENT(type)                             \
-    static IEventData::id_t ID() {                      \
-        return reinterpret_cast<IEventData::id_t>(&ID); \
-    }                                                   \
-    IEventData::id_t GetID() override {                 \
-        return ID();                                    \
-    }
-
 class Message_bus {
    public:
-    using message_callback = std::function<void(std::unique_ptr<Message>&)>;
+    using message_callback = std::function<void(Message::ptr&)>;
 
-    virtual bool add_listener(const Message::id_type& id, message_callback);
-    virtual bool remove_listener(const Message::id_type& id, message_callback);
-    virtual bool queue_message(Message::ptr message);
-    virtual void process_messages();
+    virtual bool add_listener(const Message::id_type& id, message_callback callback);
+    virtual bool remove_listener(const Message::id_type& id, message_callback callback);
+    virtual void queue_message(Message::ptr message);
+    virtual void distribute_messages();
 
    private:
-    std::list<Message::ptr> _message_queue;
-    std::map<Message::id_type, std::list<message_callback>> _message_listeners;
+    std::list<Message::ptr> _queue;
+    std::map<Message::id_type, std::list<message_callback>> _listeners;
 };
 
-//! Helper class that automatically handles removal of individual event listeners registered using OnEvent() member function upon destruction of an object derived from this class.
 class Message_listener {
    public:
-    //! Template function that also converts the event into the right data type before calling the event listener.
     template <class T>
-    bool OnEvent(std::function<void(std::shared_ptr<T>)> proc) {
-        return OnEvent(T::ID(), [&, proc](IEventDataPtr data) {
-            auto ev = std::dynamic_pointer_cast<T>(data);
+    bool respond(std::function<void(std::unique_ptr<T>&)>) {
+        return respond(T::name(), [&, callback](Message::ptr msg) {
+            auto ev = std::dynamic_pointer_cast<T>(msg);
             if (ev)
-                proc(ev);
+                callback(ev);
         });
     }
 
    protected:
-    typedef std::pair<IEventData::id_t, EventDelegate> _EvPair;
-    EventListener(std::weak_ptr<IEventManager> mgr) : _els_mEventManager(mgr) {
-    }
-    virtual ~EventListener() {
-        if (_els_mEventManager.expired())
+    Message_listener(std::weak_ptr<Message_bus> bus) : _message_bus(bus){};
+
+    virtual ~Message_listener() {
+        if (_message_bus.expired())
             return;
-        auto em = _els_mEventManager.lock();
-        for (auto i : _els_mLocalEvents) {
-            em->RemoveListener(i.first, i.second);
+        auto em = _message_bus.lock();
+        for (auto i : _registered_handlers) {
+            em->remove_listener(i.first, i.second);
         }
     }
 
-    bool OnEvent(IEventData::id_t id, EventDelegate proc) {
-        if (_els_mEventManager.expired())
+    bool respond(Message::id_type id, Message_bus::message_callback callback) {
+        if (_message_bus.expired())
             return false;
-        auto em = _els_mEventManager.lock();
-        if (em->AddListener(id, proc)) {
-            _els_mLocalEvents.push_back(_EvPair(id, proc));
+        auto em = _message_bus.lock();
+        if (em->add_listener(id, callback)) {
+            _registered_handlers.push_back(message_handler_pair(id, callback));
         }
     }
+
+    using message_handler_pair = std::pair<Message::id_type, Message_bus::message_callback>;
 
    private:
-    std::weak_ptr<IEventManager> _els_mEventManager;
-    std::vector<_EvPair> _els_mLocalEvents;
-    //std::vector<_DynEvPair> mDynamicLocalEvents;
+    std::weak_ptr<Message_bus> _message_bus;
+    std::vector<message_handler_pair> _registered_handlers;
 };

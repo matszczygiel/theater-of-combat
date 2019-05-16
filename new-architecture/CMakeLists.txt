@@ -2,19 +2,21 @@ cmake_minimum_required(VERSION 3.8)
 
 project(theater-of-combat-new VERSION 0.1.0 LANGUAGES CXX)
 
-add_executable(toc-new 
- 
+add_executable(toc-new
+                source/messaging.cpp
+                source/messaging.h
+                messages.cpp
                 )
 
-target_include_directories(toc PUBLIC 
+target_include_directories(toc-new PUBLIC 
                             source
                             )
 
-target_compile_features(toc PUBLIC 
+target_compile_features(toc-new PUBLIC 
                         cxx_std_17)
 
-target_compile_options(toc PUBLIC 
+target_compile_options(toc-new PUBLIC 
                         -Wall)
 
-target_link_libraries(toc PUBLIC )
-)                
+target_link_libraries(toc-new PUBLIC )
+                

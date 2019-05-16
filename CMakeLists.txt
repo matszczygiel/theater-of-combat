@@ -50,6 +50,8 @@ add_executable(toc
                 source/networking/netwoking_status.h
                 source/randomizer.h
                 source/randomizer.cpp
+                source/messaging/messaging.cpp
+                source/messaging/messaging.h
                 )
 
 target_include_directories(toc PUBLIC 

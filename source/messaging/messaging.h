@@ -9,12 +9,19 @@
 
 class Message {
    public:
-    using ptr                = std::unique_ptr<Message>;
-    using create_method_type = std::function<std::unique_ptr<Message>(const std::string&)>;
-    using id_type            = std::string;
+    template <class T>
+    using ptr      = std::shared_ptr<T>;
+    using ptr_base = ptr<Message>;
 
-    virtual id_type name() const = 0;
+    template <class T>
+    using create_method_type = std::function<ptr<T>(const std::string&)>;
 
+    using id_type = std::string;
+
+    static const id_type name;
+    virtual id_type get_name() const { return name; }
+    virtual ~Message() = default;
+    /*
     template <class Derived>
     struct Registrar {
         Registrar() {
@@ -26,27 +33,31 @@ class Message {
     static bool register_class(const std::string& class_name, create_method_type);
 
     static std::unordered_map<std::string, create_method_type> _register;
+*/
 };
 
 class Message_bus {
    public:
-    using message_callback = std::function<void(Message::ptr&)>;
+    using message_callback = std::function<void(Message::ptr_base&)>;
 
     virtual bool add_listener(const Message::id_type& id, message_callback callback);
     virtual bool remove_listener(const Message::id_type& id, message_callback callback);
-    virtual void queue_message(Message::ptr message);
+    virtual void queue_message(Message::ptr_base message);
     virtual void distribute_messages();
 
+    virtual ~Message_bus() = default;
+
    private:
-    std::list<Message::ptr> _queue;
+    std::list<Message::ptr_base> _queue;
     std::map<Message::id_type, std::list<message_callback>> _listeners;
 };
 
 class Message_listener {
    public:
     template <class T>
-    bool respond(std::function<void(std::unique_ptr<T>&)>) {
-        return respond(T::name(), [&, callback](Message::ptr msg) {
+    bool register_handler(std::function<void(Message::ptr<T>&)> callback) {
+        static_assert(std::is_base_of<Message, T>::value, "Trying to register handler with non-message class.");
+        return register_handler(T::name, [&, callback](Message::ptr_base msg) {
             auto ev = std::dynamic_pointer_cast<T>(msg);
             if (ev)
                 callback(ev);
@@ -56,23 +67,9 @@ class Message_listener {
    protected:
     Message_listener(std::weak_ptr<Message_bus> bus) : _message_bus(bus){};
 
-    virtual ~Message_listener() {
-        if (_message_bus.expired())
-            return;
-        auto em = _message_bus.lock();
-        for (auto i : _registered_handlers) {
-            em->remove_listener(i.first, i.second);
-        }
-    }
+    virtual ~Message_listener();
 
-    bool respond(Message::id_type id, Message_bus::message_callback callback) {
-        if (_message_bus.expired())
-            return false;
-        auto em = _message_bus.lock();
-        if (em->add_listener(id, callback)) {
-            _registered_handlers.push_back(message_handler_pair(id, callback));
-        }
-    }
+    bool register_handler(Message::id_type id, Message_bus::message_callback callback);
 
     using message_handler_pair = std::pair<Message::id_type, Message_bus::message_callback>;
 

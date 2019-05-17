@@ -1,10 +1,11 @@
 #include "component.h"
 
 #include <iostream>
+#include <string>
 
-class RenderingComponent : public Registrable<RenderingComponent> {
+class RenderingComponent : public Registrable<RenderingComponent, std::string> {
    public:
-   using Registrable_base = Registrable<RenderingComponent>;
+    using Registrable_base = Registrable<RenderingComponent, std::string>;
     void do_work() {
         std::cout << "Hello components!\n";
     }

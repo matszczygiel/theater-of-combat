@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.8)
 project(theater-of-combat-new VERSION 0.1.0 LANGUAGES CXX)
 
 add_executable(toc-new
-                source/messaging.cpp
-                source/messaging.h
-                messages.cpp
+                main.cpp
+                source/component.h
+                source/component.cpp
                 )
 
 target_include_directories(toc-new PUBLIC 

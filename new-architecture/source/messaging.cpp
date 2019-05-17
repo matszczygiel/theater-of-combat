@@ -73,7 +73,7 @@ bool Message_listener::register_handler(Message::id_type id, Message_bus::messag
 }
 
 bool Message::register_class(const Message::id_type &class_name, Message::create_method_type callback) {
-    _register[class_name] = callback;
+       _register[class_name] = callback;
 }
 
 Message::ptr_base Message::instantiate(const Message::id_type &name, const std::string &stream) {

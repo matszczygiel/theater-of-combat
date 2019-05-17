@@ -2,17 +2,16 @@
 
 #include <iostream>
 
-class RenderingComponent : public Component
-{
-    public:
-    void do_work() override {
+class RenderingComponent : public Registrable<RenderingComponent> {
+   public:
+   using Registrable_base = Registrable<RenderingComponent>;
+    void do_work() {
         std::cout << "Hello components!\n";
     }
 };
-COMPONENT_REGISTER(RenderingComponent, "RenderingComponent");
+TOC_REGISTER_CLASS(RenderingComponent::Registrable_base, RenderingComponent);
 
-int main()
-{
-    auto comp = Component::create("RenderingComponent");
+int main() {
+    auto comp = RenderingComponent::Registrable_base::create("RenderingComponent");
     comp->do_work();
 }

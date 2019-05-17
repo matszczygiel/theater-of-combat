@@ -10,7 +10,7 @@ class RenderingComponent : public Registrable<RenderingComponent, std::string> {
         std::cout << "Hello components!\n";
     }
 };
-TOC_REGISTER_CLASS(RenderingComponent::Registrable_base, RenderingComponent);
+REGISTER_CLASS(RenderingComponent::Registrable_base, RenderingComponent);
 
 int main() {
     auto comp = RenderingComponent::Registrable_base::create("RenderingComponent");

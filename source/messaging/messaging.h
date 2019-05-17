@@ -7,33 +7,19 @@
 #include <string>
 #include <vector>
 
-class Message {
+#include "core/registrable.h"
+
+class Message : public Registrable<Message, std::string, std::string> {
    public:
-    template <class T>
+   template <class T>
     using ptr      = std::shared_ptr<T>;
     using ptr_base = ptr<Message>;
-
-    template <class T>
-    using create_method_type = std::function<ptr<T>(const std::string&)>;
-
     using id_type = std::string;
+    using registrable_base = Registrable<Message, std::string, std::string>;
 
     static const id_type name;
-    virtual id_type get_name() const { return name; }
+    virtual const id_type& get_name() const { return name; }
     virtual ~Message() = default;
-    /*
-    template <class Derived>
-    struct Registrar {
-        Registrar() {
-            Message_factory::register_class(Derviced::name, Derived::create);
-        }
-    };
-
-   private:
-    static bool register_class(const std::string& class_name, create_method_type);
-
-    static std::unordered_map<std::string, create_method_type> _register;
-*/
 };
 
 class Message_bus {

@@ -42,5 +42,5 @@ class Registrable {
     }
 };
 
-#define TOC_REGISTER_CLASS(REGISTRABLE_BASE, TYPE) \
+#define REGISTER_CLASS(REGISTRABLE_BASE, TYPE) \
     static const REGISTRABLE_BASE::Register_entry<TYPE> REGISTRABLE_BASE_register_entry_##TYPE("##TYPE");

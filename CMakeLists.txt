@@ -52,6 +52,7 @@ add_executable(toc
                 source/randomizer.cpp
                 source/messaging/messaging.cpp
                 source/messaging/messaging.h
+                source/core/registrable.h
                 )
 
 target_include_directories(toc PUBLIC 

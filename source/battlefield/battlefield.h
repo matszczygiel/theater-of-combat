@@ -16,5 +16,5 @@ class Battlefield {
     std::vector<Unit*> _player2_units;
 };
 
-void Battlefield::add_unit_player1(Unit* unit) { _player1_units.push_back(unit); }
-void Battlefield::add_unit_player2(Unit* unit) { _player2_units.push_back(unit); }
+inline void Battlefield::add_unit_player1(Unit* unit) { _player1_units.push_back(unit); }
+inline void Battlefield::add_unit_player2(Unit* unit) { _player2_units.push_back(unit); }

@@ -8,8 +8,46 @@
 #include "networking/client.h"
 #include "networking/server.h"
 #include "unit/heavy_unit.h"
+#include "messaging/messaging.h"
+
+class Hello_msg : public Message {
+   public:
+    void print() const;
+    static const Message::id_type name;
+
+    virtual const Message::id_type& get_name() const override { return name; }
+
+    static Message::ptr_base create(const std::string& str) { return std::make_shared<Hello_msg>(); }
+
+   private:
+    std::string _msg = "hello";
+};
+REGISTER_CLASS(Message::registrable_base, Hello_msg);
+
+const Message::id_type Hello_msg::name = "Hello_msg";
+
+void Hello_msg::print() const {
+    std::cout << _msg << "\n";
+}
+
+class Listener : public Message_listener {
+   public:
+    Listener(std::weak_ptr<Message_bus> mb);
+};
+
+Listener::Listener(std::weak_ptr<Message_bus> mb) : Message_listener(mb) {
+    register_handler<Hello_msg>([](std::shared_ptr<Hello_msg>& msg) { msg->print(); });
+};
 
 void Game::initialize() {
+    ///tests
+    auto bus = std::make_shared<Message_bus>();
+    Listener list(bus);
+    bus->queue_message(std::make_shared<Hello_msg>());
+    bus->distribute_messages();
+
+    //end of tests
+
     ENGINE_TRACE("Creating a window.");
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
@@ -57,7 +95,6 @@ void Game::initialize() {
     auto label = tgui::Label::create("Selected units");
     _panel->add(label, "label");
     label->setTextSize(25);
- 
 
     auto menu = tgui::MenuBar::create();
     _gui.add(menu, "menu");
@@ -210,7 +247,6 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
                 _resolve_units = true;
-                
             }
             break;
 

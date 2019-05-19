@@ -12,6 +12,8 @@ class RenderingComponent : public Registrable<RenderingComponent, std::string> {
 };
 REGISTER_CLASS(RenderingComponent::Registrable_base, RenderingComponent);
 
+int ad = 4;
+
 int main() {
     auto comp = RenderingComponent::Registrable_base::create("RenderingComponent");
     comp->do_work();

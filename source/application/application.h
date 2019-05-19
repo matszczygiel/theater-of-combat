@@ -7,6 +7,8 @@
 
 #include <TGUI/TGUI.hpp>
 
+#include "messaging/messaging.h"
+
 class Application {
    public:
     virtual ~Application() = default;
@@ -28,10 +30,13 @@ class Application {
     virtual void mouse_wheel_scrolled_event(const float& delta)                     = 0;
     virtual void window_resize_event(const unsigned& width, const unsigned& height) = 0;
 
-    void handle_event(const sf::Event& event);
-
     sf::RenderWindow _window;
     tgui::Gui _gui;
 
     bool _running = false;
+
+    std::shared_ptr<Message_bus> _message_bus = std::make_shared<Message_bus>();
+
+   private:
+    void handle_event(const sf::Event& event);
 };

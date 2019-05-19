@@ -15,7 +15,7 @@ void Application::run() {
             if (!_gui.handleEvent(event))
                 handle_event(event);
         }
-
+        _message_bus->distribute_messages();
         const auto elapsed_time = clock.restart();
         update(elapsed_time);
         _window.clear();

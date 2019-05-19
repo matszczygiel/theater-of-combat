@@ -1,5 +1,9 @@
 #include "messaging.h"
 
+const Message::id_type Message::name = "Message";
+
+const Message::id_type &Message::get_name() const { return name; }
+
 bool Message_bus::add_listener(const Message::id_type &id, message_callback callback) {
     auto i = _listeners.find(id);
     if (i == _listeners.end()) {

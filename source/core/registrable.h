@@ -42,5 +42,7 @@ class Registrable {
     }
 };
 
-#define REGISTER_CLASS(REGISTRABLE_BASE, TYPE) \
-    static const REGISTRABLE_BASE::Register_entry<TYPE> register_entry_##TYPE("##TYPE");
+#define REGISTER_CLASS(REGISTRABLE_BASE, TYPE)                                           \
+namespace {                                                                              \
+    static const REGISTRABLE_BASE::Register_entry<TYPE> register_entry_##TYPE("##TYPE"); \
+}

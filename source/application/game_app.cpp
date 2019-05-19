@@ -12,12 +12,13 @@
 
 class Hello_msg : public Message {
    public:
+   Hello_msg(std::string) {}
     void print() const;
     static const Message::id_type name;
 
     virtual const Message::id_type& get_name() const override { return name; }
 
-    static Message::ptr_base create(const std::string& str) { return std::make_shared<Hello_msg>(); }
+    static Message::ptr_base create(const std::string& str) { return std::make_shared<Hello_msg>(str); }
 
    private:
     std::string _msg = "hello";
@@ -25,6 +26,7 @@ class Hello_msg : public Message {
 REGISTER_CLASS(Message::registrable_base, Hello_msg);
 
 const Message::id_type Hello_msg::name = "Hello_msg";
+
 
 void Hello_msg::print() const {
     std::cout << _msg << "\n";
@@ -43,7 +45,7 @@ void Game::initialize() {
     ///tests
     auto bus = std::make_shared<Message_bus>();
     Listener list(bus);
-    bus->queue_message(std::make_shared<Hello_msg>());
+    bus->queue_message(std::make_shared<Hello_msg>(""));
     bus->distribute_messages();
 
     //end of tests

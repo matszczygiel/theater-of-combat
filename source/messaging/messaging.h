@@ -11,14 +11,15 @@
 
 class Message : public Registrable<Message, std::string, std::string> {
    public:
-   template <class T>
-    using ptr      = std::shared_ptr<T>;
-    using ptr_base = ptr<Message>;
-    using id_type = std::string;
+    template <class T>
+    using ptr              = std::shared_ptr<T>;
+    using ptr_base         = ptr<Message>;
+    using id_type          = std::string;
     using registrable_base = Registrable<Message, std::string, std::string>;
 
     static const id_type name;
-    virtual const id_type& get_name() const { return name; }
+    virtual const id_type& get_name() const;
+
     virtual ~Message() = default;
 };
 

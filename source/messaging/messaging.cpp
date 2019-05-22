@@ -1,9 +1,5 @@
 #include "messaging.h"
 
-const Message::id_type Message::name = "Message";
-
-const Message::id_type &Message::get_name() const { return name; }
-
 bool Message_bus::add_listener(const Message::id_type &id, message_callback callback) {
     auto i = _listeners.find(id);
     if (i == _listeners.end()) {
@@ -38,18 +34,21 @@ void Message_bus::queue_message(Message::ptr_base message) {
     _queue.push_back(message);
 }
 
+void Message_bus::notify(Message::ptr_base message) {
+    auto listeners = _listeners.find(message->get_name());
+    if (listeners != _listeners.end()) {
+        for (auto l : listeners->second) {
+            l(message);
+        }
+    }
+}
+
 void Message_bus::distribute_messages() {
     auto count = _queue.size();
     for (auto it = _queue.begin(); it != _queue.end(); ++it) {
         if (!count)
             break;
-        auto &i        = *it;
-        auto listeners = _listeners.find(i->get_name());
-        if (listeners != _listeners.end()) {
-            for (auto l : listeners->second) {
-                l(i);
-            }
-        }
+        notify(*it);
 
         it = _queue.erase(it);
         count--;

@@ -7,11 +7,10 @@ class Unit_moved_msg : public Message {
     Unit_moved_msg(const std::string& stream);
     explicit Unit_moved_msg(const int& hexno, const std::string& unit_name, const std::string& nation);
 
-    const int _hexno;
-    const std::string _unit_name;
-    const std::string _nation;
+    int _hexno;
+    std::string _unit_name;
+    std::string _nation;
 
-    static const Message::id_type name;
-    virtual const Message::id_type& get_name() const override;
+    DEFINE_MESSAGE_NAMING(Unit_moved_msg);
 };
 REGISTER_CLASS(Message, Unit_moved_msg);

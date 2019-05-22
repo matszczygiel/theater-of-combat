@@ -17,11 +17,17 @@ class Message : public Registrable<Message, std::string, std::string> {
     using id_type          = std::string;
     using registrable_base = Registrable<Message, std::string, std::string>;
 
-    static const id_type name;
-    virtual const id_type& get_name() const;
+    static constexpr auto name = "Message";
+    virtual inline const id_type& get_name() const { return name; };
 
     virtual ~Message() = default;
 };
+
+#define DEFINE_MESSAGE_NAMING(Message_class)                                \
+static constexpr auto name = "##Message_class";                             \
+virtual inline const id_type& get_name() const override { return name; };
+
+
 
 class Message_bus {
    public:
@@ -31,7 +37,8 @@ class Message_bus {
     virtual bool remove_listener(const Message::id_type& id, message_callback callback);
     virtual void queue_message(Message::ptr_base message);
     virtual void distribute_messages();
-
+    virtual void notify(Message::ptr_base message);
+    
     virtual ~Message_bus() = default;
 
    private:

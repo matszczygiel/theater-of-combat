@@ -9,9 +9,9 @@ class Request_unit_movement : public Message {
 
     std::string to_string() const override;
 
-    int _hexno;
-    std::string _unit_name;
-    std::string _nation;
+    const int _hexno;
+    const std::string _unit_name;
+    const std::string _nation;
 
     DEFINE_MESSAGE_NAMING(Request_unit_movement)
 };

@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "core/registrable.h"
 
@@ -22,13 +23,26 @@ class Message : public Registrable<Message, std::string, std::string> {
     virtual std::string to_string() const = 0;
 
     virtual ~Message() = default;
+
+   protected:
+    template <class T>
+    static T get_entry_from_stream(const std::string& stream, std::string token) {
+        token += "\\s+\\S+";
+        std::regex rg(token, std::regex_constants::icase);
+        std::smatch match;
+        T res{};
+        if (std::regex_search(stream, match, rg)) {
+            std::stringstream ss(match.str());
+            ss.get();
+            ss >> res;
+        }
+        return res;
+    }
 };
 
-#define DEFINE_MESSAGE_NAMING(Message_class)                                \
-static constexpr auto name = "##Message_class";                             \
-virtual inline id_type get_name() const override { return "##Message_class"; };
-
-
+#define DEFINE_MESSAGE_NAMING(Message_class)     \
+    static constexpr auto name = #Message_class; \
+    virtual inline id_type get_name() const override { return #Message_class; };
 
 class Message_bus {
    public:
@@ -39,7 +53,7 @@ class Message_bus {
     virtual void queue_message(Message::ptr_base message);
     virtual void distribute_messages();
     virtual void notify(Message::ptr_base message);
-    
+
     virtual ~Message_bus() = default;
 
    private:

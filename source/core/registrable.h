@@ -27,6 +27,7 @@ class Registrable {
         Register_entry(const Id& name) {
             auto& reg = get_register();
             reg[name] = create_registrable<T>;
+
         }
     };
 
@@ -44,5 +45,5 @@ class Registrable {
 
 #define REGISTER_CLASS(REGISTRABLE_BASE, TYPE)                                           \
 namespace {                                                                              \
-    static const REGISTRABLE_BASE::Register_entry<TYPE> register_entry_##TYPE("##TYPE"); \
+    static const REGISTRABLE_BASE::Register_entry<TYPE> register_entry_##TYPE(#TYPE);    \
 }

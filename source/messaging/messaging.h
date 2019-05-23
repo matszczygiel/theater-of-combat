@@ -4,9 +4,9 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
 
 #include "core/registrable.h"
 
@@ -18,11 +18,12 @@ class Message : public Registrable<Message, std::string, std::string> {
     using id_type          = std::string;
     using registrable_base = Registrable<Message, std::string, std::string>;
 
-    static constexpr auto name = "Message";
-    virtual inline id_type get_name() const { return "Message"; };
-    virtual std::string to_string() const = 0;
+    virtual inline id_type get_name() const = 0;
+    virtual std::string to_string() const   = 0;
 
     virtual ~Message() = default;
+
+    static ptr_base create(const std::string& streamline);
 
    protected:
     template <class T>

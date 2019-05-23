@@ -74,3 +74,10 @@ bool Message_listener::register_handler(Message::id_type id, Message_bus::messag
     }
     return false;
 }
+
+Message::ptr_base Message::create(const std::string &streamline) {
+    std::stringstream ss(streamline);
+    std::string class_name;
+    ss >> class_name;
+    return registrable_base::create(class_name, ss.str());
+}

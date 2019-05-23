@@ -65,7 +65,7 @@ target_compile_features(toc PUBLIC
                         cxx_std_17)
 
 target_compile_options(toc PUBLIC 
-                        -Wall)
+                        -Wall -Wextra -pedantic)
 
 target_link_libraries(toc PUBLIC 
                         sfml-window

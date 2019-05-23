@@ -12,5 +12,5 @@ Request_unit_movement::Request_unit_movement(const std::string& stream)
       _nation(Message::get_entry_from_stream<std::string>(stream, "n")) {}
 
 std::string Request_unit_movement::to_string() const {
-    return "h " + std::to_string(_hexno) + " u " + _unit_name + " n " + _nation + "\n";
+    return get_name() + " h " + std::to_string(_hexno) + " u " + _unit_name + " n " + _nation + "\n";
 }

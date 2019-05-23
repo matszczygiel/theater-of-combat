@@ -2,15 +2,17 @@
 
 #include "messaging.h"
 
-class Unit_moved_msg : public Message {
+class Request_unit_movement : public Message {
    public:
-    Unit_moved_msg(const std::string& stream);
-    explicit Unit_moved_msg(const int& hexno, const std::string& unit_name, const std::string& nation);
+    Request_unit_movement(const std::string& stream);
+    explicit Request_unit_movement(const int& hexno, const std::string& unit_name, const std::string& nation);
+
+    std::string to_string() const override;
 
     int _hexno;
     std::string _unit_name;
     std::string _nation;
 
-    DEFINE_MESSAGE_NAMING(Unit_moved_msg);
+    DEFINE_MESSAGE_NAMING(Request_unit_movement)
 };
-REGISTER_CLASS(Message, Unit_moved_msg);
+REGISTER_CLASS(Message, Request_unit_movement)

@@ -18,14 +18,15 @@ class Message : public Registrable<Message, std::string, std::string> {
     using registrable_base = Registrable<Message, std::string, std::string>;
 
     static constexpr auto name = "Message";
-    virtual inline const id_type& get_name() const { return name; };
+    virtual inline id_type get_name() const { return "Message"; };
+    virtual std::string to_string() const = 0;
 
     virtual ~Message() = default;
 };
 
 #define DEFINE_MESSAGE_NAMING(Message_class)                                \
 static constexpr auto name = "##Message_class";                             \
-virtual inline const id_type& get_name() const override { return name; };
+virtual inline id_type get_name() const override { return "##Message_class"; };
 
 
 

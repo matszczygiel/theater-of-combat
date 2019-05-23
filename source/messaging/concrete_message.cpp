@@ -1,22 +1,14 @@
-#pragma once
-
 #include <regex>
 #include <sstream>
 
 #include "concrete_message.h"
 
-const Message::id_type Unit_moved_msg::name = "Unit_moved_msg";
-
-const Message::id_type& Unit_moved_msg::get_name() const {
-    return name;
-}
-
-Unit_moved_msg::Unit_moved_msg(const int& hexno, const std::string& unit_name, const std::string& nation)
+Request_unit_movement::Request_unit_movement(const int& hexno, const std::string& unit_name, const std::string& nation)
     : _hexno(hexno), _unit_name(unit_name), _nation(nation) {}
 
-Unit_moved_msg::Unit_moved_msg(const std::string& stream) {
+Request_unit_movement::Request_unit_movement(const std::string& stream) {
     {
-        std::regex rg("h\\s+\\d+\\s", std::regex_constants::icase);
+        std::regex rg("h\\s+\\d+", std::regex_constants::icase);
         std::smatch match;
         if (std::regex_search(stream, match, rg)) {
             std::stringstream ss(match.str());
@@ -24,8 +16,8 @@ Unit_moved_msg::Unit_moved_msg(const std::string& stream) {
             ss >> _hexno;
         }
     }
-{
-        std::regex rg("u\\s+\\S+\\s", std::regex_constants::icase);
+    {
+        std::regex rg("u\\s+\\S+", std::regex_constants::icase);
         std::smatch match;
         if (std::regex_search(stream, match, rg)) {
             std::stringstream ss(match.str());
@@ -33,8 +25,8 @@ Unit_moved_msg::Unit_moved_msg(const std::string& stream) {
             ss >> _unit_name;
         }
     }
-{
-        std::regex rg("n\\s+\\S+\\s", std::regex_constants::icase);
+    {
+        std::regex rg("n\\s+\\S+", std::regex_constants::icase);
         std::smatch match;
         if (std::regex_search(stream, match, rg)) {
             std::stringstream ss(match.str());
@@ -42,4 +34,8 @@ Unit_moved_msg::Unit_moved_msg(const std::string& stream) {
             ss >> _nation;
         }
     }
+}
+
+std::string Request_unit_movement::to_string() const {
+    return "h " + std::to_string(_hexno) + " u " + _unit_name + " n " + _nation + "\n";
 }

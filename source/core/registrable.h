@@ -38,7 +38,7 @@ class Registrable {
             return nullptr;
         }
 
-        return it->second();
+        return it->second(std::forward<Constructor_parameters>(params)...);
     }
 };
 

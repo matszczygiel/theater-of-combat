@@ -53,6 +53,7 @@ add_executable(toc
                 source/messaging/messaging.cpp
                 source/messaging/messaging.h
                 source/messaging/concrete_message.h
+                source/messaging/concrete_message.cpp
                 source/core/registrable.h
                 )
 
@@ -72,4 +73,6 @@ target_link_libraries(toc PUBLIC
                         sfml-system
                         sfml-network
                         pugixml
-                        tgui)                
+                        tgui)     
+                        
+add_subdirectory(tests/messages)

@@ -5,6 +5,8 @@
 #include "passage_site.h"
 #include "shapes/hex_border_shape.h"
 
+#include <cereal/types/base_class.hpp>
+
 class River : public Passage_site {
    public:
     explicit River(const int &number = 0)

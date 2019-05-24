@@ -6,8 +6,10 @@
 #include "map_site.h"
 #include "shapes/hex_shape.h"
 
-#include <pugixml.hpp>
+#include <cereal/types/array.hpp>
 #include <cereal/types/base_class.hpp>
+#include <cereal/types/memory.hpp>
+#include <pugixml.hpp>
 
 enum class Hex_type {
     field,
@@ -50,13 +52,21 @@ class Hex_site : public Map_site {
     Hex_shape _shape;
 
    private:
-    std::array<std::shared_ptr<Map_site> , 6> _sides;
-
+    std::array<std::shared_ptr<Map_site>, 6> _sides;
+    /*
+    template <class Archive>
+    friend void serialize(Archive &ar, Hex_site &h);
+*/
    public:
     template <class Archive>
-    void serialize(Archive &ar) { ar(cereal::virtual_base_class<Map_site>( this )); }
+    void serialize(Archive &ar) {
+        ar(cereal::virtual_base_class<Map_site>(this), CEREAL_NVP(_sides));
+    }
 };
-
+/*
+template <class Archive>
+void serialize(Archive &ar, Hex_site &h) { ar(cereal::virtual_base_class<Map_site>(&h), CEREAL_NVP(h._sides)); }
+*/
 inline std::shared_ptr<Map_site> Hex_site::get_side(const Directions &side) const {
     return _sides[static_cast<int>(side)];
 }

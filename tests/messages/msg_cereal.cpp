@@ -7,9 +7,13 @@
 #include <cereal/archives/xml.hpp>
 
 #include <cereal/types/polymorphic.hpp>
-/*oid Unit_move_request::log() const {
-    std::cout << "hhahah\n";
+
+void Unit_move_request::log() const {
+    std::cout << "log \n";
 }
-*/
-CEREAL_REGISTER_TYPE(Unit_move_request)
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Unit_move_request)
+
+void Unit_move_request2::log2() const {
+    std::cout << "log2 \n";
+}
+
+CEREAL_REGISTER_TYPE(Unit_move_request2)

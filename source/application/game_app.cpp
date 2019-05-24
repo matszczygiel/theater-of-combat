@@ -38,6 +38,7 @@ void Game::initialize() {
         cereal::XMLInputArchive iar(is);
         iar(_map);
     }
+    
     Tokenizable::load_textures("resources/textures/units.png");
     Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
 

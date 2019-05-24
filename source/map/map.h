@@ -44,5 +44,5 @@ class Map {
 
    public:
     template <class Archive>
-    void serialize(Archive& ar) { ar(_x_dim, _y_dim, _map, _passages); }
+    void serialize(Archive& ar) { ar(CEREAL_NVP(_x_dim), CEREAL_NVP(_y_dim),CEREAL_NVP(_map), CEREAL_NVP(_passages)); }
 };

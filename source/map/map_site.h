@@ -6,6 +6,8 @@
 #include "directions.h"
 #include "log.h"
 
+#include <cereal/cereal.hpp>
+
 enum class Site_type {
     hexagon,
     passage
@@ -34,12 +36,18 @@ class Map_site {
    protected:
     bool _highlighted = false;
     int _number;
-
+/*
+    template <class Archive>
+    friend void serialize(Archive& ar, Map_site& s);
+*/
    public:
     template <class Archive>
-    void serialize(Archive& ar) { ar(_number); }
+    void serialize(Archive& ar) { ar(CEREAL_NVP(_number)); }
 };
-
+/*
+template <class Archive>
+void serialize(Archive& ar, Map_site& s) { ar(CEREAL_NVP(s._number)); }
+*/
 inline bool Map_site::is_highlighted() const { return _highlighted; }
 
 inline const auto& Map_site::get_number() const { return _number; }

@@ -6,6 +6,8 @@
 #include "map_site.h"
 
 #include <cereal/types/base_class.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/utility.hpp>
 
 enum class Passage_type {
     stream,
@@ -47,9 +49,20 @@ class Passage_site : public Map_site, public std::enable_shared_from_this<Passag
 
    public:
     template <class Archive>
-    void serialize(Archive &ar) { ar(cereal::virtual_base_class<Map_site>(this)); }
+    void serialize(Archive &ar) {
+        ar(cereal::virtual_base_class<Map_site>(this),
+           CEREAL_NVP(_sides), CEREAL_NVP(_sides_directions));
+    }
+    /*
+    template <class Archive>
+    friend void serialize(Archive &ar, Passage_site &p);*/
 };
-
+/*
+template <class Archive>
+void serialize(Archive &ar, Passage_site &p) {
+    ar(cereal::virtual_base_class<Map_site>(&p), CEREAL_NVP(p._sides), CEREAL_NVP(p._sides_directions));
+}
+*/
 inline Site_type Passage_site::get_site_type() const {
     return Site_type::passage;
 }

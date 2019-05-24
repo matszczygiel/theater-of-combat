@@ -41,8 +41,8 @@ class Message : public Registrable<Message, std::string, std::string> {
     }
 };
 
-#define DEFINE_MESSAGE_NAMING(Message_class)     \
-    static constexpr auto name = #Message_class; \
+#define DEFINE_MESSAGE_NAMING(Message_class)                                        \
+    static constexpr auto name = #Message_class;                                    \
     virtual inline id_type get_name() const override { return #Message_class; };
 
 class Message_bus {

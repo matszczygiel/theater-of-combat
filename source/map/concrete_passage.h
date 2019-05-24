@@ -3,7 +3,7 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 
 #include "passage_site.h"
-#include "hex_border_shape.h"
+#include "shapes/hex_border_shape.h"
 
 class River : public Passage_site {
    public:

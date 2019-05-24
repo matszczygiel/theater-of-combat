@@ -7,14 +7,14 @@
 
 class Player {
    public:
-    std::set<Unit*>& get_players_units();
+    std::set<std::shared_ptr<Unit> >& get_players_units();
     void set_name(const std::string& name);
-    void add_unit(Unit* unit);
+    void add_unit(std::shared_ptr<Unit>  unit);
 
    private:
     std::string _name;
-    std::set<Unit*> _units;
+    std::set<std::shared_ptr<Unit> > _units;
 };
 
-inline std::set<Unit*>& Player::get_players_units() { return _units; }
+inline std::set<std::shared_ptr<Unit> >& Player::get_players_units() { return _units; }
 inline void Player::set_name(const std::string& name) { _name = name; }

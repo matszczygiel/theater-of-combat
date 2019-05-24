@@ -39,8 +39,8 @@ Passage_type string_to_passage_type(const std::string &str) {
 Passage_site::Passage_site(const int &number)
     : Map_site(number), _sides{nullptr, nullptr}, _sides_directions() {}
 
-void Passage_site::set_sides(const Directions &side1, Hex_site *site1,
-                             const Directions &side2, Hex_site *site2) {
+void Passage_site::set_sides(const Directions &side1, std::shared_ptr<Hex_site> site1,
+                             const Directions &side2, std::shared_ptr<Hex_site> site2) {
     if (side1 != Map_site::opposite_direction(side2)) {
         GAME_CRITICAL("Passage site initialized with not oposite sites");
         throw("Passage site initialized with not oposite sites");
@@ -49,20 +49,20 @@ void Passage_site::set_sides(const Directions &side1, Hex_site *site1,
     _sides            = {site1, site2};
     _sides_directions = {side1, side2};
 
-    site1->set_side(side2, this);
-    site2->set_side(side1, this);
+    site1->set_side(side2, shared_from_this());
+    site2->set_side(side1, shared_from_this());
 
     set_shape();
 }
 
 void Passage_site::unstage_sides() {
-    std::get<0>(_sides)->set_side(std::get<1>(_sides_directions), static_cast<Map_site *>(std::get<1>(_sides)));
-    std::get<1>(_sides)->set_side(std::get<0>(_sides_directions), static_cast<Map_site *>(std::get<0>(_sides)));
+    std::get<0>(_sides)->set_side(std::get<1>(_sides_directions), std::static_pointer_cast<Map_site> (std::get<1>(_sides)));
+    std::get<1>(_sides)->set_side(std::get<0>(_sides_directions), std::static_pointer_cast<Map_site> (std::get<0>(_sides)));
 
     _sides = {nullptr, nullptr};
 }
 
-Hex_site *Passage_site::other_side(Hex_site *adjacet_site) {
+std::shared_ptr<Hex_site> Passage_site::other_side(std::shared_ptr<Hex_site> adjacet_site) {
     if (std::get<0>(_sides) == adjacet_site)
         return std::get<1>(_sides);
     else if (std::get<1>(_sides) == adjacet_site)
@@ -93,12 +93,12 @@ void Passage_site::write(pugi::xml_node &node) {
     if (side0 != nullptr) {
         auto single_side_node0 = sides_node.append_child("side");
         single_side_node0.append_attribute("direction").set_value(direction_to_string(side0_dir).c_str());
-        static_cast<Map_site *>(side0)->write(single_side_node0);
+        std::static_pointer_cast<Map_site> (side0)->write(single_side_node0);
     }
 
     if (side1 != nullptr) {
         auto single_side_node1 = sides_node.append_child("side");
         single_side_node1.append_attribute("direction").set_value(direction_to_string(side1_dir).c_str());
-        static_cast<Map_site *>(side1)->write(single_side_node1);
+        std::static_pointer_cast<Map_site> (side1)->write(single_side_node1);
     }
 }

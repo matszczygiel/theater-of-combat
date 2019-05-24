@@ -9,6 +9,7 @@
 #include "unit_type.h"
 
 class Mover;
+class Message_bus;
 
 class Unit : public Tokenizable {
    public:
@@ -18,11 +19,11 @@ class Unit : public Tokenizable {
     virtual ~Unit() noexcept = default;
 
     virtual Unit_type get_type() const = 0;
-    virtual Mover* get_mover()         = 0;
+    virtual Mover* get_mover(std::weak_ptr<Message_bus>)         = 0;
 
     tgui::Canvas::Ptr create_displayer() const;
 
-    void place_on_hex(Hex_site* hex);
+    void place_on_hex(std::shared_ptr<Hex_site>  hex);
     void reset_mv_points() noexcept;
     void reduce_mv_points(const int& points);
     void reduce_strength_points(const int& points);
@@ -34,7 +35,7 @@ class Unit : public Tokenizable {
     static void load_font_file(const std::string& filename);
 
    protected:
-    Hex_site* _ocupation;
+    std::shared_ptr<Hex_site>  _ocupation;
 
     const int _moving_pts;
     int _current_moving_pts;

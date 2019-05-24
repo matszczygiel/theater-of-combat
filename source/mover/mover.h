@@ -29,8 +29,8 @@ class Mover {
     void clear();
 
     Unit* _unit;
-    std::vector<std::unordered_set<Hex_site*>> _paths;
-    std::unordered_set<Passage_site*> _passages;
+    std::vector<std::unordered_set<std::shared_ptr<Hex_site> >> _paths;
+    std::unordered_set<std::shared_ptr<Passage_site> > _passages;
 
     std::weak_ptr<Message_bus> _msg_bus;
 };

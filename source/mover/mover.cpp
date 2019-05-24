@@ -36,7 +36,7 @@ void Mover::find_paths() {
                         auto mp_cost  = i;
 
                         if (st == Site_type::hexagon) {
-                            auto side1 = static_cast<Hex_site*>(side);
+                            auto side1 = std::static_pointer_cast<Hex_site> (side);
                             mp_cost += _hex_table[side1->get_hex_type()];
                             if (mp_cost <= mv_pts) {
                                 side1->set_highlighted(true);
@@ -44,7 +44,7 @@ void Mover::find_paths() {
                             }
 
                         } else if (st == Site_type::passage) {
-                            auto side1 = static_cast<Passage_site*>(side);
+                            auto side1 = std::static_pointer_cast<Passage_site> (side);
                             mp_cost += _pass_table[side1->get_passage_type()];
 
                             auto side2 = side1->other_side(x);
@@ -69,7 +69,7 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
     GAME_INFO("Moving unit.");
     for (int used_mp = 0; used_mp < _paths.size(); ++used_mp) {
         for (auto& x : _paths[used_mp]) {
-            auto hex = static_cast<Hex_site*>(x);
+            auto hex = std::static_pointer_cast<Hex_site> (x);
             if (hex->contains(mouse_pos)) {
 
                 _unit->place_on_hex(hex);

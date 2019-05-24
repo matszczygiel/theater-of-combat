@@ -17,7 +17,7 @@ Site_type string_to_site_type(const std::string& str);
 class Map_site {
    public:
     explicit Map_site(const int& number = 0)
-        : _highlighted(false), _number(number) {}
+        : _number(number) {}
 
     virtual ~Map_site() = default;
 
@@ -32,8 +32,12 @@ class Map_site {
     static Directions opposite_direction(const Directions& dir);
 
    protected:
-    bool _highlighted;
+    bool _highlighted = false;
     int _number;
+
+   public:
+    template <class Archive>
+    void serialize(Archive& ar) { ar(_number); }
 };
 
 inline bool Map_site::is_highlighted() const { return _highlighted; }
@@ -43,4 +47,3 @@ inline const auto& Map_site::get_number() const { return _number; }
 inline Directions Map_site::opposite_direction(const Directions& dir) {
     return Directions((static_cast<int>(dir) + 3) % 6);
 }
-

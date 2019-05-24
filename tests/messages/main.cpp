@@ -4,7 +4,7 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-#include <fstream>
+        std::ofstream os("msg_test.json");
 #include <iostream>
 
 int main() {

@@ -4,6 +4,14 @@
 
 #include "log.h"
 
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/archives/xml.hpp>
+
+#include <cereal/types/polymorphic.hpp>
+
+CEREAL_REGISTER_TYPE(River)
+
 void River::set_shape() {
     const auto sid1 = std::get<0>(_sides);
     const auto sid2 = std::get<1>(_sides);

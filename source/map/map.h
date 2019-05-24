@@ -9,15 +9,18 @@
 #include "hex_site.h"
 #include "passage_site.h"
 
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+
 class Map {
    public:
-    using Hex_matrix  = std::vector<std::vector<std::unique_ptr<Hex_site>>>;
-    using Passage_vec = std::vector<std::unique_ptr<Passage_site>>;
+    using Hex_matrix  = std::vector<std::vector<std::shared_ptr<Hex_site>>>;
+    using Passage_vec = std::vector<std::shared_ptr<Passage_site>>;
 
     void draw(sf::RenderTarget& target) const;
-    std::unique_ptr<Hex_site>& get_hex(const int& no);
-    std::unique_ptr<Hex_site>& get_hex(const int& x, const int& y);
-    std::unique_ptr<Passage_site>& get_passage(const int& no);
+    std::shared_ptr<Hex_site>& get_hex(const int& no);
+    std::shared_ptr<Hex_site>& get_hex(const int& x, const int& y);
+    std::shared_ptr<Passage_site>& get_passage(const int& no);
 
     void load_map(const std::string& path, const float& size);
     void save_map(const std::string& path);
@@ -38,4 +41,8 @@ class Map {
 
     sf::Font _numbers_font;
     bool _draw_numbers = false;
+
+   public:
+    template <class Archive>
+    void serialize(Archive& ar) { ar(_x_dim, _y_dim, _map, _passages); }
 };

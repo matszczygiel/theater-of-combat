@@ -4,22 +4,30 @@
 
 class Field : public Hex_site {
    public:
-    explicit Field(const int& number) : Hex_site(number) {}
+    explicit Field(const int& number = 0) : Hex_site(number) {}
 
     Hex_type get_hex_type() const final;
 
    private:
     void set_color() override;
+
+   public:
+    template <class Archive>
+    void serialize(Archive& ar) { ar(cereal::virtual_base_class<Hex_site>(this)); }
 };
 
 class Forest : public Hex_site {
    public:
-    explicit Forest(const int& number) : Hex_site(number) {}
+    explicit Forest(const int& number = 0) : Hex_site(number) {}
 
     Hex_type get_hex_type() const final;
 
    private:
     void set_color() override;
+
+   public:
+    template <class Archive>
+    void serialize(Archive& ar) { ar(cereal::virtual_base_class<Hex_site>(this)); }
 };
 
 inline Hex_type Field::get_hex_type() const { return Hex_type::field; }

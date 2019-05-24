@@ -3,10 +3,11 @@
 #include <array>
 #include <string>
 
-#include "shapes/hex_shape.h"
 #include "map_site.h"
+#include "shapes/hex_shape.h"
 
 #include <pugixml.hpp>
+#include <cereal/types/base_class.hpp>
 
 enum class Hex_type {
     field,
@@ -26,20 +27,20 @@ class Hex_site : public Map_site {
     virtual ~Hex_site() = default;
 
     virtual void draw(sf::RenderTarget &target) const override;
-    void draw_number(sf::RenderTarget &target, const sf::Font& font) const;
+    void draw_number(sf::RenderTarget &target, const sf::Font &font) const;
     virtual Hex_type get_hex_type() const = 0;
 
     bool contains(const sf::Vector2f &vec) const noexcept;
     void set_highlighted(bool highlighted) noexcept override;
     void set_shape(const float &x, const float &y, const float &radius);
 
-    Map_site *get_side(const Directions &side) const;
+    std::shared_ptr<Map_site> get_side(const Directions &side) const;
     const auto &get_radius() const;
     auto get_small_radius() const;
     const auto &get_position() const;
     Site_type get_site_type() const final;
 
-    void set_side(const Directions &side, Map_site *site);
+    void set_side(const Directions &side, std::shared_ptr<Map_site> site);
 
     void write(pugi::xml_node &node);
 
@@ -49,10 +50,14 @@ class Hex_site : public Map_site {
     Hex_shape _shape;
 
    private:
-    std::array<Map_site *, 6> _sides;
+    std::array<std::shared_ptr<Map_site> , 6> _sides;
+
+   public:
+    template <class Archive>
+    void serialize(Archive &ar) { ar(cereal::virtual_base_class<Map_site>( this )); }
 };
 
-inline Map_site *Hex_site::get_side(const Directions &side) const {
+inline std::shared_ptr<Map_site> Hex_site::get_side(const Directions &side) const {
     return _sides[static_cast<int>(side)];
 }
 
@@ -68,7 +73,7 @@ inline const auto &Hex_site::get_position() const {
     return _shape.getPosition();
 }
 
-inline void Hex_site::set_side(const Directions &side, Map_site *site) {
+inline void Hex_site::set_side(const Directions &side, std::shared_ptr<Map_site> site) {
     _sides[static_cast<int>(side)] = site;
 }
 

@@ -61,9 +61,9 @@ Map Map::create_test_map(const float& size) {
         for (int y = 0; y < dim; ++y) {
             const int no = 10 * x + y;
             if (x < 4 && y < 6) {
-                res._map[x].emplace_back(std::make_unique<Forest>(no));
+                res._map[x].emplace_back(std::make_shared<Forest>(no));
             } else {
-                res._map[x].emplace_back(std::make_unique<Field>(no));
+                res._map[x].emplace_back(std::make_shared<Field>(no));
             }
             if (y % 2 == 0) {
                 res._map[x][y]->set_shape(100 + 2 * x * smr, 100 + 1.5 * y * size, size);
@@ -77,66 +77,66 @@ Map Map::create_test_map(const float& size) {
             if (y % 2 == 0) {
                 if (y != 0) {
                     res._map[x][y]
-                        ->set_side(Directions::northeast, res._map[x][y - 1].get());
+                        ->set_side(Directions::northeast, res._map[x][y - 1]);
                     res._map[x][y - 1]
-                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y]);
                     if (x != 0) {
                         res._map[x][y]
-                            ->set_side(Directions::northwest, res._map[x - 1][y - 1].get());
+                            ->set_side(Directions::northwest, res._map[x - 1][y - 1]);
                         res._map[x - 1][y - 1]
-                            ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                            ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y]);
                     }
                 }
             } else {
                 res._map[x][y]
-                    ->set_side(Directions::northwest, res._map[x][y - 1].get());
+                    ->set_side(Directions::northwest, res._map[x][y - 1]);
                 res._map[x][y - 1]
-                    ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                    ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y]);
                 if (x != dim - 1) {
                     res._map[x][y]
-                        ->set_side(Directions::northeast, res._map[x + 1][y - 1].get());
+                        ->set_side(Directions::northeast, res._map[x + 1][y - 1]);
                     res._map[x + 1][y - 1]
-                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y]);
                 }
             }
             if (x != 0) {
                 res._map[x][y]
-                    ->set_side(Directions::west, res._map[x - 1][y].get());
+                    ->set_side(Directions::west, res._map[x - 1][y]);
                 res._map[x - 1][y]
-                    ->set_side(Map_site::opposite_direction(Directions::west), res._map[x][y].get());
+                    ->set_side(Map_site::opposite_direction(Directions::west), res._map[x][y]);
             }
         }
 
     for (int i = 0; i < 10; ++i) {
         const Directions dir = Directions::east;
-        res._passages.push_back(std::make_unique<River>(i));
+        res._passages.push_back(std::make_shared<River>(i));
         res._passages[i]->set_sides(dir,
-                                    res._map[6][i].get(),
+                                    res._map[6][i],
                                     Map_site::opposite_direction(dir),
-                                    static_cast<Hex_site*>(res._map[6][i]->get_side(Map_site::opposite_direction(dir))));
+                                    std::static_pointer_cast<Hex_site>(res._map[6][i]->get_side(Map_site::opposite_direction(dir))));
     }
     for (int i = 0; i < 5; ++i) {
         const Directions dir = Directions::northeast;
-        res._passages.push_back(std::make_unique<River>(10 + i));
+        res._passages.push_back(std::make_shared<River>(10 + i));
         res._passages[10 + i]->set_sides(dir,
-                                         res._map[6][2 * i].get(),
+                                         res._map[6][2 * i],
                                          Map_site::opposite_direction(dir),
-                                         static_cast<Hex_site*>(res._map[6][2 * i]->get_side(Map_site::opposite_direction(dir))));
+                                         std::static_pointer_cast<Hex_site>(res._map[6][2 * i]->get_side(Map_site::opposite_direction(dir))));
     }
 
     for (int i = 0; i < 4; ++i) {
         const Directions dir = Directions::southeast;
-        res._passages.push_back(std::make_unique<River>(15 + i));
+        res._passages.push_back(std::make_shared<River>(15 + i));
         res._passages[15 + i]->set_sides(dir,
-                                         res._map[6][2 + 2 * i].get(),
+                                         res._map[6][2 + 2 * i],
                                          Map_site::opposite_direction(dir),
-                                         static_cast<Hex_site*>(res._map[6][2 + 2 * i]->get_side(Map_site::opposite_direction(dir))));
+                                         std::static_pointer_cast<Hex_site>(res._map[6][2 + 2 * i]->get_side(Map_site::opposite_direction(dir))));
     }
 
     return res;
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
+std::shared_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
         GAME_ERROR("Invalid hex number requested! x: {0} y; {1}.", x, y);
         assert(true);
@@ -145,7 +145,7 @@ std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     return _map.at(x).at(y);
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& no) {
+std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
     const int y = no % _y_dim;
     const int x = (no - y) / _x_dim;
     if (x >= _x_dim || y >= _y_dim) {
@@ -207,10 +207,10 @@ void Map::load_map(const std::string& path, const float& size) {
 
             switch (site_type) {
                 case Site_type::hexagon:
-                    get_hex(no)->set_side(dire, get_hex(no_side).get());
+                    get_hex(no)->set_side(dire, get_hex(no_side));
                     break;
                 case Site_type::passage:
-                    get_hex(no)->set_side(dire, _passages.at(no_side).get());
+                    get_hex(no)->set_side(dire, _passages.at(no_side));
                     break;
                 default:
                     GAME_CRITICAL("Unknown site type.");
@@ -236,7 +236,7 @@ void Map::load_map(const std::string& path, const float& size) {
         const auto dire2 = string_to_direction(side_node.attribute("direction").value());
         const auto no2   = side_node.child("site").attribute("number").as_int();
 
-        _passages.at(no)->set_sides(dire1, get_hex(no1).get(), dire2, get_hex(no2).get());
+        _passages.at(no)->set_sides(dire1, get_hex(no1), dire2, get_hex(no2));
     }
 }
 

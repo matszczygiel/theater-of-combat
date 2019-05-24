@@ -16,13 +16,13 @@ class Stack : public Tokenizable {
     int texture_offset() const override;
     Mover* get_mover();
     int size() const;
-    tgui::Grid::Ptr create_displayer(const std::function<void(Unit*)>& widget_callback) const;
+    tgui::Grid::Ptr create_displayer(const std::function<void(std::shared_ptr<Unit> )>& widget_callback) const;
 
-    void add_unit(Unit* unit);
-    void remove_unit(Unit* unit);
+    void add_unit(std::shared_ptr<Unit>  unit);
+    void remove_unit(std::shared_ptr<Unit>  unit);
 
    private:
-    std::unordered_set<Unit*> _stack;
+    std::unordered_set<std::shared_ptr<Unit> > _stack;
     bool _display_content = false;
 };
 
@@ -30,8 +30,8 @@ inline void Stack::set_display_content(bool display) { _display_content = displa
 
 inline int Stack::texture_offset() const { return 2; }
 
-inline void Stack::add_unit(Unit* unit) { _stack.insert(unit); }
+inline void Stack::add_unit(std::shared_ptr<Unit>  unit) { _stack.insert(unit); }
 
-inline void Stack::remove_unit(Unit* unit) { _stack.erase(unit); }
+inline void Stack::remove_unit(std::shared_ptr<Unit>  unit) { _stack.erase(unit); }
 
 inline int Stack::size() const { return _stack.size(); }

@@ -22,6 +22,7 @@ add_executable(toc
                 source/map/map.cpp
                 source/map/directions.h
                 source/map/concrete_hex.h
+                source/map/concrete_hex.cpp
                 source/map/site_factory.h
                 source/map/site_factory.cpp
                 source/unit/heavy_unit.h

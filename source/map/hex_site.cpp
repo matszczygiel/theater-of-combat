@@ -2,6 +2,12 @@
 
 #include "hex_site.h"
 #include "log.h"
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/archives/xml.hpp>
+
+#include <cereal/types/polymorphic.hpp>
+
 
 std::string type_to_string(const Hex_type& type) {
     switch (type) {

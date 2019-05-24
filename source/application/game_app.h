@@ -31,12 +31,12 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
-    void resolve_stacks_and_units(std::set<Unit*>& unit_set);
-    void init_mover_and_info_for_unit(Unit* unit);
+    void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
+    void init_mover_and_info_for_unit(std::shared_ptr<Unit>  unit);
 
    private:
-    std::vector<std::unique_ptr<Unit>> _units;
-    std::set<Unit*> _units_to_draw;
+    std::vector<std::shared_ptr<Unit> > _units;
+    std::set<std::shared_ptr<Unit> > _units_to_draw;
     std::vector<Stack> _stacks;
 
     std::array<Player, 2> _players;

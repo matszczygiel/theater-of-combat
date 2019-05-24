@@ -4,7 +4,7 @@
 
 sf::Font Unit::_font;
 
-void Unit::place_on_hex(Hex_site* hex) {
+void Unit::place_on_hex(std::shared_ptr<Hex_site>  hex) {
     _ocupation = hex;
     Tokenizable::set_token_postion(_ocupation->get_position());
     GAME_INFO("Unit placed on hex No. {0} at ({1}, {2})",

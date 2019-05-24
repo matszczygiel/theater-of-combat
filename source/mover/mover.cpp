@@ -7,6 +7,8 @@
 #include "log.h"
 #include "map/passage_site.h"
 
+#include "messaging/concrete_message.h"
+
 void Mover::find_paths() {
     GAME_INFO("Initializing path finding algorithm.");
 
@@ -68,6 +70,7 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
         for (auto& x : _paths[used_mp]) {
             auto hex = static_cast<Hex_site*>(x);
             if (hex->contains(mouse_pos)) {
+                
                 _unit->place_on_hex(hex);
                 _unit->reduce_mv_points(used_mp);
 

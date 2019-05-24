@@ -4,7 +4,7 @@
 
 class Tracks_mover : public Mover {
    public:
-    explicit Tracks_mover(Unit* unit) : Mover(unit) {}
+    explicit Tracks_mover(std::weak_ptr<Message_bus> bus, Unit* unit) : Mover(bus, unit) {}
 
    private:
     void create_table() override {

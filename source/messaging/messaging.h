@@ -4,46 +4,20 @@
 #include <list>
 #include <map>
 #include <memory>
-#include <regex>
 #include <string>
 #include <vector>
 
-#include "core/registrable.h"
-
-class Message : public Registrable<Message, std::string, std::string> {
+struct Message {
    public:
     template <class T>
-    using ptr              = std::shared_ptr<T>;
-    using ptr_base         = ptr<Message>;
-    using id_type          = std::string;
-    using registrable_base = Registrable<Message, std::string, std::string>;
+    using ptr      = std::shared_ptr<T>;
+    using ptr_base = ptr<Message>;
+    using id_type  = std::size_t;
 
-    virtual inline id_type get_name() const = 0;
-    virtual std::string to_string() const   = 0;
+    virtual std::string log() const = 0;
 
     virtual ~Message() = default;
-
-    static ptr_base create(const std::string& streamline);
-
-   protected:
-    template <class T>
-    static T get_entry_from_stream(const std::string& stream, std::string token) {
-        token += "\\s+\\S+";
-        std::regex rg(token, std::regex_constants::icase);
-        std::smatch match;
-        T res{};
-        if (std::regex_search(stream, match, rg)) {
-            std::stringstream ss(match.str());
-            ss.get();
-            ss >> res;
-        }
-        return res;
-    }
 };
-
-#define DEFINE_MESSAGE_NAMING(Message_class)     \
-    static constexpr auto name = #Message_class; \
-    virtual inline id_type get_name() const override { return #Message_class; };
 
 class Message_bus {
    public:
@@ -67,7 +41,7 @@ class Message_listener {
     template <class T>
     bool register_handler(std::function<void(Message::ptr<T>&)> callback) {
         static_assert(std::is_base_of<Message, T>::value, "Trying to register handler with non-message class.");
-        return register_handler(T::name, [&, callback](Message::ptr_base msg) {
+        return register_handler(typeid(T).hash_code(), [&, callback](Message::ptr_base msg) {
             auto ev = std::dynamic_pointer_cast<T>(msg);
             if (ev)
                 callback(ev);

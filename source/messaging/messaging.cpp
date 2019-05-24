@@ -35,7 +35,7 @@ void Message_bus::queue_message(Message::ptr_base message) {
 }
 
 void Message_bus::notify(Message::ptr_base message) {
-    auto listeners = _listeners.find(message->get_name());
+    auto listeners = _listeners.find(typeid(*message).hash_code());
     if (listeners != _listeners.end()) {
         for (auto l : listeners->second) {
             l(message);
@@ -75,9 +75,3 @@ bool Message_listener::register_handler(Message::id_type id, Message_bus::messag
     return false;
 }
 
-Message::ptr_base Message::create(const std::string &streamline) {
-    std::stringstream ss(streamline);
-    std::string class_name;
-    ss >> class_name;
-    return registrable_base::create(class_name, ss.str());
-}

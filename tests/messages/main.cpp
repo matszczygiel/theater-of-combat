@@ -1,10 +1,33 @@
-#include <iostream>
-#include <string>
+#include "msg_cereal.h"
 
-#include "messaging/concrete_message.h"
+#include <cereal/archives/xml.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/polymorphic.hpp>
+
+#include <fstream>
+#include <iostream>
 
 int main() {
-    std::string line = "Request_unit_movement h 23 u uu n nn";
-    auto msg = Message::create(line);
-    std::cout << msg->to_string();
+    {
+        std::ofstream os("msg_test.json");
+        cereal::JSONOutputArchive oarchive(os);
+
+        auto ptr2                          = std::make_shared<Unit_move_request>();
+        ptr2->_hex_ids                     = {23, 3, 45, 6, 7, 10};
+        ptr2->_unit_id                     = 102;
+        std::shared_ptr<Message> ptr2_base = ptr2;
+   //     ptr2_base->log();
+        oarchive(ptr2_base);
+    }
+
+    {
+        std::ifstream is("msg_test.json");
+        cereal::JSONInputArchive iarchive(is);
+
+        std::shared_ptr<Message> ptr2;
+        iarchive(ptr2);
+    //    ptr2->log();
+    }
+
+    return 0;
 }

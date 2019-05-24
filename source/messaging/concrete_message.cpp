@@ -1,16 +1,17 @@
-#include <regex>
-#include <sstream>
-
 #include "concrete_message.h"
 
-Request_unit_movement::Request_unit_movement(const int& hexno, const std::string& unit_name, const std::string& nation)
-    : _hexno(hexno), _unit_name(unit_name), _nation(nation) {}
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/archives/xml.hpp>
 
-Request_unit_movement::Request_unit_movement(const std::string& stream)
-    : _hexno(Message::get_entry_from_stream<int>(stream, "h")),
-      _unit_name(Message::get_entry_from_stream<std::string>(stream, "u")),
-      _nation(Message::get_entry_from_stream<std::string>(stream, "n")) {}
+#include <cereal/types/polymorphic.hpp>
 
-std::string Request_unit_movement::to_string() const {
-    return get_name() + " h " + std::to_string(_hexno) + " u " + _unit_name + " n " + _nation + "\n";
+std::string Unit_move_request::log() const {
+    std::string res = "Requested unit no " + std::to_string(_unit_id) + " through fields:";
+    for(const auto& x : _hex_ids)
+        res =+ " " + std::to_string(x);
+    return res; 
 }
+
+CEREAL_REGISTER_TYPE(Unit_move_request)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Unit_move_request)

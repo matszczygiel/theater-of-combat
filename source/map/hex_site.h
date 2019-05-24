@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-#include "hex_shape.h"
+#include "shapes/hex_shape.h"
 #include "map_site.h"
 
 #include <pugixml.hpp>

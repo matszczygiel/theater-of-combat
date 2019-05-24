@@ -22,6 +22,7 @@ void Mover::find_paths() {
     ocup->set_highlighted(true);
     /* TODO
     implement finding the most optimal route
+    eg Dijkstra algorithm
     */
 
     for (int i = 0; i <= mv_pts; ++i)
@@ -70,7 +71,7 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
         for (auto& x : _paths[used_mp]) {
             auto hex = static_cast<Hex_site*>(x);
             if (hex->contains(mouse_pos)) {
-                
+
                 _unit->place_on_hex(hex);
                 _unit->reduce_mv_points(used_mp);
 

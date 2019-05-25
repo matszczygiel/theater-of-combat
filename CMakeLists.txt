@@ -75,4 +75,4 @@ target_link_libraries(toc PUBLIC
                         pugixml
                         tgui)     
                         
-add_subdirectory(tests/messages)
+add_subdirectory(tests/map)

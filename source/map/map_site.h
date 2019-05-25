@@ -1,46 +1,65 @@
 #pragma once
 
+#include <string>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <pugixml.hpp>
 
-#include "directions.h"
-#include "log.h"
+#include "core/registrable.h"
 
-enum class Site_type {
-    hexagon,
-    passage
-};
-
-std::string type_to_string(const Site_type& type);
-Site_type string_to_site_type(const std::string& str);
-
-class Map_site {
+class Map_site : public Registrable<Map_site, std::string, pugi::xml_node> {
    public:
-    explicit Map_site(const int& number = 0)
-        : _highlighted(false), _number(number) {}
+    template <class T>
+    using ptr              = std::unique_ptr<T>;
+    using ptr_base         = ptr<Map_site>;
+    using id_type          = std::string;
+    using registrable_base = Registrable<Map_site, std::string, pugi::xml_node>;
+
+    constexpr explicit Map_site(const int& number) noexcept
+        : _number(number) {}
+
+    explicit Map_site(pugi::xml_node& node);
 
     virtual ~Map_site() = default;
 
-    virtual void set_highlighted(bool highlighted) noexcept = 0;
-    virtual void draw(sf::RenderTarget& target) const       = 0;
-    virtual Site_type get_site_type() const                 = 0;
+    virtual void draw(sf::RenderTarget& target) const = 0;
 
-    bool is_highlighted() const;
-    const auto& get_number() const;
-    void write(pugi::xml_node& node);
+    virtual id_type get_name() const = 0;
 
-    static Directions opposite_direction(const Directions& dir);
+    virtual void set_highlighted(bool highlighted);
+    bool is_highlighted() const noexcept;
+    constexpr auto& get_number() const noexcept;
+
+    virtual void serialize(pugi::xml_node& node) const;
+
+    static ptr_base unserialize(pugi::xml_node& node);
+
+    static constexpr auto object_identifier = "map-site";
 
    protected:
-    bool _highlighted;
-    int _number;
+    bool _highlighted = false;
+
+    static constexpr auto type_identifier   = "type";
+    static constexpr auto number_identifier = "number";
+
+   private:
+    const int _number;
 };
 
-inline bool Map_site::is_highlighted() const { return _highlighted; }
+#define REGISTER_MAP_SITE(class_name) \
+    REGISTER_CLASS(Map_site, class_name, #class_name)
 
-inline const auto& Map_site::get_number() const { return _number; }
+#define DEFINE_MAP_SITE_NAMING(class_name) \
+    virtual inline id_type get_name() const override { return #class_name; };
 
-inline Directions Map_site::opposite_direction(const Directions& dir) {
-    return Directions((static_cast<int>(dir) + 3) % 6);
+inline bool Map_site::is_highlighted() const noexcept {
+    return _highlighted;
 }
 
+inline constexpr auto& Map_site::get_number() const noexcept {
+    return _number;
+}
+
+inline void Map_site::set_highlighted(bool highlighted) {
+    _highlighted = highlighted;
+}

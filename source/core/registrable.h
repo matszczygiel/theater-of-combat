@@ -13,13 +13,13 @@ class Registrable {
         Register_entry(const Id& name);
     };
 
-    static std::shared_ptr<Base> create(const Id& name, Constructor_parameters... params);
+    static std::unique_ptr<Base> create(const Id& name, Constructor_parameters... params);
 
    private:
     template <class T>
-    static std::shared_ptr<T> create_registrable(Constructor_parameters&&... params);
+    static std::unique_ptr<T> create_registrable(Constructor_parameters&&... params);
 
-    using register_type = std::map<Id, std::function<std::shared_ptr<Base>(Constructor_parameters...)>>;
+    using register_type = std::map<Id, std::function<std::unique_ptr<Base>(Constructor_parameters...)>>;
 
     static register_type& get_register();
 };
@@ -31,9 +31,9 @@ class Registrable {
 
 template <class Base, class Id, class... Constructor_parameters>
 template <class T>
-std::shared_ptr<T> Registrable<Base, Id, Constructor_parameters...>::create_registrable(Constructor_parameters&&... params) {
+std::unique_ptr<T> Registrable<Base, Id, Constructor_parameters...>::create_registrable(Constructor_parameters&&... params) {
     static_assert(std::is_base_of<Base, T>::value, "Trying to register non registrable class.");
-    return std::make_shared<T>(std::forward<Constructor_parameters>(params)...);
+    return std::make_unique<T>(std::forward<Constructor_parameters>(params)...);
 }
 
 template <class Base, class Id, class... Constructor_parameters>
@@ -44,7 +44,7 @@ Registrable<Base, Id, Constructor_parameters...>::get_register() {
 }
 
 template <class Base, class Id, class... Constructor_parameters>
-std::shared_ptr<Base> Registrable<Base, Id, Constructor_parameters...>::create(const Id& name, Constructor_parameters... params) {
+std::unique_ptr<Base> Registrable<Base, Id, Constructor_parameters...>::create(const Id& name, Constructor_parameters... params) {
     auto& reg = get_register();
     auto it   = reg.find(name);
 

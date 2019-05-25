@@ -37,7 +37,7 @@ std::shared_ptr<T> Registrable<Base, Id, Constructor_parameters...>::create_regi
 }
 
 template <class Base, class Id, class... Constructor_parameters>
-Registrable<Base, Id, Constructor_parameters...>::register_type&
+typename Registrable<Base, Id, Constructor_parameters...>::register_type&
 Registrable<Base, Id, Constructor_parameters...>::get_register() {
     static register_type reg;
     return reg;

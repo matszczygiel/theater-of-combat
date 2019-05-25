@@ -15,4 +15,4 @@ class Request_unit_movement : public Message {
 
     DEFINE_MESSAGE_NAMING(Request_unit_movement)
 };
-REGISTER_CLASS(Message, Request_unit_movement)
+REGISTER_CLASS(Message, Request_unit_movement, Request_unit_movement)

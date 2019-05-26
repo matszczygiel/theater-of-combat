@@ -1,23 +1,20 @@
 #pragma once
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "hex_site.h"
-#include "passage_site.h"
+#include "map_site.h"
 
 class Map {
    public:
-    using Hex_matrix  = std::vector<std::vector<std::unique_ptr<Hex_site>>>;
-    using Passage_vec = std::vector<std::unique_ptr<Passage_site>>;
-
     void draw(sf::RenderTarget& target) const;
-    std::unique_ptr<Hex_site>& get_hex(const int& no);
-    std::unique_ptr<Hex_site>& get_hex(const int& x, const int& y);
-    std::unique_ptr<Passage_site>& get_passage(const int& no);
+
+    Map_site::ptr<Hex_site>& get_hex(const int& no);
+    Map_site::ptr<Hex_site>& get_hex(const int& x, const int& y);
+    Map_site::ptr_base& get_site(const int& no);
 
     void load_map(const std::string& path, const float& size);
     void save_map(const std::string& path);
@@ -30,11 +27,13 @@ class Map {
     void recompute_geometry(const float& size);
     void resize(const int& x, const int& y);
 
-    Hex_matrix _map;
-    Passage_vec _passages;
+    std::vector<std::vector<int>> _adjacency_matrix;
+    std::vector<Map_site::ptr<Hex_site>> _hexes;
+    std::vector<Map_site::ptr_base> _nonhex_sites;
 
-    int _x_dim;
-    int _y_dim;
+    int _x_dim   = 0;
+    int _y_dim   = 0;
+    int _n_hexes = 0;
 
     sf::Font _numbers_font;
     bool _draw_numbers = false;

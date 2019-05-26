@@ -1,23 +1,17 @@
 #include "map.h"
 
-#include <sstream>
-
 #include <pugixml.hpp>
 
-#include "concrete_hex.h"
-#include "concrete_passage.h"
 #include "log.h"
-#include "site_factory.h"
 
 void Map::draw(sf::RenderTarget& target) const {
-    for (const auto& x : _map)
-        for (const auto& y : x) {
-            y->draw(target);
-            if (_draw_numbers) {
-                y->draw_number(target, _numbers_font);
-            }
+    for (const auto& x : _hexes) {
+        x->draw(target);
+        if (_draw_numbers) {
+            x->draw_number(target, _numbers_font);
         }
-    for (const auto& x : _passages)
+    }
+    for (const auto& x : _nonhex_sites)
         x->draw(target);
 }
 
@@ -39,12 +33,10 @@ void Map::recompute_geometry(const float& size) {
 }
 
 void Map::resize(const int& x, const int& y) {
-    _map.resize(x);
-    for (auto& vec : _map)
-        vec.resize(y);
-
-    _x_dim = x;
-    _y_dim = y;
+    _x_dim   = x;
+    _y_dim   = y;
+    _n_hexes = x * y;
+    _hexes.resize(_n_hexes);
 }
 
 // do something with this function
@@ -136,24 +128,26 @@ Map Map::create_test_map(const float& size) {
     return res;
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
+Map_site::ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
-        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}.", x, y);
+        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.", x, y, _x_dim, _y_dim);
         assert(true);
     }
-
-    return _map.at(x).at(y);
+    const int no = _x_dim * x + y;
+    return _hexes.at(no);
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& no) {
-    const int y = no % _y_dim;
-    const int x = (no - y) / _x_dim;
-    if (x >= _x_dim || y >= _y_dim) {
-        GAME_ERROR("Invalid hex number requested!: {0}", no);
+Map_site::ptr<Hex_site>& Map::get_hex(const int& no) {
+    if (no >= _n_hexes) {
+        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _n_hexes);
         assert(true);
     }
+    return _hexes.at(no);
+}
 
-    return _map.at(x).at(y);
+Map_site::ptr_base& Map::get_site(const int& no) {
+    if (no < _n_hexes)
+        return _hexes.at(no);
 }
 
 void Map::load_map(const std::string& path, const float& size) {

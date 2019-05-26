@@ -1,0 +1,18 @@
+{
+    "value0": {
+        "polymorphic_id": 2147483649,
+        "polymorphic_name": "Unit_move_request2",
+        "ptr_wrapper": {
+            "id": 2147483649,
+            "data": {
+                "cereal::virtual_base_class<Unit_move_request>(this)": {
+                    "cereal::virtual_base_class<Message>(this)": {
+                        "x": 2
+                    },
+                    "_unit_id": 1
+                },
+                "_unit_id2": 2
+            }
+        }
+    }
+}

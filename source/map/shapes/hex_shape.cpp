@@ -23,6 +23,6 @@ sf::Vector2f Hex_shape::getPoint(std::size_t index) const {
     return sf::Vector2f(x, y);
 }
 
-float Hex_shape::get_small_radius(const float& radius) {
+constexpr float Hex_shape::get_small_radius(const float& radius) {
     return radius * std::cos(M_PI / 6.);
 }

@@ -1,18 +1,43 @@
 #include "map.h"
 
+#include <algorithm>
+
 #include <pugixml.hpp>
 
+#include "concrete_hex.h"
 #include "log.h"
 
 void Map::draw(sf::RenderTarget& target) const {
-    for (const auto& x : _hexes) {
+    for (const auto& x : _sites) {
         x->draw(target);
-        if (_draw_numbers) {
-            x->draw_number(target, _numbers_font);
-        }
     }
-    for (const auto& x : _nonhex_sites)
-        x->draw(target);
+
+    if (_draw_numbers) {
+        for (int i = 0; i < _n_hexes; ++i)
+            std::static_pointer_cast<Hex_site>(_sites.at(i))->draw_number(target, _numbers_font);
+    }
+}
+
+constexpr int Map::get_no(const int& x, const int& y) {
+    return _x_dim * x + y;
+}
+
+std::shared_ptr<Hex_site> Map::get_hex(const int& x, const int& y) {
+    if (x >= _x_dim || y >= _y_dim) {
+        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.", x, y, _x_dim, _y_dim);
+        assert(true);
+    }
+    const int no = get_no(x, y);
+    return get_hex(no);
+}
+
+std::shared_ptr<Hex_site> Map::get_hex(const int& no) {
+    if (no >= _n_hexes) {
+        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _n_hexes);
+        assert(true);
+        return nullptr;
+    }
+    return std::static_pointer_cast<Hex_site>(_sites.at(no));
 }
 
 void Map::recompute_geometry(const float& size) {
@@ -36,7 +61,9 @@ void Map::resize(const int& x, const int& y) {
     _x_dim   = x;
     _y_dim   = y;
     _n_hexes = x * y;
-    _hexes.resize(_n_hexes);
+
+    if (static_cast<int>(_sites.size()) < _n_hexes)
+        _sites.resize(_n_hexes);
 }
 
 // do something with this function
@@ -45,59 +72,62 @@ Map Map::create_test_map(const float& size) {
 
     constexpr int dim = 10;
     Map res;
-    res._map.resize(dim);
-
-    const auto smr = Hex_shape::get_small_radius(size);
+    res.resize(dim, dim);
 
     for (int x = 0; x < dim; ++x)
         for (int y = 0; y < dim; ++y) {
-            const int no = 10 * x + y;
+            const auto no = res.get_no(x, y);
             if (x < 4 && y < 6) {
-                res._map[x].emplace_back(std::make_unique<Forest>(no));
+                res.get_site(no) = std::make_shared<Forest>(no);
             } else {
-                res._map[x].emplace_back(std::make_unique<Field>(no));
-            }
-            if (y % 2 == 0) {
-                res._map[x][y]->set_shape(100 + 2 * x * smr, 100 + 1.5 * y * size, size);
-            } else {
-                res._map[x][y]->set_shape(100 + (2 * x + 1) * smr, 100 + 1.5 * y * size, size);
+                res.get_site(no) = std::make_shared<Field>(no);
             }
         }
+
+    res.recompute_geometry(size);
+
+    res._adjacency_matrix.resize(res._n_hexes);
 
     for (int x = 0; x < dim; ++x)
         for (int y = 0; y < dim; ++y) {
             if (y % 2 == 0) {
                 if (y != 0) {
-                    res._map[x][y]
-                        ->set_side(Directions::northeast, res._map[x][y - 1].get());
-                    res._map[x][y - 1]
-                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                    res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
+                        .emplace_back(res.get_hex(x, y - 1)->get_number());
+                    res._adjacency_matrix.at(res.get_hex(x, y - 1)->get_number())
+                        .emplace_back(res.get_hex(x, y)->get_number());
+
                     if (x != 0) {
-                        res._map[x][y]
-                            ->set_side(Directions::northwest, res._map[x - 1][y - 1].get());
-                        res._map[x - 1][y - 1]
-                            ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                        res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
+                            .emplace_back(res.get_hex(x - 1, y - 1)->get_number());
+                        res._adjacency_matrix.at(res.get_hex(x - 1, y - 1)->get_number())
+                            .emplace_back(res.get_hex(x, y)->get_number());
                     }
                 }
             } else {
-                res._map[x][y]
-                    ->set_side(Directions::northwest, res._map[x][y - 1].get());
-                res._map[x][y - 1]
-                    ->set_side(Map_site::opposite_direction(Directions::northwest), res._map[x][y].get());
+                res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
+                    .emplace_back(res.get_hex(x, y - 1)->get_number());
+                res._adjacency_matrix.at(res.get_hex(x, y - 1)->get_number())
+                    .emplace_back(res.get_hex(x, y)->get_number());
+
                 if (x != dim - 1) {
-                    res._map[x][y]
-                        ->set_side(Directions::northeast, res._map[x + 1][y - 1].get());
-                    res._map[x + 1][y - 1]
-                        ->set_side(Map_site::opposite_direction(Directions::northeast), res._map[x][y].get());
+                    res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
+                        .emplace_back(res.get_hex(x + 1, y - 1)->get_number());
+                    res._adjacency_matrix.at(res.get_hex(x + 1, y - 1)->get_number())
+                        .emplace_back(res.get_hex(x, y)->get_number());
                 }
             }
             if (x != 0) {
-                res._map[x][y]
-                    ->set_side(Directions::west, res._map[x - 1][y].get());
-                res._map[x - 1][y]
-                    ->set_side(Map_site::opposite_direction(Directions::west), res._map[x][y].get());
+                res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
+                    .emplace_back(res.get_hex(x - 1, y)->get_number());
+                res._adjacency_matrix.at(res.get_hex(x - 1, y)->get_number())
+                    .emplace_back(res.get_hex(x, y)->get_number());
             }
         }
+
+    for (int i = 0; i < 10; ++i) {
+    }
+    /*
 
     for (int i = 0; i < 10; ++i) {
         const Directions dir = Directions::east;
@@ -124,32 +154,10 @@ Map Map::create_test_map(const float& size) {
                                          Map_site::opposite_direction(dir),
                                          static_cast<Hex_site*>(res._map[6][2 + 2 * i]->get_side(Map_site::opposite_direction(dir))));
     }
-
+*/
     return res;
 }
-
-Map_site::ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
-    if (x >= _x_dim || y >= _y_dim) {
-        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.", x, y, _x_dim, _y_dim);
-        assert(true);
-    }
-    const int no = _x_dim * x + y;
-    return _hexes.at(no);
-}
-
-Map_site::ptr<Hex_site>& Map::get_hex(const int& no) {
-    if (no >= _n_hexes) {
-        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _n_hexes);
-        assert(true);
-    }
-    return _hexes.at(no);
-}
-
-Map_site::ptr_base& Map::get_site(const int& no) {
-    if (no < _n_hexes)
-        return _hexes.at(no);
-}
-
+/*
 void Map::load_map(const std::string& path, const float& size) {
     GAME_INFO("Loading map from a file: {0}", path);
 
@@ -266,6 +274,7 @@ void Map::save_map(const std::string& path) {
         GAME_ERROR("Could not save map file.");
     }
 }
+*/
 
 void Map::set_numbers_drawing(const std::string& font_filename) {
     _numbers_font.loadFromFile(font_filename);

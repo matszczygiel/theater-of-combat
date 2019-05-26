@@ -11,6 +11,10 @@ add_executable(test
                 ../../source/map/hex_site.h
                 ../../source/map/hex_site.cpp
                 ../../source/map/concrete_hex.h
+                ../../source/map/map.h
+                ../../source/map/map.cpp
+                ../../source/log.cpp
+                ../../source/log.h
                 main.cpp
                 )
 

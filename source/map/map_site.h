@@ -9,9 +9,6 @@
 
 class Map_site : public Registrable<Map_site, std::string, pugi::xml_node> {
    public:
-    template <class T>
-    using ptr              = std::unique_ptr<T>;
-    using ptr_base         = ptr<Map_site>;
     using id_type          = std::string;
     using registrable_base = Registrable<Map_site, std::string, pugi::xml_node>;
 
@@ -32,7 +29,7 @@ class Map_site : public Registrable<Map_site, std::string, pugi::xml_node> {
 
     virtual void serialize(pugi::xml_node& node) const;
 
-    static ptr_base unserialize(pugi::xml_node& node);
+    static std::unique_ptr<Map_site> unserialize(pugi::xml_node& node);
 
     static constexpr auto object_identifier = "map-site";
 

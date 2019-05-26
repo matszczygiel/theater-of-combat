@@ -13,7 +13,7 @@ class Hex_shape : public sf::Shape {
     float get_small_radius() const;
     const float& get_radius() const;
 
-    static constexpr float get_small_radius(const float& radius);
+    static float get_small_radius(const float& radius);
 
    private:
     float _radius;

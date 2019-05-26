@@ -16,8 +16,8 @@ add_executable(toc
                 source/map/hex_site.cpp
                 source/map/passage_site.h
                 source/map/passage_site.cpp
-                source/map/concrete_passage.h
-                source/map/concrete_passage.cpp
+                source/map/concrete_site.h
+                source/map/concrete_site.cpp
                 source/map/map.h
                 source/map/map.cpp
                 source/map/directions.h

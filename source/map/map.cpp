@@ -5,6 +5,7 @@
 #include <pugixml.hpp>
 
 #include "concrete_hex.h"
+#include "concrete_site.h"
 #include "log.h"
 
 void Map::draw(sf::RenderTarget& target) const {
@@ -126,6 +127,14 @@ Map Map::create_test_map(const float& size) {
         }
 
     for (int i = 0; i < 10; ++i) {
+        const int no = res._n_hexes + i;
+        res._sites.emplace_back(std::make_shared<River>(no));
+        const auto no1 = res.get_hex(5, i)->get_number();
+        const auto no2 = res.get_hex(6, i)->get_number();
+
+        res._adjacency_matrix.emplace_back({no1, no2});
+        std::replace(res._adjacency_matrix.at(no1).begin(), res._adjacency_matrix.at(no1).end(), no2, no);
+        std::replace(res._adjacency_matrix.at(no2).begin(), res._adjacency_matrix.at(no2).end(), no1, no);
     }
     /*
 

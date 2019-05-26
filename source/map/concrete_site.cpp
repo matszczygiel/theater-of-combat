@@ -1,44 +1,28 @@
-#include "concrete_passage.h"
+#include "concrete_site.h"
 
 #include <cmath>
 
 #include "log.h"
 
-void River::set_shape() {
-    const auto sid1 = std::get<0>(_sides);
-    const auto sid2 = std::get<1>(_sides);
-
-    if (sid1 == nullptr || sid2 == nullptr) {
-        GAME_ERROR("Setting the shape of passage failled. Sides not initialized");
-        throw std::runtime_error("Setting the shape of passage failled.");
-    }
-    const auto& rad1 = sid1->get_radius();
-    const auto& rad2 = sid2->get_radius();
-
-    if (rad1 != rad2) {
-        GAME_ERROR("Setting the shape of passage failled. rad1 = {0}, rad2 = {1}", rad1, rad2);
-        throw std::runtime_error("Setting the shape of passage failled.");
-    }
-
-    const auto& pos1 = sid1->get_position();
-    const auto& pos2 = sid2->get_position();
+void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
+                   const float &radius) {
 
     const auto vec = pos1 - pos2;
     const auto distance =
         std::sqrt(vec.x * vec.x + vec.y * vec.y);
 
-    if (distance > 2 * rad1) {
-        GAME_ERROR("Setting the shape of passage failled. distance = {0}", distance);
-        throw std::runtime_error("Setting the shape of passage failled.");
+    if (distance > 2 * radius) {
+        GAME_ERROR("Setting the shape of river failled. distance = {0}", distance);
+        throw std::runtime_error("Setting the shape of river failled.");
     }
 
     const auto angle = 180.f / M_PI * std::atan(vec.y / vec.x);
-    const auto smr   = sid1->get_small_radius();
-    _shape.set_length(smr);
+    _shape.set_length(radius);
     _shape.setPosition((pos1 + pos2) / 2.f);
     _shape.rotate(angle);
     _shape.setFillColor(sf::Color::Blue);
 }
+
 void River::draw(sf::RenderTarget& target) const {
     target.draw(_shape);
 }

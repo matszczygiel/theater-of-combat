@@ -17,8 +17,9 @@ add_executable(test
                 ../../source/map/map.cpp
                 ../../source/log.cpp
                 ../../source/log.h
-                ../../source/map/concrete_site.h
-                ../../source/map/concrete_site.cpp
+                ../../source/map/passage_site.h
+                ../../source/map/concrete_passage.h
+                ../../source/map/concrete_passage.cpp
                 main.cpp
                 )
 

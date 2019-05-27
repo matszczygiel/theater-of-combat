@@ -67,64 +67,80 @@ void Map::resize(const int& x, const int& y) {
         _sites.resize(_n_hexes);
 }
 
+void Map::generate_plain_map(const float& xdim, const float& ydim, const float& site_size) {
+    GAME_INFO("Creating plain map of size: {0} x {1}", xdim, ydim);
+
+    resize(xdim, ydim);
+
+    for (int x = 0; x < xdim; ++x)
+        for (int y = 0; y < ydim; ++y) {
+            const auto no = get_no(x, y);
+            get_site(no)  = std::make_shared<Field>(no);
+        }
+
+    recompute_geometry(site_size);
+    compute_adjacency_of_hexes();
+}
+
+void Map::connect_site(const int& hex1_no, const int& hex2_no, const Map_site::id_type& site) {
+    const int no = _adjacency_matrix.size();
+    _sites.push_back(Map_site::c);
+    const auto no1 = res.get_hex(5, i)->get_number();
+    const auto no2 = res.get_hex(6, i)->get_number();
+
+    res._adjacency_matrix.emplace_back({no1, no2});
+    std::replace(res._adjacency_matrix.at(no1).begin(), res._adjacency_matrix.at(no1).end(), no2, no);
+    std::replace(res._adjacency_matrix.at(no2).begin(), res._adjacency_matrix.at(no2).end(), no1, no);
+}
+
+void Map::compute_adjacency_of_hexes() {
+    _adjacency_matrix.resize(_n_hexes);
+
+    for (int x = 0; x < _x_dim; ++x)
+        for (int y = 0; y < _y_dim; ++y) {
+            if (y % 2 == 0) {
+                if (y != 0) {
+                    _adjacency_matrix.at(get_hex(x, y)->get_number())
+                        .emplace_back(get_hex(x, y - 1)->get_number());
+                    _adjacency_matrix.at(get_hex(x, y - 1)->get_number())
+                        .emplace_back(get_hex(x, y)->get_number());
+
+                    if (x != 0) {
+                        _adjacency_matrix.at(get_hex(x, y)->get_number())
+                            .emplace_back(get_hex(x - 1, y - 1)->get_number());
+                        _adjacency_matrix.at(get_hex(x - 1, y - 1)->get_number())
+                            .emplace_back(get_hex(x, y)->get_number());
+                    }
+                }
+            } else {
+                _adjacency_matrix.at(get_hex(x, y)->get_number())
+                    .emplace_back(get_hex(x, y - 1)->get_number());
+                _adjacency_matrix.at(get_hex(x, y - 1)->get_number())
+                    .emplace_back(get_hex(x, y)->get_number());
+
+                if (x != _x_dim - 1) {
+                    _adjacency_matrix.at(get_hex(x, y)->get_number())
+                        .emplace_back(get_hex(x + 1, y - 1)->get_number());
+                    _adjacency_matrix.at(get_hex(x + 1, y - 1)->get_number())
+                        .emplace_back(get_hex(x, y)->get_number());
+                }
+            }
+            if (x != 0) {
+                _adjacency_matrix.at(get_hex(x, y)->get_number())
+                    .emplace_back(get_hex(x - 1, y)->get_number());
+                _adjacency_matrix.at(get_hex(x - 1, y)->get_number())
+                    .emplace_back(get_hex(x, y)->get_number());
+            }
+        }
+}
+
 // do something with this function
 Map Map::create_test_map(const float& size) {
     GAME_INFO("Creating test map of size: {0}", size);
 
     constexpr int dim = 10;
     Map res;
-    res.resize(dim, dim);
-
-    for (int x = 0; x < dim; ++x)
-        for (int y = 0; y < dim; ++y) {
-            const auto no = res.get_no(x, y);
-            if (x < 4 && y < 6) {
-                res.get_site(no) = std::make_shared<Forest>(no);
-            } else {
-                res.get_site(no) = std::make_shared<Field>(no);
-            }
-        }
-
-    res.recompute_geometry(size);
-
-    res._adjacency_matrix.resize(res._n_hexes);
-
-    for (int x = 0; x < dim; ++x)
-        for (int y = 0; y < dim; ++y) {
-            if (y % 2 == 0) {
-                if (y != 0) {
-                    res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
-                        .emplace_back(res.get_hex(x, y - 1)->get_number());
-                    res._adjacency_matrix.at(res.get_hex(x, y - 1)->get_number())
-                        .emplace_back(res.get_hex(x, y)->get_number());
-
-                    if (x != 0) {
-                        res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
-                            .emplace_back(res.get_hex(x - 1, y - 1)->get_number());
-                        res._adjacency_matrix.at(res.get_hex(x - 1, y - 1)->get_number())
-                            .emplace_back(res.get_hex(x, y)->get_number());
-                    }
-                }
-            } else {
-                res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
-                    .emplace_back(res.get_hex(x, y - 1)->get_number());
-                res._adjacency_matrix.at(res.get_hex(x, y - 1)->get_number())
-                    .emplace_back(res.get_hex(x, y)->get_number());
-
-                if (x != dim - 1) {
-                    res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
-                        .emplace_back(res.get_hex(x + 1, y - 1)->get_number());
-                    res._adjacency_matrix.at(res.get_hex(x + 1, y - 1)->get_number())
-                        .emplace_back(res.get_hex(x, y)->get_number());
-                }
-            }
-            if (x != 0) {
-                res._adjacency_matrix.at(res.get_hex(x, y)->get_number())
-                    .emplace_back(res.get_hex(x - 1, y)->get_number());
-                res._adjacency_matrix.at(res.get_hex(x - 1, y)->get_number())
-                    .emplace_back(res.get_hex(x, y)->get_number());
-            }
-        }
+    res.generate_plain_map(dim, dim, size);
 
     for (int i = 0; i < 10; ++i) {
         const int no = res._n_hexes + i;

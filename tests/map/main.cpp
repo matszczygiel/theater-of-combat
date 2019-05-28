@@ -28,7 +28,6 @@ int main() {
     window.clear();
 
     auto map = Map::create_test_map(30);
-    auto pass = std::static_pointer_cast<River>(map.get_pass(103));
 
     map.draw(window);
 

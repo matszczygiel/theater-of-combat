@@ -14,9 +14,9 @@ class Map {
    public:
     void draw(sf::RenderTarget& target) const;
 
-    std::shared_ptr<Hex_site>& get_hex(const int& no);
-    std::shared_ptr<Hex_site>& get_hex(const int& x, const int& y);
-    std::shared_ptr<Passage_site>& get_pass(const int& no);
+    std::unique_ptr<Hex_site>& get_hex(const int& no);
+    std::unique_ptr<Hex_site>& get_hex(const int& x, const int& y);
+    std::unique_ptr<Passage_site>& get_pass(const int& no);
 
     //   void load_map(const std::string& path, const float& size);
     //   void save_map(const std::string& path);
@@ -37,8 +37,8 @@ class Map {
     constexpr int get_no(const int& x, const int& y);
 
     std::map<int, std::vector<int>> _adjacency_matrix;
-    std::vector<std::shared_ptr<Hex_site>> _hexes;
-    std::map<int, std::shared_ptr<Passage_site>> _passages;
+    std::vector<std::unique_ptr<Hex_site>> _hexes;
+    std::map<int, std::unique_ptr<Passage_site>> _passages;
 
     int _x_dim = 0;
     int _y_dim = 0;

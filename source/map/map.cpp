@@ -8,7 +8,7 @@
 #include "concrete_passage.h"
 #include "log.h"
 
-std::shared_ptr<Passage_site>& Map::get_pass(const int& no) {
+std::unique_ptr<Passage_site>& Map::get_pass(const int& no) {
     if (no <= static_cast<int>(_hexes.size()) || no > _current_max_no) {
         GAME_ERROR("Invalid pass number requested!: {0}, must by in domain [{1}, {2}].",
                    no, _hexes.size(), _passages.size());
@@ -21,18 +21,20 @@ constexpr int Map::get_no(const int& x, const int& y) {
     return _x_dim * x + y;
 }
 
-std::shared_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
+std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
-        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.", x, y, _x_dim, _y_dim);
+        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.",
+                   x, y, _x_dim, _y_dim);
         assert(true);
     }
     const int no = get_no(x, y);
     return get_hex(no);
 }
 
-std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
+std::unique_ptr<Hex_site>& Map::get_hex(const int& no) {
     if (no >= static_cast<int>(_hexes.size())) {
-        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _hexes.size());
+        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.",
+                   no, _hexes.size());
         assert(true);
         return _hexes.back();
     }
@@ -92,7 +94,7 @@ void Map::generate_plain_map(const float& xdim, const float& ydim, const float& 
     for (int x = 0; x < xdim; ++x)
         for (int y = 0; y < ydim; ++y) {
             const auto no = get_no(x, y);
-            get_hex(no)  = std::make_shared<Field>(no);
+            get_hex(no)   = std::make_unique<Field>(no);
         }
 
     recompute_geometry(site_size);
@@ -136,6 +138,12 @@ Map Map::create_test_map(const float& size) {
     Map res;
     res.generate_plain_map(dim, dim, size);
 
+    for (int x = 0; x < 4; ++x)
+        for (int y = 0; y < 7; ++y) {
+            res.get_hex(x, y) = std::make_unique<Forest>(res.get_no(x, y));
+        }
+    res.recompute_geometry(size);
+
     for (int i = 0; i < 10; ++i) {
         res.connect_site<River>(res.get_no(5, i), res.get_no(6, i));
     }
@@ -147,34 +155,7 @@ Map Map::create_test_map(const float& size) {
     for (int i = 0; i < 4; ++i) {
         res.connect_site<River>(res.get_no(5, 1 + 2 * i), res.get_no(6, 2 + 2 * i));
     }
-    /*
 
-    for (int i = 0; i < 10; ++i) {
-        const Directions dir = Directions::east;
-        res._passages.push_back(std::make_unique<River>(i));
-        res._passages[i]->set_sides(dir,
-                                    res._map[6][i].get(),
-                                    Map_site::opposite_direction(dir),
-                                    static_cast<Hex_site*>(res._map[6][i]->get_side(Map_site::opposite_direction(dir))));
-    }
-    for (int i = 0; i < 5; ++i) {
-        const Directions dir = Directions::northeast;
-        res._passages.push_back(std::make_unique<River>(10 + i));
-        res._passages[10 + i]->set_sides(dir,
-                                         res._map[6][2 * i].get(),
-                                         Map_site::opposite_direction(dir),
-                                         static_cast<Hex_site*>(res._map[6][2 * i]->get_side(Map_site::opposite_direction(dir))));
-    }
-
-    for (int i = 0; i < 4; ++i) {
-        const Directions dir = Directions::southeast;
-        res._passages.push_back(std::make_unique<River>(15 + i));
-        res._passages[15 + i]->set_sides(dir,
-                                         res._map[6][2 + 2 * i].get(),
-                                         Map_site::opposite_direction(dir),
-                                         static_cast<Hex_site*>(res._map[6][2 + 2 * i]->get_side(Map_site::opposite_direction(dir))));
-    }
-*/
     return res;
 }
 /*

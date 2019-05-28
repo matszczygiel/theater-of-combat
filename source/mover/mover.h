@@ -29,3 +29,4 @@ class Mover {
     std::unordered_map<Hex_type, int> _hex_table;
     std::unordered_map<Passage_type, int> _pass_table;
 };
+

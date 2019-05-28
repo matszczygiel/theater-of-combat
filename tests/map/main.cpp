@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include "map/concrete_hex.h"
+#include "map/concrete_passage.h"
 #include "map/map.h"
 
 #include <SFML/Window.hpp>
@@ -26,6 +28,8 @@ int main() {
     window.clear();
 
     auto map = Map::create_test_map(30);
+    auto pass = std::static_pointer_cast<River>(map.get_pass(103));
+
     map.draw(window);
 
     window.display();

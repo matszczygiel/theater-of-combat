@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -13,9 +14,9 @@ class Map {
    public:
     void draw(sf::RenderTarget& target) const;
 
-    std::shared_ptr<Hex_site> get_hex(const int& no);
-    std::shared_ptr<Hex_site> get_hex(const int& x, const int& y);
-    std::shared_ptr<Map_site>& get_site(const int& no);
+    std::shared_ptr<Hex_site>& get_hex(const int& no);
+    std::shared_ptr<Hex_site>& get_hex(const int& x, const int& y);
+    std::shared_ptr<Passage_site>& get_pass(const int& no);
 
     //   void load_map(const std::string& path, const float& size);
     //   void save_map(const std::string& path);
@@ -35,32 +36,32 @@ class Map {
 
     constexpr int get_no(const int& x, const int& y);
 
-    std::vector<std::vector<int>> _adjacency_matrix;
-    std::vector<std::shared_ptr<Map_site>> _sites;
+    std::map<int, std::vector<int>> _adjacency_matrix;
     std::vector<std::shared_ptr<Hex_site>> _hexes;
-    std::vector<std::shared_ptr<Passage_site>> _passages;
+    std::map<int, std::shared_ptr<Passage_site>> _passages;
 
-    int _x_dim   = 0;
-    int _y_dim   = 0;
-    int _n_hexes = 0;
+    int _x_dim = 0;
+    int _y_dim = 0;
+
+    int _current_max_no = 0;
 
     sf::Font _numbers_font;
     bool _draw_numbers = false;
 };
 
-inline std::shared_ptr<Map_site>& Map::get_site(const int& no) {
-    return _sites.at(no);
-}
-
 template <class T>
 void Map::connect_site(const int& hex1_no, const int& hex2_no) {
     static_assert(std::is_base_of<Passage_site, T>::value, "Trying to connect non passage site.");
-    const int no = _adjacency_matrix.size();
-    _sites.push_back(std::make_unique<T>(no));
-    const auto no1 = res.get_hex(5, i)->get_number();
-    const auto no2 = res.get_hex(6, i)->get_number();
+    ++_current_max_no;
+    _passages[_current_max_no]         = std::make_unique<T>(_current_max_no);
+    _adjacency_matrix[_current_max_no] = {hex1_no, hex2_no};
 
-    res._adjacency_matrix.emplace_back({no1, no2});
-    std::replace(res._adjacency_matrix.at(no1).begin(), res._adjacency_matrix.at(no1).end(), no2, no);
-    std::replace(res._adjacency_matrix.at(no2).begin(), res._adjacency_matrix.at(no2).end(), no1, no);
+    std::replace(_adjacency_matrix.at(hex1_no).begin(), _adjacency_matrix.at(hex1_no).end(),
+                 hex2_no, _current_max_no);
+    std::replace(_adjacency_matrix.at(hex2_no).begin(), _adjacency_matrix.at(hex2_no).end(),
+                 hex1_no, _current_max_no);
+
+    _passages[_current_max_no]->set_shape(get_hex(hex1_no)->get_position(),
+                                          get_hex(hex2_no)->get_position(),
+                                          get_hex(hex1_no)->get_radius());
 }

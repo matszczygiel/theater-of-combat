@@ -5,25 +5,23 @@
 #include <pugixml.hpp>
 
 #include "concrete_hex.h"
-#include "concrete_site.h"
+#include "concrete_passage.h"
 #include "log.h"
 
-void Map::draw(sf::RenderTarget& target) const {
-    for (const auto& x : _sites) {
-        x->draw(target);
+std::shared_ptr<Passage_site>& Map::get_pass(const int& no) {
+    if (no <= static_cast<int>(_hexes.size()) || no > _current_max_no) {
+        GAME_ERROR("Invalid pass number requested!: {0}, must by in domain [{1}, {2}].",
+                   no, _hexes.size(), _passages.size());
+        assert(true);
     }
-
-    if (_draw_numbers) {
-        for (int i = 0; i < _n_hexes; ++i)
-            std::static_pointer_cast<Hex_site>(_sites.at(i))->draw_number(target, _numbers_font);
-    }
+    return _passages.at(no);
 }
 
 constexpr int Map::get_no(const int& x, const int& y) {
     return _x_dim * x + y;
 }
 
-std::shared_ptr<Hex_site> Map::get_hex(const int& x, const int& y) {
+std::shared_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
         GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.", x, y, _x_dim, _y_dim);
         assert(true);
@@ -32,13 +30,29 @@ std::shared_ptr<Hex_site> Map::get_hex(const int& x, const int& y) {
     return get_hex(no);
 }
 
-std::shared_ptr<Hex_site> Map::get_hex(const int& no) {
-    if (no >= _n_hexes) {
-        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _n_hexes);
+std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
+    if (no >= static_cast<int>(_hexes.size())) {
+        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.", no, _hexes.size());
         assert(true);
-        return nullptr;
+        return _hexes.back();
     }
-    return std::static_pointer_cast<Hex_site>(_sites.at(no));
+    return _hexes.at(no);
+}
+
+void Map::draw(sf::RenderTarget& target) const {
+    for (const auto& x : _hexes) {
+        x->draw(target);
+    }
+
+    for (const auto& x : _passages) {
+        x.second->draw(target);
+    }
+
+    if (_draw_numbers) {
+        for (const auto& x : _hexes) {
+            x->draw_number(target, _numbers_font);
+        }
+    }
 }
 
 void Map::recompute_geometry(const float& size) {
@@ -59,12 +73,15 @@ void Map::recompute_geometry(const float& size) {
 }
 
 void Map::resize(const int& x, const int& y) {
-    _x_dim   = x;
-    _y_dim   = y;
-    _n_hexes = x * y;
+    _x_dim          = x;
+    _y_dim          = y;
+    _current_max_no = x * y - 1;
 
-    if (static_cast<int>(_sites.size()) < _n_hexes)
-        _sites.resize(_n_hexes);
+    _hexes.clear();
+    _passages.clear();
+    _adjacency_matrix.clear();
+
+    _hexes.resize(x * y);
 }
 
 void Map::generate_plain_map(const float& xdim, const float& ydim, const float& site_size) {
@@ -75,61 +92,38 @@ void Map::generate_plain_map(const float& xdim, const float& ydim, const float& 
     for (int x = 0; x < xdim; ++x)
         for (int y = 0; y < ydim; ++y) {
             const auto no = get_no(x, y);
-            get_site(no)  = std::make_shared<Field>(no);
+            get_hex(no)  = std::make_shared<Field>(no);
         }
 
     recompute_geometry(site_size);
     compute_adjacency_of_hexes();
 }
 
-void Map::connect_site(const int& hex1_no, const int& hex2_no, const Map_site::id_type& site) {
-    const int no = _adjacency_matrix.size();
-    _sites.push_back(Map_site::c);
-    const auto no1 = res.get_hex(5, i)->get_number();
-    const auto no2 = res.get_hex(6, i)->get_number();
-
-    res._adjacency_matrix.emplace_back({no1, no2});
-    std::replace(res._adjacency_matrix.at(no1).begin(), res._adjacency_matrix.at(no1).end(), no2, no);
-    std::replace(res._adjacency_matrix.at(no2).begin(), res._adjacency_matrix.at(no2).end(), no1, no);
-}
-
 void Map::compute_adjacency_of_hexes() {
-    _adjacency_matrix.resize(_n_hexes);
-
     for (int x = 0; x < _x_dim; ++x)
         for (int y = 0; y < _y_dim; ++y) {
             if (y % 2 == 0) {
                 if (y != 0) {
-                    _adjacency_matrix.at(get_hex(x, y)->get_number())
-                        .emplace_back(get_hex(x, y - 1)->get_number());
-                    _adjacency_matrix.at(get_hex(x, y - 1)->get_number())
-                        .emplace_back(get_hex(x, y)->get_number());
+                    _adjacency_matrix[get_no(x, y)].push_back(get_no(x, y - 1));
+                    _adjacency_matrix[get_no(x, y - 1)].push_back(get_no(x, y));
 
                     if (x != 0) {
-                        _adjacency_matrix.at(get_hex(x, y)->get_number())
-                            .emplace_back(get_hex(x - 1, y - 1)->get_number());
-                        _adjacency_matrix.at(get_hex(x - 1, y - 1)->get_number())
-                            .emplace_back(get_hex(x, y)->get_number());
+                        _adjacency_matrix[get_no(x, y)].push_back(get_no(x - 1, y - 1));
+                        _adjacency_matrix[get_no(x - 1, y - 1)].push_back(get_no(x, y));
                     }
                 }
             } else {
-                _adjacency_matrix.at(get_hex(x, y)->get_number())
-                    .emplace_back(get_hex(x, y - 1)->get_number());
-                _adjacency_matrix.at(get_hex(x, y - 1)->get_number())
-                    .emplace_back(get_hex(x, y)->get_number());
+                _adjacency_matrix[get_no(x, y)].push_back(get_no(x, y - 1));
+                _adjacency_matrix[get_no(x, y - 1)].push_back(get_no(x, y));
 
                 if (x != _x_dim - 1) {
-                    _adjacency_matrix.at(get_hex(x, y)->get_number())
-                        .emplace_back(get_hex(x + 1, y - 1)->get_number());
-                    _adjacency_matrix.at(get_hex(x + 1, y - 1)->get_number())
-                        .emplace_back(get_hex(x, y)->get_number());
+                    _adjacency_matrix[get_no(x, y)].push_back(get_no(x + 1, y - 1));
+                    _adjacency_matrix[get_no(x + 1, y - 1)].push_back(get_no(x, y));
                 }
             }
             if (x != 0) {
-                _adjacency_matrix.at(get_hex(x, y)->get_number())
-                    .emplace_back(get_hex(x - 1, y)->get_number());
-                _adjacency_matrix.at(get_hex(x - 1, y)->get_number())
-                    .emplace_back(get_hex(x, y)->get_number());
+                _adjacency_matrix[get_no(x, y)].push_back(get_no(x - 1, y));
+                _adjacency_matrix[get_no(x - 1, y)].push_back(get_no(x, y));
             }
         }
 }
@@ -143,14 +137,15 @@ Map Map::create_test_map(const float& size) {
     res.generate_plain_map(dim, dim, size);
 
     for (int i = 0; i < 10; ++i) {
-        const int no = res._n_hexes + i;
-        res._sites.emplace_back(std::make_shared<River>(no));
-        const auto no1 = res.get_hex(5, i)->get_number();
-        const auto no2 = res.get_hex(6, i)->get_number();
+        res.connect_site<River>(res.get_no(5, i), res.get_no(6, i));
+    }
 
-        res._adjacency_matrix.emplace_back({no1, no2});
-        std::replace(res._adjacency_matrix.at(no1).begin(), res._adjacency_matrix.at(no1).end(), no2, no);
-        std::replace(res._adjacency_matrix.at(no2).begin(), res._adjacency_matrix.at(no2).end(), no1, no);
+    for (int i = 0; i < 5; ++i) {
+        res.connect_site<River>(res.get_no(5, 2 * i + 1), res.get_no(6, 2 * i));
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        res.connect_site<River>(res.get_no(5, 1 + 2 * i), res.get_no(6, 2 + 2 * i));
     }
     /*
 

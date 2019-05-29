@@ -47,6 +47,8 @@ class Map {
 
     sf::Font _numbers_font;
     bool _draw_numbers = false;
+
+    friend class Mover;
 };
 
 template <class T>

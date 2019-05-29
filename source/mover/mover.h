@@ -1,17 +1,15 @@
 #pragma once
 
+#include <map>
+#include <memory>
 #include <unordered_map>
-#include <unordered_set>
-#include <vector>
 
-#include "map/map_site.h"
+#include "map/map.h"
 #include "unit/unit.h"
-#include "map/passage_site.h"
 
 class Mover {
    public:
-    explicit Mover(Unit* unit)
-        : _unit(unit), _paths(), _passages(), _hex_table(), _pass_table() {}
+    explicit Mover(std::weak_ptr<Unit> unit, std::weak_ptr<Map> map);
 
     void find_paths();
     void move(const sf::Vector2f& mouse_pos);
@@ -19,14 +17,18 @@ class Mover {
     virtual ~Mover() = default;
 
    protected:
-    virtual void create_table() = 0;
+    virtual std::unordered_map<Map_site::id_type, int> create_table() const = 0;
 
+    std::map<int, int> compute_weights() const;
     void clear();
 
-    Unit* _unit;
-    std::vector<std::unordered_set<Hex_site*>> _paths;
-    std::unordered_set<Passage_site*> _passages;
-    std::unordered_map<Hex_type, int> _hex_table;
-    std::unordered_map<Passage_type, int> _pass_table;
+    std::weak_ptr<Map> _map;
+    std::weak_ptr<Unit> _unit;
+
+    std::map<int, int> _distances;
+    std::map<int, int> _previous;
 };
 
+std::pair<std::map<int, int>, std::map<int, int>>
+dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
+         const std::map<int, int>& weights);

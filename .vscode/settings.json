@@ -55,7 +55,18 @@
         "typeindex": "cpp",
         "variant": "cpp",
         "numeric": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "csetjmp": "cpp",
+        "csignal": "cpp",
+        "cfenv": "cpp",
+        "cuchar": "cpp",
+        "forward_list": "cpp",
+        "future": "cpp",
+        "iomanip": "cpp",
+        "scoped_allocator": "cpp",
+        "shared_mutex": "cpp",
+        "valarray": "cpp",
+        "map": "cpp"
     },
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "C_Cpp.dimInactiveRegions": false

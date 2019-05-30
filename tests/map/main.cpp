@@ -22,8 +22,10 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Theater of combat");
     window.clear();
 
-    auto map = Map::create_test_map(30);
-    map.save("resources/maps/map.xml");
+ //   auto map = Map::create_test_map(30);
+   // map.save("resources/maps/map.xml");
+    Map map;
+    map.load("resources/maps/map.xml", 30);
 
     map.draw(window);
 

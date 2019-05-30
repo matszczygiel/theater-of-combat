@@ -18,7 +18,7 @@ class Map {
     std::unique_ptr<Hex_site>& get_hex(const int& x, const int& y);
     std::unique_ptr<Passage_site>& get_pass(const int& no);
 
-    //   void load_map(const std::string& path, const float& size);
+    void load(const std::string& path, const float& size);
     void save(const std::string& path) const;
 
     static Map create_test_map(const float& size);

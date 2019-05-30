@@ -72,6 +72,12 @@ void Map::recompute_geometry(const float& size) {
                 get_hex(x, y)->set_shape(map_offset + (2 * x + 1) * smr, map_offset + 1.5 * y * size, size);
             }
         }
+
+    for (auto& x : _passages) {
+        x.second->set_shape(get_hex(_adjacency_matrix.at(x.first).at(0))->get_position(),
+                            get_hex(_adjacency_matrix.at(x.first).at(1))->get_position(),
+                            size);
+    }
 }
 
 void Map::resize(const int& x, const int& y) {
@@ -157,91 +163,51 @@ Map Map::create_test_map(const float& size) {
 
     return res;
 }
-/*
-void Map::load_map(const std::string& path, const float& size) {
-    GAME_INFO("Loading map from a file: {0}", path);
+
+void Map::load(const std::string& path, const float& size) {
+    ENGINE_INFO("Loading map from a file: {0}", path);
 
     pugi::xml_document doc;
     auto parsing_result = doc.load_file(path.c_str());
 
     if (parsing_result) {
-        GAME_TRACE("Map sucesfully loaded.");
+        ENGINE_TRACE("Map file sucesfully loaded.");
     } else {
-        GAME_CRITICAL("Invlaid map file. Error description: {0}. Error offset: {1}",
-                      parsing_result.description(), parsing_result.offset);
+        ENGINE_CRITICAL("Invlaid map file. Error description: {0}. Error offset: {1}",
+                        parsing_result.description(), parsing_result.offset);
     }
 
-    _map.clear();
-    _passages.clear();
+    const auto map_node = doc.child("map");
 
-    auto hexes    = doc.child("map").child("hexagons_set");
-    auto passages = doc.child("map").child("passages_set");
+    const auto x_size = map_node.attribute("x-size").as_int();
+    const auto y_size = map_node.attribute("y-size").as_int();
 
-    GAME_TRACE("Loading hexagons set.");
+    resize(x_size, y_size);
 
-    resize(hexes.attribute("x_size").as_int(), hexes.attribute("y_size").as_int());
+    auto sites_node = map_node.child("sites");
 
-    for (auto hex_node : hexes.children("hex")) {
-        const auto no   = hex_node.attribute("number").as_int();
-        const auto type = string_to_hex_type(hex_node.attribute("hex_type").value());
-        get_hex(no)     = Map_site_factory::create_hex(type, no);
-    }
-    GAME_TRACE("Loading passges set.");
-
-    _passages.resize(passages.attribute("size").as_int());
-
-    for (auto pass : passages.children("passage")) {
-        const auto no    = pass.attribute("number").as_int();
-        const auto type  = string_to_passage_type(pass.attribute("passage_type").value());
-        _passages.at(no) = Map_site_factory::create_passage(type, no);
-    }
-
-    GAME_TRACE("Loading hexagons sides.");
-
-    for (auto hex : hexes.children("hex")) {
-        auto sides_node = hex.child("sides_array");
-        const auto no   = hex.attribute("number").as_int();
-        for (auto single_side_node : sides_node.children("side")) {
-            const auto dire      = string_to_direction(single_side_node.attribute("direction").value());
-            const auto site_node = single_side_node.child("site");
-            const auto site_type = string_to_site_type(site_node.attribute("site_type").value());
-            const auto no_side   = site_node.attribute("number").as_int();
-
-            switch (site_type) {
-                case Site_type::hexagon:
-                    get_hex(no)->set_side(dire, get_hex(no_side).get());
-                    break;
-                case Site_type::passage:
-                    get_hex(no)->set_side(dire, _passages.at(no_side).get());
-                    break;
-                default:
-                    GAME_CRITICAL("Unknown site type.");
-                    throw std::runtime_error("Unknown site type.");
-                    break;
-            }
+    for (auto node : sites_node.children("map-site")) {
+        std::unique_ptr<Map_site> site = Map_site::unserialize(node);
+        const auto& no                 = site->get_number();
+        if (no < static_cast<int>(_hexes.size())) {
+            _hexes[no] = std::unique_ptr<Hex_site>(static_cast<Hex_site*>(site.get()));
+        } else {
+            _passages[no] = std::unique_ptr<Passage_site> (static_cast<Passage_site*>(site.get()));
         }
     }
 
-    recompute_geometry(size);
+    auto adj_node = map_node.child("adjacency");
 
-    GAME_TRACE("Loading passages sides.");
-
-    for (auto pass : passages.children("passage")) {
-        const auto no  = pass.attribute("number").as_int();
-        auto side_node = pass.child("sides_array").child("side");
-
-        const auto dire1 = string_to_direction(side_node.attribute("direction").value());
-        const auto no1   = side_node.child("site").attribute("number").as_int();
-
-        side_node = side_node.next_sibling("side");
-
-        const auto dire2 = string_to_direction(side_node.attribute("direction").value());
-        const auto no2   = side_node.child("site").attribute("number").as_int();
-
-        _passages.at(no)->set_sides(dire1, get_hex(no1).get(), dire2, get_hex(no2).get());
+    for (auto x : adj_node.children("site")) {
+        const auto id         = x.attribute("id").as_int();
+        _adjacency_matrix[id] = {};
+        for (auto y : x.child("vec").attributes())
+            _adjacency_matrix[id].push_back(y.as_int());
     }
+
+    recompute_geometry(size);
 }
-*/
+
 void Map::save(const std::string& path) const {
     ENGINE_INFO("Saving map to a file: {0}", path);
 
@@ -266,7 +232,7 @@ void Map::save(const std::string& path) const {
         node.append_attribute("id").set_value(x.first);
         auto vec_node = node.append_child("vec");
         for (const auto& y : x.second) {
-            vec_node.append_attribute("enrty").set_value(y);
+            vec_node.append_attribute("entry").set_value(y);
         }
     }
 

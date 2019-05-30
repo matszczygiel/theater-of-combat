@@ -9,90 +9,83 @@
 Mover::Mover(std::weak_ptr<Unit> unit, std::weak_ptr<Map> map)
     : _map(map), _unit(unit) {}
 
-std::map<int, int> Mover::compute_weights() const {
+std::map<int, int> Mover::compute_weights(
+    const std::vector<std::unique_ptr<Hex_site>>& hex_set,
+    const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const {
     std::map<int, int> weights;
     const auto table = create_table();
 
-    for(const auto& x : _map->_hexes){
-        x->get_number();
+    for (const auto& x : hex_set) {
+        const auto& no   = x->get_number();
+        const auto& name = x->get_name();
+        weights[no]      = table.at(name);
+    }
+    for (const auto& x : pass_set) {
+        const auto& no   = x.first;
+        const auto& name = x.second->get_name();
+        weights[no]      = table.at(name);
     }
 
+    return weights;
 }
-
-void Mover::find_paths() {
-}
-
-void move(const sf::Vector2f& mouse_pos);
 
 void Mover::find_paths() {
     GAME_INFO("Initializing path finding algorithm.");
+    const auto map  = _map.lock();
+    const auto unit = _unit.lock();
 
-    create_table();
+    if (map && unit) {
+        const auto src     = unit->get_ocupation()->get_number();
+        const auto weights = compute_weights(map->_hexes, map->_passages);
+        auto res           = dijkstra(map->_adjacency_matrix, src, weights);
+        auto& dist         = res.first;
+        auto& prev         = res.second;
+        const auto& mv_pts = unit->get_mv_points();
 
-    const auto ocup   = _unit->get_ocupation();
-    const auto mv_pts = _unit->get_mv_points();
-    _paths.resize(mv_pts + 1);
-
-    _paths[0].insert(ocup);
-    ocup->set_highlighted(true);
-    /* TODO
-    implement finding the most optimal route
-    */
-
-    for (int i = 0; i <= mv_pts; ++i)
-        for (auto& x : _paths[i])
-            for (int j = 0; j < 6; ++j) {
-                auto side = x->get_side(static_cast<Directions>(j));
-
-                if (side != nullptr) {
-                    if (!side->is_highlighted()) {
-                        const auto st = side->get_site_type();
-                        auto mp_cost  = i;
-
-                        if (st == Site_type::hexagon) {
-                            auto side1 = static_cast<Hex_site*>(side);
-                            mp_cost += _hex_table[side1->get_hex_type()];
-                            if (mp_cost <= mv_pts) {
-                                side1->set_highlighted(true);
-                                _paths[mp_cost].insert(side1);
-                            }
-
-                        } else if (st == Site_type::passage) {
-                            auto side1 = static_cast<Passage_site*>(side);
-                            mp_cost += _pass_table[side1->get_passage_type()];
-
-                            auto side2 = side1->other_side(x);
-
-                            if (!side2->is_highlighted()) {
-                                mp_cost += _hex_table[side2->get_hex_type()];
-
-                                if (mp_cost <= mv_pts) {
-                                    side1->set_highlighted(true);
-                                    side2->set_highlighted(true);
-                                    _passages.insert(side1);
-                                    _paths[mp_cost].insert(side2);
-                                }
-                            }
-                        }
-                    }
+        for (auto it = dist.begin(); it != dist.end();)
+            if (it->second > mv_pts) {
+                prev.erase(it->first);
+                it = dist.erase(it);
+            } else {
+                if (map->_hexes.size() > it->first) {
+                    map->get_hex(it->first)->set_highlighted(true);
+                } else {
+                    map->get_pass(it->first)->set_highlighted(true);
                 }
+
+                ++it;
             }
+
+        _distances = dist;
+        _previous  = prev;
+
+    } else {
+        ENGINE_ERROR("Initializing mover with invalid map or unit.");
+        assert(false);
+    }
 }
 
 void Mover::move(const sf::Vector2f& mouse_pos) {
     GAME_INFO("Moving unit.");
-    for (int used_mp = 0; used_mp < _paths.size(); ++used_mp) {
-        for (auto& x : _paths[used_mp]) {
-            auto hex = static_cast<Hex_site*>(x);
-            if (hex->contains(mouse_pos)) {
-                _unit->place_on_hex(hex);
-                _unit->reduce_mv_points(used_mp);
+    const auto map  = _map.lock();
+    const auto unit = _unit.lock();
 
-                clear();
-                return;
+    if (map && unit) {
+        for (auto it = _distances.begin(); it != _distances.end(); ++it) {
+            if (map->_hexes.size() > it->first) {
+                const auto& hex = map->get_hex(it->first);
+
+                if (hex->contains(mouse_pos)) {
+                    unit->place_on_hex(hex);
+                    unit->reduce_mv_points(it->second);
+
+                    clear();
+                    return;
+                }
             }
         }
     }
+
     clear();
     return;
 }
@@ -100,6 +93,12 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
 void Mover::clear() {
     _distances.empty();
     _previous.empty();
+    if (auto map = _map.lock()) {
+        for (auto& x : map->_hexes)
+            x->set_highlighted(false);
+        for (auto& x : map->_passages)
+            x.second->set_highlighted(false);
+    }
 }
 
 std::pair<std::map<int, int>, std::map<int, int>>
@@ -125,8 +124,8 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     while (!queue.empty()) {
         auto u = queue.top().second;
         queue.pop();
-        for (const auto& v : graph[u]) {
-            const auto alt = dist[u] + weights[v];
+        for (const auto& v : graph.at(u)) {
+            const auto alt = dist[u] + weights.at(v);
             if (alt < dist[v]) {
                 dist[v] = alt;
                 prev[v] = u;

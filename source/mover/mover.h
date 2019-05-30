@@ -19,7 +19,9 @@ class Mover {
    protected:
     virtual std::unordered_map<Map_site::id_type, int> create_table() const = 0;
 
-    std::map<int, int> compute_weights() const;
+    std::map<int, int> compute_weights(
+        const std::vector<std::unique_ptr<Hex_site>>& hex_set,
+        const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const;
     void clear();
 
     std::weak_ptr<Map> _map;

@@ -130,7 +130,6 @@ void Map::compute_adjacency_of_hexes() {
         }
 }
 
-// do something with this function
 Map Map::create_test_map(const float& size) {
     GAME_INFO("Creating test map of size: {0}", size);
 
@@ -242,40 +241,39 @@ void Map::load_map(const std::string& path, const float& size) {
         _passages.at(no)->set_sides(dire1, get_hex(no1).get(), dire2, get_hex(no2).get());
     }
 }
-
-void Map::save_map(const std::string& path) {
-    GAME_INFO("Saving map to a file: {0}", path);
+*/
+void Map::save(const std::string& path) const {
+    ENGINE_INFO("Saving map to a file: {0}", path);
 
     pugi::xml_document doc;
     auto map_node = doc.append_child("map");
+    map_node.append_attribute("x-size").set_value(_x_dim);
+    map_node.append_attribute("y-size").set_value(_y_dim);
 
-    auto hexes = map_node.append_child("hexagons_set");
-    GAME_TRACE("Writing hexagons set.");
+    auto sites = map_node.append_child("sites");
+    ENGINE_TRACE("Writing sites set.");
 
-    hexes.append_attribute("x_size").set_value(_x_dim);
-    hexes.append_attribute("y_size").set_value(_y_dim);
+    for (const auto& x : _hexes)
+        x->serialize(sites);
 
-    for (int x = 0; x < _x_dim; ++x)
-        for (int y = 0; y < _y_dim; ++y) {
-            const auto& hex = get_hex(x, y);
-            hex->write(hexes);
+    for (const auto& x : _passages)
+        x.second->serialize(sites);
+
+    auto adj = map_node.append_child("adjacency");
+
+    for (const auto& x : _adjacency_matrix) {
+        auto node = adj.append_child("site");
+        node.append_attribute("id").set_value(x.first);
+        auto vec_node = node.append_child("vec");
+        for (const auto& y : x.second) {
+            vec_node.append_attribute("enrty").set_value(y);
         }
-
-    auto passes = map_node.append_child("passages_set");
-    GAME_TRACE("Writing passages set.");
-
-    passes.append_attribute("size").set_value(_passages.size());
-
-    for (int p = 0; p < _passages.size(); ++p) {
-        const auto& pass = _passages[p];
-        pass->write(passes);
     }
 
     if (!doc.save_file(path.c_str())) {
         GAME_ERROR("Could not save map file.");
     }
 }
-*/
 
 void Map::set_numbers_drawing(const std::string& font_filename) {
     _numbers_font.loadFromFile(font_filename);

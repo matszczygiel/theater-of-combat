@@ -20,8 +20,6 @@ add_executable(test
                 ../../source/map/passage_site.h
                 ../../source/map/concrete_passage.h
                 ../../source/map/concrete_passage.cpp
-                ../../source/mover/mover.h
-                ../../source/mover/mover.cpp
                 main.cpp
                 )
 

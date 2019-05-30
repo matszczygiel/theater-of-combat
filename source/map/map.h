@@ -19,7 +19,7 @@ class Map {
     std::unique_ptr<Passage_site>& get_pass(const int& no);
 
     //   void load_map(const std::string& path, const float& size);
-    //   void save_map(const std::string& path);
+    void save(const std::string& path) const;
 
     static Map create_test_map(const float& size);
 

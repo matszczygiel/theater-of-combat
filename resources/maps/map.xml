@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<map x-size="10" y-size="10">
+	<sites>
+		<map-site type="Forest" number="0" />
+		<map-site type="Forest" number="1" />
+		<map-site type="Forest" number="2" />
+		<map-site type="Forest" number="3" />
+		<map-site type="Forest" number="4" />
+		<map-site type="Forest" number="5" />
+		<map-site type="Forest" number="6" />
+		<map-site type="Field" number="7" />
+		<map-site type="Field" number="8" />
+		<map-site type="Field" number="9" />
+		<map-site type="Forest" number="10" />
+		<map-site type="Forest" number="11" />
+		<map-site type="Forest" number="12" />
+		<map-site type="Forest" number="13" />
+		<map-site type="Forest" number="14" />
+		<map-site type="Forest" number="15" />
+		<map-site type="Forest" number="16" />
+		<map-site type="Field" number="17" />
+		<map-site type="Field" number="18" />
+		<map-site type="Field" number="19" />
+		<map-site type="Forest" number="20" />
+		<map-site type="Forest" number="21" />
+		<map-site type="Forest" number="22" />
+		<map-site type="Forest" number="23" />
+		<map-site type="Forest" number="24" />
+		<map-site type="Forest" number="25" />
+		<map-site type="Forest" number="26" />
+		<map-site type="Field" number="27" />
+		<map-site type="Field" number="28" />
+		<map-site type="Field" number="29" />
+		<map-site type="Forest" number="30" />
+		<map-site type="Forest" number="31" />
+		<map-site type="Forest" number="32" />
+		<map-site type="Forest" number="33" />
+		<map-site type="Forest" number="34" />
+		<map-site type="Forest" number="35" />
+		<map-site type="Forest" number="36" />
+		<map-site type="Field" number="37" />
+		<map-site type="Field" number="38" />
+		<map-site type="Field" number="39" />
+		<map-site type="Field" number="40" />
+		<map-site type="Field" number="41" />
+		<map-site type="Field" number="42" />
+		<map-site type="Field" number="43" />
+		<map-site type="Field" number="44" />
+		<map-site type="Field" number="45" />
+		<map-site type="Field" number="46" />
+		<map-site type="Field" number="47" />
+		<map-site type="Field" number="48" />
+		<map-site type="Field" number="49" />
+		<map-site type="Field" number="50" />
+		<map-site type="Field" number="51" />
+		<map-site type="Field" number="52" />
+		<map-site type="Field" number="53" />
+		<map-site type="Field" number="54" />
+		<map-site type="Field" number="55" />
+		<map-site type="Field" number="56" />
+		<map-site type="Field" number="57" />
+		<map-site type="Field" number="58" />
+		<map-site type="Field" number="59" />
+		<map-site type="Field" number="60" />
+		<map-site type="Field" number="61" />
+		<map-site type="Field" number="62" />
+		<map-site type="Field" number="63" />
+		<map-site type="Field" number="64" />
+		<map-site type="Field" number="65" />
+		<map-site type="Field" number="66" />
+		<map-site type="Field" number="67" />
+		<map-site type="Field" number="68" />
+		<map-site type="Field" number="69" />
+		<map-site type="Field" number="70" />
+		<map-site type="Field" number="71" />
+		<map-site type="Field" number="72" />
+		<map-site type="Field" number="73" />
+		<map-site type="Field" number="74" />
+		<map-site type="Field" number="75" />
+		<map-site type="Field" number="76" />
+		<map-site type="Field" number="77" />
+		<map-site type="Field" number="78" />
+		<map-site type="Field" number="79" />
+		<map-site type="Field" number="80" />
+		<map-site type="Field" number="81" />
+		<map-site type="Field" number="82" />
+		<map-site type="Field" number="83" />
+		<map-site type="Field" number="84" />
+		<map-site type="Field" number="85" />
+		<map-site type="Field" number="86" />
+		<map-site type="Field" number="87" />
+		<map-site type="Field" number="88" />
+		<map-site type="Field" number="89" />
+		<map-site type="Field" number="90" />
+		<map-site type="Field" number="91" />
+		<map-site type="Field" number="92" />
+		<map-site type="Field" number="93" />
+		<map-site type="Field" number="94" />
+		<map-site type="Field" number="95" />
+		<map-site type="Field" number="96" />
+		<map-site type="Field" number="97" />
+		<map-site type="Field" number="98" />
+		<map-site type="Field" number="99" />
+		<map-site type="River" number="100" />
+		<map-site type="River" number="101" />
+		<map-site type="River" number="102" />
+		<map-site type="River" number="103" />
+		<map-site type="River" number="104" />
+		<map-site type="River" number="105" />
+		<map-site type="River" number="106" />
+		<map-site type="River" number="107" />
+		<map-site type="River" number="108" />
+		<map-site type="River" number="109" />
+		<map-site type="River" number="110" />
+		<map-site type="River" number="111" />
+		<map-site type="River" number="112" />
+		<map-site type="River" number="113" />
+		<map-site type="River" number="114" />
+		<map-site type="River" number="115" />
+		<map-site type="River" number="116" />
+		<map-site type="River" number="117" />
+		<map-site type="River" number="118" />
+	</sites>
+	<adjacency>
+		<site id="0">
+			<vec enrty="1" enrty="10" />
+		</site>
+		<site id="1">
+			<vec enrty="0" enrty="10" enrty="2" enrty="11" enrty="12" />
+		</site>
+		<site id="2">
+			<vec enrty="1" enrty="3" enrty="12" />
+		</site>
+		<site id="3">
+			<vec enrty="2" enrty="12" enrty="4" enrty="13" enrty="14" />
+		</site>
+		<site id="4">
+			<vec enrty="3" enrty="5" enrty="14" />
+		</site>
+		<site id="5">
+			<vec enrty="4" enrty="14" enrty="6" enrty="15" enrty="16" />
+		</site>
+		<site id="6">
+			<vec enrty="5" enrty="7" enrty="16" />
+		</site>
+		<site id="7">
+			<vec enrty="6" enrty="16" enrty="8" enrty="17" enrty="18" />
+		</site>
+		<site id="8">
+			<vec enrty="7" enrty="9" enrty="18" />
+		</site>
+		<site id="9">
+			<vec enrty="8" enrty="18" enrty="19" />
+		</site>
+		<site id="10">
+			<vec enrty="1" enrty="0" enrty="11" enrty="20" />
+		</site>
+		<site id="11">
+			<vec enrty="10" enrty="20" enrty="1" enrty="12" enrty="21" enrty="22" />
+		</site>
+		<site id="12">
+			<vec enrty="3" enrty="11" enrty="1" enrty="2" enrty="13" enrty="22" />
+		</site>
+		<site id="13">
+			<vec enrty="12" enrty="22" enrty="3" enrty="14" enrty="23" enrty="24" />
+		</site>
+		<site id="14">
+			<vec enrty="5" enrty="13" enrty="3" enrty="4" enrty="15" enrty="24" />
+		</site>
+		<site id="15">
+			<vec enrty="14" enrty="24" enrty="5" enrty="16" enrty="25" enrty="26" />
+		</site>
+		<site id="16">
+			<vec enrty="7" enrty="15" enrty="5" enrty="6" enrty="17" enrty="26" />
+		</site>
+		<site id="17">
+			<vec enrty="16" enrty="26" enrty="7" enrty="18" enrty="27" enrty="28" />
+		</site>
+		<site id="18">
+			<vec enrty="9" enrty="17" enrty="7" enrty="8" enrty="19" enrty="28" />
+		</site>
+		<site id="19">
+			<vec enrty="18" enrty="28" enrty="9" enrty="29" />
+		</site>
+		<site id="20">
+			<vec enrty="11" enrty="10" enrty="21" enrty="30" />
+		</site>
+		<site id="21">
+			<vec enrty="20" enrty="30" enrty="11" enrty="22" enrty="31" enrty="32" />
+		</site>
+		<site id="22">
+			<vec enrty="13" enrty="21" enrty="11" enrty="12" enrty="23" enrty="32" />
+		</site>
+		<site id="23">
+			<vec enrty="22" enrty="32" enrty="13" enrty="24" enrty="33" enrty="34" />
+		</site>
+		<site id="24">
+			<vec enrty="15" enrty="23" enrty="13" enrty="14" enrty="25" enrty="34" />
+		</site>
+		<site id="25">
+			<vec enrty="24" enrty="34" enrty="15" enrty="26" enrty="35" enrty="36" />
+		</site>
+		<site id="26">
+			<vec enrty="17" enrty="25" enrty="15" enrty="16" enrty="27" enrty="36" />
+		</site>
+		<site id="27">
+			<vec enrty="26" enrty="36" enrty="17" enrty="28" enrty="37" enrty="38" />
+		</site>
+		<site id="28">
+			<vec enrty="19" enrty="27" enrty="17" enrty="18" enrty="29" enrty="38" />
+		</site>
+		<site id="29">
+			<vec enrty="28" enrty="38" enrty="19" enrty="39" />
+		</site>
+		<site id="30">
+			<vec enrty="21" enrty="20" enrty="31" enrty="40" />
+		</site>
+		<site id="31">
+			<vec enrty="30" enrty="40" enrty="21" enrty="32" enrty="41" enrty="42" />
+		</site>
+		<site id="32">
+			<vec enrty="23" enrty="31" enrty="21" enrty="22" enrty="33" enrty="42" />
+		</site>
+		<site id="33">
+			<vec enrty="32" enrty="42" enrty="23" enrty="34" enrty="43" enrty="44" />
+		</site>
+		<site id="34">
+			<vec enrty="25" enrty="33" enrty="23" enrty="24" enrty="35" enrty="44" />
+		</site>
+		<site id="35">
+			<vec enrty="34" enrty="44" enrty="25" enrty="36" enrty="45" enrty="46" />
+		</site>
+		<site id="36">
+			<vec enrty="27" enrty="35" enrty="25" enrty="26" enrty="37" enrty="46" />
+		</site>
+		<site id="37">
+			<vec enrty="36" enrty="46" enrty="27" enrty="38" enrty="47" enrty="48" />
+		</site>
+		<site id="38">
+			<vec enrty="29" enrty="37" enrty="27" enrty="28" enrty="39" enrty="48" />
+		</site>
+		<site id="39">
+			<vec enrty="38" enrty="48" enrty="29" enrty="49" />
+		</site>
+		<site id="40">
+			<vec enrty="31" enrty="30" enrty="41" enrty="50" />
+		</site>
+		<site id="41">
+			<vec enrty="40" enrty="50" enrty="31" enrty="42" enrty="51" enrty="52" />
+		</site>
+		<site id="42">
+			<vec enrty="33" enrty="41" enrty="31" enrty="32" enrty="43" enrty="52" />
+		</site>
+		<site id="43">
+			<vec enrty="42" enrty="52" enrty="33" enrty="44" enrty="53" enrty="54" />
+		</site>
+		<site id="44">
+			<vec enrty="35" enrty="43" enrty="33" enrty="34" enrty="45" enrty="54" />
+		</site>
+		<site id="45">
+			<vec enrty="44" enrty="54" enrty="35" enrty="46" enrty="55" enrty="56" />
+		</site>
+		<site id="46">
+			<vec enrty="37" enrty="45" enrty="35" enrty="36" enrty="47" enrty="56" />
+		</site>
+		<site id="47">
+			<vec enrty="46" enrty="56" enrty="37" enrty="48" enrty="57" enrty="58" />
+		</site>
+		<site id="48">
+			<vec enrty="39" enrty="47" enrty="37" enrty="38" enrty="49" enrty="58" />
+		</site>
+		<site id="49">
+			<vec enrty="48" enrty="58" enrty="39" enrty="59" />
+		</site>
+		<site id="50">
+			<vec enrty="41" enrty="40" enrty="51" enrty="100" />
+		</site>
+		<site id="51">
+			<vec enrty="50" enrty="110" enrty="41" enrty="52" enrty="101" enrty="115" />
+		</site>
+		<site id="52">
+			<vec enrty="43" enrty="51" enrty="41" enrty="42" enrty="53" enrty="102" />
+		</site>
+		<site id="53">
+			<vec enrty="52" enrty="111" enrty="43" enrty="54" enrty="103" enrty="116" />
+		</site>
+		<site id="54">
+			<vec enrty="45" enrty="53" enrty="43" enrty="44" enrty="55" enrty="104" />
+		</site>
+		<site id="55">
+			<vec enrty="54" enrty="112" enrty="45" enrty="56" enrty="105" enrty="117" />
+		</site>
+		<site id="56">
+			<vec enrty="47" enrty="55" enrty="45" enrty="46" enrty="57" enrty="106" />
+		</site>
+		<site id="57">
+			<vec enrty="56" enrty="113" enrty="47" enrty="58" enrty="107" enrty="118" />
+		</site>
+		<site id="58">
+			<vec enrty="49" enrty="57" enrty="47" enrty="48" enrty="59" enrty="108" />
+		</site>
+		<site id="59">
+			<vec enrty="58" enrty="114" enrty="49" enrty="109" />
+		</site>
+		<site id="60">
+			<vec enrty="110" enrty="100" enrty="61" enrty="70" />
+		</site>
+		<site id="61">
+			<vec enrty="60" enrty="70" enrty="101" enrty="62" enrty="71" enrty="72" />
+		</site>
+		<site id="62">
+			<vec enrty="111" enrty="61" enrty="115" enrty="102" enrty="63" enrty="72" />
+		</site>
+		<site id="63">
+			<vec enrty="62" enrty="72" enrty="103" enrty="64" enrty="73" enrty="74" />
+		</site>
+		<site id="64">
+			<vec enrty="112" enrty="63" enrty="116" enrty="104" enrty="65" enrty="74" />
+		</site>
+		<site id="65">
+			<vec enrty="64" enrty="74" enrty="105" enrty="66" enrty="75" enrty="76" />
+		</site>
+		<site id="66">
+			<vec enrty="113" enrty="65" enrty="117" enrty="106" enrty="67" enrty="76" />
+		</site>
+		<site id="67">
+			<vec enrty="66" enrty="76" enrty="107" enrty="68" enrty="77" enrty="78" />
+		</site>
+		<site id="68">
+			<vec enrty="114" enrty="67" enrty="118" enrty="108" enrty="69" enrty="78" />
+		</site>
+		<site id="69">
+			<vec enrty="68" enrty="78" enrty="109" enrty="79" />
+		</site>
+		<site id="70">
+			<vec enrty="61" enrty="60" enrty="71" enrty="80" />
+		</site>
+		<site id="71">
+			<vec enrty="70" enrty="80" enrty="61" enrty="72" enrty="81" enrty="82" />
+		</site>
+		<site id="72">
+			<vec enrty="63" enrty="71" enrty="61" enrty="62" enrty="73" enrty="82" />
+		</site>
+		<site id="73">
+			<vec enrty="72" enrty="82" enrty="63" enrty="74" enrty="83" enrty="84" />
+		</site>
+		<site id="74">
+			<vec enrty="65" enrty="73" enrty="63" enrty="64" enrty="75" enrty="84" />
+		</site>
+		<site id="75">
+			<vec enrty="74" enrty="84" enrty="65" enrty="76" enrty="85" enrty="86" />
+		</site>
+		<site id="76">
+			<vec enrty="67" enrty="75" enrty="65" enrty="66" enrty="77" enrty="86" />
+		</site>
+		<site id="77">
+			<vec enrty="76" enrty="86" enrty="67" enrty="78" enrty="87" enrty="88" />
+		</site>
+		<site id="78">
+			<vec enrty="69" enrty="77" enrty="67" enrty="68" enrty="79" enrty="88" />
+		</site>
+		<site id="79">
+			<vec enrty="78" enrty="88" enrty="69" enrty="89" />
+		</site>
+		<site id="80">
+			<vec enrty="71" enrty="70" enrty="81" enrty="90" />
+		</site>
+		<site id="81">
+			<vec enrty="80" enrty="90" enrty="71" enrty="82" enrty="91" enrty="92" />
+		</site>
+		<site id="82">
+			<vec enrty="73" enrty="81" enrty="71" enrty="72" enrty="83" enrty="92" />
+		</site>
+		<site id="83">
+			<vec enrty="82" enrty="92" enrty="73" enrty="84" enrty="93" enrty="94" />
+		</site>
+		<site id="84">
+			<vec enrty="75" enrty="83" enrty="73" enrty="74" enrty="85" enrty="94" />
+		</site>
+		<site id="85">
+			<vec enrty="84" enrty="94" enrty="75" enrty="86" enrty="95" enrty="96" />
+		</site>
+		<site id="86">
+			<vec enrty="77" enrty="85" enrty="75" enrty="76" enrty="87" enrty="96" />
+		</site>
+		<site id="87">
+			<vec enrty="86" enrty="96" enrty="77" enrty="88" enrty="97" enrty="98" />
+		</site>
+		<site id="88">
+			<vec enrty="79" enrty="87" enrty="77" enrty="78" enrty="89" enrty="98" />
+		</site>
+		<site id="89">
+			<vec enrty="88" enrty="98" enrty="79" enrty="99" />
+		</site>
+		<site id="90">
+			<vec enrty="81" enrty="80" enrty="91" />
+		</site>
+		<site id="91">
+			<vec enrty="90" enrty="81" enrty="92" />
+		</site>
+		<site id="92">
+			<vec enrty="83" enrty="91" enrty="81" enrty="82" enrty="93" />
+		</site>
+		<site id="93">
+			<vec enrty="92" enrty="83" enrty="94" />
+		</site>
+		<site id="94">
+			<vec enrty="85" enrty="93" enrty="83" enrty="84" enrty="95" />
+		</site>
+		<site id="95">
+			<vec enrty="94" enrty="85" enrty="96" />
+		</site>
+		<site id="96">
+			<vec enrty="87" enrty="95" enrty="85" enrty="86" enrty="97" />
+		</site>
+		<site id="97">
+			<vec enrty="96" enrty="87" enrty="98" />
+		</site>
+		<site id="98">
+			<vec enrty="89" enrty="97" enrty="87" enrty="88" enrty="99" />
+		</site>
+		<site id="99">
+			<vec enrty="98" enrty="89" />
+		</site>
+		<site id="100">
+			<vec enrty="50" enrty="60" />
+		</site>
+		<site id="101">
+			<vec enrty="51" enrty="61" />
+		</site>
+		<site id="102">
+			<vec enrty="52" enrty="62" />
+		</site>
+		<site id="103">
+			<vec enrty="53" enrty="63" />
+		</site>
+		<site id="104">
+			<vec enrty="54" enrty="64" />
+		</site>
+		<site id="105">
+			<vec enrty="55" enrty="65" />
+		</site>
+		<site id="106">
+			<vec enrty="56" enrty="66" />
+		</site>
+		<site id="107">
+			<vec enrty="57" enrty="67" />
+		</site>
+		<site id="108">
+			<vec enrty="58" enrty="68" />
+		</site>
+		<site id="109">
+			<vec enrty="59" enrty="69" />
+		</site>
+		<site id="110">
+			<vec enrty="51" enrty="60" />
+		</site>
+		<site id="111">
+			<vec enrty="53" enrty="62" />
+		</site>
+		<site id="112">
+			<vec enrty="55" enrty="64" />
+		</site>
+		<site id="113">
+			<vec enrty="57" enrty="66" />
+		</site>
+		<site id="114">
+			<vec enrty="59" enrty="68" />
+		</site>
+		<site id="115">
+			<vec enrty="51" enrty="62" />
+		</site>
+		<site id="116">
+			<vec enrty="53" enrty="64" />
+		</site>
+		<site id="117">
+			<vec enrty="55" enrty="66" />
+		</site>
+		<site id="118">
+			<vec enrty="57" enrty="68" />
+		</site>
+	</adjacency>
+</map>

@@ -4,6 +4,10 @@
 
 sf::Font Unit::_font;
 
+const auto& Unit::get_ocupation() const { return _ocupation; }
+
+const auto& Unit::get_mv_points() const { return _current_moving_pts; }
+
 void Unit::place_on_hex(Hex_site* hex) {
     _ocupation = hex;
     Tokenizable::set_token_postion(_ocupation->get_position());

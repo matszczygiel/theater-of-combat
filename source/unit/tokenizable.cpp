@@ -6,17 +6,17 @@ bool Tokenizable::_texture_loaded = false;
 sf::Texture Tokenizable::_tokens_texture;
 
 void Tokenizable::load_textures(const std::string& filename) {
-    GAME_INFO("Loading tokens texture, from: {0}", filename);
+    ENGINE_INFO("Loading tokens texture, from: {0}", filename);
 
     if (!_tokens_texture.loadFromFile(filename)) {
-        GAME_ERROR("Failed to load textures.");
+        ENGINE_ERROR("Failed to load textures.");
         throw std::runtime_error("Failed to load textures.");
     }
 
     _texture_loaded = true;
 }
 
-bool Tokenizable::token_contains(const sf::Vector2f& vec) {
+bool Tokenizable::token_contains(const sf::Vector2f& vec) const {
     return _token.getGlobalBounds().contains(vec);
 }
 
@@ -38,7 +38,7 @@ void Tokenizable::draw(sf::RenderTarget& target) const {
 
 void Tokenizable::init_token(const float& size) {
     if (!_texture_loaded) {
-        GAME_ERROR("Initializing token without textures.");
+        ENGINE_ERROR("Initializing token without textures.");
         throw std::runtime_error("Initializing token without textures.");
     }
 
@@ -48,16 +48,16 @@ void Tokenizable::init_token(const float& size) {
     const int offset     = text_size.y * texture_offset();
 
     if (offset >= text_size.x) {
-        GAME_ERROR("Token initialized with too much texture offset. offset: {0}, texture width: {1}", offset, text_size.x);
+        ENGINE_ERROR("Token initialized with too much texture offset. offset: {0}, texture width: {1}", offset, text_size.x);
     }
 
     sf::IntRect texture_rect(offset, 0, text_size.y, text_size.y);
     _token.setTextureRect(texture_rect);
 
-    GAME_TRACE("Token intialized of size: {0}.", size);
+    ENGINE_TRACE("Token intialized of size: {0}.", size);
 }
 
-float Tokenizable::get_token_size() const {
+const float& Tokenizable::get_token_size() const {
     return _token.getSize().x;
 }
 

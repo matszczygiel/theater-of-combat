@@ -14,3 +14,15 @@ void Map_site::serialize(pugi::xml_node& node) const {
     child.append_attribute(type_identifier).set_value(get_name().c_str());
     child.append_attribute(number_identifier).set_value(_number);
 }
+
+bool Map_site::is_highlighted() const noexcept {
+    return _highlighted;
+}
+
+constexpr auto& Map_site::get_number() const noexcept {
+    return _number;
+}
+
+void Map_site::set_highlighted(bool highlighted) {
+    _highlighted = highlighted;
+}

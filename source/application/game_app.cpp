@@ -22,7 +22,7 @@ void Game::initialize() {
 
     //    _map = Map::create_test_map(token_size);
     //    _map.save_map("resources/maps/test_map.xml");
-    _map.load_map("resources/maps/test_map.xml", _token_size);
+    _map.load("resources/maps/map.xml", _token_size);
     _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
     Tokenizable::load_textures("resources/textures/units.png");

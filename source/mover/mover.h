@@ -9,7 +9,7 @@
 
 class Mover {
    public:
-    explicit Mover(std::weak_ptr<Unit> unit, std::weak_ptr<Map> map);
+    explicit Mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map);
 
     void find_paths();
     void move(const sf::Vector2f& mouse_pos);
@@ -20,12 +20,12 @@ class Mover {
     virtual std::unordered_map<Map_site::id_type, int> create_table() const = 0;
 
     std::map<int, int> compute_weights(
-        const std::vector<std::unique_ptr<Hex_site>>& hex_set,
-        const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const;
+        const std::vector<std::shared_ptr<Hex_site>>& hex_set,
+        const std::map<int, std::shared_ptr<Passage_site>>& pass_set) const;
     void clear();
 
-    std::weak_ptr<Map> _map;
-    std::weak_ptr<Unit> _unit;
+    std::shared_ptr<Map> _map;
+    std::shared_ptr<Unit> _unit;
 
     std::map<int, int> _distances;
     std::map<int, int> _previous;

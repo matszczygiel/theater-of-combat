@@ -8,9 +8,9 @@
 #include "concrete_passage.h"
 #include "log.h"
 
-std::unique_ptr<Passage_site>& Map::get_pass(const int& no) {
+std::shared_ptr<Passage_site>& Map::get_pass(const int& no) {
     if (no <= static_cast<int>(_hexes.size()) || no > _current_max_no) {
-        GAME_ERROR("Invalid pass number requested!: {0}, must by in domain [{1}, {2}].",
+        ENGINE_ERROR("Invalid pass number requested!: {0}, must by in domain [{1}, {2}].",
                    no, _hexes.size(), _passages.size());
         assert(true);
     }
@@ -21,9 +21,9 @@ constexpr int Map::get_no(const int& x, const int& y) {
     return _x_dim * x + y;
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
+std::shared_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
-        GAME_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.",
+        ENGINE_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.",
                    x, y, _x_dim, _y_dim);
         assert(true);
     }
@@ -31,9 +31,9 @@ std::unique_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
     return get_hex(no);
 }
 
-std::unique_ptr<Hex_site>& Map::get_hex(const int& no) {
+std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
     if (no >= static_cast<int>(_hexes.size())) {
-        GAME_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.",
+        ENGINE_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.",
                    no, _hexes.size());
         assert(true);
         return _hexes.back();
@@ -58,7 +58,7 @@ void Map::draw(sf::RenderTarget& target) const {
 }
 
 void Map::recompute_geometry(const float& size) {
-    GAME_INFO("Recomputing map geometry, size: {0}", size);
+    ENGINE_INFO("Recomputing map geometry, size: {0}", size);
 
     constexpr float map_offset = 100.f;
 
@@ -93,7 +93,7 @@ void Map::resize(const int& x, const int& y) {
 }
 
 void Map::generate_plain_map(const float& xdim, const float& ydim, const float& site_size) {
-    GAME_INFO("Creating plain map of size: {0} x {1}", xdim, ydim);
+    ENGINE_INFO("Creating plain map of size: {0} x {1}", xdim, ydim);
 
     resize(xdim, ydim);
 
@@ -137,7 +137,7 @@ void Map::compute_adjacency_of_hexes() {
 }
 
 Map Map::create_test_map(const float& size) {
-    GAME_INFO("Creating test map of size: {0}", size);
+    ENGINE_INFO("Creating test map of size: {0}", size);
 
     constexpr int dim = 10;
     Map res;
@@ -187,12 +187,12 @@ void Map::load(const std::string& path, const float& size) {
     auto sites_node = map_node.child("sites");
 
     for (auto node : sites_node.children("map-site")) {
-        std::unique_ptr<Map_site> site = Map_site::unserialize(node);
+        std::shared_ptr<Map_site> site = Map_site::unserialize(node);
         const auto& no                 = site->get_number();
         if (no < static_cast<int>(_hexes.size())) {
-            _hexes[no] = std::unique_ptr<Hex_site>(static_cast<Hex_site*>(site.get()));
+            _hexes[no] = std::dynamic_pointer_cast<Hex_site>(site);
         } else {
-            _passages[no] = std::unique_ptr<Passage_site> (static_cast<Passage_site*>(site.get()));
+            _passages[no] = std::dynamic_pointer_cast<Passage_site>(site);
         }
     }
 
@@ -206,6 +206,7 @@ void Map::load(const std::string& path, const float& size) {
     }
 
     recompute_geometry(size);
+    ENGINE_INFO("Map successfully loaded.");
 }
 
 void Map::save(const std::string& path) const {
@@ -237,7 +238,7 @@ void Map::save(const std::string& path) const {
     }
 
     if (!doc.save_file(path.c_str())) {
-        GAME_ERROR("Could not save map file.");
+        ENGINE_ERROR("Could not save map file.");
     }
 }
 

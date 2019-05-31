@@ -49,14 +49,3 @@ class Map_site : public Registrable<Map_site, std::string, pugi::xml_node> {
 #define DEFINE_MAP_SITE_NAMING(class_name) \
     virtual inline id_type get_name() const override { return #class_name; };
 
-inline bool Map_site::is_highlighted() const noexcept {
-    return _highlighted;
-}
-
-inline constexpr auto& Map_site::get_number() const noexcept {
-    return _number;
-}
-
-inline void Map_site::set_highlighted(bool highlighted) {
-    _highlighted = highlighted;
-}

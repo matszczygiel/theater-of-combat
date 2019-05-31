@@ -4,6 +4,9 @@
 
 sf::Font Unit::_font;
 
+Unit::Unit(const int& moving_pts, const int& strength_pts) noexcept
+    : Tokenizable(), _occupation(), _moving_pts(moving_pts), _current_moving_pts(moving_pts) {}
+
 const auto& Unit::get_ocupation() const { return _ocupation; }
 
 const auto& Unit::get_mv_points() const { return _current_moving_pts; }

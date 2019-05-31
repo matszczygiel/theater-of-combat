@@ -6,12 +6,12 @@
 
 #include "log.h"
 
-Mover::Mover(std::weak_ptr<Unit> unit, std::weak_ptr<Map> map)
+Mover::Mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map)
     : _map(map), _unit(unit) {}
 
 std::map<int, int> Mover::compute_weights(
-    const std::vector<std::unique_ptr<Hex_site>>& hex_set,
-    const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const {
+    const std::vector<std::shared_ptr<Hex_site>>& hex_set,
+    const std::map<int, std::shared_ptr<Passage_site>>& pass_set) const {
     std::map<int, int> weights;
     const auto table = create_table();
 
@@ -31,26 +31,23 @@ std::map<int, int> Mover::compute_weights(
 
 void Mover::find_paths() {
     GAME_INFO("Initializing path finding algorithm.");
-    const auto map  = _map.lock();
-    const auto unit = _unit.lock();
-
-    if (map && unit) {
-        const auto src     = unit->get_ocupation()->get_number();
-        const auto weights = compute_weights(map->_hexes, map->_passages);
-        auto res           = dijkstra(map->_adjacency_matrix, src, weights);
+    if (_map && _unit) {
+        const auto src     = _unit->get_occupation()->get_number();
+        const auto weights = compute_weights(_map->_hexes, _map->_passages);
+        auto res           = dijkstra(_map->_adjacency_matrix, src, weights);
         auto& dist         = res.first;
         auto& prev         = res.second;
-        const auto& mv_pts = unit->get_mv_points();
+        const auto& mv_pts = _unit->get_mv_points();
 
         for (auto it = dist.begin(); it != dist.end();)
             if (it->second > mv_pts) {
                 prev.erase(it->first);
                 it = dist.erase(it);
             } else {
-                if (map->_hexes.size() > it->first) {
-                    map->get_hex(it->first)->set_highlighted(true);
+                if (_map->_hexes.size() > it->first) {
+                    _map->get_hex(it->first)->set_highlighted(true);
                 } else {
-                    map->get_pass(it->first)->set_highlighted(true);
+                    _map->get_pass(it->first)->set_highlighted(true);
                 }
 
                 ++it;
@@ -67,17 +64,14 @@ void Mover::find_paths() {
 
 void Mover::move(const sf::Vector2f& mouse_pos) {
     GAME_INFO("Moving unit.");
-    const auto map  = _map.lock();
-    const auto unit = _unit.lock();
-
-    if (map && unit) {
+    if (_map && _unit) {
         for (auto it = _distances.begin(); it != _distances.end(); ++it) {
-            if (map->_hexes.size() > it->first) {
-                const auto& hex = map->get_hex(it->first);
+            if (_map->_hexes.size() > it->first) {
+                const auto& hex = _map->get_hex(it->first);
 
                 if (hex->contains(mouse_pos)) {
-                    unit->place_on_hex(hex);
-                    unit->reduce_mv_points(it->second);
+                    _unit->place_on_hex(hex);
+                    _unit->reduce_mv_points(it->second);
 
                     clear();
                     return;
@@ -85,6 +79,7 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
             }
         }
     }
+    ENGINE_WARN("Trying to move unit on map but one of them is invalid.");
 
     clear();
     return;
@@ -93,12 +88,10 @@ void Mover::move(const sf::Vector2f& mouse_pos) {
 void Mover::clear() {
     _distances.empty();
     _previous.empty();
-    if (auto map = _map.lock()) {
-        for (auto& x : map->_hexes)
-            x->set_highlighted(false);
-        for (auto& x : map->_passages)
-            x.second->set_highlighted(false);
-    }
+    for (auto& x : _map->_hexes)
+        x->set_highlighted(false);
+    for (auto& x : _map->_passages)
+        x.second->set_highlighted(false);
 }
 
 std::pair<std::map<int, int>, std::map<int, int>>

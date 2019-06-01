@@ -4,7 +4,7 @@
 
 class Tracks_mover : public Mover {
    public:
-    explicit Tracks_mover(std::weak_ptr<Unit> unit, std::weak_ptr<Map> map) : Mover(unit, map) {}
+    explicit Tracks_mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map) : Mover(unit, map) {}
 
    private:
     std::unordered_map<Map_site::id_type, int> create_table() const override {

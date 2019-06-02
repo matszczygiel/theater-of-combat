@@ -7,7 +7,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "hex_site.h"
-#include "map_site.h"
 #include "passage_site.h"
 
 #include <cereal/types/memory.hpp>

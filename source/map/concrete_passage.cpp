@@ -2,11 +2,18 @@
 
 #include <cmath>
 
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/polymorphic.hpp>
+
 #include "log.h"
 
-void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
-                   const float &radius) {
+River::River(const int &number)
+    : Passage_site(number), _shape(0.0, 0.2) {}
 
+void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
+                      const float &radius) {
     const auto vec = pos1 - pos2;
     const auto distance =
         std::sqrt(vec.x * vec.x + vec.y * vec.y);
@@ -23,6 +30,11 @@ void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
     _shape.setFillColor(sf::Color::Blue);
 }
 
-void River::draw(sf::RenderTarget& target) const {
+void River::draw(sf::RenderTarget &target) const {
     target.draw(_shape);
 }
+
+CEREAL_REGISTER_TYPE(River);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Passage_site, River);
+
+

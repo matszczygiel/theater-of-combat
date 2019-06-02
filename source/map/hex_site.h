@@ -6,12 +6,10 @@
 #include <cereal/types/array.hpp>
 #include <cereal/types/base_class.hpp>
 #include <cereal/types/memory.hpp>
-#include <pugixml.hpp>
 
 class Hex_site : public Map_site {
    public:
     explicit Hex_site(const int &number);
-    explicit Hex_site(pugi::xml_node &node);
 
     virtual ~Hex_site() = default;
 
@@ -22,25 +20,14 @@ class Hex_site : public Map_site {
     void set_shape(const float &x, const float &y, const float &radius);
     void draw_number(sf::RenderTarget &target, const sf::Font &font) const;
 
-    const auto &get_radius() const;
-    auto get_small_radius() const;
-    const auto &get_position() const;
+    const float &get_radius() const;
+    float get_small_radius() const;
+    const sf::Vector2f &get_position() const;
 
    protected:
     virtual sf::Color color() = 0;
 
    private:
     Hex_shape _shape;
-};
 
-inline const auto &Hex_site::get_radius() const {
-    return _shape.get_radius();
 };
-
-inline auto Hex_site::get_small_radius() const {
-    return _shape.get_small_radius();
-};
-
-inline const auto &Hex_site::get_position() const {
-    return _shape.getPosition();
-}

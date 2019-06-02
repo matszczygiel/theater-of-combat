@@ -3,6 +3,9 @@
 #include <algorithm>
 
 #include <pugixml.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/archives/json.hpp>
 
 #include "concrete_hex.h"
 #include "concrete_passage.h"
@@ -162,84 +165,6 @@ Map Map::create_test_map(const float& size) {
     }
 
     return res;
-}
-
-void Map::load(const std::string& path, const float& size) {
-    ENGINE_INFO("Loading map from a file: {0}", path);
-
-    pugi::xml_document doc;
-    auto parsing_result = doc.load_file(path.c_str());
-
-    if (parsing_result) {
-        ENGINE_TRACE("Map file sucesfully loaded.");
-    } else {
-        ENGINE_CRITICAL("Invlaid map file. Error description: {0}. Error offset: {1}",
-                        parsing_result.description(), parsing_result.offset);
-    }
-
-    const auto map_node = doc.child("map");
-
-    const auto x_size = map_node.attribute("x-size").as_int();
-    const auto y_size = map_node.attribute("y-size").as_int();
-
-    resize(x_size, y_size);
-
-    auto sites_node = map_node.child("sites");
-
-    for (auto node : sites_node.children("map-site")) {
-        std::shared_ptr<Map_site> site = Map_site::unserialize(node);
-        const auto& no                 = site->get_number();
-        if (no < static_cast<int>(_hexes.size())) {
-            _hexes[no] = std::dynamic_pointer_cast<Hex_site>(site);
-        } else {
-            _passages[no] = std::dynamic_pointer_cast<Passage_site>(site);
-        }
-    }
-
-    auto adj_node = map_node.child("adjacency");
-
-    for (auto x : adj_node.children("site")) {
-        const auto id         = x.attribute("id").as_int();
-        _adjacency_matrix[id] = {};
-        for (auto y : x.child("vec").attributes())
-            _adjacency_matrix[id].push_back(y.as_int());
-    }
-
-    recompute_geometry(size);
-    ENGINE_INFO("Map successfully loaded.");
-}
-
-void Map::save(const std::string& path) const {
-    ENGINE_INFO("Saving map to a file: {0}", path);
-
-    pugi::xml_document doc;
-    auto map_node = doc.append_child("map");
-    map_node.append_attribute("x-size").set_value(_x_dim);
-    map_node.append_attribute("y-size").set_value(_y_dim);
-
-    auto sites = map_node.append_child("sites");
-    ENGINE_TRACE("Writing sites set.");
-
-    for (const auto& x : _hexes)
-        x->serialize(sites);
-
-    for (const auto& x : _passages)
-        x.second->serialize(sites);
-
-    auto adj = map_node.append_child("adjacency");
-
-    for (const auto& x : _adjacency_matrix) {
-        auto node = adj.append_child("site");
-        node.append_attribute("id").set_value(x.first);
-        auto vec_node = node.append_child("vec");
-        for (const auto& y : x.second) {
-            vec_node.append_attribute("entry").set_value(y);
-        }
-    }
-
-    if (!doc.save_file(path.c_str())) {
-        ENGINE_ERROR("Could not save map file.");
-    }
 }
 
 void Map::set_numbers_drawing(const std::string& font_filename) {

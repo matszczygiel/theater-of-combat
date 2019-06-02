@@ -6,8 +6,8 @@
 
 struct Unit_move_request : public Message {
    public:
-    int _unit_id;
-    std::vector<int> _hex_ids;
+    const int _unit_id;
+    const std::vector<int> _hexes;
 
     virtual std::string log() const override;
     virtual ~Unit_move_request() = default;

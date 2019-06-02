@@ -2,6 +2,8 @@
 
 #include "hex_site.h"
 
+#include <cereal/types/base_class.hpp>
+
 class Field : public Hex_site {
    public:
     explicit Field(const int& number = 0) : Hex_site(number) {}

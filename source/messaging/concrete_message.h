@@ -2,17 +2,16 @@
 
 #include "messaging.h"
 
-class Request_unit_movement : public Message {
+#include <cereal/types/vector.hpp>
+
+struct Unit_move_request : public Message {
    public:
-    Request_unit_movement(const std::string& stream);
-    explicit Request_unit_movement(const int& hexno, const std::string& unit_name, const std::string& nation);
+    int _unit_id;
+    std::vector<int> _hex_ids;
 
-    std::string to_string() const override;
+    virtual std::string log() const override;
+    virtual ~Unit_move_request() = default;
 
-    const int _hexno;
-    const std::string _unit_name;
-    const std::string _nation;
-
-    DEFINE_MESSAGE_NAMING(Request_unit_movement)
+    template <class Archive>
+    void serialize(Archive& ar) { ar(_unit_id, _hex_ids); }
 };
-REGISTER_CLASS(Message, Request_unit_movement, "Request_unit_movement")

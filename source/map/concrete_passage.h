@@ -20,5 +20,9 @@ class River : public Passage_site {
 
    private:
     Hex_border_shape _shape;
+
+   public:
+    template <class Archive>
+    void serialize(Archive &ar) { ar(cereal::virtual_base_class<Passage_site>(this)); }
 };
 REGISTER_MAP_SITE(River)

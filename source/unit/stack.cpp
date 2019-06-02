@@ -20,7 +20,7 @@ void Stack::draw(sf::RenderTarget& target) const {
     }
 }
 
-tgui::Grid::Ptr Stack::create_displayer(const std::function<void(Unit*)>& widget_callback) const {
+tgui::Grid::Ptr Stack::create_displayer(const std::function<void(std::shared_ptr<Unit> )>& widget_callback) const {
     auto grid = tgui::Grid::create();
     grid->setPosition(10, 10);
     int counter = 0;

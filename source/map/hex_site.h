@@ -3,6 +3,9 @@
 #include "map_site.h"
 #include "shapes/hex_shape.h"
 
+#include <cereal/types/array.hpp>
+#include <cereal/types/base_class.hpp>
+#include <cereal/types/memory.hpp>
 #include <pugixml.hpp>
 
 class Hex_site : public Map_site {

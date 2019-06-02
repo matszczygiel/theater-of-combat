@@ -10,6 +10,9 @@
 #include "map_site.h"
 #include "passage_site.h"
 
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+
 class Map {
    public:
     void draw(sf::RenderTarget& target) const;

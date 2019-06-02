@@ -1,17 +1,19 @@
 #include "game_app.h"
 
+#include <fstream>
 #include <functional>
 #include <iostream>
 
+#include <cereal/archives/xml.hpp>
+
 #include "log.h"
 
+#include "messaging/messaging.h"
 #include "networking/client.h"
 #include "networking/server.h"
 #include "unit/heavy_unit.h"
-#include "messaging/messaging.h"
 
 void Game::initialize() {
-
     ENGINE_TRACE("Creating a window.");
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
@@ -25,6 +27,18 @@ void Game::initialize() {
     _map.load("resources/maps/map.xml", _token_size);
     _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
+    {
+        std::ofstream os("resources/maps/cereal_test_map.xml");
+        cereal::XMLOutputArchive oarchive(os);
+        oarchive(_map);
+    }
+
+    {
+        std::ifstream is("resources/maps/cereal_test_map.xml");
+        cereal::XMLInputArchive iar(is);
+        iar(_map);
+    }
+    
     Tokenizable::load_textures("resources/textures/units.png");
     Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
 
@@ -35,16 +49,16 @@ void Game::initialize() {
     for (auto& u : _units)
         u->init_token(_token_size);
 
-    _units[0]->place_on_hex(_map.get_hex(56).get());
-    _units[1]->place_on_hex(_map.get_hex(19).get());
-    _units[2]->place_on_hex(_map.get_hex(4).get());
+    _units[0]->place_on_hex(_map.get_hex(56));
+    _units[1]->place_on_hex(_map.get_hex(19));
+    _units[2]->place_on_hex(_map.get_hex(4));
 
     _players[0].set_name("Player 0");
     _players[1].set_name("Player 1");
 
-    _players[0].add_unit(_units[0].get());
-    _players[0].add_unit(_units[1].get());
-    _players[1].add_unit(_units[2].get());
+    _players[0].add_unit(_units[0]);
+    _players[0].add_unit(_units[1]);
+    _players[1].add_unit(_units[2]);
     _current_player = _players.begin();
     _resolve_units  = true;
 
@@ -199,7 +213,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 if (!_moving) {
                     for (auto& s : _stacks) {
                         if (s.token_contains(position)) {
-                            _panel->add(s.create_displayer([&](Unit* u) { this->init_mover_and_info_for_unit(u); }),
+                            _panel->add(s.create_displayer([&](std::shared_ptr<Unit>  u) { this->init_mover_and_info_for_unit(u); }),
                                         "unit info");
                             break;
                         }
@@ -240,7 +254,7 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     _gui.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(height))));
 }
 
-void Game::resolve_stacks_and_units(std::set<Unit*>& unit_set) {
+void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) {
     _stacks.clear();
     _units_to_draw.clear();
 
@@ -270,9 +284,9 @@ void Game::resolve_stacks_and_units(std::set<Unit*>& unit_set) {
     }
 }
 
-void Game::init_mover_and_info_for_unit(Unit* unit) {
+void Game::init_mover_and_info_for_unit(std::shared_ptr<Unit>  unit) {
     _panel->remove(_panel->get("unit info"));
-    _mover.reset(unit->get_mover());
+    _mover.reset(unit->get_mover(_message_bus));
     _mover->find_paths();
     _moving = true;
     _panel->add(unit->create_displayer(), "unit info");

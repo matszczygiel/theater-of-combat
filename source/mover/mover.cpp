@@ -29,6 +29,8 @@ std::map<int, int> Mover::compute_weights(
     return weights;
 }
 
+#include "messaging/concrete_message.h"
+
 void Mover::find_paths() {
     GAME_INFO("Initializing path finding algorithm.");
     if (_map && _unit) {
@@ -104,7 +106,6 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     for (auto it = graph.begin(); it != graph.end(); ++it) {
         dist[it->first] = infinity;
     }
-    dist[src] = 0;
 
     std::map<int, int> prev;
     std::priority_queue<std::pair<int, int>,
@@ -117,15 +118,3 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     while (!queue.empty()) {
         auto u = queue.top().second;
         queue.pop();
-        for (const auto& v : graph.at(u)) {
-            const auto alt = dist[u] + weights.at(v);
-            if (alt < dist[v]) {
-                dist[v] = alt;
-                prev[v] = u;
-                queue.push(std::make_pair(dist[v], v));
-            }
-        }
-    }
-
-    return std::make_pair(dist, prev);
-}

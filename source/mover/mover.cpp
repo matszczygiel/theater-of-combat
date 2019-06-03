@@ -118,6 +118,7 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     for (auto it = graph.begin(); it != graph.end(); ++it) {
         dist[it->first] = infinity;
     }
+    dist[src] = 0;
 
     std::map<int, int> prev;
     std::priority_queue<std::pair<int, int>,

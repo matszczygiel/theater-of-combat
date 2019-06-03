@@ -1,5 +1,9 @@
 #include "messaging.h"
 
+#include <cereal/archives/json.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+
 bool Message_bus::add_listener(const Message::id_type &id, message_callback callback) {
     auto i = _listeners.find(id);
     if (i == _listeners.end()) {

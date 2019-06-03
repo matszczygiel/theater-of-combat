@@ -26,7 +26,7 @@ void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
     const auto angle = 180.f / M_PI * std::atan(vec.y / vec.x);
     _shape.set_length(radius);
     _shape.setPosition((pos1 + pos2) / 2.f);
-    _shape.rotate(angle);
+    _shape.setRotation(angle);
     _shape.setFillColor(sf::Color::Blue);
 }
 

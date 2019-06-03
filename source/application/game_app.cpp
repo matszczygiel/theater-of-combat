@@ -22,36 +22,29 @@ void Game::initialize() {
     view.setViewport(sf::FloatRect(0.25, 0, 1, 1));
     _window.setView(view);
 
-    //    _map = Map::create_test_map(token_size);
-    //    _map.save_map("resources/maps/test_map.xml");
-    _map.load("resources/maps/map.xml", _token_size);
-    _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
-
+//    _map = std::make_shared<Map>(Map::create_test_map(_token_size));
+    //    _map->save_map("resources/maps/test_map->xml");
     {
-        std::ofstream os("resources/maps/cereal_test_map.xml");
-        cereal::XMLOutputArchive oarchive(os);
-        oarchive(_map);
-    }
-
-    {
-        std::ifstream is("resources/maps/cereal_test_map.xml");
+        std::ifstream is("resources/maps/cereal_map.xml");
         cereal::XMLInputArchive iar(is);
         iar(_map);
     }
-    
+    _map->recompute_geometry(_token_size);
+    _map->set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
+
     Tokenizable::load_textures("resources/textures/units.png");
     Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
 
     GAME_INFO("Initializing units.");
-    _units.emplace_back(std::make_unique<Mechanized>());
-    _units.emplace_back(std::make_unique<Armoured_cavalary>());
-    _units.emplace_back(std::make_unique<Armoured_cavalary>());
+    _units.emplace_back(std::make_unique<Mechanized>("unit0"));
+    _units.emplace_back(std::make_unique<Armoured_cavalry>("unit1"));
+    _units.emplace_back(std::make_unique<Armoured_cavalry>("unit2"));
     for (auto& u : _units)
         u->init_token(_token_size);
 
-    _units[0]->place_on_hex(_map.get_hex(56));
-    _units[1]->place_on_hex(_map.get_hex(19));
-    _units[2]->place_on_hex(_map.get_hex(4));
+    _units[0]->place_on_hex(_map->get_hex(56));
+    _units[1]->place_on_hex(_map->get_hex(19));
+    _units[2]->place_on_hex(_map->get_hex(4));
 
     _players[0].set_name("Player 0");
     _players[1].set_name("Player 1");
@@ -130,7 +123,7 @@ void Game::update(const sf::Time& elapsed_time) {
 }
 
 void Game::render() {
-    _map.draw(_window);
+    _map->draw(_window);
     for (auto& u : _units_to_draw)
         u->draw(_window);
 
@@ -213,14 +206,14 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 if (!_moving) {
                     for (auto& s : _stacks) {
                         if (s.token_contains(position)) {
-                            _panel->add(s.create_displayer([&](std::shared_ptr<Unit>  u) { this->init_mover_and_info_for_unit(u); }),
+                            _panel->add(s.create_displayer([&](std::shared_ptr<Unit> u) { this->init_mover_and_info_for_unit(u); }),
                                         "unit info");
                             break;
                         }
                     }
                 }
             } else {
-                _mover->move(position);
+                _mover->move(position, _message_bus);
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
@@ -259,12 +252,12 @@ void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) 
     _units_to_draw.clear();
 
     for (auto& u : unit_set) {
-        auto occ           = u->get_ocupation();
+        auto occ           = u->get_occupation();
         bool stack_created = false;
 
         for (auto it = _units_to_draw.begin(); it != _units_to_draw.end();) {
             auto unit = *it;
-            if (unit->get_ocupation() == occ) {
+            if (unit->get_occupation() == occ) {
                 if (!stack_created) {
                     _stacks.emplace_back(Stack());
                     _stacks.back().add_unit(u);
@@ -284,9 +277,9 @@ void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) 
     }
 }
 
-void Game::init_mover_and_info_for_unit(std::shared_ptr<Unit>  unit) {
+void Game::init_mover_and_info_for_unit(std::shared_ptr<Unit> unit) {
     _panel->remove(_panel->get("unit info"));
-    _mover.reset(unit->get_mover(_message_bus));
+    _mover = unit->get_mover(_map);
     _mover->find_paths();
     _moving = true;
     _panel->add(unit->create_displayer(), "unit info");

@@ -44,7 +44,7 @@ class Game : public Application {
 
     std::vector<Battlefield> _battlefields;
 
-    Map _map;
+    std::shared_ptr<Map> _map;
     std::unique_ptr<Mover> _mover = nullptr;
 
     bool _moving = false;

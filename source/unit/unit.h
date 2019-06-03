@@ -12,7 +12,7 @@ class Mover;
 class Map;
 class Hex_site;
 
-class Unit : public Tokenizable, std::enable_shared_from_this<Unit> {
+class Unit : public Tokenizable, public std::enable_shared_from_this<Unit> {
    public:
     explicit Unit(const int& moving_pts, const int& strength_pts,
                   const std::string& description) noexcept;
@@ -31,13 +31,14 @@ class Unit : public Tokenizable, std::enable_shared_from_this<Unit> {
     const std::shared_ptr<Hex_site>& get_occupation() const;
     const int& get_mv_points() const;
     const int& get_st_points() const;
+    const int& get_id() const;
 
     static void load_font_file(const std::string& filename);
 
    private:
     std::shared_ptr<Hex_site> _occupation = nullptr;
 
-    const int _moving_pts;
+    int _moving_pts;
     int _current_moving_pts;
     int _strength_pts;
 
@@ -45,9 +46,12 @@ class Unit : public Tokenizable, std::enable_shared_from_this<Unit> {
 
     static sf::Font _font;
 
+    int _id;
+    static int _current_max_id; 
+
    public:
     template <class Archive>
     void serialize(Archive& ar) {
-        ar(_moving_pts, _current_moving_pts, _strength_pts, _description);
+        ar(_moving_pts, _current_moving_pts, _strength_pts, _description, _id);
     }
 };

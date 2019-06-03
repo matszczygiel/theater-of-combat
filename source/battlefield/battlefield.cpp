@@ -7,6 +7,7 @@
 #include "log.h"
 
 void Battlefield::carry_fight() {
+/*
     int pl1_strength = 0;
     for (auto& u : _player1_units)
         pl1_strength += u->get_strength_points();
@@ -23,4 +24,5 @@ void Battlefield::carry_fight() {
 
     GAME_INFO("Player1 lost {0} pts.", pl1_loss);
     GAME_INFO("Player2 lost {0} pts.", pl2_loss);
+    */
 }

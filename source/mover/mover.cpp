@@ -5,6 +5,9 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "log.h"
+#include "map/map.h"
+#include "messaging/concrete_message.h"
+#include "unit/unit.h"
 
 Mover::Mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map)
     : _map(map), _unit(unit) {}
@@ -17,13 +20,13 @@ std::map<int, int> Mover::compute_weights(
 
     for (const auto& x : hex_set) {
         const auto& no   = x->get_number();
-        const auto& name = x->get_name();
-        weights[no]      = table.at(name);
+        const auto& type = x->get_type();
+        weights[no]      = table.at(type);
     }
     for (const auto& x : pass_set) {
         const auto& no   = x.first;
-        const auto& name = x.second->get_name();
-        weights[no]      = table.at(name);
+        const auto& type = x.second->get_type();
+        weights[no]      = table.at(type);
     }
 
     return weights;
@@ -46,7 +49,7 @@ void Mover::find_paths() {
                 prev.erase(it->first);
                 it = dist.erase(it);
             } else {
-                if (_map->_hexes.size() > it->first) {
+                if (_map->_hexes.size() > static_cast<int>(it->first)) {
                     _map->get_hex(it->first)->set_highlighted(true);
                 } else {
                     _map->get_pass(it->first)->set_highlighted(true);
@@ -64,16 +67,25 @@ void Mover::find_paths() {
     }
 }
 
-void Mover::move(const sf::Vector2f& mouse_pos) {
+void Mover::move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bus) {
     GAME_INFO("Moving unit.");
     if (_map && _unit) {
         for (auto it = _distances.begin(); it != _distances.end(); ++it) {
-            if (_map->_hexes.size() > it->first) {
-                const auto& hex = _map->get_hex(it->first);
+            if (_map->_hexes.size() > static_cast<int>(it->first)) {
+                auto& hex = _map->get_hex(it->first);
 
                 if (hex->contains(mouse_pos)) {
-                    _unit->place_on_hex(hex);
-                    _unit->reduce_mv_points(it->second);
+                    std::vector<std::pair<int, int>> vec;
+                    vec.emplace_back(*it);
+                    while (true) {
+                        auto search = _previous.find(vec.back().first);
+                        if (search == _previous.end())
+                            break;
+                        vec.emplace_back(search->second, _distances[search->second]);
+                    }
+
+                    bus->queue_message(std::make_shared<Unit_move_request>(
+                        _unit->get_id(), vec));
 
                     clear();
                     return;
@@ -118,3 +130,15 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     while (!queue.empty()) {
         auto u = queue.top().second;
         queue.pop();
+        for (const auto& v : graph.at(u)) {
+            const auto alt = dist[u] + weights.at(v);
+            if (alt < dist[v]) {
+                dist[v] = alt;
+                prev[v] = u;
+                queue.push(std::make_pair(dist[v], v));
+            }
+        }
+    }
+
+    return std::make_pair(dist, prev);
+}

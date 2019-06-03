@@ -7,13 +7,13 @@ class Tracks_mover : public Mover {
     explicit Tracks_mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map) : Mover(unit, map) {}
 
    private:
-    std::unordered_map<Map_site::id_type, int> create_table() const override {
-        std::unordered_map<Map_site::id_type, int> table;
-        
-        table["Field"]     = 2;
-        table["Forest"]    = 4;
+    std::unordered_map<Map_site::Type, int> create_table() const override {
+        std::unordered_map<Map_site::Type, int> table;
 
-        table["River"]    = 4;
+        table[Map_site::Type::Field]  = 2;
+        table[Map_site::Type::Forest] = 4;
+
+        table[Map_site::Type::River] = 4;
 
         return table;
     }

@@ -10,7 +10,7 @@
 int Armoured_cavalry::texture_offset() const { return 0; }
 
 std::unique_ptr<Mover> Armoured_cavalry::get_mover(std::shared_ptr<Map>& map) {
-    return std::make_unique<Tracks_mover>(std::enable_shared_from_this<Unit>::shared_from_this(), map);
+    return std::make_unique<Tracks_mover>(shared_from_this(), map);
 }
 
 CEREAL_REGISTER_TYPE(Armoured_cavalry);

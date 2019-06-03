@@ -68,10 +68,12 @@ void Mover::find_paths() {
 }
 
 void Mover::move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bus) {
-    GAME_INFO("Moving unit.");
+    ENGINE_INFO("Moving unit.");
+    const auto& hsize = static_cast<int>(_map->_hexes.size());
+
     if (_map && _unit) {
         for (auto it = _distances.begin(); it != _distances.end(); ++it) {
-            if (_map->_hexes.size() > static_cast<int>(it->first)) {
+            if (hsize > it->first) {
                 auto& hex = _map->get_hex(it->first);
 
                 if (hex->contains(mouse_pos)) {
@@ -81,8 +83,18 @@ void Mover::move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bu
                         auto search = _previous.find(vec.back().first);
                         if (search == _previous.end())
                             break;
-                        vec.emplace_back(search->second, _distances[search->second]);
+
+                        const auto& no = search->second;
+                        vec.emplace_back(no, _distances[no]);
                     }
+                    for (auto v = vec.begin(); v != vec.end();) {
+                        if (v->first >= hsize) {
+                            v = vec.erase(v);
+                        } else {
+                            ++v;
+                        }
+                    }
+                    std::reverse(std::begin(vec), std::end(vec));
 
                     bus->queue_message(std::make_shared<Unit_move_request>(
                         _unit->get_id(), vec));

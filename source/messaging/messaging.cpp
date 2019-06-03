@@ -4,6 +4,8 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
 
+#include "log.h"
+
 bool Message_bus::add_listener(const Message::id_type &id, message_callback callback) {
     auto i = _listeners.find(id);
     if (i == _listeners.end()) {
@@ -35,6 +37,7 @@ bool Message_bus::remove_listener(const Message::id_type &id, message_callback c
 }
 
 void Message_bus::queue_message(Message::ptr_base message) {
+    ENGINE_INFO("Queueing message: " + message->log());
     _queue.push_back(message);
 }
 

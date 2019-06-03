@@ -11,9 +11,9 @@ Unit_move_request::Unit_move_request(const int& unit_id,
     : _unit_id(unit_id), _hexes(hexes) {}
 
 std::string Unit_move_request::log() const {
-    std::string res = "Requested unit no " + std::to_string(_unit_id) + " through fields:";
+    std::string res = "Requested unit no " + std::to_string(_unit_id) + " through hexes:";
     for (const auto& x : _hexes)
-        res = +" " + std::to_string(x.first);
+        res += " " + std::to_string(x.first);
     return res;
 }
 

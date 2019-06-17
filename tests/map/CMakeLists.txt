@@ -13,11 +13,13 @@ add_executable(test
                 ../../source/map/hex_site.h
                 ../../source/map/hex_site.cpp
                 ../../source/map/concrete_hex.h
+                ../../source/map/concrete_hex.cpp
                 ../../source/map/map.h
                 ../../source/map/map.cpp
                 ../../source/log.cpp
                 ../../source/log.h
                 ../../source/map/passage_site.h
+                ../../source/map/passage_site.cpp
                 ../../source/map/concrete_passage.h
                 ../../source/map/concrete_passage.cpp
                 main.cpp

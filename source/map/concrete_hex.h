@@ -6,28 +6,20 @@
 
 class Field : public Hex_site {
    public:
-    explicit Field(const int& number = 0) : Hex_site(number) {}
-    explicit Field(pugi::xml_node&& node) : Hex_site(node) {}
-
-    DEFINE_MAP_SITE_NAMING(Field)
+    explicit Field(const int& number = 0);
+    Map_site::Type get_type() const final;
 
    private:
     sf::Color color() override;
 };
-REGISTER_MAP_SITE(Field)
+inline Map_site::Type Field::get_type() const { return Map_site::Type::Field; }
 
 class Forest : public Hex_site {
    public:
-    explicit Forest(const int& number = 0) : Hex_site(number) {}
-    explicit Forest(pugi::xml_node&& node) : Hex_site(node) {}
-
-    DEFINE_MAP_SITE_NAMING(Forest)
+    explicit Forest(const int& number = 0);
+    Map_site::Type get_type() const final;
 
    private:
     sf::Color color() override;
 };
-REGISTER_MAP_SITE(Forest)
-
-inline sf::Color Field::color() { return sf::Color::Green; }
-
-inline sf::Color Forest::color() { return sf::Color(100, 140, 20); }
+inline Map_site::Type Forest::get_type() const { return Map_site::Type::Forest; }

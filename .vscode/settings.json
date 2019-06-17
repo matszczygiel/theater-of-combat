@@ -66,7 +66,8 @@
         "scoped_allocator": "cpp",
         "shared_mutex": "cpp",
         "valarray": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "string": "cpp"
     },
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "C_Cpp.dimInactiveRegions": false

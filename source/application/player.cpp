@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include "log.h"
+
 void Player::add_unit(std::shared_ptr<Unit>  unit) {
     auto insertion_result = _units.insert(unit);
     if (!insertion_result.second) {

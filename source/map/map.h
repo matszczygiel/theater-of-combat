@@ -7,11 +7,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "hex_site.h"
-#include "map_site.h"
 #include "passage_site.h"
 
-#include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/map.hpp>
 
 class Map {
    public:
@@ -21,19 +21,16 @@ class Map {
     std::shared_ptr<Hex_site>& get_hex(const int& x, const int& y);
     std::shared_ptr<Passage_site>& get_pass(const int& no);
 
-    void load(const std::string& path, const float& size);
-    void save(const std::string& path) const;
-
     static Map create_test_map(const float& size);
 
     void set_numbers_drawing(const std::string& font_filename);
     void generate_plain_map(const float& xdim, const float& ydim, const float& site_size);
+    void recompute_geometry(const float& size);
 
     template <class T>
     void connect_site(const int& hex1_no, const int& hex2_no);
 
    private:
-    void recompute_geometry(const float& size);
     void resize(const int& x, const int& y);
     void compute_adjacency_of_hexes();
 
@@ -52,6 +49,12 @@ class Map {
     bool _draw_numbers = false;
 
     friend class Mover;
+
+   public:
+    template <class Archive>
+    void serialize(Archive& ar) {
+        ar(_x_dim, _y_dim, _current_max_no, _hexes, _passages, _adjacency_matrix);
+    }
 };
 
 template <class T>

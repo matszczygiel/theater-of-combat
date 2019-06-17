@@ -2,12 +2,13 @@
 
 #include <cmath>
 
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/polymorphic.hpp>
+
 Hex_site::Hex_site(const int& number)
     : Map_site(number), _shape() {
-}
-
-Hex_site::Hex_site(pugi::xml_node& node)
-    : Map_site(node), _shape() {
 }
 
 void Hex_site::set_shape(const float& x, const float& y, const float& radius) {
@@ -35,10 +36,24 @@ bool Hex_site::contains(const sf::Vector2f& vec) const noexcept {
 }
 
 void Hex_site::set_highlighted(bool highlighted) noexcept {
-    _highlighted = highlighted;
-    if (_highlighted)
+    Map_site::set_highlighted(highlighted);
+    if (highlighted)
         _shape.setOutlineColor(sf::Color::Red);
     else
         _shape.setOutlineColor(sf::Color::Black);
 }
 
+const float& Hex_site::get_radius() const {
+    return _shape.get_radius();
+}
+
+float Hex_site::get_small_radius() const {
+    return _shape.get_small_radius();
+}
+
+const sf::Vector2f& Hex_site::get_position() const {
+    return _shape.getPosition();
+}
+
+CEREAL_REGISTER_TYPE(Hex_site)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Map_site, Hex_site);

@@ -172,3 +172,12 @@ void Map::set_numbers_drawing(const std::string& font_filename) {
     _numbers_font.loadFromFile(font_filename);
     _draw_numbers = true;
 }
+
+std::vector<int> Map::get_controlable_hexes_from(const int& src) const {
+    ENGINE_ASSERT(src < _hexes.size(), "Invalid source hex no given!");
+    auto vec           = _adjacency_matrix.at(src);
+    const int hex_size = _hexes.size();
+
+    std::remove(vec.begin(), vec.end(), [&](auto& x) { return x >= hex_size; });
+    return vec;
+}

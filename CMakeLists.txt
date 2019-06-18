@@ -50,6 +50,8 @@ add_executable(toc
                 source/messaging/concrete_message.h
                 source/messaging/concrete_message.cpp
                 source/core/registrable.h
+                source/team/team.h
+                source/team/team.cpp
                 )
 
 target_include_directories(toc PUBLIC 

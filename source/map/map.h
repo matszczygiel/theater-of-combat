@@ -30,11 +30,12 @@ class Map {
     template <class T>
     void connect_site(const int& hex1_no, const int& hex2_no);
 
+    std::vector<int> get_controlable_hexes_from(const int& src) const;
+
    private:
     void resize(const int& x, const int& y);
     void compute_adjacency_of_hexes();
     constexpr int get_no(const int& x, const int& y);
-
 
     std::map<int, std::vector<int>> _adjacency_matrix;
 

@@ -9,17 +9,17 @@
 #include "hex_site.h"
 #include "passage_site.h"
 
+#include <cereal/types/map.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/vector.hpp>
-#include <cereal/types/map.hpp>
 
 class Map {
    public:
     void draw(sf::RenderTarget& target) const;
 
-    std::shared_ptr<Hex_site>& get_hex(const int& no);
-    std::shared_ptr<Hex_site>& get_hex(const int& x, const int& y);
-    std::shared_ptr<Passage_site>& get_pass(const int& no);
+    Hex_site& get_hex(const int& no);
+    Hex_site& get_hex(const int& x, const int& y);
+    Passage_site& get_pass(const int& no);
 
     static Map create_test_map(const float& size);
 
@@ -33,20 +33,21 @@ class Map {
    private:
     void resize(const int& x, const int& y);
     void compute_adjacency_of_hexes();
-
     constexpr int get_no(const int& x, const int& y);
 
+
     std::map<int, std::vector<int>> _adjacency_matrix;
-    std::vector<std::shared_ptr<Hex_site>> _hexes;
-    std::map<int, std::shared_ptr<Passage_site>> _passages;
 
-    int _x_dim = 0;
-    int _y_dim = 0;
+    std::vector<Hex_site> _hexes;
+    std::map<int, std::unique_ptr<Passage_site>> _passages;
 
-    int _current_max_no = 0;
+    int _x_dim{0};
+    int _y_dim{0};
+
+    int _current_max_no{0};
 
     sf::Font _numbers_font;
-    bool _draw_numbers = false;
+    bool _draw_numbers{false};
 
     friend class Mover;
 
@@ -69,7 +70,7 @@ void Map::connect_site(const int& hex1_no, const int& hex2_no) {
     std::replace(_adjacency_matrix.at(hex2_no).begin(), _adjacency_matrix.at(hex2_no).end(),
                  hex1_no, _current_max_no);
 
-    _passages[_current_max_no]->set_shape(get_hex(hex1_no)->get_position(),
-                                          get_hex(hex2_no)->get_position(),
-                                          get_hex(hex1_no)->get_radius());
+    _passages[_current_max_no]->set_shape(get_hex(hex1_no).get_position(),
+                                          get_hex(hex2_no).get_position(),
+                                          get_hex(hex1_no).get_radius());
 }

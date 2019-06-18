@@ -5,17 +5,16 @@
 #include <unordered_map>
 #include <vector>
 
-#include "map/map_site.h"
+#include "map/hex_site.h"
+#include "map/passage_site.h"
 
 class Message_bus;
 class Map;
 class Unit;
-class Hex_site;
-class Passage_site;
 
 class Mover {
    public:
-    explicit Mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map);
+    explicit Mover(Unit* unit, Map& map);
 
     void find_paths();
     void move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bus);
@@ -23,15 +22,16 @@ class Mover {
     virtual ~Mover() = default;
 
    protected:
-    virtual std::unordered_map<Map_site::Type, int> create_table() const = 0;
+    virtual std::unordered_map<Hex_site::Type, int> create_hex_table() const      = 0;
+    virtual std::unordered_map<Passage_site::Type, int> create_pass_table() const = 0;
 
     std::map<int, int> compute_weights(
-        const std::vector<std::shared_ptr<Hex_site>>& hex_set,
-        const std::map<int, std::shared_ptr<Passage_site>>& pass_set) const;
+        const std::vector<Hex_site>& hex_set,
+        const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const;
     void clear();
 
-    std::shared_ptr<Map> _map;
-    std::shared_ptr<Unit> _unit;
+    Map* _map;
+    Unit* _unit;
 
     std::map<int, int> _distances;
     std::map<int, int> _previous;

@@ -9,24 +9,25 @@
 #include "messaging/concrete_message.h"
 #include "unit/unit.h"
 
-Mover::Mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map)
-    : _map(map), _unit(unit) {}
+Mover::Mover(Unit* unit, Map& map)
+    : _map{&map}, _unit{unit} {}
 
 std::map<int, int> Mover::compute_weights(
-    const std::vector<std::shared_ptr<Hex_site>>& hex_set,
-    const std::map<int, std::shared_ptr<Passage_site>>& pass_set) const {
+        const std::vector<Hex_site>& hex_set,
+        const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const {
     std::map<int, int> weights;
-    const auto table = create_table();
+    const auto hex_table = create_hex_table();
+    const auto pass_table = create_pass_table();
 
     for (const auto& x : hex_set) {
-        const auto& no   = x->get_number();
-        const auto& type = x->get_type();
-        weights[no]      = table.at(type);
+        const auto& no   = x.get_number();
+        const auto& type = x.get_type();
+        weights[no]      = hex_table.at(type);
     }
     for (const auto& x : pass_set) {
         const auto& no   = x.first;
         const auto& type = x.second->get_type();
-        weights[no]      = table.at(type);
+        weights[no]      = pass_table.at(type);
     }
 
     return weights;
@@ -49,10 +50,10 @@ void Mover::find_paths() {
                 prev.erase(it->first);
                 it = dist.erase(it);
             } else {
-                if (_map->_hexes.size() > static_cast<int>(it->first)) {
-                    _map->get_hex(it->first)->set_highlighted(true);
+                if (static_cast<int>(_map->_hexes.size()) > it->first) {
+                    _map->get_hex(it->first).set_highlighted(true);
                 } else {
-                    _map->get_pass(it->first)->set_highlighted(true);
+                    _map->get_pass(it->first).set_highlighted(true);
                 }
 
                 ++it;
@@ -76,7 +77,7 @@ void Mover::move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bu
             if (hsize > it->first) {
                 auto& hex = _map->get_hex(it->first);
 
-                if (hex->contains(mouse_pos)) {
+                if (hex.contains(mouse_pos)) {
                     std::vector<std::pair<int, int>> vec;
                     vec.emplace_back(*it);
                     while (true) {
@@ -115,7 +116,7 @@ void Mover::clear() {
     _distances.empty();
     _previous.empty();
     for (auto& x : _map->_hexes)
-        x->set_highlighted(false);
+        x.set_highlighted(false);
     for (auto& x : _map->_passages)
         x.second->set_highlighted(false);
 }

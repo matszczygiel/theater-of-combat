@@ -4,16 +4,22 @@
 
 class Tracks_mover : public Mover {
    public:
-    explicit Tracks_mover(std::shared_ptr<Unit> unit, std::shared_ptr<Map> map) : Mover(unit, map) {}
+    explicit Tracks_mover(Unit* unit, Map& map) : Mover(unit, map) {}
 
    private:
-    std::unordered_map<Map_site::Type, int> create_table() const override {
-        std::unordered_map<Map_site::Type, int> table;
+    std::unordered_map<Hex_site::Type, int> create_hex_table() const override {
+        std::unordered_map<Hex_site::Type, int> table;
 
-        table[Map_site::Type::Field]  = 2;
-        table[Map_site::Type::Forest] = 4;
+        table[Hex_site::Type::Field]  = 2;
+        table[Hex_site::Type::Forest] = 4;
 
-        table[Map_site::Type::River] = 4;
+        return table;
+    }
+
+    std::unordered_map<Passage_site::Type, int> create_pass_table() const override {
+        std::unordered_map<Passage_site::Type, int> table;
+
+        table[Passage_site::Type::River] = 2;
 
         return table;
     }

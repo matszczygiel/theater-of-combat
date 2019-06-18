@@ -9,8 +9,8 @@
 
 int Armoured_cavalry::texture_offset() const { return 0; }
 
-std::unique_ptr<Mover> Armoured_cavalry::get_mover(std::shared_ptr<Map>& map) {
-    return std::make_unique<Tracks_mover>(shared_from_this(), map);
+std::unique_ptr<Mover> Armoured_cavalry::get_mover(Map& map) {
+    return std::make_unique<Tracks_mover>(this, map);
 }
 
 CEREAL_REGISTER_TYPE(Armoured_cavalry);
@@ -18,8 +18,8 @@ CEREAL_REGISTER_POLYMORPHIC_RELATION(Unit, Armoured_cavalry);
 
 int Mechanized::texture_offset() const { return 1; }
 
-std::unique_ptr<Mover> Mechanized::get_mover(std::shared_ptr<Map>& map) {
-    return std::make_unique<Tracks_mover>(shared_from_this(), map);
+std::unique_ptr<Mover> Mechanized::get_mover(Map& map) {
+    return std::make_unique<Tracks_mover>(this, map);
 }
 
 CEREAL_REGISTER_TYPE(Mechanized);

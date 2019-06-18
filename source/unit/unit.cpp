@@ -8,13 +8,13 @@ int Unit::_current_max_id = 0;
 
 Unit::Unit(const int& moving_pts, const int& strength_pts,
            const std::string& description) noexcept
-    : _moving_pts(moving_pts),
-      _current_moving_pts(moving_pts),
-      _strength_pts(strength_pts),
-      _description(description),
-      _id(_current_max_id++) {}
+    : _moving_pts{moving_pts},
+      _current_moving_pts{moving_pts},
+      _strength_pts{strength_pts},
+      _description{description},
+      _id{_current_max_id++} {}
 
-const std::shared_ptr<Hex_site>& Unit::get_occupation() const { return _occupation; }
+Hex_site* Unit::get_occupation() const { return _occupation; }
 
 const int& Unit::get_mv_points() const { return _current_moving_pts; }
 
@@ -22,7 +22,7 @@ const int& Unit::get_st_points() const { return _strength_pts; }
 
 const int& Unit::get_id() const { return _id; }
 
-void Unit::place_on_hex(std::shared_ptr<Hex_site>& hex) {
+void Unit::place_on_hex(Hex_site* hex) {
     _occupation = hex;
     Tokenizable::set_token_postion(_occupation->get_position());
     GAME_INFO("Unit placed on hex No. {0} at ({1}, {2})",

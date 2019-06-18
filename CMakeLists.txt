@@ -19,8 +19,6 @@ add_executable(toc
                 source/map/concrete_passage.cpp
                 source/map/map.h
                 source/map/map.cpp
-                source/map/concrete_hex.h
-                source/map/concrete_hex.cpp
                 source/unit/heavy_unit.cpp
                 source/unit/heavy_unit.h
                 source/unit/unit.h

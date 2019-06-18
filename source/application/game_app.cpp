@@ -31,8 +31,6 @@ void Game::initialize() {
     }
 */
 
-    ENGINE_ASSERT(false, "dupa");
-
     {
         std::ifstream is("resources/maps/cereal_map.xml");
         cereal::XMLInputArchive iar(is);

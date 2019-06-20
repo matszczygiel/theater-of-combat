@@ -69,7 +69,5 @@ target_link_libraries(toc PUBLIC
                         sfml-graphics
                         sfml-system
                         sfml-network
-                        pugixml
                         tgui)     
                         
-add_subdirectory(tests/map)

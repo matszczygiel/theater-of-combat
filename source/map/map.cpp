@@ -5,7 +5,6 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
-#include <pugixml.hpp>
 
 #include "concrete_passage.h"
 #include "log.h"
@@ -174,10 +173,10 @@ void Map::set_numbers_drawing(const std::string& font_filename) {
 }
 
 std::vector<int> Map::get_controlable_hexes_from(const int& src) const {
-    ENGINE_ASSERT(src < _hexes.size(), "Invalid source hex no given!");
+    ENGINE_ASSERT(src < static_cast<int>(_hexes.size()), "Invalid source hex no given!");
     auto vec           = _adjacency_matrix.at(src);
     const int hex_size = _hexes.size();
 
-    std::remove(vec.begin(), vec.end(), [&](auto& x) { return x >= hex_size; });
+    std::remove_if(vec.begin(), vec.end(), [&](auto& x) { return (x >= hex_size); });
     return vec;
 }

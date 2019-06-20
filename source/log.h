@@ -33,7 +33,7 @@ class Log {
 
 #define ENGINE_ASSERT(x, ...)                                   \
     {                                                           \
-        if (!x) {                                               \
+        if (!(x)) {                                               \
             ENGINE_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
             assert(false);                                      \
         };                                                      \
@@ -41,7 +41,7 @@ class Log {
 
 #define GAME_ASSERT(x, ...)                                   \
     {                                                         \
-        if (!x) {                                             \
+        if (!(x)) {                                             \
             GAME_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
             assert(false);                                    \
         };                                                    \

@@ -47,9 +47,9 @@ void Tokenizable::init_token(const float& size) {
     const auto text_size = _tokens_texture.getSize();
     const int offset     = text_size.y * texture_offset();
 
-    if (offset >= text_size.x) {
-        ENGINE_ERROR("Token initialized with too much texture offset. offset: {0}, texture width: {1}", offset, text_size.x);
-    }
+    
+    ENGINE_ASSERT(offset < static_cast<int>(text_size.x),
+    "Token initialized with too much texture offset. offset: {0}, texture width: {1}", offset, text_size.x);
 
     sf::IntRect texture_rect(offset, 0, text_size.y, text_size.y);
     _token.setTextureRect(texture_rect);

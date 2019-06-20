@@ -7,6 +7,7 @@
 
 class Player {
    public:
+   explicit Player(const std::string& name = ""): _name(name) {}
     std::set<std::shared_ptr<Unit> >& get_players_units();
     void set_name(const std::string& name);
     void add_unit(std::shared_ptr<Unit>  unit);

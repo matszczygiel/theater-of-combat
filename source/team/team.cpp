@@ -26,3 +26,8 @@ std::vector<int> Team::get_controlable_hexes(const Map& map) const {
     vec.erase(last, vec.end());
     return vec;
 }
+
+void Team::draw(sf::RenderTarget& target) const {
+    for(auto& u : _units_to_draw)
+        u->draw(target);
+}

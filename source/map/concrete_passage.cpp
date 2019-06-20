@@ -2,15 +2,17 @@
 
 #include <cmath>
 
+#include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
-#include <cereal/archives/json.hpp>
 #include <cereal/types/polymorphic.hpp>
 
 #include "log.h"
 
 River::River(const int &number)
-    : Passage_site(number), _shape(0.0, 0.2) {}
+    : Passage_site(number) {}
+
+Passage_site::Type River::get_type() const { return Passage_site::Type::River; }
 
 void River::set_shape(const sf::Vector2f &pos1, const sf::Vector2f &pos2,
                       const float &radius) {
@@ -36,5 +38,3 @@ void River::draw(sf::RenderTarget &target) const {
 
 CEREAL_REGISTER_TYPE(River);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Passage_site, River);
-
-

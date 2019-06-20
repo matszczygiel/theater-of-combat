@@ -1,19 +1,19 @@
 #pragma once
 
 #include <set>
-#include <vector>
 #include <variant>
+#include <vector>
 
 #include "application.h"
+#include "battlefield/battlefield.h"
 #include "map/map.h"
 #include "mover/mover.h"
+#include "networking/client.h"
+#include "networking/netwoking_status.h"
+#include "networking/server.h"
 #include "player.h"
 #include "unit/stack.h"
 #include "unit/unit.h"
-#include "networking/netwoking_status.h"
-#include "networking/client.h"
-#include "networking/server.h"
-#include "battlefield/battlefield.h"
 
 class Game : public Application {
    private:
@@ -32,7 +32,7 @@ class Game : public Application {
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
     void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
-    void init_mover_and_info_for_unit(std::shared_ptr<Unit>  unit);
+    void init_mover_and_info_for_unit(std::shared_ptr<Unit> unit);
 
    private:
     std::vector<std::shared_ptr<Unit> > _units;
@@ -44,8 +44,8 @@ class Game : public Application {
 
     std::vector<Battlefield> _battlefields;
 
-    std::shared_ptr<Map> _map;
-    std::unique_ptr<Mover> _mover = nullptr;
+    Map _map;
+    std::unique_ptr<Mover> _mover{nullptr};
 
     bool _moving = false;
 

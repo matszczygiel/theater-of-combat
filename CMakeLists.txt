@@ -19,8 +19,6 @@ add_executable(toc
                 source/map/concrete_passage.cpp
                 source/map/map.h
                 source/map/map.cpp
-                source/map/concrete_hex.h
-                source/map/concrete_hex.cpp
                 source/unit/heavy_unit.cpp
                 source/unit/heavy_unit.h
                 source/unit/unit.h
@@ -52,6 +50,8 @@ add_executable(toc
                 source/messaging/concrete_message.h
                 source/messaging/concrete_message.cpp
                 source/core/registrable.h
+                source/team/team.h
+                source/team/team.cpp
                 )
 
 target_include_directories(toc PUBLIC 

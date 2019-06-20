@@ -2,43 +2,42 @@
 
 #include <algorithm>
 
-#include <pugixml.hpp>
+#include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
-#include <cereal/archives/json.hpp>
+#include <pugixml.hpp>
 
-#include "concrete_hex.h"
 #include "concrete_passage.h"
 #include "log.h"
 
-std::shared_ptr<Passage_site>& Map::get_pass(const int& no) {
-    if (no <= static_cast<int>(_hexes.size()) || no > _current_max_no) {
+Passage_site& Map::get_pass(const int& no) {
+    if (no < static_cast<int>(_hexes.size()) || no > _current_max_no) {
         ENGINE_ERROR("Invalid pass number requested!: {0}, must by in domain [{1}, {2}].",
-                   no, _hexes.size(), _passages.size());
-        assert(true);
+                     no, _hexes.size() + 1, _current_max_no);
+        assert(false);
     }
-    return _passages.at(no);
+    return *_passages.at(no);
 }
 
 constexpr int Map::get_no(const int& x, const int& y) {
     return _x_dim * x + y;
 }
 
-std::shared_ptr<Hex_site>& Map::get_hex(const int& x, const int& y) {
+Hex_site& Map::get_hex(const int& x, const int& y) {
     if (x >= _x_dim || y >= _y_dim) {
         ENGINE_ERROR("Invalid hex number requested! x: {0} y; {1}. Curent values: {2}, {3}.",
-                   x, y, _x_dim, _y_dim);
-        assert(true);
+                     x, y, _x_dim, _y_dim);
+        assert(false);
     }
     const int no = get_no(x, y);
     return get_hex(no);
 }
 
-std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
+Hex_site& Map::get_hex(const int& no) {
     if (no >= static_cast<int>(_hexes.size())) {
         ENGINE_ERROR("Invalid hex number requested!: {0}, current number of hexes: {1}.",
-                   no, _hexes.size());
-        assert(true);
+                     no, _hexes.size());
+        assert(false);
         return _hexes.back();
     }
     return _hexes.at(no);
@@ -46,7 +45,7 @@ std::shared_ptr<Hex_site>& Map::get_hex(const int& no) {
 
 void Map::draw(sf::RenderTarget& target) const {
     for (const auto& x : _hexes) {
-        x->draw(target);
+        x.draw(target);
     }
 
     for (const auto& x : _passages) {
@@ -55,7 +54,7 @@ void Map::draw(sf::RenderTarget& target) const {
 
     if (_draw_numbers) {
         for (const auto& x : _hexes) {
-            x->draw_number(target, _numbers_font);
+            x.draw_number(target, _numbers_font);
         }
     }
 }
@@ -70,15 +69,17 @@ void Map::recompute_geometry(const float& size) {
     for (int x = 0; x < _x_dim; ++x)
         for (int y = 0; y < _y_dim; ++y) {
             if (y % 2 == 0) {
-                get_hex(x, y)->set_shape(map_offset + 2 * x * smr, map_offset + 1.5 * y * size, size);
+                get_hex(x, y).set_shape({map_offset + 2 * x * smr, map_offset + 1.5f * y * size},
+                                        size);
             } else {
-                get_hex(x, y)->set_shape(map_offset + (2 * x + 1) * smr, map_offset + 1.5 * y * size, size);
+                get_hex(x, y).set_shape({map_offset + (2 * x + 1) * smr, map_offset + 1.5f * y * size},
+                                        size);
             }
         }
 
     for (auto& x : _passages) {
-        x.second->set_shape(get_hex(_adjacency_matrix.at(x.first).at(0))->get_position(),
-                            get_hex(_adjacency_matrix.at(x.first).at(1))->get_position(),
+        x.second->set_shape(get_hex(_adjacency_matrix.at(x.first).at(0)).get_position(),
+                            get_hex(_adjacency_matrix.at(x.first).at(1)).get_position(),
                             size);
     }
 }
@@ -103,7 +104,7 @@ void Map::generate_plain_map(const float& xdim, const float& ydim, const float& 
     for (int x = 0; x < xdim; ++x)
         for (int y = 0; y < ydim; ++y) {
             const auto no = get_no(x, y);
-            get_hex(no)   = std::make_unique<Field>(no);
+            get_hex(no)   = Hex_site(no);
         }
 
     recompute_geometry(site_size);
@@ -148,7 +149,7 @@ Map Map::create_test_map(const float& size) {
 
     for (int x = 0; x < 4; ++x)
         for (int y = 0; y < 7; ++y) {
-            res.get_hex(x, y) = std::make_unique<Forest>(res.get_no(x, y));
+            res.get_hex(x, y) = Hex_site(res.get_no(x, y), Hex_site::Type::Forest);
         }
     res.recompute_geometry(size);
 
@@ -170,4 +171,13 @@ Map Map::create_test_map(const float& size) {
 void Map::set_numbers_drawing(const std::string& font_filename) {
     _numbers_font.loadFromFile(font_filename);
     _draw_numbers = true;
+}
+
+std::vector<int> Map::get_controlable_hexes_from(const int& src) const {
+    ENGINE_ASSERT(src < _hexes.size(), "Invalid source hex no given!");
+    auto vec           = _adjacency_matrix.at(src);
+    const int hex_size = _hexes.size();
+
+    std::remove(vec.begin(), vec.end(), [&](auto& x) { return x >= hex_size; });
+    return vec;
 }

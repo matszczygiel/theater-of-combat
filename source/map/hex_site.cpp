@@ -2,19 +2,21 @@
 
 #include <cmath>
 
+#include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/archives/xml.hpp>
-#include <cereal/archives/json.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-Hex_site::Hex_site(const int& number)
-    : Map_site(number), _shape() {
+#include "log.h"
+
+Hex_site::Hex_site(const int& number, const Type& type)
+    : Map_site(number) {
+    set_type(type);
 }
 
-void Hex_site::set_shape(const float& x, const float& y, const float& radius) {
-    _shape = Hex_shape(radius);
-    _shape.setFillColor(color());
-    _shape.setPosition(x, y);
+void Hex_site::set_shape(const sf::Vector2f& position, const float& radius) {
+    _shape.set_radius(radius);
+    _shape.setPosition(position);
     _shape.setOutlineThickness(-0.05 * radius);
     _shape.setOutlineColor(sf::Color::Black);
 }
@@ -53,6 +55,26 @@ float Hex_site::get_small_radius() const {
 
 const sf::Vector2f& Hex_site::get_position() const {
     return _shape.getPosition();
+}
+
+void Hex_site::set_type(const Hex_site::Type& type) {
+    _type = type;
+    switch (type) {
+        case Hex_site::Type::Field:
+            _shape.setFillColor(sf::Color::Green);
+            break;
+        case Hex_site::Type::Forest:
+            _shape.setFillColor(sf::Color(100, 140, 20));
+            break;
+        default:
+            ENGINE_ERROR("Unknown hex tpe.");
+            assert(true);
+            break;
+    }
+}
+
+const Hex_site::Type& Hex_site::get_type() const {
+    return _type;
 }
 
 CEREAL_REGISTER_TYPE(Hex_site)

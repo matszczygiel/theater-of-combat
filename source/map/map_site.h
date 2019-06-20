@@ -6,34 +6,29 @@
 
 class Map_site {
    public:
-    enum class Type {
-        Field,
-        Forest,
-
-        River
-    };
-
-    explicit constexpr Map_site(const int& number = 0) noexcept
+    explicit constexpr Map_site(const int& number) noexcept
         : _number(number) {}
 
+    Map_site()          = default;
     virtual ~Map_site() = default;
 
     virtual void draw(sf::RenderTarget& target) const = 0;
-    virtual Type get_type() const                     = 0;
-
     virtual void set_highlighted(bool highlighted);
+
     bool is_highlighted() const noexcept;
     constexpr const int& get_number() const noexcept;
 
-   private:
-    bool _highlighted = false;
-    int _number;
-
-   public:
     template <class Archive>
-    void serialize(Archive& ar) { ar(_number); }
+    void serialize(Archive& ar);
+
+   private:
+    bool _highlighted{false};
+    int _number{0};
 };
 
 constexpr const int& Map_site::get_number() const noexcept {
     return _number;
 }
+
+template <class Archive>
+void Map_site::serialize(Archive& ar) { ar(_number); }

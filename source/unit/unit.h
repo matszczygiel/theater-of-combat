@@ -19,16 +19,16 @@ class Unit : public Tokenizable, public std::enable_shared_from_this<Unit> {
 
     virtual ~Unit() = default;
 
-    virtual std::unique_ptr<Mover> get_mover(std::shared_ptr<Map>& map) = 0;
+    virtual std::unique_ptr<Mover> get_mover(Map& map) = 0;
 
     tgui::Canvas::Ptr create_displayer() const;
 
-    void place_on_hex(std::shared_ptr<Hex_site>& hex);
+    void place_on_hex(Hex_site* hex);
     void reset_mv_points() noexcept;
     void reduce_mv_points(const int& points);
     void reduce_st_points(const int& points);
 
-    const std::shared_ptr<Hex_site>& get_occupation() const;
+    Hex_site* get_occupation() const;
     const int& get_mv_points() const;
     const int& get_st_points() const;
     const int& get_id() const;
@@ -36,7 +36,7 @@ class Unit : public Tokenizable, public std::enable_shared_from_this<Unit> {
     static void load_font_file(const std::string& filename);
 
    private:
-    std::shared_ptr<Hex_site> _occupation = nullptr;
+    Hex_site* _occupation{nullptr};
 
     int _moving_pts;
     int _current_moving_pts;
@@ -47,7 +47,7 @@ class Unit : public Tokenizable, public std::enable_shared_from_this<Unit> {
     static sf::Font _font;
 
     int _id;
-    static int _current_max_id; 
+    static int _current_max_id;
 
    public:
     template <class Archive>

@@ -22,15 +22,23 @@ void Game::initialize() {
     view.setViewport(sf::FloatRect(0.25, 0, 1, 1));
     _window.setView(view);
 
-//    _map = std::make_shared<Map>(Map::create_test_map(_token_size));
-    //    _map->save_map("resources/maps/test_map->xml");
+    // _map = Map::create_test_map(_token_size);
+    /* 
+   {
+        std::ofstream os("resources/maps/cereal_map.xml");
+        cereal::XMLOutputArchive ar(os);
+        ar(_map);
+    }
+*/
+
     {
         std::ifstream is("resources/maps/cereal_map.xml");
         cereal::XMLInputArchive iar(is);
         iar(_map);
     }
-    _map->recompute_geometry(_token_size);
-    _map->set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
+
+    _map.recompute_geometry(_token_size);
+    _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
 
     Tokenizable::load_textures("resources/textures/units.png");
     Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
@@ -42,9 +50,9 @@ void Game::initialize() {
     for (auto& u : _units)
         u->init_token(_token_size);
 
-    _units[0]->place_on_hex(_map->get_hex(56));
-    _units[1]->place_on_hex(_map->get_hex(19));
-    _units[2]->place_on_hex(_map->get_hex(4));
+    _units[0]->place_on_hex(&_map.get_hex(56));
+    _units[1]->place_on_hex(&_map.get_hex(19));
+    _units[2]->place_on_hex(&_map.get_hex(4));
 
     _players[0].set_name("Player 0");
     _players[1].set_name("Player 1");
@@ -123,7 +131,7 @@ void Game::update(const sf::Time& elapsed_time) {
 }
 
 void Game::render() {
-    _map->draw(_window);
+    _map.draw(_window);
     for (auto& u : _units_to_draw)
         u->draw(_window);
 

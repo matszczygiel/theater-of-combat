@@ -12,8 +12,6 @@ add_executable(test
                 ../../source/map/map_site.cpp
                 ../../source/map/hex_site.h
                 ../../source/map/hex_site.cpp
-                ../../source/map/concrete_hex.h
-                ../../source/map/concrete_hex.cpp
                 ../../source/map/map.h
                 ../../source/map/map.cpp
                 ../../source/log.cpp

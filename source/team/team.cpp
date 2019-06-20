@@ -4,7 +4,7 @@
 #include "unit/unit.h"
 
 void Team::add_unit(std::unique_ptr<Unit> unit) {
-    _unit.emplace(std::make_pair(unit->get_id(), unit));
+    _units.emplace(std::make_pair(unit->get_id(), unit));
 }
 
 void Team::remove_unit(const int& no) {

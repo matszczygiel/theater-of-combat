@@ -33,3 +33,11 @@ void Team::draw(sf::RenderTarget& target) const {
     for (auto& u : _units_to_draw)
         u->draw(target);
 }
+
+void Team::update() {
+    _units_to_draw.clear();
+    _units_to_draw.reserve(_owned_units_ids.size());
+    for (auto& uid : _owned_units_ids) {
+        _units_to_draw.push_back(_unit_set->get_by_id(uid));
+    }
+}

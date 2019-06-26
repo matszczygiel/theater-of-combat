@@ -14,6 +14,7 @@
 #include "player.h"
 #include "unit/stack.h"
 #include "unit/unit.h"
+#include "unit/unit_set.h"
 
 class Game : public Application {
    private:
@@ -31,7 +32,7 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
-    void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
+ //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
     void init_mover_and_info_for_unit(std::shared_ptr<Unit> unit);
 
    private:
@@ -46,6 +47,7 @@ class Game : public Application {
 
     Map _map;
     std::unique_ptr<Mover> _mover{nullptr};
+    Unit_set _unit_set;
 
     bool _moving = false;
 
@@ -54,7 +56,6 @@ class Game : public Application {
     bool _moving_view_right = false;
     bool _moving_view_left  = false;
 
-    bool _resolve_units = false;
 
     tgui::Panel::Ptr _panel;
 

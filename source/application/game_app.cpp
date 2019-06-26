@@ -44,24 +44,28 @@ void Game::initialize() {
     Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
 
     GAME_INFO("Initializing units.");
-    _units.emplace_back(std::make_unique<Mechanized>("unit0"));
-    _units.emplace_back(std::make_unique<Armoured_cavalry>("unit1"));
-    _units.emplace_back(std::make_unique<Armoured_cavalry>("unit2"));
-    for (auto& u : _units)
-        u->init_token(_token_size);
 
-    _units[0]->place_on_hex(&_map.get_hex(56));
-    _units[1]->place_on_hex(&_map.get_hex(19));
-    _units[2]->place_on_hex(&_map.get_hex(4));
+    _players[0].teams.emplace_back(Team("team 0", _map, _unit_set));
+    _players[1].teams.emplace_back(Team("team 1", _map, _unit_set));
+
+    auto u0 = _unit_set.push_unit<Mechanized>("unit 0");
+    auto u1 = _unit_set.push_unit<Armoured_cavalry>("unit 1");
+    auto u2 = _unit_set.push_unit<Armoured_cavalry>("unit 2");
+
+    _players[0].teams[0].add_unit_ownership(u0);
+    _players[0].teams[0].add_unit_ownership(u1);
+    _players[1].teams[0].add_unit_ownership(u2);
+
+    _unit_set.init_tokens(_token_size);
+
+    _unit_set.get_by_id(u0)->place_on_hex(&_map.get_hex(56));
+    _unit_set.get_by_id(u1)->place_on_hex(&_map.get_hex(19));
+    _unit_set.get_by_id(u2)->place_on_hex(&_map.get_hex(4));
 
     _players[0].set_name("Player 0");
     _players[1].set_name("Player 1");
 
-    _players[0].add_unit(_units[0]);
-    _players[0].add_unit(_units[1]);
-    _players[1].add_unit(_units[2]);
     _current_player = _players.begin();
-    _resolve_units  = true;
 
     _running = true;
 
@@ -112,11 +116,13 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    if (_resolve_units) {
+    _current_player->teams[0].update();
+
+    /*    if (_resolve_units) {
         resolve_stacks_and_units(_current_player->get_players_units());
         _resolve_units = false;
     }
-
+*/
     //Networking
     switch (_network_status) {
         case Network_status::sever_accepting:
@@ -132,8 +138,7 @@ void Game::update(const sf::Time& elapsed_time) {
 
 void Game::render() {
     _map.draw(_window);
-    for (auto& u : _units_to_draw)
-        u->draw(_window);
+    _current_player->teams[0].draw(_window);
 
     for (auto& s : _stacks)
         s.draw(_window);
@@ -153,7 +158,7 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
                 _current_player = _players.begin();
                 std::for_each(_units.begin(), _units.end(), [](auto& u) { u->reset_mv_points(); });
             }
-            _resolve_units = true;
+            //            _resolve_units = true;
             break;
 
         case sf::Keyboard::Up:
@@ -225,7 +230,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
-                _resolve_units = true;
+                //                _resolve_units = true;
             }
             break;
 
@@ -254,7 +259,7 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     _window.setView(view);
     _gui.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(height))));
 }
-
+/*
 void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) {
     _stacks.clear();
     _units_to_draw.clear();
@@ -284,7 +289,7 @@ void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) 
             _units_to_draw.insert(u);
     }
 }
-
+*/
 void Game::init_mover_and_info_for_unit(std::shared_ptr<Unit> unit) {
     _panel->remove(_panel->get("unit info"));
     _mover = unit->get_mover(_map);

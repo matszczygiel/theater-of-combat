@@ -23,6 +23,7 @@ class Team {
     bool add_unit_ownership(const int& no);
     std::vector<int> get_controlable_hexes() const;
     void draw(sf::RenderTarget& target) const;
+    void update();
 
     template <class Archive>
     void serialize(Archive& ar);

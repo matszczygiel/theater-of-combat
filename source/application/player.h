@@ -1,21 +1,25 @@
 #pragma once
 
-#include <set>
+#include <map>
 #include <string>
 
-#include "unit/unit.h"
+#include "team/team.h"
 
 class Player {
    public:
-   explicit Player(const std::string& name = ""): _name(name) {}
-    std::set<std::shared_ptr<Unit> >& get_players_units();
+    explicit Player(const std::string& name = "") : _name(name) {}
     void set_name(const std::string& name);
-    void add_unit(std::shared_ptr<Unit>  unit);
+
+    template <class Archive>
+    void serialize(Archive& ar);
+
+    std::vector<Team> teams;
 
    private:
     std::string _name;
-    std::set<std::shared_ptr<Unit> > _units;
 };
 
-inline std::set<std::shared_ptr<Unit> >& Player::get_players_units() { return _units; }
-inline void Player::set_name(const std::string& name) { _name = name; }
+template <class Archive>
+void Player::serialize(Archive& ar) {
+    ar(_name, teams);
+}

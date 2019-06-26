@@ -12,7 +12,7 @@ Unit::Unit(const int& moving_pts, const int& strength_pts,
       _current_moving_pts{moving_pts},
       _strength_pts{strength_pts},
       _description{description},
-      _id{_current_max_id++} {}
+      _id{++_current_max_id} {}
 
 Hex_site* Unit::get_occupation() const { return _occupation; }
 

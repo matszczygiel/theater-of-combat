@@ -12,7 +12,7 @@ class Mover;
 class Map;
 class Hex_site;
 
-class Unit : public Tokenizable, public std::enable_shared_from_this<Unit> {
+class Unit : public Tokenizable {
    public:
     explicit Unit(const int& moving_pts, const int& strength_pts,
                   const std::string& description) noexcept;

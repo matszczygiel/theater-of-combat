@@ -6,22 +6,36 @@
 #include <vector>
 
 #include <SFML/Graphics/RenderTarget.hpp>
-
-#include "map/map.h"
+#include <cereal/types/set.hpp>
 
 class Unit;
+class Unit_set;
+class Map;
 
 class Team {
    public:
-    explicit Team(const std::string& name = "") : _name(name) {}
+    explicit Team(const std::string& name, Map& map, Unit_set& set)
+        : _map(&map), _unit_set(&set), _name(name) {}
 
-    void add_unit(std::unique_ptr<Unit> unit);
-    void remove_unit(const int& no);
-    std::vector<int> get_controlable_hexes(const Map& map) const;
+    Team() = default;
+
+    bool remove_unit_ownership(const int& no);
+    bool add_unit_ownership(const int& no);
+    std::vector<int> get_controlable_hexes() const;
     void draw(sf::RenderTarget& target) const;
 
+    template <class Archive>
+    void serialize(Archive& ar);
+
    private:
-    std::map<int, std::unique_ptr<Unit>> _units;
-    std::vector<Unit*> _units_to_draw;
-    const std::string _name;
+    std::set<int> _owned_units_ids{};
+    std::vector<Unit*> _units_to_draw{};
+    Map* _map{nullptr};
+    Unit_set* _unit_set{nullptr};
+    std::string _name{};
 };
+
+template <class Archive>
+void Team::serialize(Archive& ar) {
+    ar(_owned_units_ids, _name);
+}

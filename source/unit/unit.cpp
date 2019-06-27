@@ -50,7 +50,7 @@ void Unit::reduce_st_points(const int& points) {
 
 tgui::Canvas::Ptr Unit::create_displayer() const {
     auto canvas = tgui::Canvas::create({150, 80});
-    canvas->setPosition(10, 10);
+    canvas->setPosition(10, 30);
     canvas->clear(sf::Color::Green);
     auto token = get_token();
     token.setPosition(0, 0);

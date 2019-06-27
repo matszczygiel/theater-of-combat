@@ -41,3 +41,7 @@ void Team::update() {
         _units_to_draw.push_back(_unit_set->get_by_id(uid));
     }
 }
+
+void Team::apply(const std::function<void(Unit&)>& function) {
+    _unit_set->apply(_owned_units_ids, function);
+}

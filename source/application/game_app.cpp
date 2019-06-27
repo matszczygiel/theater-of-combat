@@ -156,7 +156,7 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
         case sf::Keyboard::R:
             if (++_current_player == _players.end()) {
                 _current_player = _players.begin();
-                std::for_each(_units.begin(), _units.end(), [](auto& u) { u->reset_mv_points(); });
+                _unit_set.apply([](Unit& u) { u.reset_mv_points(); });
             }
             //            _resolve_units = true;
             break;
@@ -210,22 +210,23 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     switch (button) {
         case sf::Mouse::Left:
             if (!_moving) {
-                for (auto& u : _units_to_draw) {
-                    if (u->token_contains(position)) {
+                _current_player->teams[0].apply([&](Unit& u) {
+                    if (u.token_contains(position)) {
                         init_mover_and_info_for_unit(u);
+                    }
+                });
+            }
+            /*           if (!_moving) {
+                for (auto& s : _stacks) {
+                    if (s.token_contains(position)) {
+                        _panel->add(s.create_displayer([&](std::shared_ptr<Unit> u) { this->init_mover_and_info_for_unit(u); }),
+                                    "unit info");
                         break;
                     }
                 }
-                if (!_moving) {
-                    for (auto& s : _stacks) {
-                        if (s.token_contains(position)) {
-                            _panel->add(s.create_displayer([&](std::shared_ptr<Unit> u) { this->init_mover_and_info_for_unit(u); }),
-                                        "unit info");
-                            break;
-                        }
-                    }
-                }
-            } else {
+            }
+    }*/
+            else {
                 _mover->move(position, _message_bus);
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
@@ -290,10 +291,10 @@ void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) 
     }
 }
 */
-void Game::init_mover_and_info_for_unit(std::shared_ptr<Unit> unit) {
+void Game::init_mover_and_info_for_unit(Unit& unit) {
     _panel->remove(_panel->get("unit info"));
-    _mover = unit->get_mover(_map);
+    _mover = unit.get_mover(_map);
     _mover->find_paths();
     _moving = true;
-    _panel->add(unit->create_displayer(), "unit info");
+    _panel->add(unit.create_displayer(), "unit info");
 }

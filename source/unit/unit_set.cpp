@@ -14,3 +14,21 @@ void Unit_set::init_tokens(const float& size) {
     for (auto& u : _units)
         u.second->init_token(size);
 }
+
+void Unit_set::apply(const std::function<void(Unit&)>& function) {
+    for (auto& u : _units) {
+        function(*u.second);
+    }
+}
+
+void Unit_set::apply(const std::vector<int> ids, const std::function<void(Unit&)>& function) {
+    for (const auto& id : ids) {
+        function(*_units.at(id));
+    }
+}
+
+void Unit_set::apply(const std::set<int> ids, const std::function<void(Unit&)>& function) {
+    for (const auto& id : ids) {
+        function(*_units.at(id));
+    }
+}

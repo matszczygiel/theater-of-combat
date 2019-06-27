@@ -24,6 +24,7 @@ class Team {
     std::vector<int> get_controlable_hexes() const;
     void draw(sf::RenderTarget& target) const;
     void update();
+    void apply(const std::function<void(Unit&)>& function);
 
     template <class Archive>
     void serialize(Archive& ar);

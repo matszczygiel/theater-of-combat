@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <vector>
+#include <set>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cereal/types/set.hpp>
@@ -21,7 +21,7 @@ class Team {
 
     bool remove_unit_ownership(const int& no);
     bool add_unit_ownership(const int& no);
-    std::vector<int> get_controlable_hexes() const;
+    std::set<int> get_controlable_hexes() const;
     void draw(sf::RenderTarget& target) const;
     void update();
     void apply(const std::function<void(Unit&)>& function);

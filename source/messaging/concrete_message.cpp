@@ -6,16 +6,15 @@
 
 #include <cereal/types/polymorphic.hpp>
 
-Unit_move_request::Unit_move_request(const int& unit_id,
-                                     const std::vector<std::pair<int, int>>& hexes)
-    : _unit_id(unit_id), _hexes(hexes) {}
+Unit_moved_msg::Unit_moved_msg(const int& unit_id, const int& destination_id, const int& cost)
+    : _unit_id(unit_id), _dest_id(destination_id), _cost(cost) {}
 
-std::string Unit_move_request::log() const {
-    std::string res = "Requested unit no " + std::to_string(_unit_id) + " through hexes:";
-    for (const auto& x : _hexes)
-        res += " " + std::to_string(x.first);
+std::string Unit_moved_msg::log() const {
+    std::string res = "Unit no " + std::to_string(_unit_id) + " moved to hex " + std::to_string(_dest_id) +
+                      " paying " + std::to_string(_cost) + " moving points.";
+
     return res;
 }
 
-CEREAL_REGISTER_TYPE(Unit_move_request)
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Unit_move_request)
+CEREAL_REGISTER_TYPE(Unit_moved_msg)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Unit_moved_msg)

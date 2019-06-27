@@ -172,11 +172,15 @@ void Map::set_numbers_drawing(const std::string& font_filename) {
     _draw_numbers = true;
 }
 
-std::vector<int> Map::get_controlable_hexes_from(const int& src) const {
+std::set<int> Map::get_controlable_hexes_from(const int& src) const {
     ENGINE_ASSERT(src < static_cast<int>(_hexes.size()), "Invalid source hex no given!");
     auto vec           = _adjacency_matrix.at(src);
     const int hex_size = _hexes.size();
 
-    std::remove_if(vec.begin(), vec.end(), [&](auto& x) { return (x >= hex_size); });
-    return vec;
+    std::set<int> res;
+    for (auto& v : vec) {
+        if (v < hex_size)
+            res.insert(v);
+    }
+    return res;
 }

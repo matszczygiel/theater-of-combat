@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <set>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -30,7 +31,7 @@ class Map {
     template <class T>
     void connect_site(const int& hex1_no, const int& hex2_no);
 
-    std::vector<int> get_controlable_hexes_from(const int& src) const;
+    std::set<int> get_controlable_hexes_from(const int& src) const;
 
    private:
     void resize(const int& x, const int& y);

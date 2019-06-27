@@ -13,10 +13,10 @@ Mover::Mover(Unit* unit, Map& map)
     : _map{&map}, _unit{unit} {}
 
 std::map<int, int> Mover::compute_weights(
-        const std::vector<Hex_site>& hex_set,
-        const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const {
+    const std::vector<Hex_site>& hex_set,
+    const std::map<int, std::unique_ptr<Passage_site>>& pass_set) const {
     std::map<int, int> weights;
-    const auto hex_table = create_hex_table();
+    const auto hex_table  = create_hex_table();
     const auto pass_table = create_pass_table();
 
     for (const auto& x : hex_set) {
@@ -68,48 +68,63 @@ void Mover::find_paths() {
     }
 }
 
-void Mover::move(const sf::Vector2f& mouse_pos, std::shared_ptr<Message_bus>& bus) {
+void Mover::move(const sf::Vector2f& mouse_pos, const std::set<int>& forbidden_sites,
+                 std::shared_ptr<Message_bus>& bus) {
     ENGINE_INFO("Moving unit.");
+    const auto path = find_path(mouse_pos);
+    if (path.empty())
+        return;
+
+    auto dest = path.back();
+
+    for (auto& site : path) {
+        if (forbidden_sites.count(site.first)) {
+            dest = site;
+            break;
+        }
+    }
+/*
+    _unit->place_on_hex(&_map->get_hex(dest.first));
+    _unit->reduce_mv_points(dest.second);
+*/
+    bus->queue_message(std::make_shared<Unit_moved_msg>(_unit->get_id(), dest.first, dest.second));
+}
+
+std::vector<std::pair<int, int>> Mover::find_path(const sf::Vector2f& mouse_pos) {
+    ENGINE_ASSERT(_map && _unit, "Trying to move unit on map but one of them is invalid.");
+
     const auto& hsize = static_cast<int>(_map->_hexes.size());
+    std::vector<std::pair<int, int>> vec;
 
-    if (_map && _unit) {
-        for (auto it = _distances.begin(); it != _distances.end(); ++it) {
-            if (hsize > it->first) {
-                auto& hex = _map->get_hex(it->first);
+    for (auto it = _distances.begin(); it != _distances.end(); ++it) {
+        if (hsize > it->first) {
+            auto& hex = _map->get_hex(it->first);
 
-                if (hex.contains(mouse_pos)) {
-                    std::vector<std::pair<int, int>> vec;
-                    vec.emplace_back(*it);
-                    while (true) {
-                        auto search = _previous.find(vec.back().first);
-                        if (search == _previous.end())
-                            break;
+            if (hex.contains(mouse_pos)) {
+                vec.emplace_back(*it);
+                while (true) {
+                    auto search = _previous.find(vec.back().first);
+                    if (search == _previous.end())
+                        break;
 
-                        const auto& no = search->second;
-                        vec.emplace_back(no, _distances[no]);
-                    }
-                    for (auto v = vec.begin(); v != vec.end();) {
-                        if (v->first >= hsize) {
-                            v = vec.erase(v);
-                        } else {
-                            ++v;
-                        }
-                    }
-                    std::reverse(std::begin(vec), std::end(vec));
-
-                    bus->queue_message(std::make_shared<Unit_move_request>(
-                        _unit->get_id(), vec));
-
-                    clear();
-                    return;
+                    const auto& no = search->second;
+                    vec.emplace_back(no, _distances[no]);
                 }
+                for (auto v = vec.begin(); v != vec.end();) {
+                    if (v->first >= hsize) {
+                        v = vec.erase(v);
+                    } else {
+                        ++v;
+                    }
+                }
+                break;
             }
         }
     }
-    ENGINE_WARN("Trying to move unit on map but one of them is invalid.");
 
     clear();
-    return;
+    std::reverse(std::begin(vec), std::end(vec));
+    return vec;
 }
 
 void Mover::clear() {

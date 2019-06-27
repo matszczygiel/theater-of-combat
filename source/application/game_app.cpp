@@ -12,6 +12,8 @@
 #include "networking/client.h"
 #include "networking/server.h"
 #include "unit/heavy_unit.h"
+#include "messaging/concrete_message.h"
+
 
 void Game::initialize() {
     ENGINE_TRACE("Creating a window.");
@@ -97,6 +99,14 @@ void Game::initialize() {
         _network.emplace<Client>();
         _gui.add(std::get<Client>(_network).create_prompt_window(_network_status));
     });
+
+
+    _message_bus->add_listener(Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg){
+        auto um_msg = static_cast<Unit_moved_msg*>(msg.get());
+        auto u =_unit_set.get_by_id(um_msg->_unit_id);
+        u->place_on_hex(&_map.get_hex(um_msg->_dest_id));
+        u->reduce_mv_points(um_msg->_cost);
+    });
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -139,9 +149,6 @@ void Game::update(const sf::Time& elapsed_time) {
 void Game::render() {
     _map.draw(_window);
     _current_player->teams[0].draw(_window);
-
-    for (auto& s : _stacks)
-        s.draw(_window);
 }
 
 void Game::finalize() {
@@ -227,7 +234,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             }
     }*/
             else {
-                _mover->move(position, _message_bus);
+                _mover->move(position, {}, _message_bus);
                 _moving = false;
                 _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);

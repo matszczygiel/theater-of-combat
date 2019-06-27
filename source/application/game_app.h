@@ -36,10 +36,6 @@ class Game : public Application {
     void init_mover_and_info_for_unit(Unit& unit);
 
    private:
-    std::vector<std::shared_ptr<Unit> > _units;
-    std::set<std::shared_ptr<Unit> > _units_to_draw;
-    std::vector<Stack> _stacks;
-
     std::array<Player, 2> _players;
     std::array<Player, 2>::iterator _current_player;
 

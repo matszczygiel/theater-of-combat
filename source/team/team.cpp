@@ -13,20 +13,18 @@ bool Team::add_unit_ownership(const int& no) {
     return _owned_units_ids.insert(no).second;
 }
 
-std::vector<int> Team::get_controlable_hexes() const {
-    std::vector<int> vec;
+std::set<int> Team::get_controlable_hexes() const {
+    std::set<int> set;
 
     for (auto& u : _owned_units_ids) {
         const auto occ = _unit_set->get_by_id(u)->get_occupation();
         if (!occ)
             continue;
         auto tmp_vec = _map->get_controlable_hexes_from(occ->get_number());
-        vec.insert(vec.end(), tmp_vec.begin(), tmp_vec.end());
+        set.merge(tmp_vec);
     }
 
-    auto last = std::unique(vec.begin(), vec.end());
-    vec.erase(last, vec.end());
-    return vec;
+    return set;
 }
 
 void Team::draw(sf::RenderTarget& target) const {

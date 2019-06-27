@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <type_traits>
 
 struct Message {
    public:
@@ -13,6 +14,12 @@ struct Message {
     using ptr      = std::shared_ptr<T>;
     using ptr_base = ptr<Message>;
     using id_type  = std::size_t;
+
+    template <class T>
+    constexpr static id_type get_id() {
+       // static_assert(std::is_base_of<Message, T>()::value, "Message id can only be given to message subclasses.");
+        return typeid(T).hash_code();
+    }
 
     virtual std::string log() const = 0;
 
@@ -41,7 +48,7 @@ class Message_listener {
     template <class T>
     bool register_handler(std::function<void(Message::ptr<T>&)> callback) {
         static_assert(std::is_base_of<Message, T>::value, "Trying to register handler with non-message class.");
-        return register_handler(typeid(T).hash_code(), [&, callback](Message::ptr_base msg) {
+        return register_handler(Message::get_id<T>(), [&, callback](Message::ptr_base msg) {
             auto ev = std::dynamic_pointer_cast<T>(msg);
             if (ev)
                 callback(ev);

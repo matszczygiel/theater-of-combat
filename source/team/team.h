@@ -2,8 +2,8 @@
 
 #include <map>
 #include <memory>
-#include <string>
 #include <set>
+#include <string>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cereal/types/set.hpp>
@@ -25,6 +25,8 @@ class Team {
     void draw(sf::RenderTarget& target) const;
     void update();
     void apply(const std::function<void(Unit&)>& function);
+    std::set<Unit*> get_units_controling(const int& hex_id);
+    std::set<Unit*> get_units_controling(const std::vector<int>& hex_ids);
 
     template <class Archive>
     void serialize(Archive& ar);

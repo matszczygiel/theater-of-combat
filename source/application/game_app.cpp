@@ -8,12 +8,11 @@
 
 #include "log.h"
 
+#include "messaging/concrete_message.h"
 #include "messaging/messaging.h"
 #include "networking/client.h"
 #include "networking/server.h"
 #include "unit/heavy_unit.h"
-#include "messaging/concrete_message.h"
-
 
 void Game::initialize() {
     ENGINE_TRACE("Creating a window.");
@@ -100,12 +99,17 @@ void Game::initialize() {
         _gui.add(std::get<Client>(_network).create_prompt_window(_network_status));
     });
 
-
-    _message_bus->add_listener(Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg){
+    _message_bus->add_listener(Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg) {
         auto um_msg = static_cast<Unit_moved_msg*>(msg.get());
-        auto u =_unit_set.get_by_id(um_msg->_unit_id);
+        auto u      = _unit_set.get_by_id(um_msg->_unit_id);
         u->place_on_hex(&_map.get_hex(um_msg->_dest_id));
         u->reduce_mv_points(um_msg->_cost);
+
+        auto hostiles = other_player()->teams[0].get_units_controling(
+            u->get_occupation()->get_number());
+        if (hostiles.empty())
+            return;
+            
     });
 }
 
@@ -161,8 +165,8 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
             break;
 
         case sf::Keyboard::R:
-            if (++_current_player == _players.end()) {
-                _current_player = _players.begin();
+            _current_player = other_player();
+            if (_current_player == _players.begin()) {
                 _unit_set.apply([](Unit& u) { u.reset_mv_points(); });
             }
             //            _resolve_units = true;
@@ -304,4 +308,13 @@ void Game::init_mover_and_info_for_unit(Unit& unit) {
     _mover->find_paths();
     _moving = true;
     _panel->add(unit.create_displayer(), "unit info");
+}
+
+std::array<Player, 2>::iterator Game::other_player() {
+    std::array<Player, 2>::iterator res = _current_player + 1;
+    if (res == _players.end()) {
+        return _players.begin();
+    }
+
+    return res;
 }

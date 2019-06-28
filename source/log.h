@@ -31,18 +31,18 @@ class Log {
 #define GAME_ERROR(...) ::Log::get_game_logger()->error(__VA_ARGS__)
 #define GAME_CRITICAL(...) ::Log::get_game_logger()->critical(__VA_ARGS__)
 
-#define ENGINE_ASSERT(x, ...)                                   \
-    {                                                           \
-        if (!(x)) {                                               \
+#define ENGINE_ASSERT(x, ...)                                      \
+    {                                                              \
+        if (!(x)) {                                                \
             ENGINE_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
-            assert(false);                                      \
-        };                                                      \
+            assert(false);                                         \
+        };                                                         \
     }
 
-#define GAME_ASSERT(x, ...)                                   \
-    {                                                         \
-        if (!(x)) {                                             \
+#define GAME_ASSERT(x, ...)                                      \
+    {                                                            \
+        if (!(x)) {                                              \
             GAME_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
-            assert(false);                                    \
-        };                                                    \
+            assert(false);                                       \
+        };                                                       \
     }

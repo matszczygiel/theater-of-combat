@@ -32,8 +32,10 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width, const unsigned& height) final;
 
- //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
+    //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
     void init_mover_and_info_for_unit(Unit& unit);
+
+    std::array<Player, 2>::iterator other_player();
 
    private:
     std::array<Player, 2> _players;
@@ -51,7 +53,6 @@ class Game : public Application {
     bool _moving_view_down  = false;
     bool _moving_view_right = false;
     bool _moving_view_left  = false;
-
 
     tgui::Panel::Ptr _panel;
 

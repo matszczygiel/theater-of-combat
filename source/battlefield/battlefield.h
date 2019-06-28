@@ -1,19 +1,18 @@
 #pragma once
 
-#include <vector>
+#include <map>
+#include <set>
 
 #include "unit/unit.h"
 
 class Battlefield {
    public:
-    void add_unit_player1(Unit* unit);
-    void add_unit_player2(Unit* unit);
+    void push(Unit* unit, const std::string& owner_name);
 
     void carry_fight();
 
    private:
-    std::vector<Unit*> _player1_units;
-    std::vector<Unit*> _player2_units;
+    std::map<std::string, std::set<Unit*>> _bucket;
 };
 
 inline void Battlefield::add_unit_player1(Unit* unit) { _player1_units.push_back(unit); }

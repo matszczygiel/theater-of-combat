@@ -5,8 +5,19 @@
 
 #include "log.h"
 #include "randomizer.h"
+#include "unit/unit.h"
 
 void Battlefield::carry_fight() {
+    ENGINE_INFO("Carrying fight.");
+
+    for(auto& node : _bucket){
+        for(auto& u : node.second) {
+            auto r = randomizer::uniform_int(0, u->get_st_points());
+            u->reduce_st_points(r);
+        }
+    }
+
+
     /*
     int pl1_strength = 0;
     for (auto& u : _player1_units)
@@ -26,7 +37,7 @@ void Battlefield::carry_fight() {
     GAME_INFO("Player2 lost {0} pts.", pl2_loss);
     */
 
-   
+
 }
 
 void Battlefield::push(Unit* unit, const std::string& owner_name) {

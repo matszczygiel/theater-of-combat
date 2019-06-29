@@ -1,11 +1,8 @@
 #include <random>
 
-class Randomizer {
-   public:
-    Randomizer() = delete;
+namespace randomizer {
 
-    static std::mt19937& get_engine() noexcept;
+std::mt19937& engine() noexcept;
+int uniform_int(const int& min, const int& max);
 
-   private:
-    static std::mt19937 _engine;
-};
+}  // namespace randomizer

@@ -1,9 +1,15 @@
 #include "randomizer.h"
 
-#include <chrono>
+namespace randomizer {
 
-std::mt19937 Randomizer::_engine(std::chrono::high_resolution_clock::now()
-                                   .time_since_epoch()
-                                   .count());
+std::mt19937& engine() noexcept {
+    static std::random_device rd;
+    static std::mt19937 engine{rd()};
+    return engine;
+}
 
-std::mt19937& Randomizer::get_engine() noexcept { return _engine; }
+int uniform_int(const int& min, const int& max) {
+    return std::uniform_int_distribution{min, max}(engine());
+}
+
+}  // namespace random

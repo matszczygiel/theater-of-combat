@@ -109,7 +109,10 @@ void Game::initialize() {
             u->get_occupation()->get_number());
         if (hostiles.empty())
             return;
-            
+
+        auto& bf = _battlefields.emplace_back(Battlefield());
+        bf.push(hostiles, other_player()->name());
+        bf.push(u, _current_player->name());
     });
 }
 
@@ -166,6 +169,11 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
 
         case sf::Keyboard::R:
             _current_player = other_player();
+            for (auto& b : _battlefields)
+                b.carry_fight();
+
+            _battlefields.clear();
+
             if (_current_player == _players.begin()) {
                 _unit_set.apply([](Unit& u) { u.reset_mv_points(); });
             }

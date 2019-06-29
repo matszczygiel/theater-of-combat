@@ -3,11 +3,11 @@
 #include <algorithm>
 #include <random>
 
-#include "randomizer.h"
 #include "log.h"
+#include "randomizer.h"
 
 void Battlefield::carry_fight() {
-/*
+    /*
     int pl1_strength = 0;
     for (auto& u : _player1_units)
         pl1_strength += u->get_strength_points();
@@ -25,4 +25,16 @@ void Battlefield::carry_fight() {
     GAME_INFO("Player1 lost {0} pts.", pl1_loss);
     GAME_INFO("Player2 lost {0} pts.", pl2_loss);
     */
+
+   
+}
+
+void Battlefield::push(Unit* unit, const std::string& owner_name) {
+    _bucket[owner_name].insert(unit);
+    ENGINE_ASSERT(_bucket.size() < 3, "Battlefield can accept no more than 2 sides of conflict.");
+}
+
+void Battlefield::push(std::set<Unit*> units, const std::string& owner_name) {
+    _bucket[owner_name].merge(units);
+    ENGINE_ASSERT(_bucket.size() < 3, "Battlefield can accept no more than 2 sides of conflict.");
 }

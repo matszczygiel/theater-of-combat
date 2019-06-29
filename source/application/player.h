@@ -9,6 +9,7 @@ class Player {
    public:
     explicit Player(const std::string& name = "") : _name(name) {}
     void set_name(const std::string& name);
+    const std::string& name() const;
 
     template <class Archive>
     void serialize(Archive& ar);

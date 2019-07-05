@@ -33,3 +33,6 @@ std::string Battle_ended_msg::log() const {
     }
     return res + "\n";
 }
+
+CEREAL_REGISTER_TYPE(Battle_ended_msg)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Battle_ended_msg)

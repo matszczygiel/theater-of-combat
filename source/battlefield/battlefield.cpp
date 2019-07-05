@@ -6,16 +6,23 @@
 #include "log.h"
 #include "randomizer.h"
 #include "unit/unit.h"
+#include "messaging/messaging.h"
+#include "messaging/concrete_message.h"
 
-void Battlefield::carry_fight() {
+
+void Battlefield::carry_fight(std::shared_ptr<Message_bus>& bus) {
     ENGINE_INFO("Carrying fight.");
+
+    auto msg = std::make_shared<Battle_ended_msg>();
 
     for(auto& node : _bucket){
         for(auto& u : node.second) {
             auto r = randomizer::uniform_int(0, u->get_st_points());
-            u->reduce_st_points(r);
+            msg->loses.insert({u->get_id(), r});
         }
     }
+
+    bus->queue_message(msg);
 
 
     /*

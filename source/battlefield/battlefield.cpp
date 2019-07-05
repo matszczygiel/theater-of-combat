@@ -4,26 +4,37 @@
 #include <random>
 
 #include "log.h"
+#include "messaging/concrete_message.h"
+#include "messaging/messaging.h"
 #include "randomizer.h"
 #include "unit/unit.h"
-#include "messaging/messaging.h"
-#include "messaging/concrete_message.h"
-
 
 void Battlefield::carry_fight(std::shared_ptr<Message_bus>& bus) {
     ENGINE_INFO("Carrying fight.");
 
     auto msg = std::make_shared<Battle_ended_msg>();
 
-    for(auto& node : _bucket){
-        for(auto& u : node.second) {
+    auto los      = randomizer::uniform_int(0, 1);
+    auto loser_it = _bucket.begin();
+    if (los)
+        ++loser_it;
+
+    msg->loser = loser_it->first;
+
+    msg->retreat_distance = randomizer::uniform_int(0, 5);
+
+    for(const auto& u : loser_it->second){
+        msg->retreating_units.insert(u->get_id());
+    }
+
+    for (auto& node : _bucket) {
+        for (auto& u : node.second) {
             auto r = randomizer::uniform_int(0, u->get_st_points());
             msg->loses.insert({u->get_id(), r});
         }
     }
 
     bus->queue_message(msg);
-
 
     /*
     int pl1_strength = 0;
@@ -43,8 +54,6 @@ void Battlefield::carry_fight(std::shared_ptr<Message_bus>& bus) {
     GAME_INFO("Player1 lost {0} pts.", pl1_loss);
     GAME_INFO("Player2 lost {0} pts.", pl2_loss);
     */
-
-
 }
 
 void Battlefield::push(Unit* unit, const std::string& owner_name) {

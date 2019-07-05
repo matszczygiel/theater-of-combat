@@ -19,11 +19,19 @@ std::string Unit_moved_msg::log() const {
 CEREAL_REGISTER_TYPE(Unit_moved_msg)
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Message, Unit_moved_msg)
 
-Battle_ended_msg::Battle_ended_msg(const std::map<int, int>& loses_) : loses(loses_) {}
-
 std::string Battle_ended_msg::log() const {
-    std::string res = "Loses:";
-    bool comma      = false;
+    std::string res = "Loser name: " + loser + ", retreat: " +
+                      std::to_string(retreat_distance) + ", retreating units:";
+    bool comma = false;
+    for (const auto& x : retreating_units) {
+        if (comma)
+            res += ",";
+        else
+            comma = true;
+        res += " " + std::to_string(x);
+    }
+    comma = false;
+    res += ", loses:";
     for (const auto& x : loses) {
         if (comma)
             res += ",";

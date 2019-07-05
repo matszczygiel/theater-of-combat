@@ -5,6 +5,7 @@
 #include <cereal/types/utility.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/types/map.hpp>
+#include <cereal/types/set.hpp>
 
 struct Unit_moved_msg : public Message {
    public:
@@ -23,13 +24,13 @@ struct Unit_moved_msg : public Message {
 
 struct Battle_ended_msg : public Message {
    public:
-    Battle_ended_msg() = default;
-    Battle_ended_msg(const std::map<int, int>& loses_);
-
     std::map<int, int> loses{};
+    std::string loser{};
+    int retreat_distance{};
+    std::set<int> retreating_units{};
 
     std::string log() const final;
 
     template <class Archive>
-    void serialize(Archive& ar) { ar(loses); }
+    void serialize(Archive& ar) { ar(loses, loser); }
 };

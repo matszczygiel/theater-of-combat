@@ -14,6 +14,8 @@ add_executable(toc
                 source/map/shapes/hex_border_shape.cpp
                 source/map/hexagons.h
                 source/map/hexagons.cpp
+                source/map/graph.h
+                source/map/graph.cpp
                 source/map/map_site.h
                 source/map/map_site.cpp
                 source/map/hex_site.h 
@@ -79,5 +81,9 @@ target_link_libraries(toc PRIVATE
                         sfml-graphics
                         sfml-system
                         sfml-network
-                        ImGui-SFML::ImGui-SFML)     
+                        ImGui-SFML::ImGui-SFML) 
                         
+                        
+add_subdirectory(tests)                        
+
+                                            

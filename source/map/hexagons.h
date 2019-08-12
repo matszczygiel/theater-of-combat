@@ -21,18 +21,15 @@ class HexCoordinates {
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
 
-    HexCoordinates(T x, T y, T z) : _x(z), _y(y), _z(z) {
+    HexCoordinates(T x, T y, T z) : _x(x), _y(y), _z(z) {
         if (x + y + z != 0)
-            throw std::domain_error("Sum of x + y + z ust equal 0.");
+            throw std::domain_error("Sum of x + y + z must be equal 0.");
     }
 
-    HexCoordinates(T q, T p) { HexCoordinates(q, -p - q, p); }
+    constexpr HexCoordinates(T q, T p) noexcept : _x(q), _y(-p - q), _z(p) {}
 
-    HexCoordinates<T> neighbor(int direction) const {
-        return directions.at(direction);
-    }
-
-    std::array<HexCoordinates<T>, 6> neighbors() const { return directions; }
+    HexCoordinates<T> neighbor(int direction) const;
+    std::array<HexCoordinates<T>, 6> neighbors() const;
 
     const T &p() const { return _z; }
     const T &q() const { return _x; }
@@ -63,7 +60,7 @@ T HexCoordinates<T>::length() const {
 }
 
 template <typename T>
-T distace(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+T distance(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
     return (lhs - rhs).length();
 }
 
@@ -89,6 +86,19 @@ HexCoordinates<T> operator-(const HexCoordinates<T> &lhs,
                             const HexCoordinates<T> &rhs) {
     return HexCoordinates<T>(lhs.x() - rhs.x(), lhs.y() - rhs.y(),
                              lhs.z() - rhs.z());
+}
+
+template <typename T>
+HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
+    return *this + directions.at(direction);
+}
+
+template <typename T>
+std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const {
+    std::array<HexCoordinates<T>, 6> res;
+    for (int i = 0; i < res.size(); ++i)
+        res[i] = neighbor(i);
+    return res;
 }
 
 template <typename T>

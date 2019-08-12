@@ -12,6 +12,8 @@ add_executable(toc
                 source/map/shapes/hex_shape.h
                 source/map/shapes/hex_border_shape.h
                 source/map/shapes/hex_border_shape.cpp
+                source/map/hexagons.h
+                source/map/hexagons.cpp
                 source/map/map_site.h
                 source/map/map_site.cpp
                 source/map/hex_site.h 

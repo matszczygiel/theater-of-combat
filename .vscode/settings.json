@@ -67,7 +67,11 @@
         "shared_mutex": "cpp",
         "valarray": "cpp",
         "map": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "set": "cpp"
     },
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "C_Cpp.dimInactiveRegions": false

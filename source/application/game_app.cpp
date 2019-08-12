@@ -24,7 +24,7 @@ void Game::initialize() {
     _window.setView(view);
 
     // _map = Map::create_test_map(_token_size);
-    /* 
+    /*
    {
         std::ofstream os("resources/maps/cereal_map.xml");
         cereal::XMLOutputArchive ar(os);
@@ -70,50 +70,22 @@ void Game::initialize() {
 
     _running = true;
 
-    _panel = tgui::Panel::create();
-    _gui.add(_panel, "panel");
-    _panel->setPosition(0, 0);
-    _panel->setSize("25%", "100%");
-    _panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
+    _message_bus->add_listener(
+        Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg) {
+            auto um_msg = static_cast<Unit_moved_msg*>(msg.get());
+            auto u      = _unit_set.get_by_id(um_msg->unit_id);
+            u->place_on_hex(&_map.get_hex(um_msg->dest_id));
+            u->reduce_mv_points(um_msg->cost);
 
-    auto label = tgui::Label::create("Selected units");
-    _panel->add(label, "label");
-    label->setTextSize(25);
+            auto hostiles = other_player()->teams[0].get_units_controling(
+                u->get_occupation()->get_number());
+            if (hostiles.empty())
+                return;
 
-    auto menu = tgui::MenuBar::create();
-    _gui.add(menu, "menu");
-    menu->setSize("100%", "7%");
-    menu->addMenu("Network");
-    menu->addMenuItem("Create server");
-    menu->addMenuItem("Connect to server");
-
-    menu->connectMenuItem("Network", "Create server", [&]() {
-        _network_status = Network_status::unspecified;
-        _network.emplace<Server>();
-        _gui.add(std::get<Server>(_network).create_prompt_window(_network_status));
-    });
-
-    menu->connectMenuItem("Network", "Connect to server", [&]() {
-        _network_status = Network_status::unspecified;
-        _network.emplace<Client>();
-        _gui.add(std::get<Client>(_network).create_prompt_window(_network_status));
-    });
-
-    _message_bus->add_listener(Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg) {
-        auto um_msg = static_cast<Unit_moved_msg*>(msg.get());
-        auto u      = _unit_set.get_by_id(um_msg->unit_id);
-        u->place_on_hex(&_map.get_hex(um_msg->dest_id));
-        u->reduce_mv_points(um_msg->cost);
-
-        auto hostiles = other_player()->teams[0].get_units_controling(
-            u->get_occupation()->get_number());
-        if (hostiles.empty())
-            return;
-
-        auto& bf = _battlefields.emplace_back(Battlefield());
-        bf.push(hostiles, other_player()->name());
-        bf.push(u, _current_player->name());
-    });
+            auto& bf = _battlefields.emplace_back(Battlefield());
+            bf.push(hostiles, other_player()->name());
+            bf.push(u, _current_player->name());
+        });
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -140,7 +112,7 @@ void Game::update(const sf::Time& elapsed_time) {
         _resolve_units = false;
     }
 */
-    //Networking
+    // Networking
     switch (_network_status) {
         case Network_status::sever_accepting:
             if (std::get<Server>(_network).accept_client()) {
@@ -158,8 +130,7 @@ void Game::render() {
     _current_player->teams[0].draw(_window);
 }
 
-void Game::finalize() {
-}
+void Game::finalize() {}
 
 void Game::key_pressed_event(const sf::Keyboard::Key& key) {
     switch (key) {
@@ -238,9 +209,8 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             /*           if (!_moving) {
                 for (auto& s : _stacks) {
                     if (s.token_contains(position)) {
-                        _panel->add(s.create_displayer([&](std::shared_ptr<Unit> u) { this->init_mover_and_info_for_unit(u); }),
-                                    "unit info");
-                        break;
+                        _panel->add(s.create_displayer([&](std::shared_ptr<Unit>
+    u) { this->init_mover_and_info_for_unit(u); }), "unit info"); break;
                     }
                 }
             }
@@ -248,7 +218,6 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             else {
                 _mover->move(position, {}, _message_bus);
                 _moving = false;
-                _panel->remove(_panel->get("unit info"));
                 _mover.reset(nullptr);
                 //                _resolve_units = true;
             }
@@ -260,8 +229,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
 }
 
 void Game::mouse_button_released_event(const sf::Mouse::Button& button,
-                                       const sf::Vector2f& position) {
-}
+                                       const sf::Vector2f& position) {}
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {
     auto view = _window.getView();
@@ -277,12 +245,10 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
     view.setSize(width, height);
     _window.setView(view);
-    _gui.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(height))));
 }
 /*
-void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) {
-    _stacks.clear();
-    _units_to_draw.clear();
+void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set)
+{ _stacks.clear(); _units_to_draw.clear();
 
     for (auto& u : unit_set) {
         auto occ           = u->get_occupation();
@@ -311,11 +277,9 @@ void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) 
 }
 */
 void Game::init_mover_and_info_for_unit(Unit& unit) {
-    _panel->remove(_panel->get("unit info"));
     _mover = unit.get_mover(_map);
     _mover->find_paths();
     _moving = true;
-    _panel->add(unit.create_displayer(), "unit info");
 }
 
 std::array<Player, 2>::iterator Game::other_player() {

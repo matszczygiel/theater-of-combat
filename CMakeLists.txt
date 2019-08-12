@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 project(theater-of-combat VERSION 0.1.0 LANGUAGES CXX)
 
+set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
+
 add_executable(toc 
                 source/main.cpp
                 source/log.cpp
@@ -54,22 +56,26 @@ add_executable(toc
                 source/core/registrable.h
                 source/team/team.h
                 source/team/team.cpp
+                source/gui/imgui_demo.cpp
                 )
 
-target_include_directories(toc PUBLIC 
+target_include_directories(toc PRIVATE 
                             source
                             )
 
-target_compile_features(toc PUBLIC 
+target_compile_features(toc PRIVATE 
                         cxx_std_17)
 
-target_compile_options(toc PUBLIC 
+target_compile_options(toc PRIVATE 
                         -Wall -Wextra -pedantic)
 
-target_link_libraries(toc PUBLIC 
+find_package(ImGui-SFML REQUIRED)
+find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
+
+target_link_libraries(toc PRIVATE 
                         sfml-window
                         sfml-graphics
                         sfml-system
                         sfml-network
-                        tgui)     
+                        ImGui-SFML::ImGui-SFML)     
                         

@@ -4,7 +4,6 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <TGUI/TGUI.hpp>
 
 #include "tokenizable.h"
 
@@ -21,7 +20,6 @@ class Unit : public Tokenizable {
 
     virtual std::unique_ptr<Mover> get_mover(Map& map) = 0;
 
-    tgui::Canvas::Ptr create_displayer() const;
 
     void place_on_hex(Hex_site* hex);
     void reset_mv_points() noexcept;

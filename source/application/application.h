@@ -5,8 +5,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include <TGUI/TGUI.hpp>
-
 #include "messaging/messaging.h"
 
 class Application {
@@ -21,17 +19,17 @@ class Application {
     virtual void render()                             = 0;
     virtual void finalize()                           = 0;
 
-    virtual void key_pressed_event(const sf::Keyboard::Key& key)                    = 0;
-    virtual void key_released_event(const sf::Keyboard::Key& key)                   = 0;
+    virtual void key_pressed_event(const sf::Keyboard::Key& key)           = 0;
+    virtual void key_released_event(const sf::Keyboard::Key& key)          = 0;
     virtual void mouse_button_pressed_event(const sf::Mouse::Button& button,
-                                            const sf::Vector2f& position)           = 0;
+                                            const sf::Vector2f& position)  = 0;
     virtual void mouse_button_released_event(const sf::Mouse::Button& button,
-                                             const sf::Vector2f& position)          = 0;
-    virtual void mouse_wheel_scrolled_event(const float& delta)                     = 0;
-    virtual void window_resize_event(const unsigned& width, const unsigned& height) = 0;
+                                             const sf::Vector2f& position) = 0;
+    virtual void mouse_wheel_scrolled_event(const float& delta)            = 0;
+    virtual void window_resize_event(const unsigned& width,
+                                     const unsigned& height)               = 0;
 
     sf::RenderWindow _window;
-    tgui::Gui _gui;
 
     bool _running = false;
 

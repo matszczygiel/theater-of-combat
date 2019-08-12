@@ -30,9 +30,11 @@ class Game : public Application {
     void mouse_button_released_event(const sf::Mouse::Button& button,
                                      const sf::Vector2f& position) final;
     void mouse_wheel_scrolled_event(const float& delta) final;
-    void window_resize_event(const unsigned& width, const unsigned& height) final;
+    void window_resize_event(const unsigned& width,
+                             const unsigned& height) final;
 
-    //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
+    //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >&
+    //   unit_set);
     void init_mover_and_info_for_unit(Unit& unit);
 
     std::array<Player, 2>::iterator other_player();
@@ -53,8 +55,6 @@ class Game : public Application {
     bool _moving_view_down  = false;
     bool _moving_view_right = false;
     bool _moving_view_left  = false;
-
-    tgui::Panel::Ptr _panel;
 
     constexpr static float _token_size        = 30;
     constexpr static float _view_moving_speed = 0.3f;

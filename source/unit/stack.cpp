@@ -19,15 +19,3 @@ void Stack::draw(sf::RenderTarget& target) const {
         }
     }
 }
-
-tgui::Grid::Ptr Stack::create_displayer(const std::function<void(std::shared_ptr<Unit> )>& widget_callback) const {
-    auto grid = tgui::Grid::create();
-    grid->setPosition(10, 10);
-    int counter = 0;
-    for (auto& u : _stack) {
-        auto disp = u->create_displayer();
-        disp->connect("Clicked", widget_callback, u);
-        grid->addWidget(disp, counter++, 0, tgui::Padding{0, 0, 0, 10});
-    }
-    return grid;
-}

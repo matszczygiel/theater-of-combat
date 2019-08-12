@@ -1,6 +1,7 @@
 #include "mover.h"
 
 #include <limits>
+#include <queue>
 
 #include <SFML/System/Vector2.hpp>
 
@@ -9,8 +10,7 @@
 #include "messaging/concrete_message.h"
 #include "unit/unit.h"
 
-Mover::Mover(Unit* unit, Map& map)
-    : _map{&map}, _unit{unit} {}
+Mover::Mover(Unit* unit, Map& map) : _map{&map}, _unit{unit} {}
 
 std::map<int, int> Mover::compute_weights(
     const std::vector<Hex_site>& hex_set,
@@ -68,7 +68,8 @@ void Mover::find_paths() {
     }
 }
 
-void Mover::move(const sf::Vector2f& mouse_pos, const std::set<int>& forbidden_sites,
+void Mover::move(const sf::Vector2f& mouse_pos,
+                 const std::set<int>& forbidden_sites,
                  std::shared_ptr<Message_bus>& bus) {
     ENGINE_INFO("Moving unit.");
     const auto path = find_path(mouse_pos);
@@ -83,15 +84,18 @@ void Mover::move(const sf::Vector2f& mouse_pos, const std::set<int>& forbidden_s
             break;
         }
     }
-/*
-    _unit->place_on_hex(&_map->get_hex(dest.first));
-    _unit->reduce_mv_points(dest.second);
-*/
-    bus->queue_message(std::make_shared<Unit_moved_msg>(_unit->get_id(), dest.first, dest.second));
+    /*
+        _unit->place_on_hex(&_map->get_hex(dest.first));
+        _unit->reduce_mv_points(dest.second);
+    */
+    bus->queue_message(std::make_shared<Unit_moved_msg>(
+        _unit->get_id(), dest.first, dest.second));
 }
 
-std::vector<std::pair<int, int>> Mover::find_path(const sf::Vector2f& mouse_pos) {
-    ENGINE_ASSERT(_map && _unit, "Trying to move unit on map but one of them is invalid.");
+std::vector<std::pair<int, int>> Mover::find_path(
+    const sf::Vector2f& mouse_pos) {
+    ENGINE_ASSERT(_map && _unit,
+                  "Trying to move unit on map but one of them is invalid.");
 
     const auto& hsize = static_cast<int>(_map->_hexes.size());
     std::vector<std::pair<int, int>> vec;
@@ -136,9 +140,9 @@ void Mover::clear() {
         x.second->set_highlighted(false);
 }
 
-std::pair<std::map<int, int>, std::map<int, int>>
-dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
-         const std::map<int, int>& weights) {
+std::pair<std::map<int, int>, std::map<int, int>> dijkstra(
+    const std::map<int, std::vector<int>>& graph, const int& src,
+    const std::map<int, int>& weights) {
     std::map<int, int> dist;
 
     constexpr auto infinity = std::numeric_limits<int>::max();
@@ -149,8 +153,7 @@ dijkstra(const std::map<int, std::vector<int>>& graph, const int& src,
     dist[src] = 0;
 
     std::map<int, int> prev;
-    std::priority_queue<std::pair<int, int>,
-                        std::vector<std::pair<int, int>>,
+    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>,
                         std::greater<std::pair<int, int>>>
         queue;
 

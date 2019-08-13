@@ -40,3 +40,35 @@ bool operator==(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs) {
 bool operator!=(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs) {
     return !(lhs == rhs);
 }
+
+WeightedBidirectionalGraph& WeightedBidirectionalGraph::insert_edge(
+    int node1, int node2, int weight_1to2, int weight_2to1) {
+    if (_adjacency_matrix.count(node1) == 1) {
+        auto& neighbors = _adjacency_matrix[node1];
+        for (auto& n : neighbors) {
+            if (n.first == node2)
+                throw std::runtime_error("Edge already inserted");
+        }
+        neighbors.insert({node2, weight_1to2});
+
+    } else {
+        _adjacency_matrix[node1] = {{node2, weight_1to2}};
+    }
+
+    /// TO DO
+    for (const auto& n : neighbors) {
+        auto search = _adjacency_matrix.find(n);
+        if (_adjacency_matrix.count(n) == 1) {
+            assert(_adjacency_matrix[n].insert(node).second);
+        } else {
+            throw std::runtime_error("Neighbors not present in the graph.");
+        }
+    }
+    if (!_adjacency_matrix.insert({node, neighbors}).second)
+        throw std::runtime_error("Node already present in the graph.");
+
+    return *this;
+}
+
+WeightedBidirectionalGraph& WeightedBidirectionalGraph::remove_edge(int node1,
+                                                                    int node2);

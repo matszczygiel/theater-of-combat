@@ -67,3 +67,89 @@ TEST(Graph, removing) {
 
     ASSERT_EQ(bg.adjacency_matrix(), expected);
 }
+
+TEST(WeightedGraph, inserting) {
+    BidirectionalGraph bg;
+    bg.insert_node(0, {})
+        .insert_node(1, {})
+        .insert_node(2, {1})
+        .insert_node(3, {1, 2})
+        .insert_node(4, {0, 3});
+
+    WeightedBidirectionalGraph wbg_expected(bg, 1);
+
+    WeightedBidirectionalGraph wbg;
+    wbg.insert_edge(1, 2, 1, 1)
+        .insert_edge(1, 3, 1, 1)
+        .insert_edge(0, 4, 1, 1)
+        .insert_edge(2, 3, 1, 1)
+        .insert_edge(3, 4, 1, 1);
+
+    ASSERT_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+}
+
+TEST(WeightedGraph, changing_weight) {
+    BidirectionalGraph bg;
+    bg.insert_node(0, {})
+        .insert_node(1, {})
+        .insert_node(2, {1})
+        .insert_node(3, {1, 2})
+        .insert_node(4, {0, 3});
+
+    WeightedBidirectionalGraph wbg_expected(bg, 0);
+
+    wbg_expected.change_edge_weight(1, 2, 3)
+        .change_edge_weight(1, 3, 0)
+        .change_edge_weight(0, 4, 1)
+        .change_edge_weight(2, 3, 0)
+        .change_edge_weight(3, 4, 1)
+        .change_edge_weight(2, 1, 4)
+        .change_edge_weight(3, 1, 4)
+        .change_edge_weight(4, 0, 3)
+        .change_edge_weight(3, 2, 3)
+        .change_edge_weight(4, 3, 0);
+
+    WeightedBidirectionalGraph wbg;
+    wbg.insert_edge(1, 2, 3, 4)
+        .insert_edge(1, 3, 0, 4)
+        .insert_edge(0, 4, 1, 3)
+        .insert_edge(2, 3, 0, 3)
+        .insert_edge(3, 4, 1, 0);
+
+    ASSERT_EQ(wbg, wbg_expected);
+}
+
+TEST(WeightedGraph, removing) {
+    BidirectionalGraph bg;
+    bg.insert_node(0, {})
+        .insert_node(1, {})
+        .insert_node(2, {1})
+        .insert_node(3, {1, 2})
+        .insert_node(4, {0, 3});
+
+    WeightedBidirectionalGraph wbg(bg, 1);
+
+    bg.remove_node(4);
+    WeightedBidirectionalGraph wbg_expected(bg, 1);
+
+    wbg.remove_node(4);
+
+    ASSERT_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+}
+
+TEST(WeightedGraph, dijkstra) {
+    WeightedBidirectionalGraph wbg;
+    wbg.insert_edge(1, 2, 3, 4)
+        .insert_edge(1, 3, 0, 4)
+        .insert_edge(0, 4, 1, 3)
+        .insert_edge(2, 3, 0, 3)
+        .insert_edge(3, 4, 1, 0);
+
+    auto [dist, prev] = wbg.dijkstra(3);
+
+    std::map<int, int> dist_expected = {{0, 4}, {1, 4}, {2, 3}, {3, 0}, {4, 1}};
+    std::map<int, int> prev_expected = {{0, 4}, {1, 3}, {2, 3}, {4, 3}};
+
+    ASSERT_EQ(dist, dist_expected);
+    ASSERT_EQ(prev, prev_expected);
+}

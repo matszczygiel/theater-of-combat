@@ -15,15 +15,9 @@ add_executable(toc
                 source/map/hexagons.h
                 source/map/hexagons.cpp
                 source/map/types.h
+                source/map/types.cpp
                 source/map/graph.h
                 source/map/graph.cpp
-                source/map/map_site.h
-                source/map/map_site.cpp
-                source/map/hex_site.h 
-                source/map/hex_site.cpp
-                source/map/passage_site.h
-                source/map/concrete_passage.h
-                source/map/concrete_passage.cpp
                 source/map/map.h
                 source/map/map.cpp
                 source/unit/heavy_unit.cpp

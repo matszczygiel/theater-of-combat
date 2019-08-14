@@ -21,12 +21,12 @@ class HexCoordinates {
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
 
-    HexCoordinates(T x, T y, T z) : _x(x), _y(y), _z(z) {
+    HexCoordinates(T x, T y, T z) : _x{x}, _y{y}, _z{z} {
         if (x + y + z != 0)
             throw std::domain_error("Sum of x + y + z must be equal 0.");
     }
 
-    constexpr HexCoordinates(T q, T p) noexcept : _x(q), _y(-p - q), _z(p) {}
+    constexpr HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
 
     HexCoordinates<T> neighbor(int direction) const;
     std::array<HexCoordinates<T>, 6> neighbors() const;
@@ -113,6 +113,7 @@ HexCoordinates<T> operator*(const HexCoordinates<T> &lhs, const T &rhs) {
 
 struct Orientation {
    public:
+    Orientation() = delete;
     // orientation matrix (used in the conversion to pixel point), row major
     std::array<float, 4> m;
     std::array<float, 4> minv;

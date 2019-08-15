@@ -19,7 +19,9 @@ class HexCoordinates {
     static const std::array<HexCoordinates<T>, 6> directions;
 
    public:
-    constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
+    constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {
+        static_assert(std::is_arithmetic<T>::value);
+    }
 
     HexCoordinates(T x, T y, T z) : _x{x}, _y{y}, _z{z} {
         if (x + y + z != 0)

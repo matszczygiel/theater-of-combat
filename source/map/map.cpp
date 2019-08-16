@@ -10,14 +10,14 @@ void Map::insert(HexSite site) {
     if (!std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
             return x.second.coord() == site.coord();
         }))
-        throw std::runtime_error("Map already contains such hex.");
+        throw std::invalid_argument("Map already contains such hex.");
 
     const auto neighors = site.coord().neighbors();
 
     std::map<int, HexSite> found_neighbors;
 
     std::copy_if(_hexes.begin(), _hexes.end(), std::inserter(found_neighbors),
-                 [](cosnt auto& s) {
+                 [](const auto& s) {
                      return std::any_of(
                          neighors.begin(), neighors.end(), [&](const auto& x) {
                              return x.second.coord() == s.second.coord();

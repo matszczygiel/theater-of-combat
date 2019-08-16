@@ -45,10 +45,10 @@ bool operator!=(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs) {
 
 WeightedBidirectionalGraph::WeightedBidirectionalGraph(
     const BidirectionalGraph& graph, int default_weight) {
-    for (const auto& node : graph.adjacency_matrix()) {
-        _adjacency_matrix[node.first] = {};
-        for (const auto& neighbor : node.second)
-            _adjacency_matrix[node.first].insert({neighbor, default_weight});
+    for (const auto& [node, neighbors] : graph.adjacency_matrix()) {
+        _adjacency_matrix[node] = {};
+        for (const auto& neighbor : neighbors)
+            _adjacency_matrix[node].insert({neighbor, default_weight});
     }
 }
 

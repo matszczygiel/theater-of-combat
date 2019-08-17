@@ -1,6 +1,8 @@
 #include "map.h"
 
 #include <algorithm>
+#include <cassert>
+#include <iterator>
 
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 
@@ -14,40 +16,22 @@ void Map::insert(HexSite site) {
 
     const auto neighors = site.coord().neighbors();
 
-    std::map<int, HexSite> found_neighbors;
+    std::set<int> found_neighbors;
 
-    std::copy_if(_hexes.begin(), _hexes.end(), std::inserter(found_neighbors),
-                 [](const auto& s) {
-                     return std::any_of(
-                         neighors.begin(), neighors.end(), [&](const auto& x) {
-                             return x.second.coord() == s.second.coord();
-                         })
-                 });
+    for (const auto& [n_id, n_site] : _hexes) {
+        if (std::any_of(neighors.begin(), neighors.end(), [&](const auto& x) {
+                return x == n_site.coord();
+            }))
+            {
+                assert(found_neighbors.insert(n_id).second);
+            }
+    }
 
-    _hexes.insert({_current_free_id++, site});
+    const int id = _current_free_id++;
 
-    102   │ let neighbours = hex.coord.neighbors();
-    103   │ 104   │ let found_neighbors
-        : HashMap<_, _> =
-              self 105   │ .hexes 106   │ .clone() 107   │ .into_iter() 108   │
-                  .filter(| (id, h) | {
-                      109   │ if neighbours.contains(&h.coord) {
-                          110   │ return true;
-                          111   │
-                      }
-                      else {
-                          112   │ return false;
-                          113   │
-                      }
-                      114   │
-                  }) 115   │ .collect();
-    116   │ 117   │ self.hexes.insert(self.current_free_id, hex);
-    118   │ 119   │ self.graph.insert_node(
-        120   │ self.current_free_id,
-        121   │ found_neighbors.keys().cloned().collect(), 122   │ )
-        ? ;
-    123   │ self.current_free_id += 1;
-    124   │ Ok(self)
+    assert(_hexes.insert({id, site}).second);
+
+    _graph.insert_node(id, found_neighbors);
 }
 
 void Map::insert(RiverSite site) {}

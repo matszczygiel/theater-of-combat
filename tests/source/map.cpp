@@ -2,6 +2,8 @@
 
 #include "../../source/map/graph.cpp"
 #include "../../source/map/hexagons.cpp"
+#include "../../source/map/map.cpp"
+#include "../../source/map/types.cpp"
 
 TEST(Hexagons, equality) {
     HexCoordinate coord1(3, -5, 2);
@@ -152,4 +154,39 @@ TEST(WeightedGraph, dijkstra) {
 
     ASSERT_EQ(dist, dist_expected);
     ASSERT_EQ(prev, prev_expected);
+}
+
+TEST(Map, insertions) {
+    Map map;
+    for (int r = -1; r <= 1; ++r)
+        for (int q = -1; q <= 1; ++q) {
+            map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
+        }
+
+    map.insert(RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1),
+                         RiverType::Stream));
+    map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1),
+                         RiverType::Stream));
+    map.insert(
+        RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::Stream));
+    map.insert(
+        RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::Stream));
+
+    BidirectionalGraph graph;
+
+    graph.insert_node(0, {})
+        .insert_node(1, {0})
+        .insert_node(2, {1})
+        .insert_node(3, {0, 1})
+        .insert_node(4, {3, 1, 2})
+        .insert_node(5, {4, 2})
+        .insert_node(6, {3, 4})
+        .insert_node(7, {6, 4, 5})
+        .insert_node(8, {5, 7})
+        .insert_node(9, {1, 2})
+        .insert_node(10, {2, 4})
+        .insert_node(11, {4, 5})
+        .insert_node(12, {5, 7});
+
+    ASSERT_EQ(map.graph(), graph);
 }

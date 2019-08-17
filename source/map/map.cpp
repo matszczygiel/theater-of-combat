@@ -3,10 +3,13 @@
 #include <algorithm>
 #include <cassert>
 #include <iterator>
+#include <tuple>
 
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 
 const std::map<int, RiverSite>& Map::rivers() const { return _rivers; }
+
+const BidirectionalGraph& Map::graph() const { return _graph; }
 
 void Map::insert(HexSite site) {
     if (!std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
@@ -18,23 +21,53 @@ void Map::insert(HexSite site) {
 
     std::set<int> found_neighbors;
 
-    for (const auto& [n_id, n_site] : _hexes) {
-        if (std::any_of(neighors.begin(), neighors.end(), [&](const auto& x) {
-                return x == n_site.coord();
-            }))
-            {
-                assert(found_neighbors.insert(n_id).second);
-            }
+    for (const auto& hex : _hexes) {
+        if (std::any_of(neighors.begin(), neighors.end(),
+                        [&](const auto& x) { return (x == hex.second.coord()); })) {
+            assert(found_neighbors.insert(hex.first).second);
+        }
     }
 
-    const int id = _current_free_id++;
-
+    const auto id = _current_free_id++;
     assert(_hexes.insert({id, site}).second);
-
     _graph.insert_node(id, found_neighbors);
 }
 
-void Map::insert(RiverSite site) {}
+void Map::insert(RiverSite site) {
+    std::set<int> found_hexes;
+
+    for (const auto& [s_id, s_site] : _hexes) {
+        if (s_site.coord() == site.sides().first ||
+            s_site.coord() == site.sides().second) {
+            assert(found_hexes.insert(s_id).second);
+        }
+    }
+
+    if (found_hexes.size() < 2) {
+        throw std::logic_error("Map doesn't contain sides of the river site.");
+    } else if (found_hexes.size() > 2) {
+        static_assert(true);
+    }
+
+    int found_rivers_count = 0;
+    for (const auto& [r_id, r_site] : _rivers) {
+        if (r_site.sides().first == site.sides().first &&
+            r_site.sides().second == site.sides().second) {
+            ++found_rivers_count;
+        } else if (r_site.sides().first == site.sides().second &&
+                   r_site.sides().second == site.sides().first) {
+            ++found_rivers_count;
+        }
+    }
+
+    if (found_rivers_count > 0) {
+        throw std::logic_error("Already foud such river.");
+    }
+
+    const auto id = _current_free_id++;
+    _rivers.insert({id, site});
+    _graph.insert_node(id, found_hexes);
+}
 
 /*
 Passage_site& Map::get_pass(const int& no) {

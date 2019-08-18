@@ -3,6 +3,7 @@
 // Classes provinding hexagonal grid functionality based on:
 // https://www.redblobgames.com/grids/hexagons/
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <stdexcept>
@@ -11,7 +12,8 @@
 
 template <typename T>
 class HexCoordinates {
-    static_assert(std::is_arithmetic<T>::value);
+    static_assert(std::is_arithmetic<T>::value,
+                  "HexCoordinates is parametrized by arithmetic types.");
 
    private:
     T _x;
@@ -61,33 +63,34 @@ T HexCoordinates<T>::length() const {
     return (std::abs(_x) + std::abs(_y) + std::abs(_z)) / 2.0;
 }
 
-template <typename T>
-T distance(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+template <typename T, typename U>
+typename std::common_type<T, U>::type distance(const HexCoordinates<T> &lhs,
+                                               const HexCoordinates<U> &rhs) {
     return (lhs - rhs).length();
 }
 
-template <typename T>
-bool operator==(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+template <typename T, typename U>
+bool operator==(const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
     return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
 }
 
-template <typename T>
-bool operator!=(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+template <typename T, typename U>
+bool operator!=(const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
     return !(lhs == rhs);
 }
 
-template <typename T>
-HexCoordinates<T> operator+(const HexCoordinates<T> &lhs,
-                            const HexCoordinates<T> &rhs) {
-    return HexCoordinates<T>(lhs.x() + rhs.x(), lhs.y() + rhs.y(),
-                             lhs.z() + rhs.z());
+template <typename T, typename U>
+HexCoordinates<typename std::common_type<T, U>::type> operator+(
+    const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+    return HexCoordinates<typename std::common_type<T, U>::type>(
+        lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z());
 }
 
-template <typename T>
-HexCoordinates<T> operator-(const HexCoordinates<T> &lhs,
-                            const HexCoordinates<T> &rhs) {
-    return HexCoordinates<T>(lhs.x() - rhs.x(), lhs.y() - rhs.y(),
-                             lhs.z() - rhs.z());
+template <typename T, typename U>
+HexCoordinates<typename std::common_type<T, U>::type> operator-(
+    const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+    return HexCoordinates<typename std::common_type<T, U>::type>(
+        lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z());
 }
 
 template <typename T>
@@ -98,18 +101,21 @@ HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
 template <typename T>
 std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const {
     std::array<HexCoordinates<T>, 6> res;
-    for (int i = 0; i < res.size(); ++i)
-        res[i] = neighbor(i);
+    std::generate(res.begin(), res.end(),
+                  [i = 0, this]() mutable { return neighbor(i++); });
     return res;
 }
 
-template <typename T>
-HexCoordinates<T> operator*(const T &lhs, const HexCoordinates<T> &rhs) {
-    return HexCoordinates<T>(lhs * rhs.x(), lhs * rhs.y(), lhs * rhs.z());
+template <typename T, typename U>
+HexCoordinates<typename std::common_type<T, U>::type> operator*(
+    const T &lhs, const HexCoordinates<U> &rhs) {
+    return HexCoordinates<typename std::common_type<T, U>::type>(
+        lhs * rhs.x(), lhs * rhs.y(), lhs * rhs.z());
 }
 
-template <typename T>
-HexCoordinates<T> operator*(const HexCoordinates<T> &lhs, const T &rhs) {
+template <typename T, typename U>
+HexCoordinates<typename std::common_type<T, U>::type> operator*(
+    const HexCoordinates<T> &lhs, const U &rhs) {
     return rhs * lhs;
 }
 

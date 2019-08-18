@@ -22,8 +22,9 @@ void Map::insert(HexSite site) {
     std::set<int> found_neighbors;
 
     for (const auto& hex : _hexes) {
-        if (std::any_of(neighors.begin(), neighors.end(),
-                        [&](const auto& x) { return (x == hex.second.coord()); })) {
+        if (std::any_of(neighors.begin(), neighors.end(), [&](const auto& x) {
+                return (x == hex.second.coord());
+            })) {
             assert(found_neighbors.insert(hex.first).second);
         }
     }

@@ -12,7 +12,7 @@ const std::map<int, RiverSite>& Map::rivers() const { return _rivers; }
 const BidirectionalGraph& Map::graph() const { return _graph; }
 
 void Map::insert(HexSite site) {
-    if (!std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
+    if (std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
             return x.second.coord() == site.coord();
         }))
         throw std::invalid_argument("Map already contains such hex.");

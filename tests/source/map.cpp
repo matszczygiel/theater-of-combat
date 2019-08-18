@@ -156,7 +156,28 @@ TEST(WeightedGraph, dijkstra) {
     ASSERT_EQ(prev, prev_expected);
 }
 
-TEST(Map, insertions) {
+TEST(Map, hex_insertions) {
+    Map map;
+    for (int r = -1; r <= 1; ++r)
+        for (int q = -1; q <= 1; ++q) {
+            map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
+        }
+    BidirectionalGraph graph;
+
+    graph.insert_node(0, {})
+        .insert_node(1, {0})
+        .insert_node(2, {1})
+        .insert_node(3, {0, 1})
+        .insert_node(4, {3, 1, 2})
+        .insert_node(5, {4, 2})
+        .insert_node(6, {3, 4})
+        .insert_node(7, {6, 4, 5})
+        .insert_node(8, {5, 7});
+
+    ASSERT_EQ(map.graph(), graph);
+}
+
+TEST(Map, river_insertions) {
     Map map;
     for (int r = -1; r <= 1; ++r)
         for (int q = -1; q <= 1; ++q) {

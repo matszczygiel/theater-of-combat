@@ -4,13 +4,13 @@
 #include "hexagons.h"
 
 enum class HexType {
-    Field,
-    Forest,
+    field,
+    forest,
 };
 
 enum class RiverType {
-    Small,
-    Stream,
+    small,
+    stream,
 };
 
 class HexSite {

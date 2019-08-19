@@ -137,10 +137,10 @@ struct Layout {
     sf::Vector2f size;
     sf::Vector2f origin;
 
-    sf::Vector2f cornerr_offset(int cornerr) const;
+    sf::Vector2f cornerr_offset(int corner) const;
 };
 
 sf::Vector2f hex_to_world_point(const HexCoordinate &hex, const Layout &layout);
-HexCoordinate hex_to_world_point(sf::Vector2f point, const Layout &layout);
+HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout &layout);
 
 #endif

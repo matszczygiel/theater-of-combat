@@ -10,12 +10,14 @@ class Map {
    public:
     const std::map<int, HexSite>& hexes() const;
     const std::map<int, RiverSite>& rivers() const;
-    const BidirectionalGraph& graph() const; 
+    const BidirectionalGraph& graph() const;
 
     void insert(HexSite site);
     void insert(RiverSite site);
 
    private:
+    int fetch_id();
+
     std::map<int, HexSite> _hexes{};
     std::map<int, RiverSite> _rivers{};
 

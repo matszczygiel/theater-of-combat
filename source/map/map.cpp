@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iterator>
+#include <sstream>
 #include <tuple>
 
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
@@ -10,6 +11,8 @@ const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 const std::map<int, RiverSite>& Map::rivers() const { return _rivers; }
 
 const BidirectionalGraph& Map::graph() const { return _graph; }
+
+int Map::fetch_id() { return _current_free_id++; }
 
 void Map::insert(HexSite site) {
     if (std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
@@ -29,7 +32,7 @@ void Map::insert(HexSite site) {
         }
     }
 
-    const auto id = _current_free_id++;
+    const auto id = fetch_id();
     assert(_hexes.insert({id, site}).second);
     _graph.insert_node(id, found_neighbors);
 }
@@ -45,28 +48,34 @@ void Map::insert(RiverSite site) {
     }
 
     if (found_hexes.size() < 2) {
-        throw std::logic_error("Map doesn't contain sides of the river site.");
+        std::stringstream ss;
+        ss << "Map doesn't contain sides of the river site.\n"
+           << "Found hexes id:";
+        for (auto id : found_hexes)
+            ss << "  " << id;
+        ss << '.';
+
+        throw std::logic_error(ss.str());
+
     } else if (found_hexes.size() > 2) {
         static_assert(true);
     }
 
-    int found_rivers_count = 0;
-    for (const auto& [r_id, r_site] : _rivers) {
-        if (r_site.sides().first == site.sides().first &&
-            r_site.sides().second == site.sides().second) {
-            ++found_rivers_count;
-        } else if (r_site.sides().first == site.sides().second &&
-                   r_site.sides().second == site.sides().first) {
-            ++found_rivers_count;
-        }
+    if (std::any_of(_rivers.begin(), _rivers.end(), [&](const auto& riv) {
+            if (riv.second.sides().first == site.sides().first &&
+                riv.second.sides().second == site.sides().second) {
+                return true;
+            } else if (riv.second.sides().first == site.sides().second &&
+                       riv.second.sides().second == site.sides().first) {
+                return true;
+            }
+            return false;
+        })) {
+        throw std::logic_error("Already found such river.");
     }
 
-    if (found_rivers_count > 0) {
-        throw std::logic_error("Already foud such river.");
-    }
-
-    const auto id = _current_free_id++;
-    _rivers.insert({id, site});
+    const auto id = fetch_id();
+    assert(_rivers.insert({id, site}).second);
     _graph.insert_node(id, found_hexes);
 }
 

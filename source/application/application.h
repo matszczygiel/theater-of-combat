@@ -1,4 +1,5 @@
-#pragma once
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <memory>
 
@@ -38,3 +39,5 @@ class Application {
    private:
     void handle_event(const sf::Event& event);
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_APP_H
+#define GAME_APP_H
 
 #include <set>
 #include <variant>
@@ -62,3 +63,5 @@ class Game : public Application {
     Network_status _network_status = Network_status::unspecified;
     std::variant<Server, Client> _network;
 };
+
+#endif

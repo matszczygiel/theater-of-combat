@@ -69,13 +69,13 @@ typename std::common_type<T, U>::type distance(const HexCoordinates<T> &lhs,
     return (lhs - rhs).length();
 }
 
-template <typename T, typename U>
-bool operator==(const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+template <typename T>
+bool operator==(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
     return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
 }
 
-template <typename T, typename U>
-bool operator!=(const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+template <typename T>
+bool operator!=(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
     return !(lhs == rhs);
 }
 

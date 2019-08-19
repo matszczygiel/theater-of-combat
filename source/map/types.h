@@ -29,7 +29,7 @@ class RiverSite {
    public:
     RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
 
-    std::pair<const HexCoordinate&, const HexCoordinate&> sides() const;
+    std::pair<HexCoordinate, HexCoordinate> sides() const;
     const RiverType& type() const;
 
    private:

@@ -30,6 +30,20 @@ BidirectionalGraph& BidirectionalGraph::remove_node(int node) {
     return *this;
 }
 
+BidirectionalGraph& BidirectionalGraph::remove_edge(int node1, int node2) {
+    if (_adjacency_matrix.count(node1) != 1 ||
+        _adjacency_matrix.count(node2) != 1)
+        throw std::logic_error("Removing edge connecting nonexistent nodes.");
+
+    if (_adjacency_matrix[node1].erase(node2) != 1)
+        throw std::logic_error("Removing nonexistent edge.");
+
+    if (_adjacency_matrix[node2].erase(node1) != 1)
+        throw std::logic_error("Removing nonexistent edge.");
+
+    return *this;
+}
+
 const std::map<int, std::set<int>>& BidirectionalGraph::adjacency_matrix()
     const {
     return _adjacency_matrix;

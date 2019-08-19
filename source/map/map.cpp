@@ -5,6 +5,7 @@
 #include <iterator>
 #include <sstream>
 #include <tuple>
+#include <vector>
 
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 
@@ -38,12 +39,12 @@ void Map::insert(HexSite site) {
 }
 
 void Map::insert(RiverSite site) {
-    std::set<int> found_hexes;
+    std::vector<int> found_hexes;
 
     for (const auto& [s_id, s_site] : _hexes) {
-        if (s_site.coord() == site.sides().first ||
-            s_site.coord() == site.sides().second) {
-            assert(found_hexes.insert(s_id).second);
+        const auto [side1, side2] = site.sides();
+        if (s_site.coord() == side1 || s_site.coord() == side2) {
+            found_hexes.push_back(s_id);
         }
     }
 
@@ -62,11 +63,12 @@ void Map::insert(RiverSite site) {
     }
 
     if (std::any_of(_rivers.begin(), _rivers.end(), [&](const auto& riv) {
-            if (riv.second.sides().first == site.sides().first &&
-                riv.second.sides().second == site.sides().second) {
+            const auto [side1, side2] = site.sides();
+            if (riv.second.sides().first == side1 &&
+                riv.second.sides().second == side2) {
                 return true;
-            } else if (riv.second.sides().first == site.sides().second &&
-                       riv.second.sides().second == site.sides().first) {
+            } else if (riv.second.sides().first == side2 &&
+                       riv.second.sides().second == side1) {
                 return true;
             }
             return false;
@@ -76,7 +78,8 @@ void Map::insert(RiverSite site) {
 
     const auto id = fetch_id();
     assert(_rivers.insert({id, site}).second);
-    _graph.insert_node(id, found_hexes);
+    _graph.insert_node(id, {found_hexes[0], found_hexes[1]});
+    _graph.remove_edge(found_hexes[0], found_hexes[1]);
 }
 
 /*

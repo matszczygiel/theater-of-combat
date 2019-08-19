@@ -18,7 +18,7 @@ RiverSite::RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type)
             "Creating RiverSite with non neighboring sides.");
 }
 
-std::pair<const HexCoordinate&, const HexCoordinate&> RiverSite::sides() const {
+std::pair<HexCoordinate, HexCoordinate> RiverSite::sides() const {
     return std::make_pair(_side1, _side2);
 }
 

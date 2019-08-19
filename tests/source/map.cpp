@@ -6,10 +6,12 @@
 #include "../../source/map/types.cpp"
 
 TEST(Hexagons, equality) {
-    HexCoordinate coord1(3, -5, 2);
-    HexCoordinate coord2(3, -5, 2);
+    HexCoordinate coord1(1, 0, -1);
+    HexCoordinate coord2(1, 0, -1);
+    HexCoordinate coord3(2, -1, -1);
 
-    ASSERT_EQ(coord1, coord2);
+    ASSERT_TRUE(coord1 == coord2);
+    ASSERT_FALSE(coord1 == coord3);
 }
 
 TEST(Hexagons, addition) {
@@ -68,6 +70,12 @@ TEST(Graph, removing) {
         {0, {}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2}}};
 
     ASSERT_EQ(bg.adjacency_matrix(), expected);
+
+    bg.remove_edge(1, 3);
+    std::map<int, std::set<int>> expected2 = {
+        {0, {}}, {1, {2}}, {2, {1, 3}}, {3, {2}}};
+
+    ASSERT_EQ(bg.adjacency_matrix(), expected2);
 }
 
 TEST(WeightedGraph, inserting) {
@@ -158,10 +166,11 @@ TEST(WeightedGraph, dijkstra) {
 
 TEST(Map, hex_insertions) {
     Map map;
-    for (int r = -1; r <= 1; ++r)
+    for (int r = -1; r <= 1; ++r) {
         for (int q = -1; q <= 1; ++q) {
             map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
         }
+    }
     BidirectionalGraph graph;
 
     graph.insert_node(0, {})
@@ -179,10 +188,12 @@ TEST(Map, hex_insertions) {
 
 TEST(Map, river_insertions) {
     Map map;
-    for (int r = -1; r <= 1; ++r)
+
+    for (int r = -1; r <= 1; ++r) {
         for (int q = -1; q <= 1; ++q) {
             map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
         }
+    }
 
     map.insert(RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1),
                          RiverType::Stream));
@@ -197,12 +208,12 @@ TEST(Map, river_insertions) {
 
     graph.insert_node(0, {})
         .insert_node(1, {0})
-        .insert_node(2, {1})
+        .insert_node(2, {})
         .insert_node(3, {0, 1})
-        .insert_node(4, {3, 1, 2})
-        .insert_node(5, {4, 2})
+        .insert_node(4, {3, 1})
+        .insert_node(5, {2})
         .insert_node(6, {3, 4})
-        .insert_node(7, {6, 4, 5})
+        .insert_node(7, {6, 4})
         .insert_node(8, {5, 7})
         .insert_node(9, {1, 2})
         .insert_node(10, {2, 4})

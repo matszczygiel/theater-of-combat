@@ -9,6 +9,7 @@ class BidirectionalGraph {
     BidirectionalGraph& insert_node(int node, const std::set<int>& neighbors);
 
     BidirectionalGraph& remove_node(int node);
+    BidirectionalGraph& remove_edge(int node1, int node2);
 
     const std::map<int, std::set<int>>& adjacency_matrix() const;
 

@@ -6,16 +6,7 @@
 #include <vector>
 
 #include "application.h"
-#include "battlefield/battlefield.h"
 #include "map/map.h"
-#include "mover/mover.h"
-#include "networking/client.h"
-#include "networking/netwoking_status.h"
-#include "networking/server.h"
-#include "player.h"
-#include "unit/stack.h"
-#include "unit/unit.h"
-#include "unit/unit_set.h"
 
 class Game : public Application {
    private:
@@ -34,34 +25,15 @@ class Game : public Application {
     void window_resize_event(const unsigned& width,
                              const unsigned& height) final;
 
-    //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >&
-    //   unit_set);
-    void init_mover_and_info_for_unit(Unit& unit);
-
-    std::array<Player, 2>::iterator other_player();
-
    private:
-    std::array<Player, 2> _players;
-    std::array<Player, 2>::iterator _current_player;
+    Map _map{};
 
-    std::vector<Battlefield> _battlefields;
+    bool _moving_view_up{false};
+    bool _moving_view_down{false};
+    bool _moving_view_right{false};
+    bool _moving_view_left{false};
 
-    Map _map;
-    std::unique_ptr<Mover> _mover{nullptr};
-    Unit_set _unit_set;
-
-    bool _moving = false;
-
-    bool _moving_view_up    = false;
-    bool _moving_view_down  = false;
-    bool _moving_view_right = false;
-    bool _moving_view_left  = false;
-
-    constexpr static float _token_size        = 30;
-    constexpr static float _view_moving_speed = 0.3f;
-
-    Network_status _network_status = Network_status::unspecified;
-    std::variant<Server, Client> _network;
+    constexpr static float _view_moving_speed{0.3f};
 };
 
 #endif

@@ -6,8 +6,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "messaging/messaging.h"
-
 class Application {
    public:
     virtual ~Application() = default;
@@ -30,11 +28,9 @@ class Application {
     virtual void window_resize_event(const unsigned& width,
                                      const unsigned& height)               = 0;
 
-    sf::RenderWindow _window;
+    sf::RenderWindow _window{};
 
-    bool _running = false;
-
-    std::shared_ptr<Message_bus> _message_bus = std::make_shared<Message_bus>();
+    bool _running{false};
 
    private:
     void handle_event(const sf::Event& event);

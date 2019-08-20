@@ -16,41 +16,12 @@ add_executable(toc
                 source/map/graph.cpp
                 source/map/map.h
                 source/map/map.cpp
-                source/unit/heavy_unit.cpp
-                source/unit/heavy_unit.h
-                source/unit/unit.h
-                source/unit/unit.cpp
-                source/unit/tokenizable.h
-                source/unit/tokenizable.cpp
-                source/unit/stack.h
-                source/unit/stack.cpp
-                source/unit/unit_set.h
-                source/unit/unit_set.cpp
-                source/mover/mover.h
-                source/mover/mover.cpp
-                source/mover/concrete_mover.h
                 source/application/application.h
                 source/application/application.cpp
                 source/application/game_app.h
                 source/application/game_app.cpp
-                source/application/player.h
-                source/application/player.cpp
-                source/battlefield/battlefield.h
-                source/battlefield/battlefield.cpp
-                source/networking/server.h
-                source/networking/server.cpp
-                source/networking/client.h
-                source/networking/client.cpp
-                source/networking/netwoking_status.h
                 source/randomizer.h
                 source/randomizer.cpp
-                source/messaging/messaging.cpp
-                source/messaging/messaging.h
-                source/messaging/concrete_message.h
-                source/messaging/concrete_message.cpp
-                source/core/registrable.h
-                source/team/team.h
-                source/team/team.cpp
                 source/gui/imgui_demo.cpp
                 )
 

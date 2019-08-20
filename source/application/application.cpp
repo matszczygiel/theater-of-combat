@@ -12,6 +12,7 @@ void Application::run() {
 
     ImGui::SFML::Init(_window);
 
+    _running = true;
     sf::Clock clock;
     while (_running) {
         sf::Event event;
@@ -20,12 +21,9 @@ void Application::run() {
 
             ImGui::SFML::ProcessEvent(event);
         }
-        _message_bus->distribute_messages();
         const auto elapsed_time = clock.restart();
         ImGui::SFML::Update(_window, elapsed_time);
         update(elapsed_time);
-
-        ImGui::ShowDemoWindow();
 
         _window.clear();
         render();

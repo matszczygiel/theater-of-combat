@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "application.h"
+#include "graphics/map_gfx.h"
 #include "map/map.h"
 
 class Game : public Application {
@@ -27,6 +28,7 @@ class Game : public Application {
 
    private:
     Map _map{};
+    MapGfx _map_gfx{};
 
     bool _moving_view_up{false};
     bool _moving_view_down{false};

@@ -8,6 +8,10 @@ void Game::initialize() {
     ENGINE_TRACE("Creating a window.");
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
+
+    _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+    _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
+    _map_gfx.update(_map);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -28,9 +32,16 @@ void Game::update(const sf::Time& elapsed_time) {
     _window.setView(view);
 
     ImGui::ShowDemoWindow();
+
+    _map_gfx.update(_map);
 }
 
-void Game::render() {}
+void Game::render() {
+    _map_gfx.draw_hexes(_window);
+    _map_gfx.draw_rivers(_window);
+    _map_gfx.draw_outlines(_window);
+    _map_gfx.draw_coords(_window);
+}
 
 void Game::finalize() {}
 

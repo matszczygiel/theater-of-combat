@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 
 project(theater-of-combat VERSION 0.1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
+#set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
 
 add_executable(toc 
                 source/main.cpp

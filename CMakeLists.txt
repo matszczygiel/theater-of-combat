@@ -23,6 +23,9 @@ add_executable(toc
                 source/randomizer.h
                 source/randomizer.cpp
                 source/gui/imgui_demo.cpp
+                source/graphics/shapes.cpp
+                source/graphics/shapes.h
+                source/graphics/map_gfx.h
                 )
 
 target_include_directories(toc PRIVATE 

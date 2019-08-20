@@ -74,5 +74,5 @@
         "set": "cpp"
     },
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
-    "C_Cpp.dimInactiveRegions": false
+    "C_Cpp.dimInactiveRegions": true,
 }

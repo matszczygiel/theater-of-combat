@@ -168,7 +168,7 @@ TEST(Map, hex_insertions) {
     Map map;
     for (int r = -1; r <= 1; ++r) {
         for (int q = -1; q <= 1; ++q) {
-            map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
+            map.insert(HexSite(HexCoordinate(q, r), HexType::field));
         }
     }
     BidirectionalGraph graph;
@@ -191,18 +191,18 @@ TEST(Map, river_insertions) {
 
     for (int r = -1; r <= 1; ++r) {
         for (int q = -1; q <= 1; ++q) {
-            map.insert(HexSite(HexCoordinate(q, r), HexType::Field));
+            map.insert(HexSite(HexCoordinate(q, r), HexType::field));
         }
     }
 
     map.insert(RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1),
-                         RiverType::Stream));
+                         RiverType::stream));
     map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1),
-                         RiverType::Stream));
+                         RiverType::stream));
     map.insert(
-        RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::Stream));
+        RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::stream));
     map.insert(
-        RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::Stream));
+        RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
 
     BidirectionalGraph graph;
 

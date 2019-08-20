@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "clang++ build and debug active file",
             "type": "lldb",
             "request": "launch",
+            "name": "Debug",
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "cwd": "${workspaceFolder}",

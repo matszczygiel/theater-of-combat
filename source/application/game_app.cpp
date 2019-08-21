@@ -33,7 +33,8 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    ImGui::ShowDemoWindow();
+    static bool show_demo_window{true};
+    ImGui::ShowDemoWindow(&show_demo_window);
 
     _map_gfx.update(_map);
 }
@@ -42,8 +43,15 @@ void Game::render() {
     _map_gfx.draw_hexes(_window);
     _map_gfx.draw_rivers(_window);
     _map_gfx.draw_outlines(_window);
+
+    for (const auto& shape : _highlighted_hexes) {
+        _window.draw(shape);
+    }
+
     _map_gfx.draw_coords(_window);
 }
+
+void Game::clear_loop() {}
 
 void Game::finalize() {}
 
@@ -126,4 +134,13 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
     view.setSize(width, height);
     _window.setView(view);
+}
+
+void Game::mouse_moved_event(const sf::Vector2f& position) {
+    _highlighted_hexes.clear();
+    const auto coord = world_point_to_hex(position, *_map_gfx.layout);
+    _highlighted_hexes.push_back(
+        std::find_if(_map_gfx.hexes.begin(), _map_gfx.hexes.end(),
+                     [&](const auto& hex) { return hex.first == coord; })
+            ->second.highlighting_shape());
 }

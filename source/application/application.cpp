@@ -11,6 +11,7 @@ void Application::run() {
     initialize();
 
     ImGui::SFML::Init(_window);
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     _running = true;
     sf::Clock clock;
@@ -29,6 +30,7 @@ void Application::run() {
         render();
         ImGui::SFML::Render(_window);
         _window.display();
+        clear_loop();
     }
 
     _window.close();
@@ -85,6 +87,12 @@ void Application::handle_event(const sf::Event& event) {
             if (io.WantCaptureMouse)
                 break;
             mouse_wheel_scrolled_event(event.mouseWheelScroll.delta);
+
+        case sf::Event::MouseMoved:
+            if (io.WantCaptureMouse)
+                break;
+            mouse_moved_event(_window.mapPixelToCoords(
+                sf::Vector2i(event.mouseMove.x, event.mouseMove.y)));
 
         default:
             break;

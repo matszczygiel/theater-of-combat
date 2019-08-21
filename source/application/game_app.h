@@ -14,6 +14,7 @@ class Game : public Application {
     void initialize() final;
     void update(const sf::Time& elapsed_time) final;
     void finalize() final;
+    void clear_loop() final;
     void render() final;
 
     void key_pressed_event(const sf::Keyboard::Key& key) final;
@@ -25,9 +26,11 @@ class Game : public Application {
     void mouse_wheel_scrolled_event(const float& delta) final;
     void window_resize_event(const unsigned& width,
                              const unsigned& height) final;
+    void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
     Map _map{};
+    std::vector<sf::ConvexShape> _highlighted_hexes{};
     MapGfx _map_gfx{};
 
     bool _moving_view_up{false};

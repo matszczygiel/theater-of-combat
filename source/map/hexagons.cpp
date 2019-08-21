@@ -44,7 +44,7 @@ sf::Vector2f hex_to_world_point(const HexCoordinate &hex,
     return sf::Vector2f{x, y} + layout.origin;
 }
 
-HexCoordinate hex_to_world_point(sf::Vector2f point, const Layout &layout) {
+HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout &layout) {
     const sf::Vector2f pt{(point.x - layout.origin.x) / layout.size.x,
                           (point.y - layout.origin.y) / layout.size.y};
     const auto &m = layout.orientation.minv;

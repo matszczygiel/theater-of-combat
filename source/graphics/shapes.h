@@ -9,29 +9,9 @@
 #include "map/map.h"
 #include "map/types.h"
 
-sf::Color site_color(HexType type) {
-    switch (type) {
-        case HexType::field:
-            return sf::Color::Green;
-        case HexType::forest:
-            return sf::Color(100, 140, 20);
-        default:
-            static_assert(true);
-    }
-    return sf::Color::Magenta;
-}
+sf::Color site_color(HexType type);
 
-sf::Color site_color(RiverType type) {
-    switch (type) {
-        case RiverType::small:
-            return sf::Color::Blue;
-        case RiverType::stream:
-            return sf::Color::Cyan;
-        default:
-            static_assert(true);
-    }
-    return sf::Color::Magenta;
-}
+sf::Color site_color(RiverType type);
 
 class HexShape {
    public:

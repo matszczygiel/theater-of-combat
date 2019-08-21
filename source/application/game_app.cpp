@@ -11,6 +11,8 @@ void Game::initialize() {
 
     _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
+
+    _map = Map::create_test_map();
     _map_gfx.update(_map);
 }
 
@@ -50,23 +52,24 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
         case sf::Keyboard::Escape:
             _running = false;
             break;
-
         case sf::Keyboard::Up:
             _moving_view_up = true;
             break;
-
         case sf::Keyboard::Down:
             _moving_view_down = true;
             break;
-
         case sf::Keyboard::Right:
             _moving_view_right = true;
             break;
-
         case sf::Keyboard::Left:
             _moving_view_left = true;
             break;
-
+        case sf::Keyboard::W:
+            _map_gfx.layout->size.y *= 0.95;
+            break;
+        case sf::Keyboard::S:
+            _map_gfx.layout->size.y *= 1.05;
+            break;
         default:
             break;
     }

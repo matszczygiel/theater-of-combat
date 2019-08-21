@@ -1,5 +1,29 @@
 #include "shapes.h"
 
+sf::Color site_color(HexType type) {
+    switch (type) {
+        case HexType::field:
+            return sf::Color::Green;
+        case HexType::forest:
+            return sf::Color(100, 140, 20);
+        default:
+            static_assert(true);
+    }
+    return sf::Color::Magenta;
+}
+
+sf::Color site_color(RiverType type) {
+    switch (type) {
+        case RiverType::small:
+            return sf::Color::Blue;
+        case RiverType::stream:
+            return sf::Color::Cyan;
+        default:
+            static_assert(true);
+    }
+    return sf::Color::Magenta;
+}
+
 const sf::ConvexShape& HexShape::shape() const { return _shape; }
 
 const sf::ConvexShape& HexShape::highlighting_shape() const {

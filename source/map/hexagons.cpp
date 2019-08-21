@@ -39,8 +39,8 @@ sf::Vector2f Layout::cornerr_offset(int cornerr) const {
 sf::Vector2f hex_to_world_point(const HexCoordinate &hex,
                                 const Layout &layout) {
     const auto &m = layout.orientation.m;
-    const auto x  = m[0] * hex.q() + m[1] * hex.p() * layout.size.x;
-    const auto y  = m[2] * hex.q() + m[3] * hex.p() * layout.size.y;
+    const auto x  = (m[0] * hex.q() + m[1] * hex.p()) * layout.size.x;
+    const auto y  = (m[2] * hex.q() + m[3] * hex.p()) * layout.size.y;
     return sf::Vector2f{x, y} + layout.origin;
 }
 

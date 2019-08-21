@@ -3,7 +3,8 @@
 void MapGfx::update(const Map& map) {
     hexes.clear();
     for (const auto& [id, site] : map.hexes()) {
-        hexes.emplace(site.coord(), HexShape{layout, site});
+        hexes.emplace_back(
+            std::make_pair(site.coord(), HexShape{layout, site}));
     }
 
     rivers.clear();

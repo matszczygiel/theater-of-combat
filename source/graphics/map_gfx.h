@@ -1,7 +1,6 @@
 #ifndef MAP_GFX_H
 #define MAP_GFX_H
 
-#include <map>
 #include <memory>
 #include <vector>
 
@@ -22,7 +21,7 @@ struct MapGfx {
         Orientation::Pointy, sf::Vector2f{0.f, 0.f}, sf::Vector2f{0.f, 0.f}}};
 
     std::vector<RiverShape> rivers{};
-    std::map<HexCoordinate, HexShape> hexes{};
+    std::vector<std::pair<HexCoordinate, HexShape>> hexes{};
 
     sf::Font font{};
 };

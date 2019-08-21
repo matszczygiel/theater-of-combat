@@ -172,6 +172,19 @@ TEST_CASE("graph") {
     }
 }
 
+TEST_CASE("site types") {
+    SUBCASE("river") {
+        CHECK_NOTHROW(RiverSite(HexCoordinate(1, -1), HexCoordinate(0, 0),
+                               RiverType::stream));
+        CHECK_NOTHROW(RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1),
+                               RiverType::stream));
+        CHECK_THROWS(RiverSite(HexCoordinate(1, -1), HexCoordinate(-1, 0),
+                               RiverType::stream));
+        CHECK_THROWS(RiverSite(HexCoordinate(0, -1), HexCoordinate(0, 1),
+                               RiverType::stream));
+    }
+}
+
 TEST_CASE("map") {
     SUBCASE("hex insertions") {
         Map map;

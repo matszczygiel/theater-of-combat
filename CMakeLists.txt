@@ -2,8 +2,15 @@ cmake_minimum_required(VERSION 3.8)
 
 project(theater-of-combat VERSION 0.1.0 LANGUAGES CXX)
 
-#set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*")
-file(GLOB_RECURSE sources CONFIGURE_DEPENDS source/**.cpp source/**.h)
+set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=cppcoreguidelines-*, portability-*")
+file(GLOB_RECURSE sources CONFIGURE_DEPENDS 
+    source/map/*.cpp            source/map/*.h
+    source/gui/*.cpp            source/gui/*.h
+    source/graphics/*.cpp       source/graphics/*.h
+    source/application/*.cpp    source/application/*.h
+    source/main.cpp
+    source/log.h source/log.cpp 
+    )
 
 add_executable(toc ${sources})
 

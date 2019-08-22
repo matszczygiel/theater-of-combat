@@ -1,14 +1,26 @@
 #include "game_app.h"
 
 #include <imgui.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include "spdlog/sinks/rotating_file_sink.h"
 
+#include "gui/log_window.h"
 #include "log.h"
 
+Game::Game() {
+    auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+        "tmp/logs/log.txt", 1048576 * 5, 2);
+    rot_sink->set_pattern("%^[%T] (thread %t) %n [%l]: %v%$");
+    rot_sink->set_level(spdlog::level::trace);
+    logger::get_distributing_sink()->add_sink(rot_sink);
+}
+
 void Game::initialize() {
-    ENGINE_TRACE("Creating a window.");
+    engine_trace("Creating a window.");
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
 
+    game_info("Loading font");
     _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
 
@@ -34,9 +46,14 @@ void Game::update(const sf::Time& elapsed_time) {
     _window.setView(view);
 
     static bool show_demo_window{true};
-    ImGui::ShowDemoWindow(&show_demo_window);
+    if (show_demo_window)
+        ImGui::ShowDemoWindow(&show_demo_window);
+
+    show_log_window(nullptr);
 
     _map_gfx.update(_map);
+
+    engine_trace("updating");
 }
 
 void Game::render() {

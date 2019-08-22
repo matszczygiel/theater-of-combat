@@ -1,48 +1,66 @@
-#pragma once
+#ifndef LOG_H
+#define LOG_H
 
 #include <memory>
+#include <string>
 
 #include <spdlog/logger.h>
+#include <spdlog/sinks/dist_sink.h>
 
-class Log {
-   public:
-    Log() = delete;
+namespace logger {
+std::shared_ptr<spdlog::sinks::dist_sink_mt>& get_distributing_sink();
+std::unique_ptr<spdlog::logger>& get_game_logger();
+std::unique_ptr<spdlog::logger>& get_engine_logger();
+}  // namespace logger
 
-    static std::shared_ptr<spdlog::logger> get_engine_logger();
-    static std::shared_ptr<spdlog::logger> get_game_logger();
+template <typename... Args>
+inline void engine_trace(const char* fmt, const Args&... args) {
+    logger::get_engine_logger()->trace(fmt, args...);
+}
 
-   private:
-    static void init_game_logger();
-    static void init_engine_logger();
+template <typename... Args>
+inline void engine_info(const char* fmt, const Args&... args) {
+    logger::get_engine_logger()->info(fmt, args...);
+}
 
-    static std::shared_ptr<spdlog::logger> _engine_logger;
-    static std::shared_ptr<spdlog::logger> _game_logger;
-};
+template <typename... Args>
+inline void engine_warn(const char* fmt, const Args&... args) {
+    logger::get_engine_logger()->warn(fmt, args...);
+}
 
-#define ENGINE_TRACE(...) ::Log::get_engine_logger()->trace(__VA_ARGS__)
-#define ENGINE_INFO(...) ::Log::get_engine_logger()->info(__VA_ARGS__)
-#define ENGINE_WARN(...) ::Log::get_engine_logger()->warn(__VA_ARGS__)
-#define ENGINE_ERROR(...) ::Log::get_engine_logger()->error(__VA_ARGS__)
-#define ENGINE_CRITICAL(...) ::Log::get_engine_logger()->critical(__VA_ARGS__)
+template <typename... Args>
+inline void engine_error(const char* fmt, const Args&... args) {
+    logger::get_engine_logger()->error(fmt, args...);
+}
 
-#define GAME_TRACE(...) ::Log::get_game_logger()->trace(__VA_ARGS__)
-#define GAME_INFO(...) ::Log::get_game_logger()->info(__VA_ARGS__)
-#define GAME_WARN(...) ::Log::get_game_logger()->warn(__VA_ARGS__)
-#define GAME_ERROR(...) ::Log::get_game_logger()->error(__VA_ARGS__)
-#define GAME_CRITICAL(...) ::Log::get_game_logger()->critical(__VA_ARGS__)
+template <typename... Args>
+inline void engine_critical(const char* fmt, const Args&... args) {
+    logger::get_engine_logger()->critical(fmt, args...);
+}
 
-#define ENGINE_ASSERT(x, ...)                                      \
-    {                                                              \
-        if (!(x)) {                                                \
-            ENGINE_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
-            assert(false);                                         \
-        };                                                         \
-    }
+template <typename... Args>
+inline void game_trace(const char* fmt, const Args&... args) {
+    logger::get_game_logger()->trace(fmt, args...);
+}
 
-#define GAME_ASSERT(x, ...)                                      \
-    {                                                            \
-        if (!(x)) {                                              \
-            GAME_CRITICAL("Assertion Failed: {0}", __VA_ARGS__); \
-            assert(false);                                       \
-        };                                                       \
-    }
+template <typename... Args>
+inline void game_info(const char* fmt, const Args&... args) {
+    logger::get_game_logger()->info(fmt, args...);
+}
+
+template <typename... Args>
+inline void game_warn(const char* fmt, const Args&... args) {
+    logger::get_game_logger()->warn(fmt, args...);
+}
+
+template <typename... Args>
+inline void game_error(const char* fmt, const Args&... args) {
+    logger::get_game_logger()->error(fmt, args...);
+}
+
+template <typename... Args>
+inline void game_critical(const char* fmt, const Args&... args) {
+    logger::get_game_logger()->critical(fmt, args...);
+}
+
+#endif

@@ -10,6 +10,9 @@
 #include "map/map.h"
 
 class Game : public Application {
+   public:
+    Game();
+
    private:
     void initialize() final;
     void update(const sf::Time& elapsed_time) final;

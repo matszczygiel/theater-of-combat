@@ -6,10 +6,10 @@
 #include "log.h"
 
 void Application::run() {
-    ENGINE_INFO("Initializing application.");
-
+    engine_info("Initializing application.");
     initialize();
 
+    engine_info("Initializing ImGui.");
     ImGui::SFML::Init(_window);
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -36,8 +36,7 @@ void Application::run() {
     _window.close();
     ImGui::SFML::Shutdown();
 
-    ENGINE_INFO("Quiting application.");
-
+    engine_info("Quiting application.");
     finalize();
 }
 

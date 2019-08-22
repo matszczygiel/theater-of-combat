@@ -1,0 +1,3012 @@
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:48] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:49] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:50] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:51] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[2[23:47:48] GAME: test
+3:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:52] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] updating
+[23:47:53] [thread 18586] Quiting application.
+[23:48:26] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:27] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[[23:48:26] GAME: test
+23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:28] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] updating
+[23:48:29] [thread 18643] Quiting application.
+[23:58:16] game logger [info]: test
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:16] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:17] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:18] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: updating
+[23:58:19] engine logger [info]: Quiting application.
+[00:00:18] GAME [info]: test
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:18] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:19] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:20] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:21] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:22] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:23] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:24] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:25] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:26] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:27] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:28] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:29] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:30] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:31] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:32] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:33] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:34] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: updating
+[00:00:35] ENGINE [info]: Quiting application.
+[00:06:11] (thread 19776) GAME [info]: test
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:11] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:12] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:13] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:14] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:15] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:16] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:17] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:18] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:19] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:20] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:21] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:22] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:23] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:24] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:25] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:26] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:27] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:28] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: updating
+[00:06:29] (thread 19776) ENGINE [info]: Quiting application.
+[00:22:29] (thread 21790) ENGINE [info]: Initializing application.
+[00:22:48] (thread 21790) ENGINE [info]: Quiting application.
+[00:24:26] (thread 21974) ENGINE [info]: Initializing application.
+[00:24:26] (thread 21974) GAME [info]: Loading font
+[00:24:36] (thread 21974) ENGINE [info]: Quiting application.
+[00:27:03] (thread 22199) ENGINE [info]: Initializing application.
+[00:27:03] (thread 22199) GAME [info]: Loading font
+[00:27:03] (thread 22199) ENGINE [info]: Initializing ImGui.
+[00:27:06] (thread 22199) ENGINE [info]: Quiting application.
+[00:28:10] (thread 22352) GAME [info]: Loading font
+[00:28:10] (thread 22352) ENGINE [info]: Initializing ImGui.
+[00:28:14] (thread 22352) ENGINE [info]: Quiting application.
+[00:29:57] (thread 22603) ENGINE [info]: Initializing application.
+[00:29:57] (thread 22603) GAME [info]: Loading font
+[00:29:57] (thread 22603) ENGINE [info]: Initializing ImGui.
+[00:30:00] (thread 22603) ENGINE [info]: Quiting application.
+[00:30:14] (thread 22642) ENGINE [info]: Initializing application.
+[00:30:14] (thread 22642) GAME [info]: Loading font
+[00:30:14] (thread 22642) ENGINE [info]: Initializing ImGui.
+[00:30:28] (thread 22642) ENGINE [info]: Quiting application.
+[00:32:30] (thread 22903) ENGINE [info]: Initializing application.
+[00:32:30] (thread 22903) GAME [info]: Loading font
+[00:32:30] (thread 22903) ENGINE [info]: Initializing ImGui.
+[00:32:46] (thread 22903) ENGINE [info]: Quiting application.
+[00:33:19] (thread 22998) ENGINE [info]: Initializing application.
+[00:33:19] (thread 22998) GAME [info]: Loading font
+[00:33:19] (thread 22998) ENGINE [info]: Initializing ImGui.
+[00:40:49] (thread 23718) ENGINE [info]: Initializing application.
+[00:40:49] (thread 23718) ENGINE [trace]: Creating a window.
+[00:40:49] (thread 23718) GAME [info]: Loading font
+[00:40:49] (thread 23718) ENGINE [info]: Initializing ImGui.
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:49] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:50] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:51] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [trace]: updating
+[00:40:52] (thread 23718) ENGINE [info]: Quiting application.

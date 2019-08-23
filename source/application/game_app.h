@@ -8,6 +8,7 @@
 #include "application.h"
 #include "graphics/map_gfx.h"
 #include "map/map.h"
+#include "gui/log_window.h"
 
 class Game : public Application {
    public:
@@ -40,6 +41,8 @@ class Game : public Application {
     bool _moving_view_down{false};
     bool _moving_view_right{false};
     bool _moving_view_left{false};
+
+    LogWindow _log{};
 
     constexpr static float _view_moving_speed{0.3f};
 };

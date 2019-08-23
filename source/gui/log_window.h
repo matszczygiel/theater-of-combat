@@ -23,6 +23,6 @@ class LogWindow {
     spdlog::sink_ptr _sink{new spdlog::sinks::ostream_sink_mt(_oss)};
 };
 
-void show_log_window(bool* p_open);
+void show_log_window(LogWindow& log, bool* p_open);
 
 #endif

@@ -2,7 +2,6 @@
 #define LOG_H
 
 #include <memory>
-#include <string>
 
 #include <spdlog/logger.h>
 #include <spdlog/sinks/dist_sink.h>

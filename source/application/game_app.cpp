@@ -5,12 +5,13 @@
 #include "spdlog/sinks/rotating_file_sink.h"
 
 #include "gui/log_window.h"
+#include "gui/dock_space.h"
 #include "log.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
         "tmp/logs/log.txt", 1048576 * 5, 2);
-    rot_sink->set_pattern("%^[%T] (thread %t) %n [%l]: %v%$");
+    rot_sink->set_pattern("%^[%c] (thread %t) %n [%l]: %v%$");
     rot_sink->set_level(spdlog::level::trace);
     logger::get_distributing_sink()->add_sink(rot_sink);
 }
@@ -45,15 +46,15 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
+    show_dock_space_window(nullptr);
+
     static bool show_demo_window{true};
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    show_log_window(nullptr);
+    show_log_window(_log ,nullptr);
 
     _map_gfx.update(_map);
-
-    engine_trace("updating");
 }
 
 void Game::render() {

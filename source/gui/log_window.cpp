@@ -88,9 +88,7 @@ void LogWindow::draw(std::string title, bool* open) {
 }
 
 // Demonstrate creating a simple log window with basic filtering.
-void show_log_window(bool* p_open) {
-    static LogWindow log;
-
+void show_log_window(LogWindow& log, bool* p_open) {
     // For the demo: add a debug button _BEFORE_ the normal log window contents
     // We take advantage of a rarely used feature: multiple calls to
     // Begin()/End() are appending to the _same_ window. Most of the contents of

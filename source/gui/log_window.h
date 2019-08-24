@@ -1,28 +1,27 @@
 #ifndef LOG_WINDOW_H
 #define LOG_WINDOW_H
 
-#include <memory>
 #include <sstream>
 #include <string>
+#include <vector>
 
-#include <spdlog/sinks/dist_sink.h>
 #include <spdlog/sinks/ostream_sink.h>
 
 class LogWindow {
    public:
-    explicit LogWindow();
+    LogWindow();
     ~LogWindow();
 
     void clear();
-
     void show_window(bool* p_open = nullptr);
 
    private:
     void draw(std::string title, bool* open = nullptr);
+    void read_sink();
 
-    bool _auto_scroll{true};
-    std::ostringstream _oss{};
-    spdlog::sink_ptr _sink{new spdlog::sinks::ostream_sink_mt(_oss)};
+    std::vector<std::string> _lines_buffer{};
+    std::stringstream _ss{};
+    spdlog::sink_ptr _sink{new spdlog::sinks::ostream_sink_mt(_ss)};
 };
 
 #endif

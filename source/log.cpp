@@ -8,10 +8,10 @@ std::shared_ptr<spdlog::sinks::dist_sink_mt>& get_distributing_sink() {
     return sink;
 }
 
-std::unique_ptr<spdlog::logger>& get_game_logger() {
+std::unique_ptr<spdlog::logger>& get_app_logger() {
     static auto logger = []() {
         auto logger =
-            std::make_unique<spdlog::logger>("GAME", get_distributing_sink());
+            std::make_unique<spdlog::logger>("CLIENT", get_distributing_sink());
         logger->set_level(spdlog::level::trace);
         return logger;
     }();

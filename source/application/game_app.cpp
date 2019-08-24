@@ -4,8 +4,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/rotating_file_sink.h"
 
-#include "gui/log_window.h"
 #include "gui/dock_space.h"
+#include "gui/log_window.h"
 #include "log.h"
 
 Game::Game() {
@@ -21,7 +21,7 @@ void Game::initialize() {
     _window.create(sf::VideoMode(800, 600), "Theater of combat");
     _window.setFramerateLimit(60);
 
-    game_info("Loading font");
+    app_info("Loading font.");
     _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
 
@@ -52,9 +52,11 @@ void Game::update(const sf::Time& elapsed_time) {
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    _log.show_window();
+    _log.show_window(nullptr);
 
     _map_gfx.update(_map);
+
+    // engine_trace("Updating");
 }
 
 void Game::render() {

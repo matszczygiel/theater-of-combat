@@ -5,6 +5,8 @@
 #include <variant>
 #include <vector>
 
+#include <sol/sol.hpp>
+
 #include "application.h"
 #include "graphics/map_gfx.h"
 #include "map/map.h"
@@ -43,6 +45,8 @@ class Game : public Application {
     bool _moving_view_left{false};
 
     LogWindow _log{"Log console"};
+
+    sol::state _lua{};
 
     constexpr static float _view_moving_speed{0.3f};
 };

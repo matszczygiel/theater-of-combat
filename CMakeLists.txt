@@ -12,10 +12,17 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/log.h source/log.cpp 
     )
 
+find_package(ImGui-SFML REQUIRED)
+find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
+find_package(sol2 REQUIRED)
+find_package(Lua REQUIRED)
+find_package(spdlog REQUIRED)
+    
 add_executable(toc ${sources})
 
 target_include_directories(toc PRIVATE 
-                            source)
+                            source
+                            ${LUA_INCLUDE_DIR})
 
 target_compile_features(toc PRIVATE 
                         cxx_std_17)
@@ -23,15 +30,16 @@ target_compile_features(toc PRIVATE
 target_compile_options(toc PRIVATE 
                         -Wall -Wextra -pedantic)
 
-find_package(ImGui-SFML REQUIRED)
-find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
+target_compile_definitions(toc PRIVATE SOL_ALL_SAFETIES_ON=1)                        
+
 
 target_link_libraries(toc PRIVATE 
                         sfml-window
                         sfml-graphics
                         sfml-system
                         sfml-network
-                        ImGui-SFML::ImGui-SFML) 
+                        ImGui-SFML::ImGui-SFML
+                        ${LUA_LIBRARIES}) 
                         
 enable_testing()           
 add_subdirectory(tests)                        

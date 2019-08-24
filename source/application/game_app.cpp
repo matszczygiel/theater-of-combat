@@ -27,6 +27,13 @@ void Game::initialize() {
 
     _map = Map::create_test_map();
     _map_gfx.update(_map);
+
+    _lua["x"]    = "dupa";
+    engine_debug("===== printing lua =====");
+    for (const auto [key, val] : _lua.globals()) {
+        engine_debug(" [ {} ] : {}",key.as<std::string>(), val.as<std::string>());
+    }
+    engine_debug("=== end printing lua ===");
 }
 
 void Game::update(const sf::Time& elapsed_time) {

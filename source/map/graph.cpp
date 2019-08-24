@@ -7,7 +7,6 @@
 BidirectionalGraph& BidirectionalGraph::insert_node(
     int node, const std::set<int>& neighbors) {
     for (const auto& n : neighbors) {
-        auto search = _adjacency_matrix.find(n);
         if (_adjacency_matrix.count(n) == 1) {
             assert(_adjacency_matrix[n].insert(node).second);
         } else {

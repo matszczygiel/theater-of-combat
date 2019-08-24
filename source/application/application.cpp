@@ -97,3 +97,4 @@ void Application::handle_event(const sf::Event& event) {
             break;
     }
 }
+

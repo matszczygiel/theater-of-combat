@@ -52,7 +52,7 @@ void Game::update(const sf::Time& elapsed_time) {
     if (show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    show_log_window(_log ,nullptr);
+    _log.show_window();
 
     _map_gfx.update(_map);
 }

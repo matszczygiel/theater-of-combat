@@ -10,13 +10,9 @@ LogWindow::LogWindow() {
     logger::get_distributing_sink()->add_sink(_sink);
 }
 
-LogWindow::~LogWindow() {
-    logger::get_distributing_sink()->remove_sink(_sink);
-}
+LogWindow::~LogWindow() { logger::get_distributing_sink()->remove_sink(_sink); }
 
-void LogWindow::clear() { _oss.str(""); }
-
-void LogWindow::add_log(const std::string& log) { _oss << log; }
+void LogWindow::clear() { _oss.str("");  }
 
 void LogWindow::draw(std::string title, bool* open) {
     if (!ImGui::Begin(title.c_str(), open)) {
@@ -49,8 +45,8 @@ void LogWindow::draw(std::string title, bool* open) {
 
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
     // The simplest and easy way to display the entire buffer:
-    ImGui::TextUnformatted(_oss.str().c_str(),
-                           _oss.str().c_str() + _oss.str().size());
+    const auto oss_string = _oss.str();
+    ImGui::TextUnformatted(&oss_string.front(), &oss_string.back());
     // And it'll just work. TextUnformatted() has specialization for large
     // blob of text and will fast-forward to skip non-visible lines. Here we
     // instead demonstrate using the clipper to only process lines that are
@@ -88,13 +84,13 @@ void LogWindow::draw(std::string title, bool* open) {
 }
 
 // Demonstrate creating a simple log window with basic filtering.
-void show_log_window(LogWindow& log, bool* p_open) {
+void LogWindow::show_window(bool* p_open) {
     // For the demo: add a debug button _BEFORE_ the normal log window contents
     // We take advantage of a rarely used feature: multiple calls to
     // Begin()/End() are appending to the _same_ window. Most of the contents of
     // the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Log test", p_open);
+    ImGui::Begin("Log console", p_open);
     if (ImGui::SmallButton("[Debug] Add 5 entries")) {
         static int counter = 0;
         for (int n = 0; n < 5; n++) {
@@ -110,13 +106,13 @@ void show_log_window(LogWindow& log, bool* p_open) {
                 "] Hello, current time is" + std::to_string(ImGui::GetTime()) +
                 ", here's a word: '" +
                 std::string(words[counter % IM_ARRAYSIZE(words)]) + "'\n";
-            log.add_log(msg);
-            counter++;
+            _oss << msg;
+            ++counter;
         }
     }
     ImGui::End();
 
     // Actually call in the regular Log helper (which will Begin() into the same
     // window as we just did)
-    log.draw("Log test", p_open);
+    draw("Log console", p_open);
 }

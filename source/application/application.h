@@ -30,6 +30,7 @@ class Application {
                                      const unsigned& height)               = 0;
     virtual void mouse_moved_event(const sf::Vector2f& position)           = 0;
 
+
     sf::RenderWindow _window{};
 
     bool _running{false};

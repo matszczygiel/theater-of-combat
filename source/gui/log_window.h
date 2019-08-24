@@ -14,15 +14,15 @@ class LogWindow {
     ~LogWindow();
 
     void clear();
-    void add_log(const std::string& log);
-    void draw(std::string title, bool* open = nullptr);
+
+    void show_window(bool* p_open = nullptr);
 
    private:
+    void draw(std::string title, bool* open = nullptr);
+
     bool _auto_scroll{true};
     std::ostringstream _oss{};
     spdlog::sink_ptr _sink{new spdlog::sinks::ostream_sink_mt(_oss)};
 };
-
-void show_log_window(LogWindow& log, bool* p_open);
 
 #endif

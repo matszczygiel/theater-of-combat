@@ -11,7 +11,7 @@
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
         "tmp/logs/log.txt", 1048576 * 5, 2);
-    rot_sink->set_pattern("%^[%c] (thread %t) %n [%l]: %v%$");
+    rot_sink->set_pattern("%^[%c] (thread %t) %n: [%l] %v%$");
     rot_sink->set_level(spdlog::level::trace);
     logger::get_distributing_sink()->add_sink(rot_sink);
 }

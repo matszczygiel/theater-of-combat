@@ -42,7 +42,7 @@ class Game : public Application {
     bool _moving_view_right{false};
     bool _moving_view_left{false};
 
-    LogWindow _log{};
+    LogWindow _log{"Log console"};
 
     constexpr static float _view_moving_speed{0.3f};
 };

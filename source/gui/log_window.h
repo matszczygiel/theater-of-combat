@@ -6,10 +6,11 @@
 #include <vector>
 
 #include <spdlog/sinks/ostream_sink.h>
+#include <imgui.h>
 
 class LogWindow {
    public:
-    LogWindow();
+    LogWindow(std::string name);
     ~LogWindow();
 
     void clear();
@@ -22,6 +23,10 @@ class LogWindow {
     std::vector<std::string> _lines_buffer{};
     std::stringstream _ss{};
     spdlog::sink_ptr _sink{new spdlog::sinks::ostream_sink_mt(_ss)};
+
+    ImGuiTextFilter _filter{};
+    bool _auto_scroll{true};
+    std::string _name{};
 };
 
 #endif

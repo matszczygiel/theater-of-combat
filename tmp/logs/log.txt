@@ -14865,3 +14865,102 @@
 [Sat Aug 24 12:37:59 2019] (thread 11268) CLIENT [info]: Loading font.
 [Sat Aug 24 12:37:59 2019] (thread 11268) ENGINE [info]: Initializing ImGui.
 [Sat Aug 24 12:38:22 2019] (thread 11268) ENGINE [info]: Quiting application.
+[Sat Aug 24 20:45:20 2019] (thread 17111) ENGINE: [info] Initializing application.
+[Sat Aug 24 20:45:20 2019] (thread 17111) ENGINE: [trace] Creating a window.
+[Sat Aug 24 20:45:20 2019] (thread 17111) CLIENT: [info] Loading font.
+[Sat Aug 24 20:45:20 2019] (thread 17111) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 20:46:07 2019] (thread 17111) ENGINE: [info] Quiting application.
+[Sat Aug 24 21:50:19 2019] (thread 18486) ENGINE: [info] Initializing application.
+[Sat Aug 24 21:50:19 2019] (thread 18486) ENGINE: [trace] Creating a window.
+[Sat Aug 24 21:50:20 2019] (thread 18486) CLIENT: [info] Loading font.
+[Sat Aug 24 21:50:20 2019] (thread 18486) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 21:51:03 2019] (thread 18486) ENGINE: [info] Quiting application.
+[Sat Aug 24 21:58:35 2019] (thread 18958) ENGINE: [info] Initializing application.
+[Sat Aug 24 21:58:35 2019] (thread 18958) ENGINE: [trace] Creating a window.
+[Sat Aug 24 21:58:35 2019] (thread 18958) CLIENT: [info] Loading font.
+[Sat Aug 24 21:58:35 2019] (thread 18958) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 21:58:37 2019] (thread 18958) ENGINE: [info] Quiting application.
+[Sat Aug 24 22:15:18 2019] (thread 19162) ENGINE: [info] Initializing application.
+[Sat Aug 24 22:15:18 2019] (thread 19162) ENGINE: [trace] Creating a window.
+[Sat Aug 24 22:15:18 2019] (thread 19162) CLIENT: [info] Loading font.
+[Sat Aug 24 22:15:18 2019] (thread 19162) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 22:17:01 2019] (thread 19162) ENGINE: [info] Quiting application.
+[Sat Aug 24 23:21:38 2019] (thread 20779) ENGINE: [info] Initializing application.
+[Sat Aug 24 23:21:38 2019] (thread 20779) ENGINE: [trace] Creating a window.
+[Sat Aug 24 23:21:39 2019] (thread 20779) CLIENT: [info] Loading font.
+[Sat Aug 24 23:21:39 2019] (thread 20779) ENGINE: [debug] ===== printing lua =====
+[Sat Aug 24 23:21:39 2019] (thread 20779) ENGINE: [debug] === end printing lua ===
+[Sat Aug 24 23:21:39 2019] (thread 20779) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 23:21:53 2019] (thread 20779) ENGINE: [info] Quiting application.
+[Sat Aug 24 23:22:46 2019] (thread 20957) ENGINE: [info] Initializing application.
+[Sat Aug 24 23:22:46 2019] (thread 20957) ENGINE: [trace] Creating a window.
+[Sat Aug 24 23:22:47 2019] (thread 20957) CLIENT: [info] Loading font.
+[Sat Aug 24 23:22:47 2019] (thread 20957) ENGINE: [debug] ===== printing lua =====
+[Sat Aug 24 23:22:47 2019] (thread 20957) ENGINE: [debug] === end printing lua ===
+[Sat Aug 24 23:22:47 2019] (thread 20957) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 23:23:16 2019] (thread 20957) ENGINE: [info] Quiting application.
+[Sat Aug 24 23:23:35 2019] (thread 21053) ENGINE: [info] Initializing application.
+[Sat Aug 24 23:23:35 2019] (thread 21053) ENGINE: [trace] Creating a window.
+[Sat Aug 24 23:23:35 2019] (thread 21053) CLIENT: [info] Loading font.
+[Sat Aug 24 23:23:35 2019] (thread 21053) ENGINE: [debug] ===== printing lua =====
+[Sat Aug 24 23:23:35 2019] (thread 21053) ENGINE: [debug] === end printing lua ===
+[Sat Aug 24 23:23:35 2019] (thread 21053) ENGINE: [info] Initializing ImGui.
+[Sat Aug 24 23:23:38 2019] (thread 21053) ENGINE: [info] Quiting application.
+[Sun Aug 25 10:16:34 2019] (thread 2953) ENGINE: [info] Initializing application.
+[Sun Aug 25 10:16:34 2019] (thread 2953) ENGINE: [trace] Creating a window.
+[Sun Aug 25 10:16:34 2019] (thread 2953) CLIENT: [info] Loading font.
+[Sun Aug 25 10:16:34 2019] (thread 2953) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 10:17:58 2019] (thread 2953) ENGINE: [info] Quiting application.
+[Sun Aug 25 11:30:04 2019] (thread 8634) ENGINE: [info] Initializing application.
+[Sun Aug 25 11:30:04 2019] (thread 8634) ENGINE: [trace] Creating a window.
+[Sun Aug 25 11:30:04 2019] (thread 8634) CLIENT: [info] Loading font.
+[Sun Aug 25 11:30:04 2019] (thread 8634) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 11:30:38 2019] (thread 8634) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:02:12 2019] (thread 10202) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:02:12 2019] (thread 10202) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:02:12 2019] (thread 10202) CLIENT: [info] Loading font.
+[Sun Aug 25 12:02:12 2019] (thread 10202) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:02:21 2019] (thread 10202) ENGINE: [debug] [Lua error]: sol: syntax error: [string "print('dupa')"]:1: unexpected symbol
+[Sun Aug 25 12:03:17 2019] (thread 10202) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:32:09 2019] (thread 11436) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:32:09 2019] (thread 11436) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:32:09 2019] (thread 11436) CLIENT: [info] Loading font.
+[Sun Aug 25 12:32:09 2019] (thread 11436) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:32:19 2019] (thread 11436) ENGINE: [debug] [Lua error]: sol: syntax error: [string "print('duap')"]:1: unexpected symbol
+[Sun Aug 25 12:32:42 2019] (thread 11436) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:33:01 2019] (thread 11510) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:33:01 2019] (thread 11510) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:33:01 2019] (thread 11510) CLIENT: [info] Loading font.
+[Sun Aug 25 12:33:01 2019] (thread 11510) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:33:05 2019] (thread 11510) ENGINE: [debug] [Lua error]: sol: syntax error: [string "sddsf"]:1: syntax error
+[Sun Aug 25 12:33:11 2019] (thread 11510) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:34:09 2019] (thread 11654) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:34:09 2019] (thread 11654) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:34:09 2019] (thread 11654) CLIENT: [info] Loading font.
+[Sun Aug 25 12:34:09 2019] (thread 11654) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:34:20 2019] (thread 11654) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:42:18 2019] (thread 11903) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:42:18 2019] (thread 11903) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:42:19 2019] (thread 11903) CLIENT: [info] Loading font.
+[Sun Aug 25 12:42:19 2019] (thread 11903) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:42:37 2019] (thread 11903) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:43:11 2019] (thread 12044) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:43:11 2019] (thread 12044) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:43:12 2019] (thread 12044) CLIENT: [info] Loading font.
+[Sun Aug 25 12:43:12 2019] (thread 12044) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:43:28 2019] (thread 12044) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:44:16 2019] (thread 12091) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:44:16 2019] (thread 12091) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:44:16 2019] (thread 12091) CLIENT: [info] Loading font.
+[Sun Aug 25 12:44:16 2019] (thread 12091) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:44:29 2019] (thread 12091) ENGINE: [info] Quiting application.
+[Sun Aug 25 12:49:16 2019] (thread 12453) ENGINE: [info] Initializing application.
+[Sun Aug 25 12:49:16 2019] (thread 12453) ENGINE: [trace] Creating a window.
+[Sun Aug 25 12:49:16 2019] (thread 12453) CLIENT: [info] Loading font.
+[Sun Aug 25 12:49:16 2019] (thread 12453) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 12:49:39 2019] (thread 12453) ENGINE: [info] Quiting application.
+[Sun Aug 25 13:16:27 2019] (thread 13087) ENGINE: [info] Initializing application.
+[Sun Aug 25 13:16:27 2019] (thread 13087) ENGINE: [trace] Creating a window.
+[Sun Aug 25 13:16:27 2019] (thread 13087) CLIENT: [info] Loading font.
+[Sun Aug 25 13:16:27 2019] (thread 13087) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 13:17:01 2019] (thread 13087) ENGINE: [info] Quiting application.

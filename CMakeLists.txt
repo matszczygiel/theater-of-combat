@@ -8,8 +8,8 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/gui/*.cpp            source/gui/*.h
     source/graphics/*.cpp       source/graphics/*.h
     source/application/*.cpp    source/application/*.h
+    source/core/*.cpp           source/core/*.h
     source/main.cpp
-    source/log.h source/log.cpp 
     )
 
 find_package(ImGui-SFML REQUIRED)

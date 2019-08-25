@@ -1,16 +1,13 @@
 #ifndef GAME_APP_H
 #define GAME_APP_H
 
-#include <set>
-#include <variant>
 #include <vector>
-
-#include <sol/sol.hpp>
 
 #include "application.h"
 #include "graphics/map_gfx.h"
 #include "map/map.h"
 #include "gui/log_window.h"
+#include "gui/console.h"
 
 class Game : public Application {
    public:
@@ -45,8 +42,7 @@ class Game : public Application {
     bool _moving_view_left{false};
 
     LogWindow _log{"Log console"};
-
-    sol::state _lua{};
+    ConsoleWindow _console{"Lua console"};
 
     constexpr static float _view_moving_speed{0.3f};
 };

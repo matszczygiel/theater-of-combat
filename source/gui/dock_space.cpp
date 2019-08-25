@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "log.h"
+#include "core/log.h"
 
 void show_dock_space_window(bool* p_open) {
     static ImGuiDockNodeFlags dockspace_flags =

@@ -6,7 +6,7 @@
 
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
-#include "log.h"
+#include "core/log.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -18,7 +18,7 @@ Game::Game() {
 
 void Game::initialize() {
     engine_trace("Creating a window.");
-    _window.create(sf::VideoMode(800, 600), "Theater of combat");
+    _window.create(sf::VideoMode(1200, 800), "Theater of combat");
     _window.setFramerateLimit(60);
 
     app_info("Loading font.");
@@ -28,12 +28,6 @@ void Game::initialize() {
     _map = Map::create_test_map();
     _map_gfx.update(_map);
 
-    _lua["x"]    = "dupa";
-    engine_debug("===== printing lua =====");
-    for (const auto [key, val] : _lua.globals()) {
-        engine_debug(" [ {} ] : {}",key.as<std::string>(), val.as<std::string>());
-    }
-    engine_debug("=== end printing lua ===");
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -60,6 +54,7 @@ void Game::update(const sf::Time& elapsed_time) {
         ImGui::ShowDemoWindow(&show_demo_window);
 
     _log.show_window(nullptr);
+    _console.show(nullptr);
 
     _map_gfx.update(_map);
 

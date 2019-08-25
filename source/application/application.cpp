@@ -3,7 +3,7 @@
 #include <imgui-SFML.h>
 #include <imgui.h>
 
-#include "log.h"
+#include "core/log.h"
 
 void Application::run() {
     engine_info("Initializing application.");

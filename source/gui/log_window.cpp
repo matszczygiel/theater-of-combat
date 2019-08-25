@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "log.h"
+#include "core/log.h"
 
 LogWindow::LogWindow(std::string name) : _name(name) {
     _sink->set_pattern("%^[%T] %n: [%l] %v%$");

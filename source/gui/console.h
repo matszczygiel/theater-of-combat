@@ -10,13 +10,14 @@ class ConsoleWindow {
     public:
      ConsoleWindow(std::string name);
 
-     void add_line(std::string line);
-     void clear();
-
      void show(bool* p_open = nullptr);
-     void execute_command(std::string cmd);
 
     private:
+     void execute_command(std::string cmd);
+     void clear();
+     void add_line(std::string line);
+     void clear_buffer();
+
      std::string _in_buffer{};
      std::vector<std::string> _lines{};
      std::vector<std::string> _history{};

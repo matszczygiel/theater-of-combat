@@ -30,7 +30,7 @@ target_compile_features(toc PRIVATE
 target_compile_options(toc PRIVATE 
                         -Wall -Wextra -pedantic)
 
-target_compile_definitions(toc PRIVATE SOL_ALL_SAFETIES_ON=1)                        
+target_compile_definitions(toc PRIVATE SOL_ALL_SAFETIES_ON=1 SOL_PRINT_ERRORS=0)                        
 
 
 target_link_libraries(toc PRIVATE 

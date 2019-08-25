@@ -8,20 +8,30 @@
 using namespace std::string_literals;
 
 ConsoleWindow::ConsoleWindow(std::string name) : _name{name} {
+    clear_buffer();
     add_line("Welcome to " + _name);
     lua::get_state().open_libraries(sol::lib::base, sol::lib::io);
 }
 
-void ConsoleWindow::add_line(std::string line) { _lines.push_back(line + "\n"); }
+void ConsoleWindow::add_line(std::string line) {
+    _lines.push_back(line + "\n");
+}
 
 void ConsoleWindow::clear() { _lines.clear(); }
 
+void ConsoleWindow::clear_buffer() {
+    constexpr int buffer_size = 256;
+    _in_buffer.clear();
+    _in_buffer.resize(buffer_size);
+}
+
 void ConsoleWindow::execute_command(std::string cmd) {
     add_line("> " + cmd);
+    engine_trace("Lua command: {}", cmd);
     try {
-        lua::get_state().script(cmd);
+        lua::get_state().script(cmd, &lua::error_handler);
     } catch (const sol::error& e) {
-        std::string msg = "[Lua error]: "s + e.what() + "\n";
+        std::string msg = "[error]: "s + e.what() + "\n";
         add_line(msg);
     }
 
@@ -157,16 +167,17 @@ void ConsoleWindow::show(bool* p_open) {
 
     // Command-line
     bool reclaim_focus = false;
-    _in_buffer.resize(256);
-    if (ImGui::InputText("Input", _in_buffer.data(), _in_buffer.size(),
+    if (ImGui::InputText("Input", &_in_buffer.front(), _in_buffer.size(),
                          ImGuiInputTextFlags_EnterReturnsTrue)) {
+        _in_buffer.erase(std::find(_in_buffer.begin(), _in_buffer.end(), '\0'),
+                         _in_buffer.end());
         _in_buffer.erase(0, _in_buffer.find_first_not_of(" \n\r\t"));
         _in_buffer.erase(_in_buffer.find_last_not_of(" \n\r\t") + 1);
 
         if (!_in_buffer.empty())
             execute_command(_in_buffer);
         reclaim_focus = true;
-        _in_buffer.clear();
+        clear_buffer();
     }
 
     // Auto-focus on window apparition

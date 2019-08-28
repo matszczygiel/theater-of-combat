@@ -1,7 +1,8 @@
 #include "console.h"
 
 #include <algorithm>
-#include <functional>
+
+#include <lua.hpp>
 
 #include "core/log.h"
 #include "core/lua_vm.h"
@@ -11,7 +12,17 @@ using namespace std::string_literals;
 ConsoleWindow::ConsoleWindow(std::string name) : _name{std::move(name)} {
     clear_buffer();
     add_item(ItemType::output, "Welcome to " + _name);
-    lua::get_state().open_libraries(sol::lib::base, sol::lib::io);
+    auto& lua = lua::get_state();
+    lua.open_libraries(sol::lib::base);
+    lua.set_function("print", [&](const sol::variadic_args& vargs) {
+        std::string res;
+        for (const auto& arg : vargs) {
+            res += lua["tostring"](arg.get<sol::object>());
+            res += " ";
+        }
+        add_item(ItemType::output, res);
+        return 0;
+    });
 }
 
 void ConsoleWindow::add_item(ItemType type, std::string line) {
@@ -48,8 +59,9 @@ void ConsoleWindow::execute_command(std::string cmd) {
         add_item(ItemType::error, e.what() + "\n"s);
     }
 
-    _history.erase(std::remove(_history.begin(), _history.end(), cmd), _history.end());
-    if(cmd != "")
+    _history.erase(std::remove(_history.begin(), _history.end(), cmd),
+                   _history.end());
+    if (cmd != "")
         _history.push_back(cmd);
     _history_position = -1;
 
@@ -70,16 +82,6 @@ void ConsoleWindow::show(bool* p_open) {
         ImGui::EndPopup();
     }
 
-    if (ImGui::SmallButton("Add Dummy Text")) {
-        add_item(ItemType::output, "some text");
-        add_item(ItemType::output, "some more text");
-        add_item(ItemType::output, "display very important message here!");
-    }
-    ImGui::SameLine();
-    if (ImGui::SmallButton("Add Dummy Error")) {
-        add_item(ItemType::error, "something went wrong");
-    }
-    ImGui::SameLine();
     if (ImGui::SmallButton("Clear")) {
         clear();
     }
@@ -88,7 +90,6 @@ void ConsoleWindow::show(bool* p_open) {
 
     ImGui::Separator();
 
-    // Options menu
     if (ImGui::BeginPopup("Options")) {
         ImGui::Checkbox("Auto-scroll", &_auto_scroll);
         ImGui::EndPopup();
@@ -104,6 +105,7 @@ void ConsoleWindow::show(bool* p_open) {
     const float footer_height_to_reserve =
         ImGui::GetStyle().ItemSpacing.y +
         ImGui::GetFrameHeightWithSpacing();  // 1 separator, 1 input text
+
     ImGui::BeginChild(
         "ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false,
         ImGuiWindowFlags_HorizontalScrollbar);  // Leave room for 1
@@ -146,8 +148,6 @@ void ConsoleWindow::show(bool* p_open) {
         if (!_filter.PassFilter(&item.front(), &item.back()))
             continue;
 
-        // Normally you would store more information in your item (e.g. make
-        // Items[] an array of structure, store color/type etc.)
         switch (type) {
             case ItemType::command:
                 ImGui::PushStyleColor(ImGuiCol_Text,
@@ -177,33 +177,34 @@ void ConsoleWindow::show(bool* p_open) {
     ImGui::EndChild();
     ImGui::Separator();
 
-    constexpr auto history_event_callback = [](ImGuiInputTextCallbackData* data) {
-        assert(data->EventFlag == ImGuiInputTextFlags_CallbackHistory);
-        auto console     = static_cast<ConsoleWindow*>(data->UserData);
-        const auto& hist = console->_history;
-        auto& hist_pos   = console->_history_position;
-        const auto prev_history_pos = hist_pos;
-        const auto history_size     = static_cast<int>(hist.size());
-        if (data->EventKey == ImGuiKey_UpArrow) {
-            if (hist_pos == -1)
-                hist_pos = history_size - 1;
-            else if(hist_pos > 0)
-                --hist_pos;
-        } else if (data->EventKey == ImGuiKey_DownArrow) {
-            if (hist_pos != -1)
-                if (++hist_pos >= history_size)
-                    hist_pos = -1;
-        }
+    constexpr auto history_event_callback =
+        [](ImGuiInputTextCallbackData* data) {
+            assert(data->EventFlag == ImGuiInputTextFlags_CallbackHistory);
+            auto console     = static_cast<ConsoleWindow*>(data->UserData);
+            const auto& hist = console->_history;
+            auto& hist_pos   = console->_history_position;
+            const auto prev_history_pos = hist_pos;
+            const auto history_size     = static_cast<int>(hist.size());
+            if (data->EventKey == ImGuiKey_UpArrow) {
+                if (hist_pos == -1)
+                    hist_pos = history_size - 1;
+                else if (hist_pos > 0)
+                    --hist_pos;
+            } else if (data->EventKey == ImGuiKey_DownArrow) {
+                if (hist_pos != -1)
+                    if (++hist_pos >= history_size)
+                        hist_pos = -1;
+            }
 
-        // A better implementation would preserve the data on the
-        // current input line along with cursor position.
-        if (prev_history_pos != hist_pos) {
-            const auto history_str = (hist_pos >= 0) ? hist[hist_pos] : "";
-            data->DeleteChars(0, data->BufTextLen);
-            data->InsertChars(0, history_str.c_str());
-        }
-        return 0;
-    };
+            // A better implementation would preserve the data on the
+            // current input line along with cursor position.
+            if (prev_history_pos != hist_pos) {
+                const auto history_str = (hist_pos >= 0) ? hist[hist_pos] : "";
+                data->DeleteChars(0, data->BufTextLen);
+                data->InsertChars(0, history_str.c_str());
+            }
+            return 0;
+        };
 
     // Command-line
     bool reclaim_focus = false;

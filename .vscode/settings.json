@@ -66,7 +66,8 @@
         "complex": "cpp",
         "forward_list": "cpp",
         "cfenv": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "bit": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

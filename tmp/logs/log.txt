@@ -14964,3 +14964,248 @@
 [Sun Aug 25 13:16:27 2019] (thread 13087) CLIENT: [info] Loading font.
 [Sun Aug 25 13:16:27 2019] (thread 13087) ENGINE: [info] Initializing ImGui.
 [Sun Aug 25 13:17:01 2019] (thread 13087) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:09:07 2019] (thread 2824) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:09:07 2019] (thread 2824) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:09:07 2019] (thread 2824) CLIENT: [info] Loading font.
+[Sun Aug 25 15:09:07 2019] (thread 2824) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:09:31 2019] (thread 2824) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:12:23 2019] (thread 5116) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:12:23 2019] (thread 5116) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:12:23 2019] (thread 5116) CLIENT: [info] Loading font.
+[Sun Aug 25 15:12:23 2019] (thread 5116) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:12:50 2019] (thread 5116) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:13:53 2019] (thread 6743) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:13:53 2019] (thread 6743) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:13:53 2019] (thread 6743) CLIENT: [info] Loading font.
+[Sun Aug 25 15:13:53 2019] (thread 6743) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:14:01 2019] (thread 6743) ENGINE: [trace] Executing Lua command: print('bark')                                                                                                                                                                                                                                                   
+[Sun Aug 25 15:14:20 2019] (thread 6743) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:35:55 2019] (thread 15900) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:35:55 2019] (thread 15900) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:35:55 2019] (thread 15900) CLIENT: [info] Loading font.
+[Sun Aug 25 15:35:55 2019] (thread 15900) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:35:58 2019] (thread 15900) ENGINE: [trace] Executing Lua command: sdfdsf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:35:58 2019] (thread 15900) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error
+[Sun Aug 25 15:36:32 2019] (thread 15900) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:37:59 2019] (thread 16107) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:37:59 2019] (thread 16107) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:37:59 2019] (thread 16107) CLIENT: [info] Loading font.
+[Sun Aug 25 15:37:59 2019] (thread 16107) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:38:02 2019] (thread 16107) ENGINE: [trace] Executing Lua command: dsafdsf                                                                                                                                                                                                                                                         
+[Sun Aug 25 15:38:02 2019] (thread 16107) ENGINE: [debug] Lua error: sol: syntax error: [string "dsafdsf"]:1: syntax error
+[Sun Aug 25 15:38:06 2019] (thread 16107) ENGINE: [trace] Executing Lua command: sdfsdf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:38:06 2019] (thread 16107) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error
+[Sun Aug 25 15:38:08 2019] (thread 16107) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:39:07 2019] (thread 16362) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:39:07 2019] (thread 16362) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:39:07 2019] (thread 16362) CLIENT: [info] Loading font.
+[Sun Aug 25 15:39:07 2019] (thread 16362) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:39:09 2019] (thread 16362) ENGINE: [trace] Executing Lua command: dsfdsf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:39:09 2019] (thread 16362) ENGINE: [debug] Lua error: sol: syntax error: [string "dsfdsf"]:1: syntax error
+[Sun Aug 25 15:39:23 2019] (thread 16362) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:42:32 2019] (thread 16586) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:42:32 2019] (thread 16586) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:42:32 2019] (thread 16586) CLIENT: [info] Loading font.
+[Sun Aug 25 15:42:32 2019] (thread 16586) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:42:37 2019] (thread 16586) ENGINE: [trace] Lua command: dsfsdf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:42:37 2019] (thread 16586) ENGINE: [debug] Lua error: sol: syntax error: [string "dsfsdf"]:1: syntax error
+[Sun Aug 25 15:42:39 2019] (thread 16586) ENGINE: [trace] Lua command: dsf                                                                                                                                                                                                                                                             
+[Sun Aug 25 15:42:39 2019] (thread 16586) ENGINE: [debug] Lua error: sol: syntax error: [string "dsf"]:1: syntax error
+[Sun Aug 25 15:42:40 2019] (thread 16586) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:44:48 2019] (thread 16640) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:44:48 2019] (thread 16640) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:44:48 2019] (thread 16640) CLIENT: [info] Loading font.
+[Sun Aug 25 15:44:48 2019] (thread 16640) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:44:53 2019] (thread 16640) ENGINE: [trace] Lua command: sdf ds fds  fds                                                                                                                                                                                                                                                 
+[Sun Aug 25 15:44:53 2019] (thread 16640) ENGINE: [debug] Lua error: sol: syntax error: [string "sdf ds fds  fds     "]:1: syntax error near 'ds'
+[Sun Aug 25 15:45:50 2019] (thread 16640) ENGINE: [trace] Lua command: print('bark')                                                                                                                                                                                                                                                   
+[Sun Aug 25 15:45:50 2019] (thread 16640) ENGINE: [debug] Lua error: sol: syntax error: [string "print('bark') "]:1: unexpected symbol
+[Sun Aug 25 15:46:53 2019] (thread 16640) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:50:43 2019] (thread 16792) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:50:43 2019] (thread 16792) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:50:43 2019] (thread 16792) CLIENT: [info] Loading font.
+[Sun Aug 25 15:50:43 2019] (thread 16792) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:51:07 2019] (thread 16792) ENGINE: [trace] Lua command: sdfdsf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:51:07 2019] (thread 16792) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error
+[Sun Aug 25 15:51:11 2019] (thread 16792) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:51:38 2019] (thread 16880) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:51:38 2019] (thread 16880) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:51:38 2019] (thread 16880) CLIENT: [info] Loading font.
+[Sun Aug 25 15:51:38 2019] (thread 16880) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:51:41 2019] (thread 16880) ENGINE: [trace] Lua command: dsf                                                                                                                                                                                                                                                             
+[Sun Aug 25 15:51:41 2019] (thread 16880) ENGINE: [debug] Lua error: sol: syntax error: [string "dsf"]:1: syntax error
+[Sun Aug 25 15:51:43 2019] (thread 16880) ENGINE: [trace] Lua command: sdfdsfdsfdsf                                                                                                                                                                                                                                                    
+[Sun Aug 25 15:51:43 2019] (thread 16880) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsfdsfdsf"]:1: syntax error
+[Sun Aug 25 15:51:48 2019] (thread 16880) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:53:31 2019] (thread 16998) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:53:31 2019] (thread 16998) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:53:31 2019] (thread 16998) CLIENT: [info] Loading font.
+[Sun Aug 25 15:53:31 2019] (thread 16998) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:53:41 2019] (thread 16998) ENGINE: [info] Quiting application.
+[Sun Aug 25 15:54:23 2019] (thread 17095) ENGINE: [info] Initializing application.
+[Sun Aug 25 15:54:23 2019] (thread 17095) ENGINE: [trace] Creating a window.
+[Sun Aug 25 15:54:23 2019] (thread 17095) CLIENT: [info] Loading font.
+[Sun Aug 25 15:54:23 2019] (thread 17095) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 15:54:25 2019] (thread 17095) ENGINE: [trace] Lua command: sdfdsf                                                                                                                                                                                                                                                          
+[Sun Aug 25 15:54:25 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error
+[Sun Aug 25 15:54:26 2019] (thread 17095) ENGINE: [trace] Lua command:                                                                                                                                                                                                                                                                 
+[Sun Aug 25 15:54:26 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string ""]:1: unexpected symbol
+[Sun Aug 25 15:54:27 2019] (thread 17095) ENGINE: [trace] Lua command: s                                                                                                                                                                                                                                                               
+[Sun Aug 25 15:54:27 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string "s"]:1: syntax error
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [trace] Lua command:                                                                                                                                                                                                                                                                 
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string ""]:1: unexpected symbol
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [trace] Lua command:                                                                                                                                                                                                                                                                 
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string ""]:1: unexpected symbol
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [trace] Lua command:                                                                                                                                                                                                                                                                 
+[Sun Aug 25 15:54:28 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string ""]:1: unexpected symbol
+[Sun Aug 25 15:54:30 2019] (thread 17095) ENGINE: [trace] Lua command: sdddddd                                                                                                                                                                                                                                                         
+[Sun Aug 25 15:54:30 2019] (thread 17095) ENGINE: [debug] Lua error: sol: syntax error: [string "sdddddd"]:1: syntax error
+[Sun Aug 25 15:54:35 2019] (thread 17095) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:10:52 2019] (thread 17363) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:10:52 2019] (thread 17363) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:10:53 2019] (thread 17363) CLIENT: [info] Loading font.
+[Sun Aug 25 16:10:53 2019] (thread 17363) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:10:57 2019] (thread 17363) ENGINE: [trace] Lua command: sdf sdf sdsf                                                                                                                                                                                                                                                    
+[Sun Aug 25 16:10:57 2019] (thread 17363) ENGINE: [debug] Lua error: sol: syntax error: [string "sdf sdf sdsf"]:1: syntax error near 'sdf'
+[Sun Aug 25 16:11:00 2019] (thread 17363) ENGINE: [trace] Lua command: sdfdsf                                                                                                                                                                                                                                                      
+[Sun Aug 25 16:11:00 2019] (thread 17363) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error
+[Sun Aug 25 16:11:03 2019] (thread 17363) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:15:17 2019] (thread 17561) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:15:17 2019] (thread 17561) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:15:17 2019] (thread 17561) CLIENT: [info] Loading font.
+[Sun Aug 25 16:15:17 2019] (thread 17561) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:15:19 2019] (thread 17561) ENGINE: [trace] Lua command: sdf ds
+[Sun Aug 25 16:15:19 2019] (thread 17561) ENGINE: [debug] Lua error: sol: syntax error: [string "sdf ds"]:1: syntax error near 'ds'
+[Sun Aug 25 16:15:23 2019] (thread 17561) ENGINE: [trace] Lua command: sdf sdf sdf
+[Sun Aug 25 16:15:23 2019] (thread 17561) ENGINE: [debug] Lua error: sol: syntax error: [string "sdf sdf sdf"]:1: syntax error near 'sdf'
+[Sun Aug 25 16:15:27 2019] (thread 17561) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:20:49 2019] (thread 18112) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:20:49 2019] (thread 18112) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:20:49 2019] (thread 18112) CLIENT: [info] Loading font.
+[Sun Aug 25 16:20:49 2019] (thread 18112) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:20:55 2019] (thread 18112) ENGINE: [trace] Lua command: print('bark')                                                                                                                                                                                                                                                  
+[Sun Aug 25 16:20:55 2019] (thread 18112) ENGINE: [debug] Lua error: sol: syntax error: [string "print('bark')"]:1: unexpected symbol
+[Sun Aug 25 16:21:04 2019] (thread 18112) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:22:05 2019] (thread 18249) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:22:05 2019] (thread 18249) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:22:05 2019] (thread 18249) CLIENT: [info] Loading font.
+[Sun Aug 25 16:22:05 2019] (thread 18249) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:22:08 2019] (thread 18249) ENGINE: [trace] Lua command: sdfdsf
+[Sun Aug 25 16:22:08 2019] (thread 18249) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error near <eof>
+[Sun Aug 25 16:22:13 2019] (thread 18249) ENGINE: [trace] Lua command: sdfdsf
+[Sun Aug 25 16:22:13 2019] (thread 18249) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error near <eof>
+[Sun Aug 25 16:22:17 2019] (thread 18249) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:24:09 2019] (thread 18405) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:24:09 2019] (thread 18405) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:24:09 2019] (thread 18405) CLIENT: [info] Loading font.
+[Sun Aug 25 16:24:09 2019] (thread 18405) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:24:12 2019] (thread 18405) ENGINE: [trace] Lua command: sdfsdf                                                                                                                                                                                                                                                          
+[Sun Aug 25 16:24:12 2019] (thread 18405) ENGINE: [debug] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error
+[Sun Aug 25 16:24:13 2019] (thread 18405) ENGINE: [info] Quiting application.
+[Sun Aug 25 16:28:14 2019] (thread 19218) ENGINE: [info] Initializing application.
+[Sun Aug 25 16:28:14 2019] (thread 19218) ENGINE: [trace] Creating a window.
+[Sun Aug 25 16:28:14 2019] (thread 19218) CLIENT: [info] Loading font.
+[Sun Aug 25 16:28:14 2019] (thread 19218) ENGINE: [info] Initializing ImGui.
+[Sun Aug 25 16:28:20 2019] (thread 19218) ENGINE: [trace] Lua command: prin('bark')
+[Sun Aug 25 16:28:20 2019] (thread 19218) ENGINE: [debug] Lua error: sol: runtime error: [string "prin('bark')"]:1: attempt to call a nil value (global 'prin')
+stack traceback:
+	[string "prin('bark')"]:1: in main chunk
+[Sun Aug 25 16:28:32 2019] (thread 19218) ENGINE: [trace] Lua command: print('bark')
+[Sun Aug 25 16:29:14 2019] (thread 19218) ENGINE: [trace] Lua command: print('dupa')
+[Sun Aug 25 16:29:20 2019] (thread 19218) ENGINE: [trace] Lua command: dsfdsfdsf
+[Sun Aug 25 16:29:20 2019] (thread 19218) ENGINE: [debug] Lua error: sol: syntax error: [string "dsfdsfdsf"]:1: syntax error near <eof>
+[Sun Aug 25 16:30:19 2019] (thread 19218) ENGINE: [info] Quiting application.
+[Wed Aug 28 21:24:49 2019] (thread 20990) ENGINE: [info] Initializing application.
+[Wed Aug 28 21:24:49 2019] (thread 20990) ENGINE: [trace] Creating a window.
+[Wed Aug 28 21:24:49 2019] (thread 20990) CLIENT: [info] Loading font.
+[Wed Aug 28 21:24:50 2019] (thread 20990) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 21:25:00 2019] (thread 20990) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 21:25:04 2019] (thread 20990) ENGINE: [trace] Lua command: dupa
+[Wed Aug 28 21:25:04 2019] (thread 20990) ENGINE: [debug] Lua error: sol: syntax error: [string "dupa"]:1: syntax error near <eof>
+[Wed Aug 28 21:25:37 2019] (thread 20990) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:22:28 2019] (thread 25333) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:22:28 2019] (thread 25333) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:22:28 2019] (thread 25333) CLIENT: [info] Loading font.
+[Wed Aug 28 22:22:28 2019] (thread 25333) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:22:32 2019] (thread 25333) ENGINE: [trace] Lua command: dsf
+[Wed Aug 28 22:22:32 2019] (thread 25333) ENGINE: [error] Lua error: sol: syntax error: [string "dsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:22:33 2019] (thread 25333) ENGINE: [trace] Lua command: sdf
+[Wed Aug 28 22:22:33 2019] (thread 25333) ENGINE: [error] Lua error: sol: syntax error: [string "sdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:22:35 2019] (thread 25333) ENGINE: [trace] Lua command: dsf
+[Wed Aug 28 22:22:35 2019] (thread 25333) ENGINE: [error] Lua error: sol: syntax error: [string "dsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:22:37 2019] (thread 25333) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:24:08 2019] (thread 25460) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:24:08 2019] (thread 25460) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:24:08 2019] (thread 25460) CLIENT: [info] Loading font.
+[Wed Aug 28 22:24:08 2019] (thread 25460) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:24:21 2019] (thread 25460) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:24:29 2019] (thread 25460) ENGINE: [trace] Lua command: sdfsdf
+[Wed Aug 28 22:24:29 2019] (thread 25460) ENGINE: [error] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:24:44 2019] (thread 25460) ENGINE: [trace] Lua command: sdfsdf
+[Wed Aug 28 22:24:44 2019] (thread 25460) ENGINE: [error] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:24:56 2019] (thread 25460) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:24:57 2019] (thread 25460) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:25:17 2019] (thread 25460) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:25:18 2019] (thread 25460) ENGINE: [trace] Lua command: sdfsdf
+[Wed Aug 28 22:25:18 2019] (thread 25460) ENGINE: [error] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:25:27 2019] (thread 25460) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:26:17 2019] (thread 25578) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:26:17 2019] (thread 25578) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:26:18 2019] (thread 25578) CLIENT: [info] Loading font.
+[Wed Aug 28 22:26:18 2019] (thread 25578) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:26:20 2019] (thread 25578) ENGINE: [trace] Lua command: sdfdsf
+[Wed Aug 28 22:26:20 2019] (thread 25578) ENGINE: [error] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:26:25 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:26:26 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:26:26 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:26:27 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:26:33 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:26:36 2019] (thread 25578) ENGINE: [trace] Lua command: sdfdsf
+[Wed Aug 28 22:26:36 2019] (thread 25578) ENGINE: [error] Lua error: sol: syntax error: [string "sdfdsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:27:01 2019] (thread 25578) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:27:09 2019] (thread 25578) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:33:24 2019] (thread 25796) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:33:24 2019] (thread 25796) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:33:24 2019] (thread 25796) CLIENT: [info] Loading font.
+[Wed Aug 28 22:33:24 2019] (thread 25796) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:33:43 2019] (thread 25796) ENGINE: [trace] Lua command: asdfsdf
+[Wed Aug 28 22:33:43 2019] (thread 25796) ENGINE: [error] Lua error: sol: syntax error: [string "asdfsdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:33:48 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:33:53 2019] (thread 25796) ENGINE: [trace] Lua command: dsf
+[Wed Aug 28 22:33:53 2019] (thread 25796) ENGINE: [error] Lua error: sol: syntax error: [string "dsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:33:55 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:33:56 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:33:56 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:34:13 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:34:22 2019] (thread 25796) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:34:34 2019] (thread 25796) ENGINE: [trace] Lua command: dsf
+[Wed Aug 28 22:34:34 2019] (thread 25796) ENGINE: [error] Lua error: sol: syntax error: [string "dsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:34:39 2019] (thread 25796) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:38:23 2019] (thread 26170) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:38:23 2019] (thread 26170) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:38:23 2019] (thread 26170) CLIENT: [info] Loading font.
+[Wed Aug 28 22:38:23 2019] (thread 26170) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:38:26 2019] (thread 26170) ENGINE: [trace] Lua command: sdfsdf
+[Wed Aug 28 22:38:26 2019] (thread 26170) ENGINE: [error] Lua error: sol: syntax error: [string "sdfsdf"]:1: syntax error near <eof>
+[Wed Aug 28 22:38:28 2019] (thread 26170) ENGINE: [trace] Lua command: sdfdsfdsfdsfdsf
+[Wed Aug 28 22:38:28 2019] (thread 26170) ENGINE: [error] Lua error: sol: syntax error: [string "sdfdsfdsfdsfdsf"]:1: syntax error near <eof>
+[Wed Aug 28 22:38:37 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:38:38 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark1')
+[Wed Aug 28 22:38:43 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark2')
+[Wed Aug 28 22:38:58 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:39:01 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark1')
+[Wed Aug 28 22:39:05 2019] (thread 26170) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:39:12 2019] (thread 26170) ENGINE: [info] Quiting application.
+[Wed Aug 28 22:39:35 2019] (thread 26275) ENGINE: [info] Initializing application.
+[Wed Aug 28 22:39:35 2019] (thread 26275) ENGINE: [trace] Creating a window.
+[Wed Aug 28 22:39:35 2019] (thread 26275) CLIENT: [info] Loading font.
+[Wed Aug 28 22:39:35 2019] (thread 26275) ENGINE: [info] Initializing ImGui.
+[Wed Aug 28 22:39:42 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:39:43 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark1')
+[Wed Aug 28 22:39:45 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark2')
+[Wed Aug 28 22:39:47 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark3')
+[Wed Aug 28 22:39:47 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark3')
+[Wed Aug 28 22:39:48 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark3')
+[Wed Aug 28 22:39:48 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark3')
+[Wed Aug 28 22:39:51 2019] (thread 26275) ENGINE: [trace] Lua command: print('bark')
+[Wed Aug 28 22:39:59 2019] (thread 26275) ENGINE: [info] Quiting application.

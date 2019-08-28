@@ -2,11 +2,14 @@
 
 #include <imgui.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include "spdlog/sinks/rotating_file_sink.h"
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <sol/sol.hpp>
 
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
 #include "core/log.h"
+#include "core/lua_vm.h"
+#include "map/lua_map.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -28,6 +31,9 @@ void Game::initialize() {
     _map = Map::create_test_map();
     _map_gfx.update(_map);
 
+    auto& lua = lua::get_state();
+    map::lua_push_functions();
+    lua["game_map"] = &_map;
 }
 
 void Game::update(const sf::Time& elapsed_time) {

@@ -67,7 +67,8 @@
         "forward_list": "cpp",
         "cfenv": "cpp",
         "valarray": "cpp",
-        "bit": "cpp"
+        "bit": "cpp",
+        "filesystem": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

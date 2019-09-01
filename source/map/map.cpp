@@ -6,6 +6,9 @@
 #include <sstream>
 #include <tuple>
 #include <vector>
+#include <fstream>
+
+#include <cereal/archives/json.hpp>
 
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 
@@ -81,6 +84,7 @@ void Map::insert(RiverSite site) {
     _graph.insert_node(id, {found_hexes[0], found_hexes[1]});
     _graph.remove_edge(found_hexes[0], found_hexes[1]);
 }
+
 
 Map Map::create_test_map() {
     Map map;

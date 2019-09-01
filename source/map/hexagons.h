@@ -15,13 +15,6 @@ class HexCoordinates {
     static_assert(std::is_arithmetic<T>::value,
                   "HexCoordinates is parametrized by arithmetic types.");
 
-   private:
-    T _x;
-    T _y;
-    T _z;
-
-    static const std::array<HexCoordinates<T>, 6> directions;
-
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
 
@@ -45,6 +38,16 @@ class HexCoordinates {
     T length() const;
 
     static HexCoordinates<T> origin() { return HexCoordinates<T>(); }
+
+    template <class Archive>
+    void serialize(Archive &archive);
+
+   private:
+    T _x;
+    T _y;
+    T _z;
+
+    static const std::array<HexCoordinates<T>, 6> directions;
 };
 using HexCoordinate           = HexCoordinates<int>;
 using HexCoordinateFractional = HexCoordinates<float>;
@@ -117,6 +120,12 @@ template <typename T, typename U>
 HexCoordinates<typename std::common_type<T, U>::type> operator*(
     const HexCoordinates<T> &lhs, const U &rhs) {
     return rhs * lhs;
+}
+
+template <typename T>
+template <class Archive>
+void HexCoordinates<T>::serialize(Archive &archive) {
+    archive(_x, _y, _z);
 }
 
 struct Orientation {

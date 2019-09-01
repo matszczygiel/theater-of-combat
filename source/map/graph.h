@@ -4,6 +4,9 @@
 #include <map>
 #include <set>
 
+#include <cereal/types/map.hpp>
+#include <cereal/types/set.hpp>
+
 class BidirectionalGraph {
    public:
     BidirectionalGraph& insert_node(int node, const std::set<int>& neighbors);
@@ -13,12 +16,20 @@ class BidirectionalGraph {
 
     const std::map<int, std::set<int>>& adjacency_matrix() const;
 
+    template <class Archive>
+    void serialize(Archive& archive);
+
    private:
     std::map<int, std::set<int>> _adjacency_matrix{};
 };
 
 bool operator==(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs);
 bool operator!=(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs);
+
+template <class Archive>
+void BidirectionalGraph::serialize(Archive& archive) {
+    archive(_adjacency_matrix);
+}
 
 class WeightedBidirectionalGraph {
    public:

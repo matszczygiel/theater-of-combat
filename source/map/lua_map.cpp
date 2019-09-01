@@ -36,6 +36,5 @@ void lua_push_functions() {
     map["test_map"] = &Map::create_test_map;
     map["insert_hex"] = sol::resolve<void(HexSite)>(&Map::insert);
     map["insert_river"] = sol::resolve<void(RiverSite)>(&Map::insert);
-
 }
 }  // namespace map

@@ -9,6 +9,8 @@ const HexCoordinate& HexSite::coord() const { return _coord; }
 
 const HexType& HexSite::type() const { return _type; }
 
+RiverSite::RiverSite() : _side1{0, 0}, _side2{1, 0} {}
+
 RiverSite::RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type)
     : _side1{side1}, _side2{side2}, _type{type} {
     const auto neighbors = side1.neighbors();

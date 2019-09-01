@@ -17,6 +17,7 @@ find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(Lua REQUIRED)
 find_package(spdlog REQUIRED)
+#find_package(cereal REQUIRED)
     
 add_executable(toc ${sources})
 

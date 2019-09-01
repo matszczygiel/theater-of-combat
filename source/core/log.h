@@ -72,4 +72,20 @@ inline void app_critical(const char* fmt, const Args&... args) {
     logger::get_app_logger()->critical(fmt, args...);
 }
 
+template <typename... Args>
+inline void engine_assert(bool condition, const char* message, const Args&... args) {
+    if (!condition) {
+        engine_critical(message, args...);
+        throw std::runtime_error("Paused on assert. Check logs for more info.");
+    }
+}
+
+template <typename... Args>
+inline void app_assert(bool condition, const char* message, const Args&... args) {
+    if (!condition) {
+        app_critical(message, args...);
+        throw std::runtime_error("Paused on assert. Check logs for more info.");
+    }
+}
+
 #endif

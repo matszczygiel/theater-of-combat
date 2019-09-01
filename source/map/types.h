@@ -15,27 +15,45 @@ enum class RiverType {
 
 class HexSite {
    public:
+    HexSite() = default;
     HexSite(HexCoordinate coord, HexType type) noexcept;
 
     const HexCoordinate& coord() const;
     const HexType& type() const;
+
+    template <class Archive>
+    void serialize(Archive& archive);
 
    private:
     HexCoordinate _coord{};
     HexType _type{};
 };
 
+template <class Archive>
+void HexSite::serialize(Archive& archive) {
+    archive(_coord, _type);
+}
+
 class RiverSite {
    public:
+    RiverSite();
     RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
 
     std::pair<HexCoordinate, HexCoordinate> sides() const;
     const RiverType& type() const;
+
+    template <class Archive>
+    void serialize(Archive& archive);
 
    private:
     HexCoordinate _side1{};
     HexCoordinate _side2{};
     RiverType _type{};
 };
+
+template <class Archive>
+void RiverSite::serialize(Archive& archive) {
+    archive(_side1, _side2, _type);
+}
 
 #endif

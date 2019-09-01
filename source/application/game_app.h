@@ -8,6 +8,8 @@
 #include "map/map.h"
 #include "gui/log_window.h"
 #include "gui/console.h"
+#include "core/resource_manager.h"
+
 
 class Game : public Application {
    public:
@@ -43,6 +45,8 @@ class Game : public Application {
 
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
+
+    ResourceManager _res_manager{"resources/"};
 
     constexpr static float _view_moving_speed{0.3f};
 };

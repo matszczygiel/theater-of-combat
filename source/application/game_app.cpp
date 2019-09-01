@@ -1,14 +1,14 @@
 #include "game_app.h"
 
 #include <imgui.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include <sol/sol.hpp>
 
-#include "gui/dock_space.h"
-#include "gui/log_window.h"
 #include "core/log.h"
 #include "core/lua_vm.h"
+#include "gui/dock_space.h"
+#include "gui/log_window.h"
 #include "map/lua_map.h"
 
 Game::Game() {
@@ -17,6 +17,8 @@ Game::Game() {
     rot_sink->set_pattern("%^[%c] (thread %t) %n: [%l] %v%$");
     rot_sink->set_level(spdlog::level::trace);
     logger::get_distributing_sink()->add_sink(rot_sink);
+
+    _res_manager.register_resource_type<Map>("maps", "map");
 }
 
 void Game::initialize() {
@@ -34,6 +36,8 @@ void Game::initialize() {
     auto& lua = lua::get_state();
     map::lua_push_functions();
     lua["game_map"] = &_map;
+    lua["save_map"] = [&](std::string name) { _res_manager.save(_map, name); };
+    lua["load_map"] = [&](std::string name) { _map = _res_manager.load<Map>(name); };
 }
 
 void Game::update(const sf::Time& elapsed_time) {

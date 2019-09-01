@@ -3,6 +3,8 @@
 
 #include <map>
 
+#include <cereal/types/map.hpp>
+
 #include "graph.h"
 #include "types.h"
 
@@ -17,6 +19,10 @@ class Map {
 
     static Map create_test_map();
 
+    template <class Archive>
+    void serialize(Archive& archive);
+
+
    private:
     int fetch_id();
 
@@ -27,5 +33,10 @@ class Map {
 
     int _current_free_id{0};
 };
+
+template <class Archive>
+void Map::serialize(Archive& archive) {
+    archive(_current_free_id, _graph, _hexes, _rivers);
+}
 
 #endif

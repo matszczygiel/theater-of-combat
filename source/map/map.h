@@ -22,7 +22,6 @@ class Map {
     template <class Archive>
     void serialize(Archive& archive);
 
-
    private:
     int fetch_id();
 
@@ -36,7 +35,8 @@ class Map {
 
 template <class Archive>
 void Map::serialize(Archive& archive) {
-    archive(_current_free_id, _graph, _hexes, _rivers);
+    archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_graph),
+            CEREAL_NVP(_hexes), CEREAL_NVP(_rivers));
 }
 
 #endif

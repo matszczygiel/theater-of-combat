@@ -9,6 +9,8 @@
 #include <stdexcept>
 
 #include <SFML/System/Vector2.hpp>
+#include <cereal/types/utility.hpp>
+
 
 template <typename T>
 class HexCoordinates {
@@ -125,7 +127,7 @@ HexCoordinates<typename std::common_type<T, U>::type> operator*(
 template <typename T>
 template <class Archive>
 void HexCoordinates<T>::serialize(Archive &archive) {
-    archive(_x, _y, _z);
+    archive( CEREAL_NVP(_x),  CEREAL_NVP(_y),  CEREAL_NVP(_z));
 }
 
 struct Orientation {

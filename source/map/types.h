@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <cereal/types/utility.hpp>
+
 #include "hexagons.h"
 
 enum class HexType {
@@ -31,7 +33,7 @@ class HexSite {
 
 template <class Archive>
 void HexSite::serialize(Archive& archive) {
-    archive(_coord, _type);
+    archive(CEREAL_NVP(_coord), CEREAL_NVP(_type));
 }
 
 class RiverSite {
@@ -53,7 +55,7 @@ class RiverSite {
 
 template <class Archive>
 void RiverSite::serialize(Archive& archive) {
-    archive(_side1, _side2, _type);
+    archive(CEREAL_NVP(_side1), CEREAL_NVP(_side2), CEREAL_NVP(_type));
 }
 
 #endif

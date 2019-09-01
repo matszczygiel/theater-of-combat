@@ -10,6 +10,8 @@
 
 #include <cereal/archives/json.hpp>
 
+#include "core/log.h"
+
 const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
 
 const std::map<int, RiverSite>& Map::rivers() const { return _rivers; }
@@ -32,12 +34,12 @@ void Map::insert(HexSite site) {
         if (std::any_of(neighors.begin(), neighors.end(), [&](const auto& x) {
                 return (x == hex.second.coord());
             })) {
-            assert(found_neighbors.insert(hex.first).second);
+            engine_assert(found_neighbors.insert(hex.first).second, "");
         }
     }
 
     const auto id = fetch_id();
-    assert(_hexes.insert({id, site}).second);
+    engine_assert(_hexes.insert({id, site}).second, "");
     _graph.insert_node(id, found_neighbors);
 }
 
@@ -62,7 +64,7 @@ void Map::insert(RiverSite site) {
         throw std::logic_error(ss.str());
 
     } else if (found_hexes.size() > 2) {
-        static_assert(true);
+        engine_assert(false, "Found to many hexes, indicating deeper logic error");
     }
 
     if (std::any_of(_rivers.begin(), _rivers.end(), [&](const auto& riv) {
@@ -80,7 +82,7 @@ void Map::insert(RiverSite site) {
     }
 
     const auto id = fetch_id();
-    assert(_rivers.insert({id, site}).second);
+    engine_assert(_rivers.insert({id, site}).second, "");
     _graph.insert_node(id, {found_hexes[0], found_hexes[1]});
     _graph.remove_edge(found_hexes[0], found_hexes[1]);
 }

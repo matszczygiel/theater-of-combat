@@ -139,7 +139,7 @@ void Game::key_released_event(const sf::Keyboard::Key& key) {
 }
 
 void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
-                                      const sf::Vector2f& position) {
+                                      const sf::Vector2f& ) {
     switch (button) {
         case sf::Mouse::Left:
             break;
@@ -149,8 +149,8 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     }
 }
 
-void Game::mouse_button_released_event(const sf::Mouse::Button& button,
-                                       const sf::Vector2f& position) {}
+void Game::mouse_button_released_event(const sf::Mouse::Button&,
+                                       const sf::Vector2f& ) {}
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {
     auto view = _window.getView();

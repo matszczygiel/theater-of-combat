@@ -28,7 +28,7 @@ bool operator!=(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs);
 
 template <class Archive>
 void BidirectionalGraph::serialize(Archive& archive) {
-    archive(_adjacency_matrix);
+    archive( CEREAL_NVP(_adjacency_matrix));
 }
 
 class WeightedBidirectionalGraph {

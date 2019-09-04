@@ -1,55 +1,27 @@
 #include "unit.h"
 
-#include "log.h"
-#include "map/hex_site.h"
+#include "unit_components.h"
+#include "core/log.h"
 
-sf::Font Unit::_font;
-int Unit::_current_max_id = 0;
-
-Unit::Unit(const int& moving_pts, const int& strength_pts,
-           const std::string& description) noexcept
-    : _moving_pts{moving_pts},
-      _current_moving_pts{moving_pts},
-      _strength_pts{strength_pts},
-      _description{description},
-      _id{++_current_max_id} {}
-
-Hex_site* Unit::get_occupation() const { return _occupation; }
-
-const int& Unit::get_mv_points() const { return _current_moving_pts; }
-
-const int& Unit::get_st_points() const { return _strength_pts; }
-
-const int& Unit::get_id() const { return _id; }
-
-void Unit::place_on_hex(Hex_site* hex) {
-    _occupation = hex;
-    Tokenizable::set_token_postion(_occupation->get_position());
-    GAME_INFO("Unit placed on hex No. {0} at ({1}, {2})",
-              _occupation->get_number(),
-              _occupation->get_position().x,
-              _occupation->get_position().y);
+Unit::Unit(entityx::EntityManager &es, UnitType unit_type, std::string unit_name)
+    : type{unit_type}, name{unit_name} {
+    _entity = es.create();
+    create_from_type(type);
 }
 
-void Unit::reset_mv_points() noexcept {
-    ENGINE_TRACE("Reseting moving points.");
-    _current_moving_pts = _moving_pts;
-}
+Unit::~Unit() { _entity.destroy(); }
 
-void Unit::reduce_mv_points(const int& points) {
-    assert(points <= _current_moving_pts);
-
-    _current_moving_pts -= points;
-}
-
-void Unit::reduce_st_points(const int& points) {
-    assert(points <= _strength_pts);
-
-    _strength_pts -= points;
-}
-
-
-void Unit::load_font_file(const std::string& filename) {
-    _font.loadFromFile(filename);
-    GAME_INFO("Loading unit info font.");
+void Unit::create_from_type(UnitType type) {
+    switch (type)
+    {
+    case UnitType::heavy:
+        _entity.assign<MovementComponent>(type, 12);
+        break;
+    case UnitType::mechanized:
+        _entity.assign<MovementComponent>(type, 20);
+        break;
+    default:
+        app_assert(false, "Unknown unit type.");
+        break;
+    }
 }

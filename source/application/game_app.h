@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include <entityx/entityx.h>
+
 #include "application.h"
 #include "graphics/map_gfx.h"
 #include "map/map.h"
@@ -47,6 +49,8 @@ class Game : public Application {
     ConsoleWindow _console{"Lua console"};
 
     ResourceManager _res_manager{"resources/"};
+
+    entityx::EntityX unit_system{};
 
     constexpr static float _view_moving_speed{0.3f};
 };

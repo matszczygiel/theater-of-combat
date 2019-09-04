@@ -9,6 +9,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/graphics/*.cpp       source/graphics/*.h
     source/application/*.cpp    source/application/*.h
     source/core/*.cpp           source/core/*.h
+    source/unit/*.cpp           source/unit/*.h
     source/main.cpp
     )
 
@@ -18,7 +19,9 @@ find_package(sol2 REQUIRED)
 find_package(Lua REQUIRED)
 find_package(spdlog REQUIRED)
 #find_package(cereal REQUIRED)
-    
+#find_package(entityx REQUIRED)
+
+
 add_executable(toc ${sources})
 
 target_include_directories(toc PRIVATE 
@@ -40,7 +43,8 @@ target_link_libraries(toc PRIVATE
                         sfml-system
                         sfml-network
                         ImGui-SFML::ImGui-SFML
-                        ${LUA_LIBRARIES}) 
+                        ${LUA_LIBRARIES}
+                        entityx) 
                         
 enable_testing()           
 add_subdirectory(tests)                        

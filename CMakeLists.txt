@@ -19,7 +19,6 @@ find_package(sol2 REQUIRED)
 find_package(Lua REQUIRED)
 find_package(spdlog REQUIRED)
 #find_package(cereal REQUIRED)
-#find_package(entityx REQUIRED)
 
 
 add_executable(toc ${sources})

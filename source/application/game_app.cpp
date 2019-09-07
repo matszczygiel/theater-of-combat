@@ -38,6 +38,8 @@ void Game::initialize() {
     lua["game_map"] = &_map;
     lua["save_map"] = [&](std::string name) { _res_manager.save(_map, name); };
     lua["load_map"] = [&](std::string name) { _map = _res_manager.load<Map>(name); };
+
+    _units.create(UnitType::mechanized, "test unit", true);
 }
 
 void Game::update(const sf::Time& elapsed_time) {

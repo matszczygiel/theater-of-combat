@@ -3,14 +3,13 @@
 
 #include <vector>
 
-#include <entityx/entityx.h>
-
 #include "application.h"
 #include "graphics/map_gfx.h"
 #include "map/map.h"
 #include "gui/log_window.h"
 #include "gui/console.h"
 #include "core/resource_manager.h"
+#include "unit/unit.h"
 
 
 class Game : public Application {
@@ -50,7 +49,7 @@ class Game : public Application {
 
     ResourceManager _res_manager{"resources/"};
 
-    entityx::EntityX unit_system{};
+    UnitManager _units{};
 
     constexpr static float _view_moving_speed{0.3f};
 };

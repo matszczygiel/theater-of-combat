@@ -3,10 +3,10 @@
 
 #include <optional>
 
-#include "map/hexagons.h"
 #include "unit.h"
+#include "map/hexagons.h"
 
-struct MovementComponent {
+struct MovementComponent : public ComponentBase {
     MovementComponent(UnitType t, int moving_points);
 
     const UnitType type;

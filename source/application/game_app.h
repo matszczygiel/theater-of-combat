@@ -5,11 +5,13 @@
 
 #include "application.h"
 #include "graphics/map_gfx.h"
+#include "graphics/unit_gfx.h"
 #include "map/map.h"
 #include "gui/log_window.h"
 #include "gui/console.h"
 #include "core/resource_manager.h"
 #include "unit/unit.h"
+
 
 
 class Game : public Application {
@@ -50,6 +52,7 @@ class Game : public Application {
     ResourceManager _res_manager{"resources/"};
 
     UnitManager _units{};
+    UnitGfx _unit_gfx{_map_gfx};
 
     constexpr static float _view_moving_speed{0.3f};
 };

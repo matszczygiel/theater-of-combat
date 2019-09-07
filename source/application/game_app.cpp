@@ -41,8 +41,10 @@ void Game::initialize() {
     lua["load_map"] = [&](std::string name) { _map = _res_manager.load<Map>(name); };
 
     auto unit_id = _units.create(UnitType::mechanized, "test unit", true);
-    auto& cmp = _units.get_component<MovementComponent>(unit_id);
-    cmp.position = HexCoordinate(-1, 1);
+    auto cmp = _units.get_component<MovementComponent>(unit_id);
+    cmp->position = HexCoordinate(-1, 1);
+
+    _unit_gfx.update(_units);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -72,6 +74,8 @@ void Game::update(const sf::Time& elapsed_time) {
     _console.show(nullptr);
 
     _map_gfx.update(_map);
+    _unit_gfx.update(_units);
+
 
     // engine_trace("Updating");
 }
@@ -86,6 +90,8 @@ void Game::render() {
     }
 
     _map_gfx.draw_coords(_window);
+
+    _unit_gfx.draw_tokens(_window);
 }
 
 void Game::clear_loop() {}

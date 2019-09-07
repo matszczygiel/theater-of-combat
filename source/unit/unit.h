@@ -68,10 +68,12 @@ class UnitManager {
     Component& assign_component(Unit::IdType id, Args&&... args);
 
     template <class Component>
-    Component& get_component(Unit::IdType id);
+    Component* get_component(Unit::IdType id);
 
     template <class Component>
     void remove_component(Unit::IdType id);
+
+    const std::map<Unit::IdType, Unit>& units() const;
 
    private:
     void assign_default_components(Unit::IdType id, UnitType type);
@@ -99,15 +101,20 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
 }
 
 template <class Component>
-Component& UnitManager::get_component(Unit::IdType id) {
+Component* UnitManager::get_component(Unit::IdType id) {
     static_assert(std::is_base_of_v<ComponentBase, Component>);
     app_assert(_units.count(id) == 1, "Unit with id: {} does not exists.", id);
 
     auto& vec = _components.get_container<Component>();
 
-    return *std::find(vec.begin(), vec.end(),
-                     [&](auto& com) { return com.owner == id; });
+    auto res = std::find_if(vec.begin(), vec.end(),
+                         [&](auto& com) { return com.owner == id; });
 
+    if (res != vec.end()) {
+        return &(*res);
+    } else {
+        return nullptr;
+    }
 }
 
 template <class Component>

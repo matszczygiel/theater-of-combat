@@ -10,7 +10,7 @@
 
 class Token {
    public:
-    Token(std::shared_ptr<Layout> layout);
+    Token(std::shared_ptr<Layout> layout, const HexCoordinate& site);
 
     void update(const HexCoordinate& site);
 

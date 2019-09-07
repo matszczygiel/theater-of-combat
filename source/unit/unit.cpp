@@ -14,6 +14,8 @@ Unit::IdType UnitManager::create(UnitType type, std::string name,
 
     if (assign_components)
         assign_default_components(id, type);
+
+    return id;
 }
 
 void UnitManager::assign_default_components(Unit::IdType id, UnitType type) {
@@ -28,4 +30,8 @@ void UnitManager::assign_default_components(Unit::IdType id, UnitType type) {
             app_assert(false, "Unknown unit type.");
             break;
     }
+}
+
+const std::map<Unit::IdType, Unit>& UnitManager::units() const {
+    return _units;
 }

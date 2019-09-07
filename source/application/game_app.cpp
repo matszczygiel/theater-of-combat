@@ -10,6 +10,7 @@
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
 #include "map/lua_map.h"
+#include "unit/unit_components.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -39,7 +40,9 @@ void Game::initialize() {
     lua["save_map"] = [&](std::string name) { _res_manager.save(_map, name); };
     lua["load_map"] = [&](std::string name) { _map = _res_manager.load<Map>(name); };
 
-    _units.create(UnitType::mechanized, "test unit", true);
+    auto unit_id = _units.create(UnitType::mechanized, "test unit", true);
+    auto& cmp = _units.get_component<MovementComponent>(unit_id);
+    cmp.position = HexCoordinate(-1, 1);
 }
 
 void Game::update(const sf::Time& elapsed_time) {

@@ -68,6 +68,9 @@ class UnitManager {
     Component& assign_component(Unit::IdType id, Args&&... args);
 
     template <class Component>
+    Component& get_component(Unit::IdType id);
+
+    template <class Component>
     void remove_component(Unit::IdType id);
 
    private:
@@ -85,9 +88,26 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
     app_assert(_units.count(id) == 1, "Unit with id: {} does not exists.", id);
 
     auto& vec = _components.get_container<Component>();
+    app_assert(std::none_of(vec.begin(), vec.end(),
+                            [&](auto& cmp) { return cmp.owner == id; }),
+               "Reassigning a component: {} to a unit: {}",
+               typeid(Component).name(), id);
+
     auto& com = vec.emplace_back(std::forward<Args>(args)...);
     com.owner = id;
     return com;
+}
+
+template <class Component>
+Component& UnitManager::get_component(Unit::IdType id) {
+    static_assert(std::is_base_of_v<ComponentBase, Component>);
+    app_assert(_units.count(id) == 1, "Unit with id: {} does not exists.", id);
+
+    auto& vec = _components.get_container<Component>();
+
+    return *std::find(vec.begin(), vec.end(),
+                     [&](auto& com) { return com.owner == id; });
+
 }
 
 template <class Component>

@@ -26,7 +26,7 @@ void Token::update(const HexCoordinate& site) {
     _highlighting_shape.setPosition(position);
 
     const auto thickness = std::min(_layout->size.x, _layout->size.y) * 0.04f;
-    _shape.setOutlineThickness(0.f);
+    _shape.setOutlineThickness(thickness);
 }
 
 const sf::ConvexShape& Token::shape() const { return _shape; }

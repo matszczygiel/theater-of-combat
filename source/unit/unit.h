@@ -20,17 +20,24 @@ class Unit {
     Unit(const Unit&) = delete;
     Unit& operator=(const Unit&) = delete;
 
+    const std::string& name() const;
+    UnitType type();
+
    private:
     friend class UnitManager;
 
-    std::string name{};
-    UnitType type{};
+    std::string _name{};
+    UnitType _type{};
 };
 
 struct ComponentBase {
+    Unit::IdType owner();
+    UnitType owner_type();
+
    private:
     friend class UnitManager;
-    Unit::IdType owner{};
+    Unit::IdType _owner{};
+    UnitType _owner_type{};
 };
 
 struct ComponentVecBase {};
@@ -91,12 +98,13 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
 
     auto& vec = _components.get_container<Component>();
     app_assert(std::none_of(vec.begin(), vec.end(),
-                            [&](auto& cmp) { return cmp.owner == id; }),
+                            [&](auto& cmp) { return cmp._owner == id; }),
                "Reassigning a component: {} to a unit: {}",
                typeid(Component).name(), id);
 
     auto& com = vec.emplace_back(std::forward<Args>(args)...);
-    com.owner = id;
+    com._owner = id;
+    com._owner_type = _units[id].type();
     return com;
 }
 
@@ -108,7 +116,7 @@ Component* UnitManager::get_component(Unit::IdType id) {
     auto& vec = _components.get_container<Component>();
 
     auto res = std::find_if(vec.begin(), vec.end(),
-                         [&](auto& com) { return com.owner == id; });
+                         [&](auto& com) { return com._owner == id; });
 
     if (res != vec.end()) {
         return &(*res);
@@ -124,7 +132,7 @@ void UnitManager::remove_component(Unit::IdType id) {
 
     auto& vec = _components.get_container<Component>();
     vec.erase(std::remove_if(vec.begin(), vec.end(),
-                             [&](auto& com) { return com.owner == id; }),
+                             [&](auto& com) { return com._owner == id; }),
               vec.end());
 }
 

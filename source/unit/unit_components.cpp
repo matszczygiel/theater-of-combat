@@ -2,12 +2,15 @@
 
 #include "core/log.h"
 
-MovementComponent::MovementComponent(UnitType t, int moving_points)
-    : type{t},
-      total_moving_pts{moving_points},
-      moving_pts{moving_points},
-      position{} {
+MovementComponent::MovementComponent(int moving_points) noexcept
+    : moving_pts{moving_points},
+      position{},
+      _total_moving_pts{moving_points} {
     app_assert(
         moving_points >= 0,
         "MovementComponent should be initialized with positive number of moving pts.");
+}
+
+const int& MovementComponent::total_moving_pts() const {
+    return _total_moving_pts;
 }

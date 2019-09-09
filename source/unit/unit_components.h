@@ -3,18 +3,20 @@
 
 #include <optional>
 
-#include "unit.h"
 #include "map/hexagons.h"
+#include "unit.h"
 
 struct MovementComponent : public ComponentBase {
     MovementComponent() = default;
-    MovementComponent(UnitType t, int moving_points);
+    explicit MovementComponent(int moving_points) noexcept;
 
-    const UnitType type{};
-    const int total_moving_pts{};
     int moving_pts{};
-
     std::optional<HexCoordinate> position{};
+
+    const int& total_moving_pts() const;
+
+   private:
+    int _total_moving_pts{};
 };
 
 #endif

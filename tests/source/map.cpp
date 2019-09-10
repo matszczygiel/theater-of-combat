@@ -1,10 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "../../source/map/graph.cpp"
-#include "../../source/map/hexagons.cpp"
-#include "../../source/map/map.cpp"
-#include "../../source/map/types.cpp"
+#include "map/graph.h"
+#include "map/hexagons.h"
+#include "map/map.h"
+#include "map/types.h"
 
 TEST_CASE("hexagons") {
     SUBCASE("equality") {
@@ -150,7 +150,15 @@ TEST_CASE("graph") {
 
         wbg.remove_node(4);
 
+        BidirectionalGraph bg_expected;
+        bg_expected.insert_node(0, {})
+            .insert_node(1, {})
+            .insert_node(2, {1})
+            .insert_node(3, {1, 2});
+
+        CHECK_EQ(bg.adjacency_matrix(), bg_expected.adjacency_matrix());
         CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
     }
 
     SUBCASE("dijkstra") {
@@ -175,9 +183,9 @@ TEST_CASE("graph") {
 TEST_CASE("site types") {
     SUBCASE("river") {
         CHECK_NOTHROW(RiverSite(HexCoordinate(1, -1), HexCoordinate(0, 0),
-                               RiverType::stream));
+                                RiverType::stream));
         CHECK_NOTHROW(RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1),
-                               RiverType::stream));
+                                RiverType::stream));
         CHECK_THROWS(RiverSite(HexCoordinate(1, -1), HexCoordinate(-1, 0),
                                RiverType::stream));
         CHECK_THROWS(RiverSite(HexCoordinate(0, -1), HexCoordinate(0, 1),

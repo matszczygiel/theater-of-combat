@@ -2,23 +2,23 @@
 
 #include <algorithm>
 #include <cassert>
+#include <fstream>
 #include <iterator>
 #include <sstream>
 #include <tuple>
 #include <vector>
-#include <fstream>
 
 #include <cereal/archives/json.hpp>
 
 #include "core/log.h"
 
-const std::map<int, HexSite>& Map::hexes() const { return _hexes; }
+const std::map<Map::SiteId, HexSite>& Map::hexes() const { return _hexes; }
 
-const std::map<int, RiverSite>& Map::rivers() const { return _rivers; }
+const std::map<Map::SiteId, RiverSite>& Map::rivers() const { return _rivers; }
 
 const BidirectionalGraph& Map::graph() const { return _graph; }
 
-int Map::fetch_id() { return _current_free_id++; }
+Map::SiteId Map::fetch_id() { return _current_free_id++; }
 
 void Map::insert(HexSite site) {
     if (std::any_of(_hexes.begin(), _hexes.end(), [&](const auto& x) {
@@ -28,7 +28,7 @@ void Map::insert(HexSite site) {
 
     const auto neighors = site.coord().neighbors();
 
-    std::set<int> found_neighbors;
+    std::set<Map::SiteId> found_neighbors;
 
     for (const auto& hex : _hexes) {
         if (std::any_of(neighors.begin(), neighors.end(), [&](const auto& x) {
@@ -44,7 +44,7 @@ void Map::insert(HexSite site) {
 }
 
 void Map::insert(RiverSite site) {
-    std::vector<int> found_hexes;
+    std::vector<Map::SiteId> found_hexes;
 
     for (const auto& [s_id, s_site] : _hexes) {
         const auto [side1, side2] = site.sides();
@@ -64,7 +64,8 @@ void Map::insert(RiverSite site) {
         throw std::logic_error(ss.str());
 
     } else if (found_hexes.size() > 2) {
-        engine_assert(false, "Found to many hexes, indicating deeper logic error");
+        engine_assert(false,
+                      "Found to many hexes, indicating deeper logic error");
     }
 
     if (std::any_of(_rivers.begin(), _rivers.end(), [&](const auto& riv) {
@@ -87,6 +88,14 @@ void Map::insert(RiverSite site) {
     _graph.remove_edge(found_hexes[0], found_hexes[1]);
 }
 
+Map::SiteType Map::type_of(Map::SiteId id) const {
+    if(_hexes.count(id) == 1)
+        return SiteType::hex;
+    else if (_rivers.count(id) == 1)
+        return SiteType::river;
+    app_assert(false, "Unknown site type.");
+    return SiteType::hex;
+}
 
 Map Map::create_test_map() {
     Map map;

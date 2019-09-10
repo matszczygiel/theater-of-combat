@@ -37,13 +37,14 @@ class WeightedBidirectionalGraph {
     WeightedBidirectionalGraph(const BidirectionalGraph& graph,
                                int default_weight = 1);
 
-    WeightedBidirectionalGraph& insert_edge(int node);
+    WeightedBidirectionalGraph& insert_node(int node);
 
     WeightedBidirectionalGraph& insert_edge(int node1, int node2,
                                             int weight_1to2, int weight_2to1);
 
     WeightedBidirectionalGraph& change_edge_weight(int node1, int node2,
                                                    int weight_1to2);
+    int weight(int node_start, int node_end) const;
 
     WeightedBidirectionalGraph& remove_node(int node);
 

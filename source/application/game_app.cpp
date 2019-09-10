@@ -9,9 +9,9 @@
 #include "core/lua_vm.h"
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
-#include "map/lua_map.h"
+#include "lua/lua_map.h"
+#include "lua/lua_units.h"
 #include "unit/unit_components.h"
-#include "unit/lua_units.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -103,6 +103,7 @@ void Game::clear_loop() {}
 void Game::finalize() {}
 
 void Game::key_pressed_event(const sf::Keyboard::Key& key) {
+    constexpr float map_tilt_speed = 1.05;
     switch (key) {
         case sf::Keyboard::Escape:
             _running = false;
@@ -120,10 +121,10 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
             _moving_view_left = true;
             break;
         case sf::Keyboard::W:
-            _map_gfx.layout->size.y *= 0.95;
+            _map_gfx.layout->size.y /= map_tilt_speed;
             break;
         case sf::Keyboard::S:
-            _map_gfx.layout->size.y *= 1.05;
+            _map_gfx.layout->size.y *= map_tilt_speed;
             break;
         default:
             break;
@@ -169,17 +170,18 @@ void Game::mouse_button_released_event(const sf::Mouse::Button&,
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {
     auto view = _window.getView();
+    constexpr float zoom_factor = 1.05;
     if (delta > 0)
-        view.zoom(0.95);
+        view.zoom(1.0 / zoom_factor);
     else if (delta < 0)
-        view.zoom(1.05);
+        view.zoom(zoom_factor);
 
     _window.setView(view);
 }
 
 void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
-    view.setSize(width, height);
+    view.setSize(static_cast<float>(width), static_cast<float>(height));
     _window.setView(view);
 }
 

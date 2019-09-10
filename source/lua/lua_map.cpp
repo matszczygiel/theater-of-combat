@@ -3,9 +3,9 @@
 #include <sol/sol.hpp>
 
 #include "core/lua_vm.h"
-#include "hexagons.h"
-#include "map.h"
-#include "types.h"
+#include "map/hexagons.h"
+#include "map/map.h"
+#include "map/types.h"
 
 namespace map {
 void lua_push_functions() {

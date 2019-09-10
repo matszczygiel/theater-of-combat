@@ -65,7 +65,7 @@ WeightedBidirectionalGraph::WeightedBidirectionalGraph(
     }
 }
 
-WeightedBidirectionalGraph& WeightedBidirectionalGraph::insert_edge(int node) {
+WeightedBidirectionalGraph& WeightedBidirectionalGraph::insert_node(int node) {
     if (_adjacency_matrix.count(node) == 1)
         throw std::runtime_error("Node already present in the graph.");
 
@@ -165,4 +165,8 @@ bool operator==(const WeightedBidirectionalGraph& lhs,
 bool operator!=(const WeightedBidirectionalGraph& lhs,
                 const WeightedBidirectionalGraph& rhs) {
     return !(lhs == rhs);
+}
+
+int WeightedBidirectionalGraph::weight(int node_start, int node_end) const {
+    return _adjacency_matrix.at(node_start).at(node_end);
 }

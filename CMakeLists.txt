@@ -9,7 +9,9 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/graphics/*.cpp       source/graphics/*.h
     source/application/*.cpp    source/application/*.h
     source/core/*.cpp           source/core/*.h
+    source/lua/*.cpp            source/lua/*.h
     source/unit/*.cpp           source/unit/*.h
+    source/moving/*.cpp         source/moving/*.h
     source/main.cpp
     )
 

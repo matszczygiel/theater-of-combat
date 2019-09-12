@@ -82,6 +82,9 @@ class UnitManager {
 
     const std::map<Unit::IdType, Unit>& units() const;
 
+    template <class Component>
+    void apply_for_each(const std::function<bool(Component&)>& operation);
+
    private:
     void assign_default_components(Unit::IdType id, UnitType type);
 
@@ -102,8 +105,8 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
                "Reassigning a component: {} to a unit: {}",
                typeid(Component).name(), id);
 
-    auto& com = vec.emplace_back(std::forward<Args>(args)...);
-    com._owner = id;
+    auto& com       = vec.emplace_back(std::forward<Args>(args)...);
+    com._owner      = id;
     com._owner_type = _units[id].type();
     return com;
 }
@@ -116,7 +119,7 @@ Component* UnitManager::get_component(Unit::IdType id) {
     auto& vec = _components.get_container<Component>();
 
     auto res = std::find_if(vec.begin(), vec.end(),
-                         [&](auto& com) { return com._owner == id; });
+                            [&](auto& com) { return com._owner == id; });
 
     if (res != vec.end()) {
         return &(*res);
@@ -134,6 +137,14 @@ void UnitManager::remove_component(Unit::IdType id) {
     vec.erase(std::remove_if(vec.begin(), vec.end(),
                              [&](auto& com) { return com._owner == id; }),
               vec.end());
+}
+
+template <class Component>
+void UnitManager::apply_for_each(
+    const std::function<bool(Component&)>& operation) {
+    for (auto& cmp : _components.get_container<Component>())
+        if (!oepration(cmp))
+            break;
 }
 
 #endif

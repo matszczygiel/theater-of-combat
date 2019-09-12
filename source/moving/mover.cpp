@@ -1,5 +1,7 @@
 #include "mover.h"
 
+#include "unit/unit_components.h"
+
 namespace mover {
 static std::map<HexType, int> get_hex_table(UnitType type) {
     switch (type) {
@@ -87,4 +89,48 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
     }
     return res;
 }
+
+MovementSystem::MovementSystem(std::shared_ptr<UnitManager>& units,
+                               const std::shared_ptr<Map>& map)
+    : _units{units}, _map{map} {}
+
+bool MovementSystem::init_movement(HexCoordinate coord) {
+    MovementComponent* target_component{nullptr};
+    _units->apply_for_each<MovementComponent>([&](auto& cmp) {
+        if (cmp.position == coord) {
+            target_component = std::addressof(cmp);
+            return false;
+        } else
+            return true;
+    });
+    if (target_component == nullptr)
+        return false;
+
+    const auto graph =
+        make_weighted_graph(*_map, target_component->owner_type());
+
+    Map::SiteId start_hex;
+    for (const auto& [id, hex] : _map->hexes()) {
+        if (hex.coord() == coord) {
+            start_hex = id;
+            break;
+        }
+    }
+
+    auto [distances, paths] = graph.dijkstra(start_hex);
+    for (auto i = distances.begin(); i != distances.end();) {
+        if (i->second > target_component->moving_pts) {
+            app_assert(
+                paths.erase(i->first) == 1,
+                "Paths does not containg such node, error in dijkstra algorithm ?");
+            i = distances.erase(i);
+        } else {
+            ++i;
+        }
+    }
+
+    _distances = std::move(distances);
+    _paths     = std::move(paths);
+}
+
 }  // namespace mover

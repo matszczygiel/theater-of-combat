@@ -21,6 +21,7 @@ ConsoleWindow::ConsoleWindow(std::string name) : _name{std::move(name)} {
             res += " ";
         }
         add_item(ItemType::output, res);
+        engine_trace("Lua output: {}", res);
         return 0;
     });
 }

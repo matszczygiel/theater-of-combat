@@ -15,8 +15,8 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/main.cpp
     )
 
-find_package(ImGui-SFML REQUIRED)
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
+find_package(ImGui-SFML REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(Lua REQUIRED)
 find_package(spdlog REQUIRED)
@@ -45,7 +45,7 @@ target_link_libraries(toc PRIVATE
                         sfml-network
                         ImGui-SFML::ImGui-SFML
                         ${LUA_LIBRARIES}
-                        entityx) 
+                        ) 
                         
 enable_testing()           
 add_subdirectory(tests)                        

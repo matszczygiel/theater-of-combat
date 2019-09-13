@@ -28,6 +28,9 @@ class Map {
 
     static Map create_test_map();
 
+    std::optional<SiteId> get_hex_id(HexCoordinate coord) const;
+    std::optional<HexCoordinate> get_hex_coord(SiteId id) const;
+
     template <class Archive>
     void serialize(Archive& archive);
 

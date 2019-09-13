@@ -89,7 +89,7 @@ void Map::insert(RiverSite site) {
 }
 
 Map::SiteType Map::type_of(Map::SiteId id) const {
-    if(_hexes.count(id) == 1)
+    if (_hexes.count(id) == 1)
         return SiteType::hex;
     else if (_rivers.count(id) == 1)
         return SiteType::river;
@@ -151,4 +151,24 @@ Map Map::create_test_map() {
         RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
 
     return map;
+}
+
+std::optional<Map::SiteId> Map::get_hex_id(HexCoordinate coord) const {
+    auto it = std::find_if(_hexes.begin(), _hexes.end(), [](const auto& pair) {
+        pair.second.coord() == coord;
+    });
+
+    if (it != _hexes.end())
+        return {};
+    else
+        return it->first;
+}
+
+std::optional<HexCoordinate> Map::get_hex_coord(SiteId id) const {
+    auto it = _hexes.find(id);
+
+    if (it != _hexes.end())
+        return {};
+    else
+        return it->second.coord();
 }

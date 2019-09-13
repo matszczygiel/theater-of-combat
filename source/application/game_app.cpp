@@ -32,23 +32,23 @@ void Game::initialize() {
     _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
 
-    _map = Map::create_test_map();
-    _map_gfx.update(_map);
+    *_map = Map::create_test_map();
+    _map_gfx.update(*_map);
 
     auto& lua = lua::get_state();
     map::lua_push_functions();
     lua["game_map"] = &_map;
     lua["save_map"] = [&](std::string name) { _res_manager.save(_map, name); };
-    lua["load_map"] = [&](std::string name) { _map = _res_manager.load<Map>(name); };
+    lua["load_map"] = [&](std::string name) { *_map = _res_manager.load<Map>(name); };
 
     units::lua_push_functions();
     lua["game_units"] = &_units;
 
-    auto unit_id = _units.create(UnitType::mechanized, "test unit", true);
-    auto cmp = _units.get_component<MovementComponent>(unit_id);
+    auto unit_id = _units->create(UnitType::mechanized, "test unit", true);
+    auto cmp = _units->get_component<MovementComponent>(unit_id);
     cmp->position = HexCoordinate(-1, 1);
 
-    _unit_gfx.update(_units);
+    _unit_gfx.update(*_units);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -77,8 +77,8 @@ void Game::update(const sf::Time& elapsed_time) {
     _log.show_window(nullptr);
     _console.show(nullptr);
 
-    _map_gfx.update(_map);
-    _unit_gfx.update(_units);
+    _map_gfx.update(*_map);
+    _unit_gfx.update(*_units);
 
 
     // engine_trace("Updating");
@@ -155,9 +155,14 @@ void Game::key_released_event(const sf::Keyboard::Key& key) {
 }
 
 void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
-                                      const sf::Vector2f& ) {
+                                      const sf::Vector2f& position) {
     switch (button) {
-        case sf::Mouse::Left:
+        case sf::Mouse::Left: {
+            const auto coord = world_point_to_hex(position, *_map_gfx.layout);
+            if(!_moving_system->is_moving()) {
+                _moving_system->init_movement(coord);
+            }
+        }
             break;
 
         default:
@@ -192,4 +197,14 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
         std::find_if(_map_gfx.hexes.begin(), _map_gfx.hexes.end(),
                      [&](const auto& hex) { return hex.first == coord; })
             ->second.highlighting_shape());
+
+    if(_moving_system->is_moving()) {
+        const auto path = _moving_system->path_preview(coord);
+        for(const auto& [coord, shape] : _map_gfx.hexes()){
+            if(std::find(path.begin(), path.end(), coord) != path.end()) {
+                _highlighted_hexes.push_back(shape.highlighting_shape());
+            }
+        }
+        
+    }
 }

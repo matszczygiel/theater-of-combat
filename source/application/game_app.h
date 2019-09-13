@@ -4,15 +4,14 @@
 #include <vector>
 
 #include "application.h"
+#include "core/resource_manager.h"
 #include "graphics/map_gfx.h"
 #include "graphics/unit_gfx.h"
-#include "map/map.h"
-#include "gui/log_window.h"
 #include "gui/console.h"
-#include "core/resource_manager.h"
+#include "gui/log_window.h"
+#include "map/map.h"
+#include "moving/mover.h"
 #include "unit/unit.h"
-
-
 
 class Game : public Application {
    public:
@@ -37,7 +36,7 @@ class Game : public Application {
     void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
-    Map _map{};
+    std::shared_ptr<Map> _map{std::make_shared<Map>()};
     std::vector<sf::ConvexShape> _highlighted_hexes{};
     MapGfx _map_gfx{};
 
@@ -51,8 +50,11 @@ class Game : public Application {
 
     ResourceManager _res_manager{"resources/"};
 
-    UnitManager _units{};
+    std::shared_ptr<UnitManager> _units{std::make_shared<UnitManager>()};
     UnitGfx _unit_gfx{_map_gfx};
+
+    std::shared_ptr<mover::MovementSystem> _moving_system{
+        std::make_shared<mover::MovementSystem>(_units, _map)};
 
     constexpr static float _view_moving_speed{0.3f};
 };

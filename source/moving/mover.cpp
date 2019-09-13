@@ -109,15 +109,11 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
     const auto graph =
         make_weighted_graph(*_map, _target_component->owner_type());
 
-    Map::SiteId start_hex;
-    for (const auto& [id, hex] : _map->hexes()) {
-        if (hex.coord() == coord) {
-            start_hex = id;
-            break;
-        }
-    }
+    auto start_hex = _map->get_hex_id(coord);
+    app_assert(start_hex.has_value(),
+               "Initializing movement with nonexistent hex on this map.");
 
-    std::tie(_distances, _paths) = graph.dijkstra(start_hex);
+    std::tie(_distances, _paths) = graph.dijkstra(*start_hex);
     for (auto i = _distances.begin(); i != _distances.end();) {
         if (i->second > _target_component->moving_pts) {
             app_assert(
@@ -141,14 +137,13 @@ void MovementSystem::reset() {
 
 bool MovementSystem::move_target(HexCoordinate destination) {
     app_assert(is_moving(), "No unit to move.");
-    Map::SiteId dest_hex;
-    for (const auto& [id, hex] : _map->hexes()) {
-        if (hex.coord() == destination) {
-            dest_hex = id;
-            break;
-        }
+    auto dest_hex = _map->get_hex_id(destination);
+    if (!dest_hex) {
+        reset();
+        return false;
     }
-    auto it = _distances.find(dest_hex);
+
+    auto it = _distances.find(*dest_hex);
     if (it == _distances.end()) {
         reset();
         return false;
@@ -157,10 +152,45 @@ bool MovementSystem::move_target(HexCoordinate destination) {
     const auto cost = it->second;
     _target_component->moving_pts -= cost;
     app_assert(_target_component->moving_pts >= 0,
-               "Unit has negative number of moving pts.");
+               "Unit {} has negative number of moving pts.",
+               _target_component->owner());
     _target_component->position = destination;
     reset();
     return true;
+}
+
+std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {
+    app_assert(is_moving(), "No unit to preview path.");
+    auto dest_hex = _map->get_hex_id(destination);
+    if (!dest_hex)
+        return {};
+
+    auto it = _distances.find(*dest_hex);
+    if (it == _distances.end())
+        return {};
+
+    std::vector<int> res = {*dest_hex};
+    auto i               = _paths.find(*dest_hex);
+    while (i != _paths.end()) {
+        res.push_back(i->second);
+        i = _paths.find(res.back());
+    }
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
+}
+
+std::vector<HexCoordinate> MovementSystem::path_preview(
+    HexCoordinate destination) const {
+    const auto ids = path_indices(destination);
+    std::vector<HexCoordinate> res;
+    res.reserve(ids.size());
+    for (const auto& id : ids) {
+        res.push_back(*_map->get_hex_coord(id));
+    }
+
+    return res;
 }
 
 }  // namespace mover

@@ -7,6 +7,8 @@
 #include "map/map.h"
 #include "unit/unit.h"
 
+struct MovementComponent;
+
 namespace mover {
 WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type);
 
@@ -19,6 +21,8 @@ class MovementSystem {
 
     bool is_moving() const;
     void reset();
+    std::vector<int> path_indices(HexCoordinate destination) const;
+    std::vector<HexCoordinate> path_preview(HexCoordinate destination) const;
 
     bool move_target(HexCoordinate destination);
 

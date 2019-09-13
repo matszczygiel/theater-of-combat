@@ -143,7 +143,7 @@ template <class Component>
 void UnitManager::apply_for_each(
     const std::function<bool(Component&)>& operation) {
     for (auto& cmp : _components.get_container<Component>())
-        if (!oepration(cmp))
+        if (!operation(cmp))
             break;
 }
 

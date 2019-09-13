@@ -17,12 +17,19 @@ class MovementSystem {
 
     bool init_movement(HexCoordinate coord);
 
-   private:
-    std::shared_ptr<UnitManager> _units;
-    std::shared_ptr<Map> _map;
+    bool is_moving() const;
+    void reset();
 
-    std::map<int, int> _distances;
-    std::map<int, int> _paths;
+    bool move_target(HexCoordinate destination);
+
+   private:
+    MovementComponent* _target_component{nullptr};
+
+    std::shared_ptr<UnitManager> _units{nullptr};
+    std::shared_ptr<Map> _map{nullptr};
+
+    std::map<int, int> _distances{};
+    std::map<int, int> _paths{};
 };
 
 }  // namespace mover

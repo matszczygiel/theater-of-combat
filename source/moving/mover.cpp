@@ -95,19 +95,19 @@ MovementSystem::MovementSystem(std::shared_ptr<UnitManager>& units,
     : _units{units}, _map{map} {}
 
 bool MovementSystem::init_movement(HexCoordinate coord) {
-    MovementComponent* target_component{nullptr};
+    app_assert(!is_moving(), "Already moving unit.");
     _units->apply_for_each<MovementComponent>([&](auto& cmp) {
         if (cmp.position == coord) {
-            target_component = std::addressof(cmp);
+            _target_component = std::addressof(cmp);
             return false;
         } else
             return true;
     });
-    if (target_component == nullptr)
+    if (!is_moving())
         return false;
 
     const auto graph =
-        make_weighted_graph(*_map, target_component->owner_type());
+        make_weighted_graph(*_map, _target_component->owner_type());
 
     Map::SiteId start_hex;
     for (const auto& [id, hex] : _map->hexes()) {
@@ -117,20 +117,50 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
         }
     }
 
-    auto [distances, paths] = graph.dijkstra(start_hex);
-    for (auto i = distances.begin(); i != distances.end();) {
-        if (i->second > target_component->moving_pts) {
+    std::tie(_distances, _paths) = graph.dijkstra(start_hex);
+    for (auto i = _distances.begin(); i != _distances.end();) {
+        if (i->second > _target_component->moving_pts) {
             app_assert(
-                paths.erase(i->first) == 1,
+                _paths.erase(i->first) == 1,
                 "Paths does not containg such node, error in dijkstra algorithm ?");
-            i = distances.erase(i);
+            i = _distances.erase(i);
         } else {
             ++i;
         }
     }
+    return true;
+}
 
-    _distances = std::move(distances);
-    _paths     = std::move(paths);
+bool MovementSystem::is_moving() const { return _target_component != nullptr; }
+
+void MovementSystem::reset() {
+    _target_component = nullptr;
+    _distances.clear();
+    _paths.clear();
+}
+
+bool MovementSystem::move_target(HexCoordinate destination) {
+    app_assert(is_moving(), "No unit to move.");
+    Map::SiteId dest_hex;
+    for (const auto& [id, hex] : _map->hexes()) {
+        if (hex.coord() == destination) {
+            dest_hex = id;
+            break;
+        }
+    }
+    auto it = _distances.find(dest_hex);
+    if (it == _distances.end()) {
+        reset();
+        return false;
+    }
+
+    const auto cost = it->second;
+    _target_component->moving_pts -= cost;
+    app_assert(_target_component->moving_pts >= 0,
+               "Unit has negative number of moving pts.");
+    _target_component->position = destination;
+    reset();
+    return true;
 }
 
 }  // namespace mover

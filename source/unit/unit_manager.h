@@ -1,65 +1,12 @@
-#ifndef UNIT_H
-#define UNIT_H
+#ifndef UNIT_MANAGER_H
+#define UNIT_MANAGER_H
 
-#include <map>
-#include <memory>
-#include <string>
-#include <type_traits>
-#include <typeindex>
 #include <vector>
+#include <map>
+#include <typeindex>
 
-#include <cereal/types/map.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/types/string.hpp>
-#include <cereal/types/vector.hpp>
+#include "unit.h"
 
-#include "core/log.h"
-
-enum class UnitType { heavy, mechanized };
-
-class Unit {
-   public:
-    using IdType = int;
-
-    Unit()            = default;
-    Unit(const Unit&) = delete;
-    Unit& operator=(const Unit&) = delete;
-
-    const std::string& name() const;
-    UnitType type();
-
-    template <class Archive>
-    void serialize(Archive& archive);
-
-   private:
-    friend class UnitManager;
-
-    std::string _name{};
-    UnitType _type{};
-};
-
-template <class Archive>
-void Unit::serialize(Archive& archive) {
-    archive(CEREAL_NVP(_name), CEREAL_NVP(_type));
-}
-
-struct ComponentBase {
-    Unit::IdType owner();
-    UnitType owner_type();
-
-    template <class Archive>
-    void serialize(Archive& archive);
-
-   private:
-    friend class UnitManager;
-    Unit::IdType _owner{};
-    UnitType _owner_type{};
-};
-
-template <class Archive>
-void ComponentBase::serialize(Archive& archive) {
-    archive(CEREAL_NVP(_owner), CEREAL_NVP(_owner_type));
-}
 
 struct ComponentVecBase {};
 

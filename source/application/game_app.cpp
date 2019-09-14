@@ -21,6 +21,7 @@ Game::Game() {
     logger::get_distributing_sink()->add_sink(rot_sink);
 
     _res_manager.register_resource_type<Map>("maps", "map");
+    _res_manager.register_resource_type<UnitManager>("units", "umg");
 }
 
 void Game::initialize() {
@@ -45,6 +46,12 @@ void Game::initialize() {
 
     units::lua_push_functions();
     lua["game_units"] = std::ref(*_units);
+    lua["save_units"] = [&](std::string name) {
+        _res_manager.save(*_units, name);
+    };
+    lua["load_units"] = [&](std::string name) {
+        *_units = _res_manager.load<UnitManager>(name);
+    };
 
     auto unit_id  = _units->create(UnitType::mechanized, "test unit", true);
     auto cmp      = _units->get_component<MovementComponent>(unit_id);
@@ -162,8 +169,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             const auto coord = world_point_to_hex(position, *_map_gfx.layout);
             if (!_moving_system->is_moving()) {
                 _moving_system->init_movement(coord);
-            }
-            else {
+            } else {
                 _moving_system->move_target(coord);
             }
         } break;

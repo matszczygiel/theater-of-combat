@@ -1,201 +1,140 @@
 #include "game_app.h"
 
-#include <fstream>
-#include <functional>
-#include <iostream>
+#include <imgui.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <sol/sol.hpp>
 
-#include <cereal/archives/xml.hpp>
+#include "core/log.h"
+#include "core/lua_vm.h"
+#include "gui/dock_space.h"
+#include "gui/log_window.h"
+#include "lua/lua_map.h"
+#include "lua/lua_units.h"
+#include "unit/unit_components.h"
+#include "unit/unit_manager.h"
 
-#include "log.h"
+Game::Game() {
+    auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+        "tmp/logs/log.txt", 1048576 * 5, 2);
+    rot_sink->set_pattern("%^[%c] (thread %t) %n: [%l] %v%$");
+    rot_sink->set_level(spdlog::level::trace);
+    logger::get_distributing_sink()->add_sink(rot_sink);
 
-#include "messaging/concrete_message.h"
-#include "messaging/messaging.h"
-#include "networking/client.h"
-#include "networking/server.h"
-#include "unit/heavy_unit.h"
+    _res_manager.register_resource_type<Map>("maps", "map");
+    _res_manager.register_resource_type<UnitManager>("units", "umg");
+}
 
 void Game::initialize() {
-    ENGINE_TRACE("Creating a window.");
-    _window.create(sf::VideoMode(800, 600), "Theater of combat");
+    engine_trace("Creating a window.");
+    _window.create(sf::VideoMode(1200, 800), "Theater of combat");
     _window.setFramerateLimit(60);
 
-    auto view = _window.getView();
-    view.setViewport(sf::FloatRect(0.25, 0, 1, 1));
-    _window.setView(view);
+    app_info("Loading font.");
+    _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+    _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
 
-    // _map = Map::create_test_map(_token_size);
-    /* 
-   {
-        std::ofstream os("resources/maps/cereal_map.xml");
-        cereal::XMLOutputArchive ar(os);
-        ar(_map);
-    }
-*/
+    *_map = Map::create_test_map();
+    _map_gfx.update(*_map);
 
-    {
-        std::ifstream is("resources/maps/cereal_map.xml");
-        cereal::XMLInputArchive iar(is);
-        iar(_map);
-    }
+    auto& lua = lua::get_state();
+    map::lua_push_functions();
+    lua["game_map"] = std::ref(*_map);
+    lua["save_map"] = [&](std::string name) { _res_manager.save(*_map, name); };
+    lua["load_map"] = [&](std::string name) {
+        *_map = _res_manager.load<Map>(name);
+    };
 
-    _map.recompute_geometry(_token_size);
-    _map.set_numbers_drawing("resources/fonts/OpenSans-Regular.ttf");
+    units::lua_push_functions();
+    lua["game_units"] = std::ref(*_units);
+    lua["save_units"] = [&](std::string name) {
+        _res_manager.save(*_units, name);
+    };
+    lua["load_units"] = [&](std::string name) {
+        *_units = _res_manager.load<UnitManager>(name);
+    };
 
-    Tokenizable::load_textures("resources/textures/units.png");
-    Unit::load_font_file("resources/fonts/OpenSans-Regular.ttf");
+    auto unit_id  = _units->create(UnitType::mechanized, "test unit", true);
+    auto cmp      = _units->get_component<MovementComponent>(unit_id);
+    cmp->position = HexCoordinate(-1, 1);
 
-    GAME_INFO("Initializing units.");
-
-    _players[0].teams.emplace_back(Team("team 0", _map, _unit_set));
-    _players[1].teams.emplace_back(Team("team 1", _map, _unit_set));
-
-    auto u0 = _unit_set.push_unit<Mechanized>("unit 0");
-    auto u1 = _unit_set.push_unit<Armoured_cavalry>("unit 1");
-    auto u2 = _unit_set.push_unit<Armoured_cavalry>("unit 2");
-
-    _players[0].teams[0].add_unit_ownership(u0);
-    _players[0].teams[0].add_unit_ownership(u1);
-    _players[1].teams[0].add_unit_ownership(u2);
-
-    _unit_set.init_tokens(_token_size);
-
-    _unit_set.get_by_id(u0)->place_on_hex(&_map.get_hex(56));
-    _unit_set.get_by_id(u1)->place_on_hex(&_map.get_hex(19));
-    _unit_set.get_by_id(u2)->place_on_hex(&_map.get_hex(4));
-
-    _players[0].set_name("Player 0");
-    _players[1].set_name("Player 1");
-
-    _current_player = _players.begin();
-
-    _running = true;
-
-    _panel = tgui::Panel::create();
-    _gui.add(_panel, "panel");
-    _panel->setPosition(0, 0);
-    _panel->setSize("25%", "100%");
-    _panel->getRenderer()->setBackgroundColor(sf::Color::Blue);
-
-    auto label = tgui::Label::create("Selected units");
-    _panel->add(label, "label");
-    label->setTextSize(25);
-
-    auto menu = tgui::MenuBar::create();
-    _gui.add(menu, "menu");
-    menu->setSize("100%", "7%");
-    menu->addMenu("Network");
-    menu->addMenuItem("Create server");
-    menu->addMenuItem("Connect to server");
-
-    menu->connectMenuItem("Network", "Create server", [&]() {
-        _network_status = Network_status::unspecified;
-        _network.emplace<Server>();
-        _gui.add(std::get<Server>(_network).create_prompt_window(_network_status));
-    });
-
-    menu->connectMenuItem("Network", "Connect to server", [&]() {
-        _network_status = Network_status::unspecified;
-        _network.emplace<Client>();
-        _gui.add(std::get<Client>(_network).create_prompt_window(_network_status));
-    });
-
-    _message_bus->add_listener(Message::get_id<Unit_moved_msg>(), [&](Message::ptr_base& msg) {
-        auto um_msg = static_cast<Unit_moved_msg*>(msg.get());
-        auto u      = _unit_set.get_by_id(um_msg->unit_id);
-        u->place_on_hex(&_map.get_hex(um_msg->dest_id));
-        u->reduce_mv_points(um_msg->cost);
-
-        auto hostiles = other_player()->teams[0].get_units_controling(
-            u->get_occupation()->get_number());
-        if (hostiles.empty())
-            return;
-
-        auto& bf = _battlefields.emplace_back(Battlefield());
-        bf.push(hostiles, other_player()->name());
-        bf.push(u, _current_player->name());
-    });
+    _unit_gfx.update(*_units);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
     auto view = _window.getView();
-    sf::Vector2f moving_view(0, 0);
+    sf::Vector2f moving_view{0.f, 0.f};
     if (_moving_view_down)
-        moving_view += sf::Vector2f(0, 1);
+        moving_view += sf::Vector2f{0.f, 1.f};
     if (_moving_view_up)
-        moving_view += sf::Vector2f(0, -1);
+        moving_view += sf::Vector2f{0.f, -1.f};
     if (_moving_view_right)
-        moving_view += sf::Vector2f(1, 0);
+        moving_view += sf::Vector2f{1.f, 0.f};
     if (_moving_view_left)
-        moving_view += sf::Vector2f(-1, 0);
+        moving_view += sf::Vector2f{-1.f, 0.f};
 
     moving_view *= elapsed_time.asMilliseconds() * _view_moving_speed;
 
     view.move(moving_view);
     _window.setView(view);
 
-    _current_player->teams[0].update();
+    show_dock_space_window(nullptr);
 
-    /*    if (_resolve_units) {
-        resolve_stacks_and_units(_current_player->get_players_units());
-        _resolve_units = false;
-    }
-*/
-    //Networking
-    switch (_network_status) {
-        case Network_status::sever_accepting:
-            if (std::get<Server>(_network).accept_client()) {
-                _network_status = Network_status::server;
-                GAME_INFO("Connected client.");
-            }
-            break;
-        default:
-            break;
-    }
+    static bool show_demo_window{true};
+    if (show_demo_window)
+        ImGui::ShowDemoWindow(&show_demo_window);
+
+    _log.show_window(nullptr);
+    _console.show(nullptr);
+
+    _map_gfx.update(*_map);
+    _unit_gfx.update(*_units);
+
+    // engine_trace("Updating");
 }
 
 void Game::render() {
-    _map.draw(_window);
-    _current_player->teams[0].draw(_window);
+    _map_gfx.draw_hexes(_window);
+    _map_gfx.draw_rivers(_window);
+    _map_gfx.draw_outlines(_window);
+
+    for (const auto& shape : _highlighted_hexes) {
+        _window.draw(shape);
+    }
+
+    _map_gfx.draw_coords(_window);
+
+    _unit_gfx.draw_tokens(_window);
 }
 
-void Game::finalize() {
-}
+void Game::clear_loop() {}
+
+void Game::finalize() {}
 
 void Game::key_pressed_event(const sf::Keyboard::Key& key) {
+    constexpr float map_tilt_speed = 1.05;
     switch (key) {
         case sf::Keyboard::Escape:
             _running = false;
             break;
-
-        case sf::Keyboard::R:
-            _current_player = other_player();
-            for (auto& b : _battlefields)
-                b.carry_fight(_message_bus);
-
-            _battlefields.clear();
-
-            if (_current_player == _players.begin()) {
-                _unit_set.apply([](Unit& u) { u.reset_mv_points(); });
-            }
-            //            _resolve_units = true;
-            break;
-
         case sf::Keyboard::Up:
             _moving_view_up = true;
             break;
-
         case sf::Keyboard::Down:
             _moving_view_down = true;
             break;
-
         case sf::Keyboard::Right:
             _moving_view_right = true;
             break;
-
         case sf::Keyboard::Left:
             _moving_view_left = true;
             break;
-
+        case sf::Keyboard::W:
+            _map_gfx.layout->size.y /= map_tilt_speed;
+            break;
+        case sf::Keyboard::S:
+            _map_gfx.layout->size.y *= map_tilt_speed;
+            break;
         default:
             break;
     }
@@ -227,102 +166,58 @@ void Game::key_released_event(const sf::Keyboard::Key& key) {
 void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                                       const sf::Vector2f& position) {
     switch (button) {
-        case sf::Mouse::Left:
-            if (!_moving) {
-                _current_player->teams[0].apply([&](Unit& u) {
-                    if (u.token_contains(position)) {
-                        init_mover_and_info_for_unit(u);
-                    }
-                });
+        case sf::Mouse::Left: {
+            const auto coord = world_point_to_hex(position, *_map_gfx.layout);
+            if (!_moving_system->is_moving()) {
+                _moving_system->init_movement(coord);
+            } else {
+                _moving_system->move_target(coord);
             }
-            /*           if (!_moving) {
-                for (auto& s : _stacks) {
-                    if (s.token_contains(position)) {
-                        _panel->add(s.create_displayer([&](std::shared_ptr<Unit> u) { this->init_mover_and_info_for_unit(u); }),
-                                    "unit info");
-                        break;
-                    }
-                }
-            }
-    }*/
-            else {
-                _mover->move(position, {}, _message_bus);
-                _moving = false;
-                _panel->remove(_panel->get("unit info"));
-                _mover.reset(nullptr);
-                //                _resolve_units = true;
-            }
-            break;
+        } break;
 
         default:
             break;
     }
 }
 
-void Game::mouse_button_released_event(const sf::Mouse::Button& button,
-                                       const sf::Vector2f& position) {
-}
+void Game::mouse_button_released_event(const sf::Mouse::Button&,
+                                       const sf::Vector2f&) {}
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {
-    auto view = _window.getView();
+    auto view                   = _window.getView();
+    constexpr float zoom_factor = 1.05;
     if (delta > 0)
-        view.zoom(0.95);
+        view.zoom(1.0 / zoom_factor);
     else if (delta < 0)
-        view.zoom(1.05);
+        view.zoom(zoom_factor);
 
     _window.setView(view);
 }
 
 void Game::window_resize_event(const unsigned& width, const unsigned& height) {
     auto view = _window.getView();
-    view.setSize(width, height);
+    view.setSize(static_cast<float>(width), static_cast<float>(height));
     _window.setView(view);
-    _gui.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(width), static_cast<float>(height))));
 }
-/*
-void Game::resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set) {
-    _stacks.clear();
-    _units_to_draw.clear();
 
-    for (auto& u : unit_set) {
-        auto occ           = u->get_occupation();
-        bool stack_created = false;
+void Game::mouse_moved_event(const sf::Vector2f& position) {
+    _highlighted_hexes.clear();
+    const auto coord = world_point_to_hex(position, *_map_gfx.layout);
 
-        for (auto it = _units_to_draw.begin(); it != _units_to_draw.end();) {
-            auto unit = *it;
-            if (unit->get_occupation() == occ) {
-                if (!stack_created) {
-                    _stacks.emplace_back(Stack());
-                    _stacks.back().add_unit(u);
-                    _stacks.back().init_token(_token_size);
-                    _stacks.back().set_token_postion(occ->get_position());
-                    stack_created = true;
-                }
-                _stacks.back().add_unit(unit);
-                it = _units_to_draw.erase(it);
-            } else {
-                ++it;
+    if (_moving_system->is_moving()) {
+        const auto path = _moving_system->path_preview(coord);
+        for (const auto [hex_coord, shape] : _map_gfx.hexes) {
+            if (std::any_of(path.cbegin(), path.cend(),
+                            [hex_coord = hex_coord](const auto& x) {
+                                return x == hex_coord;
+                            })) {
+                _highlighted_hexes.push_back(shape.highlighting_shape());
             }
         }
-
-        if (!stack_created)
-            _units_to_draw.insert(u);
+    } else {
+        _highlighted_hexes.push_back(
+            std::find_if(_map_gfx.hexes.cbegin(), _map_gfx.hexes.cend(),
+                         [&](const auto& hex) { return hex.first == coord; })
+                ->second.highlighting_shape());
     }
-}
-*/
-void Game::init_mover_and_info_for_unit(Unit& unit) {
-    _panel->remove(_panel->get("unit info"));
-    _mover = unit.get_mover(_map);
-    _mover->find_paths();
-    _moving = true;
-    _panel->add(unit.create_displayer(), "unit info");
-}
-
-std::array<Player, 2>::iterator Game::other_player() {
-    std::array<Player, 2>::iterator res = _current_player + 1;
-    if (res == _players.end()) {
-        return _players.begin();
-    }
-
-    return res;
 }

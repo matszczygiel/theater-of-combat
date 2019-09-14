@@ -1,78 +1,54 @@
-#pragma once
+#ifndef MAP_H
+#define MAP_H
 
 #include <map>
-#include <memory>
-#include <vector>
-#include <set>
-
-#include <SFML/Graphics/RenderTarget.hpp>
-
-#include "hex_site.h"
-#include "passage_site.h"
 
 #include <cereal/types/map.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/types/vector.hpp>
+
+#include "graph.h"
+#include "types.h"
 
 class Map {
    public:
-    void draw(sf::RenderTarget& target) const;
+    enum class SiteType {
+        hex,
+        river,
+    };
 
-    Hex_site& get_hex(const int& no);
-    Hex_site& get_hex(const int& x, const int& y);
-    Passage_site& get_pass(const int& no);
+    using SiteId = int;
 
-    static Map create_test_map(const float& size);
+    const std::map<SiteId, HexSite>& hexes() const;
+    const std::map<SiteId, RiverSite>& rivers() const;
+    const BidirectionalGraph& graph() const;
 
-    void set_numbers_drawing(const std::string& font_filename);
-    void generate_plain_map(const float& xdim, const float& ydim, const float& site_size);
-    void recompute_geometry(const float& size);
+    void insert(HexSite site);
+    void insert(RiverSite site);
 
-    template <class T>
-    void connect_site(const int& hex1_no, const int& hex2_no);
+    SiteType type_of(SiteId id) const;
 
-    std::set<int> get_controlable_hexes_from(const int& src) const;
+    static Map create_test_map();
+
+    std::optional<SiteId> get_hex_id(HexCoordinate coord) const;
+    std::optional<HexCoordinate> get_hex_coord(SiteId id) const;
+
+    template <class Archive>
+    void serialize(Archive& archive);
 
    private:
-    void resize(const int& x, const int& y);
-    void compute_adjacency_of_hexes();
-    constexpr int get_no(const int& x, const int& y);
+    SiteId fetch_id();
 
-    std::map<int, std::vector<int>> _adjacency_matrix;
+    std::map<SiteId, HexSite> _hexes{};
+    std::map<SiteId, RiverSite> _rivers{};
 
-    std::vector<Hex_site> _hexes;
-    std::map<int, std::unique_ptr<Passage_site>> _passages;
+    BidirectionalGraph _graph{};
 
-    int _x_dim{0};
-    int _y_dim{0};
-
-    int _current_max_no{0};
-
-    sf::Font _numbers_font;
-    bool _draw_numbers{false};
-
-    friend class Mover;
-
-   public:
-    template <class Archive>
-    void serialize(Archive& ar) {
-        ar(_x_dim, _y_dim, _current_max_no, _hexes, _passages, _adjacency_matrix);
-    }
+    SiteId _current_free_id{0};
 };
 
-template <class T>
-void Map::connect_site(const int& hex1_no, const int& hex2_no) {
-    static_assert(std::is_base_of<Passage_site, T>::value, "Trying to connect non passage site.");
-    ++_current_max_no;
-    _passages[_current_max_no]         = std::make_unique<T>(_current_max_no);
-    _adjacency_matrix[_current_max_no] = {hex1_no, hex2_no};
-
-    std::replace(_adjacency_matrix.at(hex1_no).begin(), _adjacency_matrix.at(hex1_no).end(),
-                 hex2_no, _current_max_no);
-    std::replace(_adjacency_matrix.at(hex2_no).begin(), _adjacency_matrix.at(hex2_no).end(),
-                 hex1_no, _current_max_no);
-
-    _passages[_current_max_no]->set_shape(get_hex(hex1_no).get_position(),
-                                          get_hex(hex2_no).get_position(),
-                                          get_hex(hex1_no).get_radius());
+template <class Archive>
+void Map::serialize(Archive& archive) {
+    archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_graph),
+            CEREAL_NVP(_hexes), CEREAL_NVP(_rivers));
 }
+
+#endif

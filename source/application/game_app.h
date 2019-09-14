@@ -1,26 +1,27 @@
-#pragma once
+#ifndef GAME_APP_H
+#define GAME_APP_H
 
-#include <set>
-#include <variant>
 #include <vector>
 
 #include "application.h"
-#include "battlefield/battlefield.h"
+#include "core/resource_manager.h"
+#include "graphics/map_gfx.h"
+#include "graphics/unit_gfx.h"
+#include "gui/console.h"
+#include "gui/log_window.h"
 #include "map/map.h"
-#include "mover/mover.h"
-#include "networking/client.h"
-#include "networking/netwoking_status.h"
-#include "networking/server.h"
-#include "player.h"
-#include "unit/stack.h"
+#include "moving/mover.h"
 #include "unit/unit.h"
-#include "unit/unit_set.h"
 
 class Game : public Application {
+   public:
+    Game();
+
    private:
     void initialize() final;
     void update(const sf::Time& elapsed_time) final;
     void finalize() final;
+    void clear_loop() final;
     void render() final;
 
     void key_pressed_event(const sf::Keyboard::Key& key) final;
@@ -30,35 +31,32 @@ class Game : public Application {
     void mouse_button_released_event(const sf::Mouse::Button& button,
                                      const sf::Vector2f& position) final;
     void mouse_wheel_scrolled_event(const float& delta) final;
-    void window_resize_event(const unsigned& width, const unsigned& height) final;
-
-    //   void resolve_stacks_and_units(std::set<std::shared_ptr<Unit> >& unit_set);
-    void init_mover_and_info_for_unit(Unit& unit);
-
-    std::array<Player, 2>::iterator other_player();
+    void window_resize_event(const unsigned& width,
+                             const unsigned& height) final;
+    void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
-    std::array<Player, 2> _players;
-    std::array<Player, 2>::iterator _current_player;
+    std::shared_ptr<Map> _map{std::make_shared<Map>()};
+    std::vector<sf::ConvexShape> _highlighted_hexes{};
+    MapGfx _map_gfx{};
 
-    std::vector<Battlefield> _battlefields;
+    bool _moving_view_up{false};
+    bool _moving_view_down{false};
+    bool _moving_view_right{false};
+    bool _moving_view_left{false};
 
-    Map _map;
-    std::unique_ptr<Mover> _mover{nullptr};
-    Unit_set _unit_set;
+    LogWindow _log{"Log console"};
+    ConsoleWindow _console{"Lua console"};
 
-    bool _moving = false;
+    ResourceManager _res_manager{"resources/"};
 
-    bool _moving_view_up    = false;
-    bool _moving_view_down  = false;
-    bool _moving_view_right = false;
-    bool _moving_view_left  = false;
+    std::shared_ptr<UnitManager> _units{std::make_shared<UnitManager>()};
+    UnitGfx _unit_gfx{_map_gfx};
 
-    tgui::Panel::Ptr _panel;
+    std::shared_ptr<mover::MovementSystem> _moving_system{
+        std::make_shared<mover::MovementSystem>(_units, _map)};
 
-    constexpr static float _token_size        = 30;
-    constexpr static float _view_moving_speed = 0.3f;
-
-    Network_status _network_status = Network_status::unspecified;
-    std::variant<Server, Client> _network;
+    constexpr static float _view_moving_speed{0.3f};
 };
+
+#endif

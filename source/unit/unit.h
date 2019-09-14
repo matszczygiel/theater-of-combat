@@ -1,57 +1,52 @@
-#pragma once
+#ifndef UNIT_H
+#define UNIT_H
 
-#include <memory>
+#include <string>
 
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <TGUI/TGUI.hpp>
+#include <cereal/types/string.hpp>
 
-#include "tokenizable.h"
+#include "core/log.h"
 
-class Mover;
-class Map;
-class Hex_site;
+enum class UnitType { heavy, mechanized };
 
-class Unit : public Tokenizable {
+class Unit {
    public:
-    explicit Unit(const int& moving_pts, const int& strength_pts,
-                  const std::string& description) noexcept;
+    using IdType = int;
 
-    virtual ~Unit() = default;
+    const std::string& name() const;
+    UnitType type();
 
-    virtual std::unique_ptr<Mover> get_mover(Map& map) = 0;
-
-    tgui::Canvas::Ptr create_displayer() const;
-
-    void place_on_hex(Hex_site* hex);
-    void reset_mv_points() noexcept;
-    void reduce_mv_points(const int& points);
-    void reduce_st_points(const int& points);
-
-    Hex_site* get_occupation() const;
-    const int& get_mv_points() const;
-    const int& get_st_points() const;
-    const int& get_id() const;
-
-    static void load_font_file(const std::string& filename);
+    template <class Archive>
+    void serialize(Archive& archive);
 
    private:
-    Hex_site* _occupation{nullptr};
+    friend class UnitManager;
 
-    int _moving_pts;
-    int _current_moving_pts;
-    int _strength_pts;
-
-    std::string _description;
-
-    static sf::Font _font;
-
-    int _id;
-    static int _current_max_id;
-
-   public:
-    template <class Archive>
-    void serialize(Archive& ar) {
-        ar(_moving_pts, _current_moving_pts, _strength_pts, _description, _id);
-    }
+    std::string _name{};
+    UnitType _type{};
 };
+
+template <class Archive>
+void Unit::serialize(Archive& archive) {
+    archive(CEREAL_NVP(_name), CEREAL_NVP(_type));
+}
+
+struct ComponentBase {
+    Unit::IdType owner();
+    UnitType owner_type();
+
+    template <class Archive>
+    void serialize(Archive& archive);
+
+   private:
+    friend class UnitManager;
+    Unit::IdType _owner{};
+    UnitType _owner_type{};
+};
+
+template <class Archive>
+void ComponentBase::serialize(Archive& archive) {
+    archive(CEREAL_NVP(_owner), CEREAL_NVP(_owner_type));
+}
+
+#endif

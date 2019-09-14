@@ -2,4 +2,5 @@
 build
 **.ipch
 *.bin
-new-architecture/build
+*.ini
+tmp

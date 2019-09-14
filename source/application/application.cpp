@@ -1,57 +1,81 @@
 #include "application.h"
 
-#include "log.h"
+#include <imgui-SFML.h>
+#include <imgui.h>
+
+#include "core/log.h"
 
 void Application::run() {
-    ENGINE_INFO("Initializing application.");
-
+    engine_info("Initializing application.");
     initialize();
-    _gui.setTarget(_window);
 
+    engine_info("Initializing ImGui.");
+    ImGui::SFML::Init(_window);
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    _running = true;
     sf::Clock clock;
     while (_running) {
         sf::Event event;
         while (_window.pollEvent(event)) {
-            if (!_gui.handleEvent(event))
-                handle_event(event);
+            handle_event(event);
+
+            ImGui::SFML::ProcessEvent(event);
         }
-        _message_bus->distribute_messages();
         const auto elapsed_time = clock.restart();
+        ImGui::SFML::Update(_window, elapsed_time);
         update(elapsed_time);
+
         _window.clear();
         render();
-        _gui.draw();
+        ImGui::SFML::Render(_window);
         _window.display();
+        clear_loop();
     }
 
     _window.close();
+    ImGui::SFML::Shutdown();
 
-    ENGINE_INFO("Quiting application.");
+    engine_info("Quiting application.");
     finalize();
 }
 
 void Application::handle_event(const sf::Event& event) {
+    const auto& io = ImGui::GetIO();
+
     switch (event.type) {
         case sf::Event::Closed:
             _running = false;
             break;
 
         case sf::Event::KeyPressed:
+            if (io.WantCaptureKeyboard)
+                break;
             key_pressed_event(event.key.code);
             break;
 
         case sf::Event::KeyReleased:
+            if (io.WantCaptureKeyboard)
+                break;
             key_released_event(event.key.code);
             break;
 
         case sf::Event::MouseButtonPressed:
-            mouse_button_pressed_event(event.mouseButton.button,
-                                       _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
+            if (io.WantCaptureMouse)
+                break;
+            mouse_button_pressed_event(
+                event.mouseButton.button,
+                _window.mapPixelToCoords(
+                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
             break;
 
         case sf::Event::MouseButtonReleased:
-            mouse_button_released_event(event.mouseButton.button,
-                                        _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
+            if (io.WantCaptureMouse)
+                break;
+            mouse_button_released_event(
+                event.mouseButton.button,
+                _window.mapPixelToCoords(
+                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
             break;
 
         case sf::Event::Resized:
@@ -59,9 +83,18 @@ void Application::handle_event(const sf::Event& event) {
             break;
 
         case sf::Event::MouseWheelScrolled:
+            if (io.WantCaptureMouse)
+                break;
             mouse_wheel_scrolled_event(event.mouseWheelScroll.delta);
+
+        case sf::Event::MouseMoved:
+            if (io.WantCaptureMouse)
+                break;
+            mouse_moved_event(_window.mapPixelToCoords(
+                sf::Vector2i(event.mouseMove.x, event.mouseMove.y)));
 
         default:
             break;
     }
 }
+

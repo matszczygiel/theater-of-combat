@@ -118,7 +118,7 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
         if (i->second > _target_component->moving_pts) {
             app_assert(
                 _paths.erase(i->first) == 1,
-                "Paths does not containg such node, error in dijkstra algorithm ?");
+                "Paths does not containing such node, error in dijkstra algorithm ?");
             i = _distances.erase(i);
         } else {
             ++i;

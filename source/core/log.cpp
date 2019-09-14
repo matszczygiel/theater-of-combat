@@ -13,6 +13,7 @@ std::unique_ptr<spdlog::logger>& get_app_logger() {
         auto logger =
             std::make_unique<spdlog::logger>("CLIENT", get_distributing_sink());
         logger->set_level(spdlog::level::trace);
+        logger->flush_on(spdlog::level::critical);
         return logger;
     }();
     return logger;
@@ -23,6 +24,7 @@ std::unique_ptr<spdlog::logger>& get_engine_logger() {
         auto logger =
             std::make_unique<spdlog::logger>("ENGINE", get_distributing_sink());
         logger->set_level(spdlog::level::trace);
+        logger->flush_on(spdlog::level::critical);
         return logger;
     }();
     return logger;

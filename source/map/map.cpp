@@ -154,21 +154,21 @@ Map Map::create_test_map() {
 }
 
 std::optional<Map::SiteId> Map::get_hex_id(HexCoordinate coord) const {
-    auto it = std::find_if(_hexes.begin(), _hexes.end(), [](const auto& pair) {
-        pair.second.coord() == coord;
+    auto it = std::find_if(_hexes.begin(), _hexes.end(), [&](const auto& pair) {
+        return pair.second.coord() == coord;
     });
 
     if (it != _hexes.end())
-        return {};
-    else
         return it->first;
+    else
+        return {};
 }
 
 std::optional<HexCoordinate> Map::get_hex_coord(SiteId id) const {
     auto it = _hexes.find(id);
 
     if (it != _hexes.end())
-        return {};
-    else
         return it->second.coord();
+    else
+        return {};
 }

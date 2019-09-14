@@ -165,12 +165,12 @@ std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {
     if (!dest_hex)
         return {};
 
-    auto it = _distances.find(*dest_hex);
+    auto it = _distances.find(dest_hex.value());
     if (it == _distances.end())
         return {};
 
     std::vector<int> res = {*dest_hex};
-    auto i               = _paths.find(*dest_hex);
+    auto i               = _paths.find(dest_hex.value());
     while (i != _paths.end()) {
         res.push_back(i->second);
         i = _paths.find(res.back());
@@ -187,7 +187,7 @@ std::vector<HexCoordinate> MovementSystem::path_preview(
     std::vector<HexCoordinate> res;
     res.reserve(ids.size());
     for (const auto& id : ids) {
-        res.push_back(*_map->get_hex_coord(id));
+        res.push_back(_map->get_hex_coord(id).value());
     }
 
     return res;

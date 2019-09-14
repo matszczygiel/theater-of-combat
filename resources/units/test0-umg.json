@@ -1,0 +1,32 @@
+{
+    "value0": {
+        "_current_free_id": 1,
+        "_units": [
+            {
+                "key": 0,
+                "value": {
+                    "_name": "test unit",
+                    "_type": 1
+                }
+            }
+        ],
+        "MovementComponent's": [
+            {
+                "value0": {
+                    "_owner": 0,
+                    "_owner_type": 1
+                },
+                "_total_moving_pts": 20,
+                "moving_pts": 20,
+                "position": {
+                    "nullopt": false,
+                    "data": {
+                        "_x": -1,
+                        "_y": 0,
+                        "_z": 1
+                    }
+                }
+            }
+        ]
+    }
+}

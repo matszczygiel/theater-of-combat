@@ -5,7 +5,7 @@
 
 #include "map/graph.h"
 #include "map/map.h"
-#include "unit/unit.h"
+#include "unit/unit_manager.h"
 
 struct MovementComponent;
 

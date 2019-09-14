@@ -8,7 +8,7 @@
 
 #include "map/hexagons.h"
 #include "token.h"
-#include "unit/unit.h"
+#include "unit/unit_manager.h"
 #include "map_gfx.h"
 
 struct UnitGfx {

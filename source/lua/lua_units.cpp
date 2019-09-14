@@ -4,6 +4,7 @@
 
 #include "core/lua_vm.h"
 #include "unit/unit.h"
+#include "unit/unit_manager.h"
 #include "unit/unit_components.h"
 
 namespace units {

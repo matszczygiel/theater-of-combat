@@ -1,12 +1,14 @@
 #ifndef UNIT_MANAGER_H
 #define UNIT_MANAGER_H
 
-#include <vector>
 #include <map>
 #include <typeindex>
+#include <vector>
+
+#include <cereal/types/vector.hpp>
 
 #include "unit.h"
-
+#include "unit_components.h"
 
 struct ComponentVecBase {};
 
@@ -70,7 +72,8 @@ template <class Archive>
 void UnitManager::serialize(Archive& archive) {
     archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_units),
             // list all posible components
-            CEREAL_NVP(_components.get_container<MovementComponent>()));
+            cereal::make_nvp("MovementComponent's",
+                             _components.get_container<MovementComponent>()));
 }
 
 template <class Component, class... Args>

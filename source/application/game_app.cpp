@@ -12,6 +12,7 @@
 #include "lua/lua_map.h"
 #include "lua/lua_units.h"
 #include "unit/unit_components.h"
+#include "unit/unit_manager.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(

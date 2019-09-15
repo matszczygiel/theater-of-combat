@@ -12,6 +12,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/lua/*.cpp            source/lua/*.h
     source/unit/*.cpp           source/unit/*.h
     source/moving/*.cpp         source/moving/*.h
+    source/gameplay/*.cpp       source/gameplay/*.h
     source/main.cpp
     )
 

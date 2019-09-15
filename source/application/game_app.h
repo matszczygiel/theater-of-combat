@@ -5,6 +5,7 @@
 
 #include "application.h"
 #include "core/resource_manager.h"
+#include "gameplay/game_state.h"
 #include "graphics/map_gfx.h"
 #include "graphics/unit_gfx.h"
 #include "gui/console.h"
@@ -36,7 +37,8 @@ class Game : public Application {
     void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
-    std::shared_ptr<Map> _map{std::make_shared<Map>()};
+    GameState _state{};
+
     std::vector<sf::ConvexShape> _highlighted_hexes{};
     MapGfx _map_gfx{};
 
@@ -50,11 +52,11 @@ class Game : public Application {
 
     ResourceManager _res_manager{"resources/"};
 
-    std::shared_ptr<UnitManager> _units{std::make_shared<UnitManager>()};
     UnitGfx _unit_gfx{_map_gfx};
 
     std::shared_ptr<mover::MovementSystem> _moving_system{
-        std::make_shared<mover::MovementSystem>(_units, _map)};
+        std::make_shared<mover::MovementSystem>(_state.scenario.units,
+                                                _state.scenario.map)};
 
     constexpr static float _view_moving_speed{0.3f};
 };

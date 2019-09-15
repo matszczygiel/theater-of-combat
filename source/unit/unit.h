@@ -32,8 +32,8 @@ void Unit::serialize(Archive& archive) {
 }
 
 struct ComponentBase {
-    Unit::IdType owner();
-    UnitType owner_type();
+    Unit::IdType owner() const;
+    UnitType owner_type() const;
 
     template <class Archive>
     void serialize(Archive& archive);

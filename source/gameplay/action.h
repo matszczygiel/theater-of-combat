@@ -13,8 +13,20 @@ class Action {
     virtual ~Action() = default;
 };
 
+class UndoPreviousAction : public Action {
+   public:
+    virtual void execute(GameState* state) override;
+    virtual void revert(GameState* state) override;
+
+   private:
+    bool _executed{false};
+    std::unique_ptr<Action> _reverted_action{nullptr};
+};
+
 class MovementAction : public Action {
    public:
+    MovementAction(const std::vector<MovementComponent>& components);
+    
     virtual void execute(GameState* state) override;
     virtual void revert(GameState* state) override;
 

@@ -11,7 +11,7 @@
 #include "gui/console.h"
 #include "gui/log_window.h"
 #include "map/map.h"
-#include "moving/mover.h"
+#include "systems/mover.h"
 #include "unit/unit.h"
 
 class Game : public Application {

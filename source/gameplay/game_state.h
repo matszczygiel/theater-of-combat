@@ -42,7 +42,7 @@ class GameState {
     decltype(players)::iterator remote_player{};
     decltype(players)::iterator local_player{};
     GamePhase phase{GamePhase::not_started};
-    std::stack<std::unique_ptr<Action>> _action_stack{};
+    std::stack<std::unique_ptr<Action>> action_stack{};
 };
 
 #endif

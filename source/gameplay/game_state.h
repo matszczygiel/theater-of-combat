@@ -3,15 +3,17 @@
 
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
+#include <vector>
 
 #include <sol/load_result.hpp>
 
-#include "unit/unit.h"
+#include "action.h"
+#include "map/map.h"
 #include "player.h"
-
-class Map;
-class UnitManager;
+#include "unit/unit.h"
+#include "unit/unit_manager.h"
 
 class Scenario {
    public:
@@ -32,17 +34,15 @@ enum class GamePhase {
     movement,
 };
 
-class Action;
-
 class GameState {
-    public:
-     Scenario scenario{};
-     std::array<Player, 2> players{};
-     decltype(players)::iterator current_player = players.begin();
-     decltype(players)::iterator remote_player{};
-     decltype(players)::iterator local_player{};
-     GamePhase phase{GamePhase::not_started};
-     std::stack<std::unique_ptr<Action>> _action_stack{};
+   public:
+    Scenario scenario{};
+    std::array<Player, 2> players{};
+    decltype(players)::iterator current_player = players.begin();
+    decltype(players)::iterator remote_player{};
+    decltype(players)::iterator local_player{};
+    GamePhase phase{GamePhase::not_started};
+    std::stack<std::unique_ptr<Action>> _action_stack{};
 };
 
 #endif

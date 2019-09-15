@@ -34,31 +34,43 @@ void Game::initialize() {
     _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
 
-    *_map = Map::create_test_map();
-    _map_gfx.update(*_map);
+    auto& map = *_state.scenario.map;
+    map       = Map::create_test_map();
+    _map_gfx.update(map);
 
     auto& lua = lua::get_state();
     map::lua_push_functions();
-    lua["game_map"] = std::ref(*_map);
-    lua["save_map"] = [&](std::string name) { _res_manager.save(*_map, name); };
+    lua["game_map"] = std::ref(map);
+    lua["save_map"] = [&](std::string name) { _res_manager.save(map, name); };
     lua["load_map"] = [&](std::string name) {
-        *_map = _res_manager.load<Map>(name);
+        map = _res_manager.load<Map>(name);
     };
 
     units::lua_push_functions();
-    lua["game_units"] = std::ref(*_units);
+    auto& units       = *_state.scenario.units;
+    lua["game_units"] = std::ref(units);
     lua["save_units"] = [&](std::string name) {
-        _res_manager.save(*_units, name);
+        _res_manager.save(units, name);
     };
     lua["load_units"] = [&](std::string name) {
-        *_units = _res_manager.load<UnitManager>(name);
+        units = _res_manager.load<UnitManager>(name);
     };
 
-    auto unit_id  = _units->create(UnitType::mechanized, "test unit", true);
-    auto cmp      = _units->get_component<MovementComponent>(unit_id);
-    cmp->position = HexCoordinate(-1, 1);
+    auto unit_id_0  = units.create(UnitType::mechanized, "test unit 0", true);
+    auto unit_id_1  = units.create(UnitType::mechanized, "test unit 1", true);
+    auto cmp_0      = units.get_component<MovementComponent>(unit_id_0);
+    cmp_0->position = HexCoordinate(-1, 1);
 
-    _unit_gfx.update(*_units);
+    auto cmp_1      = units.get_component<MovementComponent>(unit_id_1);
+    cmp_1->position = HexCoordinate(-3, 0);
+
+    _state.scenario.teams["team 0"] = {unit_id_0};
+    _state.scenario.teams["team 1"] = {unit_id_1};
+
+    _state.players = {Player("player 0", {"team 0"}),
+                      Player("player 1", {"team 1"})};
+
+    _unit_gfx.update(units);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -87,8 +99,8 @@ void Game::update(const sf::Time& elapsed_time) {
     _log.show_window(nullptr);
     _console.show(nullptr);
 
-    _map_gfx.update(*_map);
-    _unit_gfx.update(*_units);
+    _map_gfx.update(*_state.scenario.map);
+    _unit_gfx.update(*_state.scenario.units);
 
     // engine_trace("Updating");
 }

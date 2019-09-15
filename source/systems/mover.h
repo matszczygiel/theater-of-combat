@@ -6,6 +6,7 @@
 #include "map/graph.h"
 #include "map/map.h"
 #include "unit/unit_manager.h"
+#include "gameplay/action.h"
 
 struct MovementComponent;
 
@@ -14,7 +15,7 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type);
 
 class MovementSystem {
    public:
-    explicit MovementSystem(std::shared_ptr<UnitManager>& units,
+    explicit MovementSystem(const std::shared_ptr<UnitManager>& units,
                             const std::shared_ptr<Map>& map);
 
     bool init_movement(HexCoordinate coord);
@@ -24,13 +25,13 @@ class MovementSystem {
     std::vector<int> path_indices(HexCoordinate destination) const;
     std::vector<HexCoordinate> path_preview(HexCoordinate destination) const;
 
-    bool move_target(HexCoordinate destination);
+    std::unique_ptr<MovementAction> move_target(HexCoordinate destination);
 
    private:
-    MovementComponent* _target_component{nullptr};
+    const MovementComponent* _target_component{nullptr};
 
-    std::shared_ptr<UnitManager> _units{nullptr};
-    std::shared_ptr<Map> _map{nullptr};
+    const std::shared_ptr<UnitManager> _units{nullptr};
+    const std::shared_ptr<Map> _map{nullptr};
 
     std::map<int, int> _distances{};
     std::map<int, int> _paths{};

@@ -183,7 +183,11 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
             if (!_moving_system->is_moving()) {
                 _moving_system->init_movement(coord);
             } else {
-                _moving_system->move_target(coord);
+                auto action = _moving_system->move_target(coord);
+                if (action) {
+                    _state.action_stack.push(std::move(action));
+                    _state.action_stack.top()->execute(&_state);
+                }
             }
         } break;
 

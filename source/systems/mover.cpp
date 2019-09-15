@@ -90,7 +90,7 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
     return res;
 }
 
-MovementSystem::MovementSystem(std::shared_ptr<UnitManager>& units,
+MovementSystem::MovementSystem(const std::shared_ptr<UnitManager>& units,
                                const std::shared_ptr<Map>& map)
     : _units{units}, _map{map} {}
 
@@ -135,28 +135,29 @@ void MovementSystem::reset() {
     _paths.clear();
 }
 
-bool MovementSystem::move_target(HexCoordinate destination) {
+std::unique_ptr<MovementAction> MovementSystem::move_target(
+    HexCoordinate destination) {
     app_assert(is_moving(), "No unit to move.");
     auto dest_hex = _map->get_hex_id(destination);
     if (!dest_hex) {
         reset();
-        return false;
+        return nullptr;
     }
 
     auto it = _distances.find(*dest_hex);
     if (it == _distances.end()) {
         reset();
-        return false;
+        return nullptr;
     }
 
     const auto cost = it->second;
-    _target_component->moving_pts -= cost;
-    app_assert(_target_component->moving_pts >= 0,
-               "Unit {} has negative number of moving pts.",
-               _target_component->owner());
-    _target_component->position = destination;
+    auto new_cmp    = *_target_component;
+    new_cmp.moving_pts -= cost;
+    app_assert(new_cmp.moving_pts >= 0,
+               "Unit {} has negative number of moving pts.", new_cmp.owner());
+    new_cmp.position = destination;
     reset();
-    return true;
+    return std::make_unique<MovementAction>(new_cmp);
 }
 
 std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {

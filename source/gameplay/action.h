@@ -1,6 +1,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+#include <optional>
+
 #include "unit/unit_components.h"
 
 class GameState;
@@ -25,15 +27,14 @@ class UndoPreviousAction : public Action {
 
 class MovementAction : public Action {
    public:
-    MovementAction(const std::vector<MovementComponent>& components);
+    MovementAction(const MovementComponent& component);
     
     virtual void execute(GameState* state) override;
     virtual void revert(GameState* state) override;
 
    private:
-    bool _executed{false};
-    std::vector<MovementComponent> _components_to_change{};
-    std::vector<MovementComponent> _components_before_change{};
+    MovementComponent _new_component{};
+    std::optional<MovementComponent> _old_component{};
 };
 
 #endif

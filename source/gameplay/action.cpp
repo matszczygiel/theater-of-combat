@@ -25,40 +25,30 @@ void UndoPreviousAction::revert(GameState* state) {
     _executed        = false;
 }
 
-MovementAction::MovementAction(const std::vector<MovementComponent>& components)
-    : _components_to_change{components} {}
+MovementAction::MovementAction(const MovementComponent& component)
+    : _new_component{component} {}
 
 void MovementAction::execute(GameState* state) {
-    app_assert(!_executed, "MovementAction executed more than once.");
+    app_assert(!_old_component, "MovementAction executed more than once.");
     auto& unit_man = *state->scenario.units;
 
-    for(const auto& cmp : _components_to_change) {
-        const auto& owner = cmp.owner();
-        auto original_cmp = unit_man.get_component<MovementComponent>(owner);
-        app_assert(original_cmp,
-                   "Procesing nonexistent MovementComponent. Owner: {}.",
-                   owner);
-
-        _components_before_change.push_back(*original_cmp);
-        *original_cmp = cmp;
-    }
-
-    _executed = true;
+    const auto& owner = _new_component.owner();
+    auto cmp          = unit_man.get_component<MovementComponent>(owner);
+    app_assert(cmp, "Procesing nonexistent MovementComponent. Owner: {}.",
+               owner);
+    _old_component = *cmp;
+    *cmp           = _new_component;
 }
 
 void MovementAction::revert(GameState* state) {
-    app_assert(_executed, "MovementAction reverted before executed.");
+    app_assert(_old_component.has_value(),
+               "MovementAction reverted before executed.");
     auto& unit_man = *state->scenario.units;
 
-    for(const auto& cmp : _components_before_change) {
-        const auto& owner = cmp.owner();
-        auto changed_cmp = unit_man.get_component<MovementComponent>(owner);
-        app_assert(changed_cmp,
-                   "Procesing nonexistent MovementComponent. Owner: {}.",
-                   owner);
-        *changed_cmp = cmp;
-    }
-
-    _components_before_change.clear();
-    _executed = false;
+    const auto& owner = _old_component.value().owner();
+    auto cmp          = unit_man.get_component<MovementComponent>(owner);
+    app_assert(cmp, "Procesing nonexistent MovementComponent. Owner: {}.",
+               owner);
+    *cmp = _old_component.value();
+    _old_component.reset();
 }

@@ -2,6 +2,7 @@
 #define ACTION_H
 
 #include <optional>
+#include <thread>
 
 #include "unit/unit_components.h"
 
@@ -13,6 +14,17 @@ class Action {
     virtual void revert(GameState* state)  = 0;
 
     virtual ~Action() = default;
+};
+
+class ActionQueue {
+    public:
+     void push(std::unique_ptr<Action> action);
+
+     void process_actions(GameState* state);
+
+     private:
+      std::mutex _m;
+      std::vector<std::unique_ptr<Action>> _actions{};
 };
 
 class UndoPreviousAction : public Action {

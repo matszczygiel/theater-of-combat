@@ -3,6 +3,19 @@
 #include "core/log.h"
 #include "game_state.h"
 
+void ActionQueue::push(std::unique_ptr<Action> action) {
+    std::lock_guard<std::mutex> lock{_m};
+    _actions.push_back(std::move(action));
+}
+
+void ActionQueue::process_actions(GameState* state) {
+    std::lock_guard<std::mutex> lock{_m};
+    for(auto& act : _actions)
+        state->push_action(std::move(act));
+
+    _actions.clear();
+}
+
 void UndoPreviousAction::execute(GameState* state) {
     app_assert(!_executed, "UndoPreviousAction executed more than once.");
 

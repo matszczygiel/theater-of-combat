@@ -58,6 +58,11 @@ class Game : public Application {
         std::make_shared<mover::MovementSystem>(_state.scenario.units,
                                                 _state.scenario.map)};
 
+    enum class ActionProvider { local, remote };
+    ActionProvider _action_provider{ActionProvider::local};
+
+    std::string _local_player_name{"Your name"};
+
     constexpr static float _view_moving_speed{0.3f};
 };
 

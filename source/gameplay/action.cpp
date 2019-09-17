@@ -2,7 +2,7 @@
 
 #include "core/log.h"
 #include "game_state.h"
-
+/*
 void ActionQueue::push(std::unique_ptr<Action> action) {
     std::lock_guard<std::mutex> lock{_m};
     _actions.push_back(std::move(action));
@@ -15,13 +15,13 @@ void ActionQueue::process_actions(GameState* state) {
 
     _actions.clear();
 }
-
+*/
 void UndoPreviousAction::execute(GameState* state) {
     app_assert(!_executed, "UndoPreviousAction executed more than once.");
 
-    auto& actions = state->action_stack;
+    auto& actions = state->_action_stack;
     app_assert(actions.size() > 0,
-               "UndoPreviousAction cannot be executed on empty action_stack.");
+               "UndoPreviousAction cannot be executed on empty _action_stack.");
 
     _reverted_action = std::move(actions.top());
     actions.pop();
@@ -31,7 +31,7 @@ void UndoPreviousAction::execute(GameState* state) {
 
 void UndoPreviousAction::revert(GameState* state) {
     app_assert(_executed, "UndoPreviousAction reverted before executed.");
-    auto& actions = state->action_stack;
+    auto& actions = state->_action_stack;
     _reverted_action->execute(state);
     actions.push(std::move(_reverted_action));
     _reverted_action = nullptr;

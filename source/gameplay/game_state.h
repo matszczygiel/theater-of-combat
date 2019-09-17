@@ -39,14 +39,15 @@ class GameState {
     void push_action(std::unique_ptr<Action> action);
 
     Scenario scenario{};
-    std::array<Player, 2> players{};
-    decltype(players)::iterator current_player = players.begin();
-    decltype(players)::iterator remote_player{};
-    decltype(players)::iterator local_player{};
     GamePhase phase{GamePhase::not_started};
+    std::array<Player, 2> players{};
+    decltype(players)::iterator local_player{};
+    decltype(players)::iterator current_player = players.begin();
 
    private:
-    std::stack<std::unique_ptr<Action>> action_stack{};
+    friend class UndoPreviousAction;
+
+    std::stack<std::unique_ptr<Action>> _action_stack{};
 };
 
 #endif

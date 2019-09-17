@@ -1,8 +1,12 @@
 #include "game_app.h"
 
+#include <sstream>
+
 #include <imgui.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/types/memory.hpp>
 #include <sol/sol.hpp>
 
 #include "core/log.h"
@@ -71,6 +75,11 @@ void Game::initialize() {
     _state.players = {Player("player 0", {"team 0"}),
                       Player("player 1", {"team 1"})};
 
+    lua.new_enum("ActionProvider", "user", ActionProvider::user, "remote",
+                 ActionProvider::remote);
+
+    lua["game_action_provider"] = &_action_provider;
+
     _unit_gfx.update(units);
 }
 
@@ -90,6 +99,44 @@ void Game::update(const sf::Time& elapsed_time) {
 
     view.move(moving_view);
     _window.setView(view);
+
+    if (_action_provider == ActionProvider::user) {
+        for (auto& a : _pending_actions) {
+            auto header = static_cast<sf::Int8>(PacketHeader::action);
+            std::ostringstream ss{std::ios::out | std::ios::binary};
+            {
+                cereal::PortableBinaryOutputArchive ar(ss);
+                ar(a);
+            }
+            sf::Packet p;
+            p << header << ss.str();
+            app_debug("Sending packet:\n{}\n...", ss.str());
+            std::visit([&](auto&& net) { net.send(p); }, _network);
+            app_debug("Done");
+            _state.push_action(std::move(a));
+        }
+        _pending_actions.clear();
+
+    } else if (_action_provider == ActionProvider::remote) {
+        _pending_actions.clear();
+
+        sf::Int8 header = 0;
+        std::string str;
+        sf::Packet p;
+        std::visit([&](auto&& net) { net.receive(p); }, _network);
+        p >> header >> str;
+        if (header == 1) {
+            app_debug("Received packet:\n{}\n", str);
+            std::unique_ptr<Action> a{nullptr};
+            std::istringstream ss{str, std::ios::in | std::ios::binary};
+            {
+                cereal::PortableBinaryInputArchive ar(ss);
+                ar(a);
+            }
+
+            _state.push_action(std::move(a));
+        }
+    }
 
     show_dock_space_window(nullptr);
 
@@ -187,7 +234,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _moving_system->init_movement(coord);
             } else {
                 auto action = _moving_system->move_target(coord);
-                _state.push_action(std::move(action));
+                _pending_actions.push_back(std::move(action));
             }
         } break;
 

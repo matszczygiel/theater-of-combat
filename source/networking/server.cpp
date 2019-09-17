@@ -17,6 +17,9 @@ bool Server::accept_client() {
     }
     engine_info("Server accepted client: {}.",
                 _socket.getRemoteAddress().toString());
+
+    _socket.setBlocking(false);
+
     return true;
 }
 
@@ -31,4 +34,26 @@ sf::IpAddress Server::get_public_ip() {
 
 sf::IpAddress Server::get_remote_ip() const {
     return _socket.getRemoteAddress();
+}
+
+bool Server::send(sf::Packet& packet) {
+    if (auto status = _socket.send(packet); status != sf::Socket::Done) {
+        if (status != sf::Socket::Partial)
+            return false;
+        while (_socket.send(packet) == sf::Socket::Partial)
+            ;
+        return true;
+    }
+    return true;
+}
+
+bool Server::receive(sf::Packet& packet) {
+    if (auto status = _socket.receive(packet); status != sf::Socket::Done) {
+        if (status != sf::Socket::Partial)
+            return false;
+        while (_socket.receive(packet) == sf::Socket::Partial)
+            ;
+        return true;
+    }
+    return true;
 }

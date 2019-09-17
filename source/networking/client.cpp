@@ -8,7 +8,7 @@ bool Client::connect_to_server(const sf::IpAddress& ip,
                 port);
 
     const auto timeout = sf::milliseconds(1000);
-    _socket.setBlocking(true);
+    _socket.setBlocking(false);
 
     if (_socket.connect(ip, port, timeout) != sf::Socket::Status::Done) {
         engine_warn("Connection failed, with timeout: {0} ms",
@@ -28,4 +28,26 @@ sf::IpAddress Client::get_remote_ip() const {
 
 unsigned short Client::get_remote_port() const {
     return _socket.getRemotePort();
+}
+
+bool Client::send(sf::Packet& packet) {
+    if (auto status = _socket.send(packet); status != sf::Socket::Done) {
+        if (status != sf::Socket::Partial)
+            return false;
+        while (_socket.send(packet) == sf::Socket::Partial)
+            ;
+        return true;
+    }
+    return true;
+}
+
+bool Client::receive(sf::Packet& packet) {
+    if (auto status = _socket.receive(packet); status != sf::Socket::Done) {
+        if (status != sf::Socket::Partial)
+            return false;
+        while (_socket.receive(packet) == sf::Socket::Partial)
+            ;
+        return true;
+    }
+    return true;
 }

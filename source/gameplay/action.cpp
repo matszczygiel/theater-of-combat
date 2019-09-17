@@ -1,7 +1,14 @@
 #include "action.h"
 
+#include <cereal/archives/binary.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/polymorphic.hpp>
+
 #include "core/log.h"
 #include "game_state.h"
+
+
 /*
 void ActionQueue::push(std::unique_ptr<Action> action) {
     std::lock_guard<std::mutex> lock{_m};
@@ -38,6 +45,9 @@ void UndoPreviousAction::revert(GameState* state) {
     _executed        = false;
 }
 
+CEREAL_REGISTER_TYPE(UndoPreviousAction);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, UndoPreviousAction);
+
 MovementAction::MovementAction(const MovementComponent& component)
     : _new_component{component} {}
 
@@ -65,3 +75,6 @@ void MovementAction::revert(GameState* state) {
     *cmp = _old_component.value();
     _old_component.reset();
 }
+
+CEREAL_REGISTER_TYPE(MovementAction);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, MovementAction);

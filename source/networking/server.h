@@ -16,6 +16,9 @@ class Server {
 
     unsigned short get_port();
 
+    bool send(sf::Packet& packet);
+    bool receive(sf::Packet& packet);
+
    private:
     sf::TcpSocket _socket;
     sf::TcpListener _listener;

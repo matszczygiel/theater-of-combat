@@ -3,6 +3,8 @@
 
 #include <optional>
 
+#include <cereal/macros.hpp>
+
 #include "unit/unit_components.h"
 
 class GameState;
@@ -31,21 +33,36 @@ class UndoPreviousAction : public Action {
     virtual void execute(GameState* state) override;
     virtual void revert(GameState* state) override;
 
+    template <class Archive>
+    void serialize(Archive& ar);
+
    private:
     bool _executed{false};
     std::unique_ptr<Action> _reverted_action{nullptr};
 };
 
+template <class Archive>
+void UndoPreviousAction::serialize(Archive&) {}
+
 class MovementAction : public Action {
    public:
+    MovementAction() = default;
     MovementAction(const MovementComponent& component);
-    
+
     virtual void execute(GameState* state) override;
     virtual void revert(GameState* state) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
 
    private:
     MovementComponent _new_component{};
     std::optional<MovementComponent> _old_component{};
 };
+
+template <class Archive>
+void MovementAction::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_new_component));
+}
 
 #endif

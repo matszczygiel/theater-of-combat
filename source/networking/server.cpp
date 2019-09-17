@@ -1,12 +1,11 @@
 #include "server.h"
 
-#include "log.h"
+#include "core/log.h"
 
 bool Server::listen_at_port(const unsigned short& port) {
-    _listener.setBlocking(false);
-    ENGINE_INFO("Server listening port: {0}", port);
+    engine_info("Server listening port: {0}", port);
     if (_listener.listen(port) != sf::Socket::Status::Done) {
-        ENGINE_WARN("Listener failed.");
+        engine_warn("Listener failed.");
         return false;
     }
     return true;
@@ -16,7 +15,8 @@ bool Server::accept_client() {
     if (_listener.accept(_socket) != sf::Socket::Status::Done) {
         return false;
     }
-    ENGINE_INFO("Server accepted client.");
+    engine_info("Server accepted client: {}.",
+                _socket.getRemoteAddress().toString());
     return true;
 }
 
@@ -27,4 +27,8 @@ unsigned short Server::get_port() { return _listener.getLocalPort(); }
 
 sf::IpAddress Server::get_public_ip() {
     return sf::IpAddress::getPublicAddress();
+}
+
+sf::IpAddress Server::get_remote_ip() const {
+    return _socket.getRemoteAddress();
 }

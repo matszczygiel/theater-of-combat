@@ -13,6 +13,8 @@
 #include "map/map.h"
 #include "systems/mover.h"
 #include "unit/unit.h"
+#include "networking/client.h"
+#include "networking/server.h"
 
 class Game : public Application {
    public:
@@ -62,6 +64,8 @@ class Game : public Application {
     ActionProvider _action_provider{ActionProvider::local};
 
     std::string _local_player_name{"Your name"};
+
+    std::variant<Server, Client> _network;
 
     constexpr static float _view_moving_speed{0.3f};
 };

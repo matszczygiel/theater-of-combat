@@ -13,6 +13,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
     source/unit/*.cpp           source/unit/*.h
     source/systems/*.cpp        source/systems/*.h
     source/gameplay/*.cpp       source/gameplay/*.h
+    source/networking/*.cpp     source/networking/*.h
     source/main.cpp
     )
 

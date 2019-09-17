@@ -9,6 +9,7 @@
 #include "core/lua_vm.h"
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
+#include "gui/network_prompt.h"
 #include "lua/lua_map.h"
 #include "lua/lua_units.h"
 #include "unit/unit_components.h"
@@ -98,6 +99,8 @@ void Game::update(const sf::Time& elapsed_time) {
 
     _log.show_window(nullptr);
     _console.show(nullptr);
+
+    show_network_prompt(_network, "Network status", nullptr);
 
     _map_gfx.update(*_state.scenario.map);
     _unit_gfx.update(*_state.scenario.units);

@@ -75,10 +75,22 @@ void Game::initialize() {
     _state.players = {Player("player 0", {"team 0"}),
                       Player("player 1", {"team 1"})};
 
-    lua.new_enum("ActionProvider", "user", ActionProvider::user, "remote",
-                 ActionProvider::remote);
+    lua["switch_action_provider"] = [&]() {
+        switch (_action_provider) {
+            case ActionProvider::remote:
+                _action_provider = ActionProvider::local;
+                app_info("_action_provider switched to local.");
+                return;
+            case ActionProvider::local:
+                _action_provider = ActionProvider::remote;
+                app_info("_action_provider switched to remote.");
+                return;
+        }
+    };
 
-    lua["game_action_provider"] = &_action_provider;
+    lua["undo_action"] = [&]() {
+        _state.push_action(std::make_unique<UndoPreviousAction>());
+    };
 
     _unit_gfx.update(units);
 }
@@ -100,7 +112,7 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    if (_action_provider == ActionProvider::user) {
+    if (_action_provider == ActionProvider::local) {
         for (auto& a : _pending_actions) {
             auto header = static_cast<sf::Int8>(PacketHeader::action);
             std::ostringstream ss{std::ios::out | std::ios::binary};
@@ -110,7 +122,7 @@ void Game::update(const sf::Time& elapsed_time) {
             }
             sf::Packet p;
             p << header << ss.str();
-            app_debug("Sending packet:\n{}\n...", ss.str());
+            app_debug("Sending packet...");
             std::visit([&](auto&& net) { net.send(p); }, _network);
             app_debug("Done");
             _state.push_action(std::move(a));
@@ -126,7 +138,7 @@ void Game::update(const sf::Time& elapsed_time) {
         std::visit([&](auto&& net) { net.receive(p); }, _network);
         p >> header >> str;
         if (header == 1) {
-            app_debug("Received packet:\n{}\n", str);
+            app_debug("Received packet");
             std::unique_ptr<Action> a{nullptr};
             std::istringstream ss{str, std::ios::in | std::ios::binary};
             {

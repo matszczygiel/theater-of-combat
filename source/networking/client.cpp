@@ -8,7 +8,7 @@ bool Client::connect_to_server(const sf::IpAddress& ip,
                 port);
 
     const auto timeout = sf::milliseconds(1000);
-    _socket.setBlocking(false);
+    _socket.setBlocking(true);
 
     if (_socket.connect(ip, port, timeout) != sf::Socket::Status::Done) {
         engine_warn("Connection failed, with timeout: {0} ms",
@@ -16,6 +16,7 @@ bool Client::connect_to_server(const sf::IpAddress& ip,
         return false;
     } else {
         engine_info("Connected.");
+        _socket.setBlocking(false);
         return true;
     }
 }

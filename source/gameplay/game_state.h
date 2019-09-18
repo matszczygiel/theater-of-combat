@@ -47,7 +47,8 @@ class GameState {
    private:
     friend class UndoPreviousAction;
 
-    std::stack<std::unique_ptr<Action>> _action_stack{};
+    std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>
+        _action_stack{};
 };
 
 #endif

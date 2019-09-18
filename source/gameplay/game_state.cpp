@@ -12,7 +12,7 @@ int Scenario::current_day() const { return _current_day; }
 
 void GameState::push_action(std::unique_ptr<Action> action) {
     if (action) {
+        action->execute(this);
         _action_stack.push(std::move(action));
-        _action_stack.top()->execute(this);
     }
 }

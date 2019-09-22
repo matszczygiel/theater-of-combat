@@ -2,6 +2,8 @@
 #define MAP_H
 
 #include <map>
+#include <optional>
+#include <set>
 
 #include <cereal/types/map.hpp>
 
@@ -30,6 +32,8 @@ class Map {
 
     std::optional<SiteId> get_hex_id(HexCoordinate coord) const;
     std::optional<HexCoordinate> get_hex_coord(SiteId id) const;
+
+    std::set<SiteId> get_controlable_hexes_from(SiteId id) const;
 
     template <class Archive>
     void serialize(Archive& archive);

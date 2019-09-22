@@ -16,18 +16,7 @@ class Action {
 
     virtual ~Action() = default;
 };
-/*
-class ActionQueue {
-    public:
-     void push(std::unique_ptr<Action> action);
 
-     void process_actions(GameState* state);
-
-     private:
-      std::mutex _m;
-      std::vector<std::unique_ptr<Action>> _actions{};
-};
-*/
 class UndoPreviousAction : public Action {
    public:
     virtual void execute(GameState* state) override;

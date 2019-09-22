@@ -90,21 +90,44 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
     return res;
 }
 
-MovementSystem::MovementSystem(const std::shared_ptr<UnitManager>& units,
-                               const std::shared_ptr<Map>& map)
-    : _units{units}, _map{map} {}
+MovementSystem::MovementSystem(const GameState& state)
+    : _units{state.scenario.units},
+      _map{state.scenario.map},
+      _teams{state.scenario.teams} {}
 
-bool MovementSystem::init_movement(HexCoordinate coord) {
+bool MovementSystem::init_movement(HexCoordinate coord,
+                                   std::vector<std::string> teams,
+                                   std::vector<std::string> hostile_teams) {
     app_assert(!is_moving(), "Already moving unit.");
+
+    std::set<Unit::IdType> friendly;
+    for (const auto& t : teams) {
+        if (auto it = _teams.find(t); it != _teams.end()) {
+            friendly.merge(it->second);
+        }
+    }
+
+    std::set<Unit::IdType> hostile;
+    for (const auto& t : hostile_teams) {
+        if (auto it = _teams.find(t); it != _teams.end()) {
+            hostile.merge(it->second);
+        }
+    }
+
     _units->apply_for_each<MovementComponent>([&](auto& cmp) {
-        if (cmp.position == coord) {
+        if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
             _target_component = std::addressof(cmp);
-            return false;
-        } else
-            return true;
+        } else if (hostile.count(cmp.owner()) == 1 && cmp.position) {
+            auto id = _map->get_hex_id(cmp.position.value()).value();
+            _sticky_sites.merge(_map->get_controlable_hexes_from(id));
+        }
+        return true;
     });
-    if (!is_moving())
+
+    if (!is_moving()) {
+        reset();
         return false;
+    }
 
     const auto graph =
         make_weighted_graph(*_map, _target_component->owner_type());
@@ -133,22 +156,19 @@ void MovementSystem::reset() {
     _target_component = nullptr;
     _distances.clear();
     _paths.clear();
+    _sticky_sites.clear();
 }
 
 std::unique_ptr<MovementAction> MovementSystem::move_target(
     HexCoordinate destination) {
-    app_assert(is_moving(), "No unit to move.");
-    auto dest_hex = _map->get_hex_id(destination);
-    if (!dest_hex) {
+    const auto path = path_indices(destination);
+
+    if(path.empty()) {
         reset();
         return nullptr;
     }
 
-    auto it = _distances.find(*dest_hex);
-    if (it == _distances.end()) {
-        reset();
-        return nullptr;
-    }
+    for()
 
     const auto cost = it->second;
     auto new_cmp    = *_target_component;

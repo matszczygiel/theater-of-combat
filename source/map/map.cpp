@@ -172,3 +172,30 @@ std::optional<HexCoordinate> Map::get_hex_coord(SiteId id) const {
     else
         return {};
 }
+
+std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
+    const auto it = _graph.adjacency_matrix().find(id);
+    if (it == _graph.adjacency_matrix().end())
+        return {};
+
+    auto neighbors = it->second;
+    for (const auto node : it->second) {
+        switch (type_of(node)) {
+            case SiteType::river:
+                neighbors.merge(_graph.adjacency_matrix().at(node));
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    neighbors.erase(id);
+
+    neighbors.erase(std::remove_if(neighbors.begin(), neighbors.end(),
+                                   [this](const auto& id) {
+                                       return type_of(id) != SiteType::hex;
+                                   }),
+                    neighbors.end());
+    return neighbors;
+}

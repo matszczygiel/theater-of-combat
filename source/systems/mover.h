@@ -3,10 +3,11 @@
 
 #include <memory>
 
+#include "gameplay/action.h"
+#include "gameplay/game_state.h"
 #include "map/graph.h"
 #include "map/map.h"
 #include "unit/unit_manager.h"
-#include "gameplay/action.h"
 
 struct MovementComponent;
 
@@ -15,10 +16,10 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type);
 
 class MovementSystem {
    public:
-    explicit MovementSystem(const std::shared_ptr<UnitManager>& units,
-                            const std::shared_ptr<Map>& map);
+    explicit MovementSystem(const GameState& state);
 
-    bool init_movement(HexCoordinate coord);
+    bool init_movement(HexCoordinate coord, std::vector<std::string> teams,
+                       std::vector<std::string> hostile_teams);
 
     bool is_moving() const;
     void reset();
@@ -33,6 +34,9 @@ class MovementSystem {
     const std::shared_ptr<UnitManager> _units{nullptr};
     const std::shared_ptr<Map> _map{nullptr};
 
+    std::map<std::string, std::set<Unit::IdType>> _teams{};
+
+    std::set<int> _sticky_sites{};
     std::map<int, int> _distances{};
     std::map<int, int> _paths{};
 };

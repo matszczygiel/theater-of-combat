@@ -36,12 +36,9 @@ void Game::initialize() {
     _window.setFramerateLimit(60);
 
     app_info("Loading font.");
-    _map_gfx.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
-    _map_gfx.layout->size = sf::Vector2f{50.f, 50.f};
-
+    _gfx_state.map.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
     auto& map = *_state.scenario.map;
     map       = Map::create_test_map();
-    _map_gfx.update(map);
 
     auto& lua = lua::get_state();
     map::lua_push_functions();
@@ -92,7 +89,6 @@ void Game::initialize() {
         _state.push_action(std::make_unique<UndoPreviousAction>());
     };
 
-    _unit_gfx.update(units);
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -161,25 +157,12 @@ void Game::update(const sf::Time& elapsed_time) {
 
     show_network_prompt(_network, "Network status", nullptr);
 
-    _map_gfx.update(*_state.scenario.map);
-    _unit_gfx.update(*_state.scenario.units);
+    _gfx_state.update();
 
     // engine_trace("Updating");
 }
 
-void Game::render() {
-    _map_gfx.draw_hexes(_window);
-    _map_gfx.draw_rivers(_window);
-    _map_gfx.draw_outlines(_window);
-
-    for (const auto& shape : _highlighted_hexes) {
-        _window.draw(shape);
-    }
-
-    _map_gfx.draw_coords(_window);
-
-    _unit_gfx.draw_tokens(_window);
-}
+void Game::render() { _gfx_state.draw(_window); }
 
 void Game::clear_loop() {}
 
@@ -204,10 +187,10 @@ void Game::key_pressed_event(const sf::Keyboard::Key& key) {
             _moving_view_left = true;
             break;
         case sf::Keyboard::W:
-            _map_gfx.layout->size.y /= map_tilt_speed;
+            _gfx_state.layout->size.y /= map_tilt_speed;
             break;
         case sf::Keyboard::S:
-            _map_gfx.layout->size.y *= map_tilt_speed;
+            _gfx_state.layout->size.y *= map_tilt_speed;
             break;
         default:
             break;
@@ -241,7 +224,7 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                                       const sf::Vector2f& position) {
     switch (button) {
         case sf::Mouse::Left: {
-            const auto coord = world_point_to_hex(position, *_map_gfx.layout);
+            const auto coord = world_point_to_hex(position, *_gfx_state.layout);
             if (!_moving_system->is_moving()) {
                 _moving_system->init_movement(coord);
             } else {
@@ -276,22 +259,22 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
 }
 
 void Game::mouse_moved_event(const sf::Vector2f& position) {
-    _highlighted_hexes.clear();
-    const auto coord = world_point_to_hex(position, *_map_gfx.layout);
+    _gfx_state.highlighted_hexes.clear();
+    const auto coord = world_point_to_hex(position, *_gfx_state.layout);
 
     if (_moving_system->is_moving()) {
         const auto path = _moving_system->path_preview(coord);
-        for (const auto [hex_coord, shape] : _map_gfx.hexes) {
+        for (const auto [hex_coord, shape] : _gfx_state.map.hexes) {
             if (std::any_of(path.cbegin(), path.cend(),
                             [hex_coord = hex_coord](const auto& x) {
                                 return x == hex_coord;
                             })) {
-                _highlighted_hexes.push_back(shape.highlighting_shape());
+                _gfx_state.highlighted_hexes.push_back(shape.highlighting_shape());
             }
         }
     } else {
-        _highlighted_hexes.push_back(
-            std::find_if(_map_gfx.hexes.cbegin(), _map_gfx.hexes.cend(),
+        _gfx_state.highlighted_hexes.push_back(
+            std::find_if(_gfx_state.map.hexes.cbegin(), _gfx_state.map.hexes.cend(),
                          [&](const auto& hex) { return hex.first == coord; })
                 ->second.highlighting_shape());
     }

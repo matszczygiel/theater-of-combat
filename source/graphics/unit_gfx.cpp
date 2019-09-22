@@ -2,7 +2,7 @@
 
 #include "unit/unit_components.h"
 
-UnitGfx::UnitGfx(MapGfx& map) : _layout{map.layout} {}
+UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
 
 void UnitGfx::update(UnitManager& manager) {
     tokens.clear();

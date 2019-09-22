@@ -6,13 +6,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "map/hexagons.h"
 #include "token.h"
 #include "unit/unit_manager.h"
 #include "map_gfx.h"
 
 struct UnitGfx {
-    UnitGfx(MapGfx& map);
+    UnitGfx(std::shared_ptr<Layout>& layout);
     void update(UnitManager& manager);
     void draw_tokens(sf::RenderTarget& target) const;
 

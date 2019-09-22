@@ -1,15 +1,17 @@
 #include "map_gfx.h"
 
+MapGfx::MapGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
+
 void MapGfx::update(const Map& map) {
     hexes.clear();
     for (const auto& [id, site] : map.hexes()) {
         hexes.emplace_back(
-            std::make_pair(site.coord(), HexShape{layout, site}));
+            std::make_pair(site.coord(), HexShape{_layout, site}));
     }
 
     rivers.clear();
     for (const auto& [id, site] : map.rivers()) {
-        rivers.emplace_back(RiverShape{layout, site});
+        rivers.emplace_back(RiverShape{_layout, site});
     }
 }
 
@@ -29,7 +31,7 @@ void MapGfx::draw_coords(sf::RenderTarget& target) const {
     for (const auto& [coord, shape] : hexes) {
         auto text = sf::Text{
             std::to_string(coord.q()) + "  " + std::to_string(coord.p()), font,
-            static_cast<unsigned int>(layout->size.x * 0.5)};
+            static_cast<unsigned int>(_layout->size.x * 0.5)};
 
         text.setFillColor(sf::Color::Magenta);
         text.setOutlineColor(sf::Color::Magenta);

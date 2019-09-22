@@ -1,13 +1,10 @@
 #ifndef GAME_APP_H
 #define GAME_APP_H
 
-#include <vector>
-
 #include "application.h"
 #include "core/resource_manager.h"
 #include "gameplay/game_state.h"
-#include "graphics/map_gfx.h"
-#include "graphics/unit_gfx.h"
+#include "graphics/graphics_state.h"
 #include "gui/console.h"
 #include "gui/log_window.h"
 #include "map/map.h"
@@ -40,9 +37,7 @@ class Game : public Application {
 
    private:
     GameState _state{};
-
-    std::vector<sf::ConvexShape> _highlighted_hexes{};
-    MapGfx _map_gfx{};
+    GfxState _gfx_state{_state};
 
     bool _moving_view_up{false};
     bool _moving_view_down{false};
@@ -53,8 +48,6 @@ class Game : public Application {
     ConsoleWindow _console{"Lua console"};
 
     ResourceManager _res_manager{"resources/"};
-
-    UnitGfx _unit_gfx{_map_gfx};
 
     std::shared_ptr<mover::MovementSystem> _moving_system{
         std::make_shared<mover::MovementSystem>(_state.scenario.units,

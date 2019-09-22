@@ -11,7 +11,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <cereal/types/utility.hpp>
 
-
 template <typename T>
 class HexCoordinates {
     static_assert(std::is_arithmetic<T>::value,
@@ -30,19 +29,19 @@ class HexCoordinates {
     HexCoordinates<T> neighbor(int direction) const;
     std::array<HexCoordinates<T>, 6> neighbors() const;
 
-    const T &p() const { return _z; }
-    const T &q() const { return _x; }
+    const T& p() const { return _z; }
+    const T& q() const { return _x; }
 
-    const T &x() const { return _x; }
-    const T &y() const { return _y; }
-    const T &z() const { return _z; }
+    const T& x() const { return _x; }
+    const T& y() const { return _y; }
+    const T& z() const { return _z; }
 
     T length() const;
 
     static HexCoordinates<T> origin() { return HexCoordinates<T>(); }
 
     template <class Archive>
-    void serialize(Archive &archive);
+    void serialize(Archive& archive);
 
    private:
     T _x;
@@ -61,7 +60,7 @@ const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::directions = {
     HexCoordinates<T>(-1, 0, 1), HexCoordinates<T>(0, -1, 1),
 };
 
-HexCoordinate round(const HexCoordinateFractional &hex);
+HexCoordinate round(const HexCoordinateFractional& hex);
 
 template <typename T>
 T HexCoordinates<T>::length() const {
@@ -69,31 +68,31 @@ T HexCoordinates<T>::length() const {
 }
 
 template <typename T, typename U>
-typename std::common_type<T, U>::type distance(const HexCoordinates<T> &lhs,
-                                               const HexCoordinates<U> &rhs) {
+typename std::common_type<T, U>::type distance(const HexCoordinates<T>& lhs,
+                                               const HexCoordinates<U>& rhs) {
     return (lhs - rhs).length();
 }
 
 template <typename T>
-bool operator==(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+bool operator==(const HexCoordinates<T>& lhs, const HexCoordinates<T>& rhs) {
     return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
 }
 
 template <typename T>
-bool operator!=(const HexCoordinates<T> &lhs, const HexCoordinates<T> &rhs) {
+bool operator!=(const HexCoordinates<T>& lhs, const HexCoordinates<T>& rhs) {
     return !(lhs == rhs);
 }
 
 template <typename T, typename U>
 HexCoordinates<typename std::common_type<T, U>::type> operator+(
-    const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) {
     return HexCoordinates<typename std::common_type<T, U>::type>(
         lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z());
 }
 
 template <typename T, typename U>
 HexCoordinates<typename std::common_type<T, U>::type> operator-(
-    const HexCoordinates<T> &lhs, const HexCoordinates<U> &rhs) {
+    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) {
     return HexCoordinates<typename std::common_type<T, U>::type>(
         lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z());
 }
@@ -113,21 +112,21 @@ std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const {
 
 template <typename T, typename U>
 HexCoordinates<typename std::common_type<T, U>::type> operator*(
-    const T &lhs, const HexCoordinates<U> &rhs) {
+    const T& lhs, const HexCoordinates<U>& rhs) {
     return HexCoordinates<typename std::common_type<T, U>::type>(
         lhs * rhs.x(), lhs * rhs.y(), lhs * rhs.z());
 }
 
 template <typename T, typename U>
 HexCoordinates<typename std::common_type<T, U>::type> operator*(
-    const HexCoordinates<T> &lhs, const U &rhs) {
+    const HexCoordinates<T>& lhs, const U& rhs) {
     return rhs * lhs;
 }
 
 template <typename T>
 template <class Archive>
-void HexCoordinates<T>::serialize(Archive &archive) {
-    archive( CEREAL_NVP(_x),  CEREAL_NVP(_y),  CEREAL_NVP(_z));
+void HexCoordinates<T>::serialize(Archive& archive) {
+    archive(CEREAL_NVP(_x), CEREAL_NVP(_y), CEREAL_NVP(_z));
 }
 
 struct Orientation {
@@ -144,14 +143,14 @@ struct Orientation {
 };
 
 struct Layout {
-    Orientation orientation;
-    sf::Vector2f size;
-    sf::Vector2f origin;
+    Orientation orientation{Orientation::Pointy};
+    sf::Vector2f size{50.0, 50.0};
+    sf::Vector2f origin{0.0, 0.0};
 
     sf::Vector2f cornerr_offset(int corner) const;
 };
 
-sf::Vector2f hex_to_world_point(const HexCoordinate &hex, const Layout &layout);
-HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout &layout);
+sf::Vector2f hex_to_world_point(const HexCoordinate& hex, const Layout& layout);
+HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout& layout);
 
 #endif

@@ -4,15 +4,22 @@
 #include <memory>
 
 #include "gameplay/game_state.h"
+#include "graphics/graphics_state.h"
+
+
+namespace debug_info {
 
 class DebugInfoSystem {
     public:
-     explicit DebugInfoSystem(GameState& state);
+     explicit DebugInfoSystem(const GameState& state);
 
-    
+     void debug_action(const std::unique_ptr<Action>& action) const;
+
     private:
-     std::shared_ptr<Map> _map{nullptr};
-     std::shared_ptr<UnitManager> _units{nullptr};
+     const std::shared_ptr<Map> _map{nullptr};
+     const std::shared_ptr<UnitManager> _units{nullptr};
 };
+
+}
 
 #endif

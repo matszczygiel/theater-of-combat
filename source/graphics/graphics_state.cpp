@@ -19,7 +19,10 @@ void GfxState::draw(sf::RenderTarget& target) const {
         target.draw(shape);
     }
 
-    map.draw_coords(target);
+    if (debug_coords)
+        map.draw_coords(target, font);
 
     units.draw_tokens(target);
+    if(debug_units)
+        units.draw_ids(target, font);
 }

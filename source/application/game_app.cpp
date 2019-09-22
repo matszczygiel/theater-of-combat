@@ -36,7 +36,8 @@ void Game::initialize() {
     _window.setFramerateLimit(60);
 
     app_info("Loading font.");
-    _gfx_state.map.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+    _gfx_state.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+    
     auto& map = *_state.scenario.map;
     map       = Map::create_test_map();
 
@@ -86,7 +87,7 @@ void Game::initialize() {
     };
 
     lua["undo_action"] = [&]() {
-        _state.push_action(std::make_unique<UndoPreviousAction>());
+        _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
 
 }
@@ -121,9 +122,7 @@ void Game::update(const sf::Time& elapsed_time) {
             app_debug("Sending packet...");
             std::visit([&](auto&& net) { net.send(p); }, _network);
             app_debug("Done");
-            _state.push_action(std::move(a));
         }
-        _pending_actions.clear();
 
     } else if (_action_provider == ActionProvider::remote) {
         _pending_actions.clear();
@@ -142,9 +141,15 @@ void Game::update(const sf::Time& elapsed_time) {
                 ar(a);
             }
 
-            _state.push_action(std::move(a));
+            _pending_actions.push_back(std::move(a));
         }
     }
+
+    for(auto& a : _pending_actions) {
+        debug_info.debug_action(a);
+        _state.push_action(std::move(a));
+    }
+    _pending_actions.clear();
 
     show_dock_space_window(nullptr);
 

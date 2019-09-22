@@ -27,11 +27,11 @@ void MapGfx::draw_outlines(sf::RenderTarget& target) const {
     }
 }
 
-void MapGfx::draw_coords(sf::RenderTarget& target) const {
+void MapGfx::draw_coords(sf::RenderTarget& target, const sf::Font& font) const {
     for (const auto& [coord, shape] : hexes) {
         auto text = sf::Text{
-            std::to_string(coord.q()) + "  " + std::to_string(coord.p()), font,
-            static_cast<unsigned int>(_layout->size.x * 0.5)};
+            std::to_string(coord.q()) + "    " + std::to_string(coord.p()), font,
+            static_cast<unsigned int>(_layout->size.x * 0.3)};
 
         text.setFillColor(sf::Color::Magenta);
         text.setOutlineColor(sf::Color::Magenta);

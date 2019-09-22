@@ -11,6 +11,7 @@
 #include "networking/client.h"
 #include "networking/server.h"
 #include "systems/mover.h"
+#include "systems/debug_info.h"
 #include "unit/unit.h"
 
 class Game : public Application {
@@ -52,6 +53,8 @@ class Game : public Application {
     std::shared_ptr<mover::MovementSystem> _moving_system{
         std::make_shared<mover::MovementSystem>(_state.scenario.units,
                                                 _state.scenario.map)};
+
+    debug_info::DebugInfoSystem debug_info{_state};
 
     enum class ActionProvider { local, remote };
     ActionProvider _action_provider{ActionProvider::local};

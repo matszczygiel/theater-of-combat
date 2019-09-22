@@ -20,7 +20,12 @@ class GfxState {
     MapGfx map{layout};
     UnitGfx units{layout};
 
+    bool debug_coords{true};
+    bool debug_units{true};
+
     std::vector<sf::ConvexShape> highlighted_hexes{};
+
+    sf::Font font;
 
    private:
     const std::shared_ptr<Map> _map;

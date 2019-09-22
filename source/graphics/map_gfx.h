@@ -16,13 +16,11 @@ struct MapGfx {
     void update(const Map& map);
     void draw_hexes(sf::RenderTarget& target) const;
     void draw_outlines(sf::RenderTarget& target) const;
-    void draw_coords(sf::RenderTarget& target) const;
+    void draw_coords(sf::RenderTarget& target, const sf::Font& font) const;
     void draw_rivers(sf::RenderTarget& target) const;
 
     std::vector<RiverShape> rivers{};
     std::vector<std::pair<HexCoordinate, HexShape>> hexes{};
-
-    sf::Font font{};
 
    private:
     std::shared_ptr<Layout> _layout{new Layout{

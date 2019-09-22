@@ -14,6 +14,7 @@ struct UnitGfx {
     UnitGfx(std::shared_ptr<Layout>& layout);
     void update(UnitManager& manager);
     void draw_tokens(sf::RenderTarget& target) const;
+    void draw_ids(sf::RenderTarget& target, const sf::Font& font) const;
 
     std::vector<std::pair<Unit::IdType, Token>> tokens{};
 

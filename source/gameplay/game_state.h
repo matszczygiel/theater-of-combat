@@ -17,10 +17,10 @@
 
 class Scenario {
    public:
-    std::shared_ptr<std::map<std::string, std::set<Unit::IdType>>> teams{
-        std::make_shared<std::map<std::string, std::set<Unit::IdType>>>()};
-    std::shared_ptr<UnitManager> units{std::make_shared<UnitManager>()};
-    std::shared_ptr<Map> map{std::make_shared<Map>()};
+    std::map<std::string, std::set<Unit::IdType>> teams{};
+    UnitManager units{};
+    Map map{};
+    std::array<std::vector<std::string>, 2> player_teams{};
 
     void next_day();
     int current_day() const;
@@ -33,20 +33,29 @@ class Scenario {
 enum class GamePhase {
     not_started,
     movement,
+    battles,
 };
 
 class GameState {
    public:
     void push_action(std::unique_ptr<Action> action);
 
-    Scenario scenario{};
+    std::shared_ptr<Scenario> scenario{nullptr};
     GamePhase phase{GamePhase::not_started};
     std::array<Player, 2> players{};
-    decltype(players)::iterator local_player{};
-    decltype(players)::iterator current_player = players.begin();
+
+    void start();
+    bool set_local_player(std::string name);
+
+    void next_player();
 
    private:
     friend class UndoPreviousAction;
+
+    void next_phase();
+
+    decltype(players)::iterator local_player{};
+    decltype(players)::iterator current_player{};
 
     std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>
         _action_stack{};

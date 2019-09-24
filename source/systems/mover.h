@@ -34,7 +34,8 @@ class MovementSystem {
     const std::shared_ptr<UnitManager> _units{nullptr};
     const std::shared_ptr<Map> _map{nullptr};
 
-    std::map<std::string, std::set<Unit::IdType>> _teams{};
+    const std::shared_ptr<std::map<std::string, std::set<Unit::IdType>>>
+        _teams{nullptr};
 
     std::set<int> _sticky_sites{};
     std::map<int, int> _distances{};

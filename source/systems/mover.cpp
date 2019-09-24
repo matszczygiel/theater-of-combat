@@ -102,15 +102,17 @@ bool MovementSystem::init_movement(HexCoordinate coord,
 
     std::set<Unit::IdType> friendly;
     for (const auto& t : teams) {
-        if (auto it = _teams.find(t); it != _teams.end()) {
-            friendly.merge(it->second);
+        if (auto it = _teams->find(t); it != _teams->end()) {
+            auto set = it->second;
+            friendly.merge(set);
         }
     }
 
     std::set<Unit::IdType> hostile;
     for (const auto& t : hostile_teams) {
-        if (auto it = _teams.find(t); it != _teams.end()) {
-            hostile.merge(it->second);
+        if (auto it = _teams->find(t); it != _teams->end()) {
+            auto set = it->second;
+            hostile.merge(set);
         }
     }
 
@@ -163,21 +165,26 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
     HexCoordinate destination) {
     const auto path = path_indices(destination);
 
-    if(path.empty()) {
+    if (path.empty()) {
         reset();
         return nullptr;
     }
 
-    for()
+    const auto find = std::find_first_of(path.begin(), path.end(),
+                                   _sticky_sites.begin(), _sticky_sites.end());
 
-    const auto cost = it->second;
+    const bool immobilized  = find != path.end();
+    const auto true_dest_id = immobilized ? *find : path.back();
+
+    const auto cost = _distances.at(true_dest_id);
     auto new_cmp    = *_target_component;
     new_cmp.moving_pts -= cost;
     app_assert(new_cmp.moving_pts >= 0,
                "Unit {} has negative number of moving pts.", new_cmp.owner());
-    new_cmp.position = destination;
+    new_cmp.position = _map->get_hex_coord(true_dest_id);
+    new_cmp.immobilized = immobilized;
     reset();
-    return std::make_unique<MovementAction>(new_cmp);
+    return std::make_unique<MovementAction>(std::move(new_cmp));
 }
 
 std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {

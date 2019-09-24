@@ -17,7 +17,8 @@
 
 class Scenario {
    public:
-    std::map<std::string, std::set<Unit::IdType>> teams{};
+    std::shared_ptr<std::map<std::string, std::set<Unit::IdType>>> teams{
+        std::make_shared<std::map<std::string, std::set<Unit::IdType>>>()};
     std::shared_ptr<UnitManager> units{std::make_shared<UnitManager>()};
     std::shared_ptr<Map> map{std::make_shared<Map>()};
 

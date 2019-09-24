@@ -67,8 +67,8 @@ void Game::initialize() {
     auto cmp_1      = units.get_component<MovementComponent>(unit_id_1);
     cmp_1->position = HexCoordinate(-3, 0);
 
-    _state.scenario.teams["team 0"] = {unit_id_0};
-    _state.scenario.teams["team 1"] = {unit_id_1};
+    _state.scenario.teams->operator[]("team 0") = {unit_id_0};
+    _state.scenario.teams->operator[]("team 1") = {unit_id_1};
 
     _state.players = {Player("player 0", {"team 0"}),
                       Player("player 1", {"team 1"})};
@@ -230,10 +230,10 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     switch (button) {
         case sf::Mouse::Left: {
             const auto coord = world_point_to_hex(position, *_gfx_state.layout);
-            if (!_moving_system->is_moving()) {
-                _moving_system->init_movement(coord);
+            if (!_moving_system.is_moving()) {
+                _moving_system.init_movement(coord, _state.players[0].teams(), _state.players[1].teams());
             } else {
-                auto action = _moving_system->move_target(coord);
+                auto action = _moving_system.move_target(coord);
                 _pending_actions.push_back(std::move(action));
             }
         } break;
@@ -267,8 +267,8 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
     _gfx_state.highlighted_hexes.clear();
     const auto coord = world_point_to_hex(position, *_gfx_state.layout);
 
-    if (_moving_system->is_moving()) {
-        const auto path = _moving_system->path_preview(coord);
+    if (_moving_system.is_moving()) {
+        const auto path = _moving_system.path_preview(coord);
         for (const auto [hex_coord, shape] : _gfx_state.map.hexes) {
             if (std::any_of(path.cbegin(), path.cend(),
                             [hex_coord = hex_coord](const auto& x) {

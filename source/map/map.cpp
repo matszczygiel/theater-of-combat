@@ -179,12 +179,12 @@ std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
         return {};
 
     auto neighbors = it->second;
-    for (const auto node : it->second) {
+    for (const auto& node : it->second) {
         switch (type_of(node)) {
-            case SiteType::river:
-                neighbors.merge(_graph.adjacency_matrix().at(node));
-                break;
-
+            case SiteType::river: {
+                auto riv_neighbors = _graph.adjacency_matrix().at(node);
+                neighbors.merge(riv_neighbors);
+            } break;
             default:
                 break;
         }
@@ -192,10 +192,12 @@ std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
 
     neighbors.erase(id);
 
-    neighbors.erase(std::remove_if(neighbors.begin(), neighbors.end(),
-                                   [this](const auto& id) {
-                                       return type_of(id) != SiteType::hex;
-                                   }),
-                    neighbors.end());
+    for (auto i = neighbors.begin(); i != neighbors.end();) {
+        if (type_of(*i) != SiteType::hex) {
+            i = neighbors.erase(i);
+        } else {
+            ++i;
+        }
+    }
     return neighbors;
 }

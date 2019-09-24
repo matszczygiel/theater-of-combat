@@ -50,9 +50,7 @@ class Game : public Application {
 
     ResourceManager _res_manager{"resources/"};
 
-    std::shared_ptr<mover::MovementSystem> _moving_system{
-        std::make_shared<mover::MovementSystem>(_state.scenario.units,
-                                                _state.scenario.map)};
+    mover::MovementSystem _moving_system{_state};
 
     debug_info::DebugInfoSystem debug_info{_state};
 

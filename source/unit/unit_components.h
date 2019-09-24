@@ -16,6 +16,7 @@ struct MovementComponent : public ComponentBase {
 
     int moving_pts{};
     std::optional<HexCoordinate> position{};
+    bool immobilized{false};
 
     const int& total_moving_pts() const;
 
@@ -29,7 +30,7 @@ struct MovementComponent : public ComponentBase {
 template <class Archive>
 void MovementComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(_total_moving_pts),
-            CEREAL_NVP(moving_pts), CEREAL_NVP(position));
+            CEREAL_NVP(moving_pts), CEREAL_NVP(position), CEREAL_NVP(immobilized));
 }
 
 #endif

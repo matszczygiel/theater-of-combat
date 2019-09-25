@@ -6,6 +6,36 @@
 #include "map/map.h"
 #include "map/types.h"
 
+static Map simple_test_map() {
+    Map res;
+    // hexes
+    res.insert(HexSite(HexCoordinate(-1, -1), HexType::field));
+    res.insert(HexSite(HexCoordinate(0, -1), HexType::forest));
+    res.insert(HexSite(HexCoordinate(1, -1), HexType::forest));
+    res.insert(HexSite(HexCoordinate(-2, 0), HexType::field));
+    res.insert(HexSite(HexCoordinate(-1, 0), HexType::field));
+    res.insert(HexSite(HexCoordinate(0, 0), HexType::forest));
+    res.insert(HexSite(HexCoordinate(1, 0), HexType::forest));
+    res.insert(HexSite(HexCoordinate(-2, 1), HexType::field));
+    res.insert(HexSite(HexCoordinate(-1, 1), HexType::field));
+    res.insert(HexSite(HexCoordinate(0, 1), HexType::field));
+
+    // rivers
+    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0),
+                         RiverType::small));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0),
+                         RiverType::small));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1),
+                         RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1),
+                         RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1),
+                         RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(-1, 1), HexCoordinate(0, 1),
+                         RiverType::stream));
+    return res;
+}
+
 TEST_CASE("hexagons") {
     SUBCASE("equality") {
         HexCoordinate coord1(1, 0, -1);
@@ -158,7 +188,6 @@ TEST_CASE("graph") {
 
         CHECK_EQ(bg.adjacency_matrix(), bg_expected.adjacency_matrix());
         CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
-
     }
 
     SUBCASE("dijkstra") {
@@ -251,5 +280,22 @@ TEST_CASE("map") {
             .insert_node(12, {5, 7});
 
         CHECK_EQ(map.graph(), graph);
+    }
+
+    SUBCASE("controlable hexes") {
+        const auto map               = simple_test_map();
+        const auto neighbors         = map.get_controlable_hexes_from(5);
+        const std::set<int> expected = {1, 2, 4, 6, 8, 9};
+        CHECK_EQ(neighbors, expected);
+    }
+
+    SUBCASE("id from coord") {
+        const auto map = simple_test_map();
+        CHECK_EQ(map.get_hex_coord(7), HexCoordinate(-2, 1));
+    }
+
+    SUBCASE("coord from id") {
+        const auto map = simple_test_map();
+        CHECK_EQ(map.get_hex_id(HexCoordinate(1, -1)), 2);
     }
 }

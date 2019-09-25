@@ -22,7 +22,7 @@ bool GameState::set_local_player(std::string name) {
     auto pos = std::find_if(std::begin(players), std::end(players),
                             [&](auto& p) { return p.name() == name; });
     if (pos != std::end(players)) {
-        local_player = pos;
+        local_player_index = std::distance(players.begin(), pos);
         return true;
     } else {
         return false;
@@ -40,6 +40,7 @@ void GameState::next_player() {
 
 void GameState::start() {
     app_assert(phase == GamePhase::not_started, "Game already started.");
+    app_assert(local_player_index.has_value(), "Local player not defined.");
     current_player = players.begin();
     phase          = GamePhase::movement;
 }

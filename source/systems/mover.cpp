@@ -97,6 +97,7 @@ bool MovementSystem::init_movement(HexCoordinate coord,
                                    std::vector<std::string> teams,
                                    std::vector<std::string> hostile_teams) {
     app_assert(!is_moving(), "Already moving unit.");
+    app_info("Initiating MovementSystem.");
 
     std::set<Unit::IdType> friendly;
     for (const auto& t : teams) {
@@ -117,9 +118,7 @@ bool MovementSystem::init_movement(HexCoordinate coord,
     _scenario->units.apply_for_each<MovementComponent>([&](auto& cmp) {
         if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
             _target_component = std::addressof(cmp);
-        } else if (hostile.count(cmp.owner()) == 1 && cmp.position) {
-            auto id = -_scenario->map.get_hex_id(cmp.position.value()).value();
-            _sticky_sites.merge(_scenario->map.get_controlable_hexes_from(id));
+            return false;
         }
         return true;
     });
@@ -127,6 +126,21 @@ bool MovementSystem::init_movement(HexCoordinate coord,
     if (!is_moving()) {
         reset();
         return false;
+    }
+
+    _scenario->units.apply_for_each<MovementComponent>([&](auto& cmp) {
+        if (hostile.count(cmp.owner()) == 1 && cmp.position) {
+            auto id = _scenario->map.get_hex_id(cmp.position.value()).value();
+            _sticky_sites.merge(_scenario->map.get_controlable_hexes_from(id));
+        }
+        return true;
+    });
+
+    {
+        std::string log;
+        for (const auto& site : _sticky_sites)
+            log += " " + std::to_string(site);
+        app_debug("_sticky sites ids: {}", log);
     }
 
     const auto graph =

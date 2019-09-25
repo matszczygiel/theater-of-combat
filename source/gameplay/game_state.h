@@ -6,6 +6,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <optional>
 
 #include <sol/load_result.hpp>
 
@@ -54,8 +55,8 @@ class GameState {
 
     void next_phase();
 
-    decltype(players)::iterator local_player{};
     decltype(players)::iterator current_player{};
+    std::optional<int> local_player_index{};
 
     std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>
         _action_stack{};

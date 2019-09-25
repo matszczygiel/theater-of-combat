@@ -233,12 +233,15 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     switch (button) {
         case sf::Mouse::Left: {
             const auto coord = world_point_to_hex(position, *_gfx_state.layout);
-            if (!_moving_system.is_moving()) {
-                _moving_system.init_movement(coord, _state.players[0].teams(),
-                                             _state.players[1].teams());
-            } else {
-                auto action = _moving_system.move_target(coord);
-                _pending_actions.push_back(std::move(action));
+            if (_state.is_local_player_now() && _state.phase == GamePhase::movement) {
+                if (!_moving_system.is_moving()) {
+                    _moving_system.init_movement(
+                        coord, _state.current_player().teams(),
+                        _state.opposite_player().teams());
+                } else {
+                    auto action = _moving_system.move_target(coord);
+                    _pending_actions.push_back(std::move(action));
+                }
             }
         } break;
 

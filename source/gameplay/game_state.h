@@ -50,12 +50,17 @@ class GameState {
 
     void next_player();
 
+    bool is_local_player_now() const;
+
+    const Player& current_player() const;
+    const Player& opposite_player() const;
+
    private:
     friend class UndoPreviousAction;
 
     void next_phase();
 
-    decltype(players)::iterator current_player{};
+    int current_player_index{-1};
     std::optional<int> local_player_index{};
 
     std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>

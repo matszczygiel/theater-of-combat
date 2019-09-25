@@ -28,8 +28,7 @@ class GfxState {
     sf::Font font;
 
    private:
-    const std::shared_ptr<Map> _map;
-    const std::shared_ptr<UnitManager> _units;
+    const std::shared_ptr<Scenario> _scenario{nullptr};
 };
 
 #endif

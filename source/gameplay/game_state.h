@@ -40,7 +40,7 @@ class GameState {
    public:
     void push_action(std::unique_ptr<Action> action);
 
-    std::shared_ptr<Scenario> scenario{nullptr};
+    std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
     GamePhase phase{GamePhase::not_started};
     std::array<Player, 2> players{};
 

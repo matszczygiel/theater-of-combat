@@ -5,7 +5,7 @@
 UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
 
 void UnitGfx::update(UnitManager& manager) {
-    tokens.clear();
+    clear();
     for (const auto& [id, unit] : manager.units()) {
         const auto mov_cmp = manager.get_component<MovementComponent>(id);
         if (!mov_cmp)
@@ -42,3 +42,5 @@ void UnitGfx::draw_ids(sf::RenderTarget& target, const sf::Font& font) const {
         target.draw(text);
     }
 }
+
+void UnitGfx::clear() { tokens.clear(); }

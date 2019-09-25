@@ -19,6 +19,8 @@ struct MapGfx {
     void draw_coords(sf::RenderTarget& target, const sf::Font& font) const;
     void draw_rivers(sf::RenderTarget& target) const;
 
+    void clear();
+
     std::vector<RiverShape> rivers{};
     std::vector<std::pair<HexCoordinate, HexShape>> hexes{};
 

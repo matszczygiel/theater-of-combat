@@ -10,7 +10,7 @@
 
 namespace debug_info {
 DebugInfoSystem::DebugInfoSystem(const GameState& state)
-    : _map{state.scenario.map}, _units{state.scenario.units} {}
+    : _scenario{state.scenario} {}
 
 void DebugInfoSystem::debug_action(const std::unique_ptr<Action>& action) const {
     app_info("Debugging action.");

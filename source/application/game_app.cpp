@@ -14,6 +14,7 @@
 #include "gui/dock_space.h"
 #include "gui/log_window.h"
 #include "gui/network_prompt.h"
+#include "lua/lua_gameplay.h"
 #include "lua/lua_map.h"
 #include "lua/lua_units.h"
 #include "unit/unit_components.h"
@@ -37,8 +38,8 @@ void Game::initialize() {
 
     app_info("Loading font.");
     _gfx_state.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
-    
-    auto& map = *_state.scenario.map;
+
+    auto& map = _state.scenario->map;
     map       = Map::create_test_map();
 
     auto& lua = lua::get_state();
@@ -50,7 +51,7 @@ void Game::initialize() {
     };
 
     units::lua_push_functions();
-    auto& units       = *_state.scenario.units;
+    auto& units       = _state.scenario->units;
     lua["game_units"] = std::ref(units);
     lua["save_units"] = [&](std::string name) {
         _res_manager.save(units, name);
@@ -67,8 +68,8 @@ void Game::initialize() {
     auto cmp_1      = units.get_component<MovementComponent>(unit_id_1);
     cmp_1->position = HexCoordinate(-3, 0);
 
-    _state.scenario.teams->operator[]("team 0") = {unit_id_0};
-    _state.scenario.teams->operator[]("team 1") = {unit_id_1};
+    _state.scenario->teams["team 0"] = {unit_id_0};
+    _state.scenario->teams["team 1"] = {unit_id_1};
 
     _state.players = {Player("player 0", {"team 0"}),
                       Player("player 1", {"team 1"})};
@@ -90,6 +91,8 @@ void Game::initialize() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
 
+    lua["game_state"] = std::ref(_state);
+    gameplay::lua_push_functions();
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -145,7 +148,7 @@ void Game::update(const sf::Time& elapsed_time) {
         }
     }
 
-    for(auto& a : _pending_actions) {
+    for (auto& a : _pending_actions) {
         debug_info.debug_action(a);
         _state.push_action(std::move(a));
     }
@@ -231,7 +234,8 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
         case sf::Mouse::Left: {
             const auto coord = world_point_to_hex(position, *_gfx_state.layout);
             if (!_moving_system.is_moving()) {
-                _moving_system.init_movement(coord, _state.players[0].teams(), _state.players[1].teams());
+                _moving_system.init_movement(coord, _state.players[0].teams(),
+                                             _state.players[1].teams());
             } else {
                 auto action = _moving_system.move_target(coord);
                 _pending_actions.push_back(std::move(action));
@@ -274,12 +278,14 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
                             [hex_coord = hex_coord](const auto& x) {
                                 return x == hex_coord;
                             })) {
-                _gfx_state.highlighted_hexes.push_back(shape.highlighting_shape());
+                _gfx_state.highlighted_hexes.push_back(
+                    shape.highlighting_shape());
             }
         }
     } else {
         _gfx_state.highlighted_hexes.push_back(
-            std::find_if(_gfx_state.map.hexes.cbegin(), _gfx_state.map.hexes.cend(),
+            std::find_if(_gfx_state.map.hexes.cbegin(),
+                         _gfx_state.map.hexes.cend(),
                          [&](const auto& hex) { return hex.first == coord; })
                 ->second.highlighting_shape());
     }

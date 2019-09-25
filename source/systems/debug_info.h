@@ -16,8 +16,7 @@ class DebugInfoSystem {
      void debug_action(const std::unique_ptr<Action>& action) const;
 
     private:
-     const std::shared_ptr<Map> _map{nullptr};
-     const std::shared_ptr<UnitManager> _units{nullptr};
+     const std::shared_ptr<Scenario> _scenario{nullptr};
 };
 
 }

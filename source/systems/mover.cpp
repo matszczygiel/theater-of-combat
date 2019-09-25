@@ -91,9 +91,7 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
 }
 
 MovementSystem::MovementSystem(const GameState& state)
-    : _units{state.scenario.units},
-      _map{state.scenario.map},
-      _teams{state.scenario.teams} {}
+    : _scenario{state.scenario} {}
 
 bool MovementSystem::init_movement(HexCoordinate coord,
                                    std::vector<std::string> teams,
@@ -102,7 +100,7 @@ bool MovementSystem::init_movement(HexCoordinate coord,
 
     std::set<Unit::IdType> friendly;
     for (const auto& t : teams) {
-        if (auto it = _teams->find(t); it != _teams->end()) {
+        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
             auto set = it->second;
             friendly.merge(set);
         }
@@ -110,18 +108,18 @@ bool MovementSystem::init_movement(HexCoordinate coord,
 
     std::set<Unit::IdType> hostile;
     for (const auto& t : hostile_teams) {
-        if (auto it = _teams->find(t); it != _teams->end()) {
+        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
             auto set = it->second;
             hostile.merge(set);
         }
     }
 
-    _units->apply_for_each<MovementComponent>([&](auto& cmp) {
+    _scenario->units.apply_for_each<MovementComponent>([&](auto& cmp) {
         if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
             _target_component = std::addressof(cmp);
         } else if (hostile.count(cmp.owner()) == 1 && cmp.position) {
-            auto id = _map->get_hex_id(cmp.position.value()).value();
-            _sticky_sites.merge(_map->get_controlable_hexes_from(id));
+            auto id = -_scenario->map.get_hex_id(cmp.position.value()).value();
+            _sticky_sites.merge(_scenario->map.get_controlable_hexes_from(id));
         }
         return true;
     });
@@ -132,9 +130,9 @@ bool MovementSystem::init_movement(HexCoordinate coord,
     }
 
     const auto graph =
-        make_weighted_graph(*_map, _target_component->owner_type());
+        make_weighted_graph(_scenario->map, _target_component->owner_type());
 
-    auto start_hex = _map->get_hex_id(coord);
+    auto start_hex = _scenario->map.get_hex_id(coord);
     app_assert(start_hex.has_value(),
                "Initializing movement with nonexistent hex on this map.");
 
@@ -170,8 +168,8 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
         return nullptr;
     }
 
-    const auto find = std::find_first_of(path.begin(), path.end(),
-                                   _sticky_sites.begin(), _sticky_sites.end());
+    const auto find = std::find_first_of(
+        path.begin(), path.end(), _sticky_sites.begin(), _sticky_sites.end());
 
     const bool immobilized  = find != path.end();
     const auto true_dest_id = immobilized ? *find : path.back();
@@ -181,7 +179,7 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
     new_cmp.moving_pts -= cost;
     app_assert(new_cmp.moving_pts >= 0,
                "Unit {} has negative number of moving pts.", new_cmp.owner());
-    new_cmp.position = _map->get_hex_coord(true_dest_id);
+    new_cmp.position    = _scenario->map.get_hex_coord(true_dest_id);
     new_cmp.immobilized = immobilized;
     reset();
     return std::make_unique<MovementAction>(std::move(new_cmp));
@@ -189,7 +187,7 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
 
 std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {
     app_assert(is_moving(), "No unit to preview path.");
-    auto dest_hex = _map->get_hex_id(destination);
+    auto dest_hex = _scenario->map.get_hex_id(destination);
     if (!dest_hex)
         return {};
 
@@ -215,7 +213,7 @@ std::vector<HexCoordinate> MovementSystem::path_preview(
     std::vector<HexCoordinate> res;
     res.reserve(ids.size());
     for (const auto& id : ids) {
-        res.push_back(_map->get_hex_coord(id).value());
+        res.push_back(_scenario->map.get_hex_coord(id).value());
     }
 
     return res;

@@ -38,7 +38,7 @@ MovementAction::MovementAction(const MovementComponent& component)
 
 void MovementAction::execute(GameState* state) {
     app_assert(!_old_component, "MovementAction executed more than once.");
-    auto& unit_man = *state->scenario.units;
+    auto& unit_man = state->scenario->units;
 
     const auto& owner = _new_component.owner();
     auto cmp          = unit_man.get_component<MovementComponent>(owner);
@@ -51,7 +51,7 @@ void MovementAction::execute(GameState* state) {
 void MovementAction::revert(GameState* state) {
     app_assert(_old_component.has_value(),
                "MovementAction reverted before executed.");
-    auto& unit_man = *state->scenario.units;
+    auto& unit_man = state->scenario->units;
 
     const auto& owner = _old_component.value().owner();
     auto cmp          = unit_man.get_component<MovementComponent>(owner);

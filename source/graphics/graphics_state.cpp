@@ -1,13 +1,18 @@
 #include "graphics_state.h"
 
-GfxState::GfxState(const GameState& state)
-    : _map{state.scenario.map}, _units{state.scenario.units} {
+GfxState::GfxState(const GameState& state) : _scenario{state.scenario} {
     update();
 }
 
 void GfxState::update() {
-    map.update(*_map);
-    units.update(*_units);
+    if (!_scenario) {
+        map.clear();
+        units.clear();
+        return;
+    }
+    
+    map.update(_scenario->map);
+    units.update(_scenario->units);
 }
 
 void GfxState::draw(sf::RenderTarget& target) const {
@@ -23,6 +28,6 @@ void GfxState::draw(sf::RenderTarget& target) const {
         map.draw_coords(target, font);
 
     units.draw_tokens(target);
-    if(debug_units)
+    if (debug_units)
         units.draw_ids(target, font);
 }

@@ -31,11 +31,7 @@ class MovementSystem {
    private:
     const MovementComponent* _target_component{nullptr};
 
-    const std::shared_ptr<UnitManager> _units{nullptr};
-    const std::shared_ptr<Map> _map{nullptr};
-
-    const std::shared_ptr<std::map<std::string, std::set<Unit::IdType>>>
-        _teams{nullptr};
+    const std::shared_ptr<Scenario> _scenario{nullptr};
 
     std::set<int> _sticky_sites{};
     std::map<int, int> _distances{};

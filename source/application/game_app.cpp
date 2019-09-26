@@ -44,20 +44,22 @@ void Game::initialize() {
 
     auto& lua = lua::get_state();
     map::lua_push_functions();
-    lua["game_map"] = std::ref(map);
-    lua["save_map"] = [&](std::string name) { _res_manager.save(map, name); };
-    lua["load_map"] = [&](std::string name) {
-        map = _res_manager.load<Map>(name);
+    lua["game_map"]      = std::ref(map);
+    lua["save_map_json"] = [&](std::string name) {
+        _res_manager.save_json(map, name);
+    };
+    lua["load_map_json"] = [&](std::string name) {
+        map = _res_manager.load_json<Map>(name);
     };
 
     units::lua_push_functions();
-    auto& units       = _state.scenario->units;
-    lua["game_units"] = std::ref(units);
-    lua["save_units"] = [&](std::string name) {
-        _res_manager.save(units, name);
+    auto& units            = _state.scenario->units;
+    lua["game_units"]      = std::ref(units);
+    lua["save_units_json"] = [&](std::string name) {
+        _res_manager.save_json(units, name);
     };
-    lua["load_units"] = [&](std::string name) {
-        units = _res_manager.load<UnitManager>(name);
+    lua["load_units_json"] = [&](std::string name) {
+        units = _res_manager.load_json<UnitManager>(name);
     };
 
     auto unit_id_0  = units.create(UnitType::mechanized, "test unit 0", true);
@@ -78,8 +80,20 @@ void Game::initialize() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
 
-    lua["game_state"] = std::ref(_state);
     gameplay::lua_push_functions();
+    lua["game_state"]           = std::ref(_state);
+    lua["game_scenario"]        = std::ref(*_state.scenario);
+    lua["load_scenario_script"] = [&](std::string name) {
+        std::ifstream lua_script(_res_manager.resources_path().string() +
+                                 "/scenarios/" + name + ".lua");
+        if (!lua_script.is_open())
+            return false;
+
+        std::string str((std::istreambuf_iterator<char>(lua_script)),
+                        std::istreambuf_iterator<char>());
+
+        return _state.scenario->load_script(str);
+    };
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -220,7 +234,8 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     switch (button) {
         case sf::Mouse::Left: {
             const auto coord = world_point_to_hex(position, *_gfx_state.layout);
-            if (_state.is_local_player_now() && _state.phase == GamePhase::movement) {
+            if (_state.is_local_player_now() &&
+                _state.phase == GamePhase::movement) {
                 if (!_moving_system.is_moving()) {
                     _moving_system.init_movement(
                         coord, _state.current_player().teams(),

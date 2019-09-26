@@ -79,7 +79,7 @@ Resource ResourceManager::load_json(std::string name) const {
 }
 
 template <class Resource>
-void ResourceManager::save_json(Resource& res, std::string name) const {
+void ResourceManager::save_bin(Resource& res, std::string name) const {
     static_assert(std::is_default_constructible<Resource>::value,
                   "Resource type must implement cereal serialization.");
 
@@ -130,8 +130,9 @@ fs::path ResourceManager::make_path_json(std::string name) const {
 
 template <class Resource>
 bool ResourceManager::is_registered() const {
-    return _type_dirs_and_postfixes.find(std::type_index(typeid(Resource))) ! =
-               _type_dirs_and_postfixes.end();
+    const auto it =
+        _type_dirs_and_postfixes.find(std::type_index(typeid(Resource)));
+    return it != _type_dirs_and_postfixes.end();
 }
 
 template <class Resource>

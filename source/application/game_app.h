@@ -1,6 +1,8 @@
 #ifndef GAME_APP_H
 #define GAME_APP_H
 
+#include <variant>
+
 #include "application.h"
 #include "core/resource_manager.h"
 #include "gameplay/game_state.h"

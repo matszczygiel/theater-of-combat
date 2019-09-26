@@ -5,21 +5,50 @@
 
 void Scenario::next_day() {
     ++_current_day;
-    if (auto it = _daily_scripts.find(_current_day);
-        it != _daily_scripts.end()) {
-        auto result =
-            lua::get_state().safe_script(it->second, sol::script_pass_on_error);
-        if (!result.valid()) {
-            app_error("Scenario's daily (day {}) lua script failed",
-                      _current_day);
-            sol::error err = result;
-            app_error("Error message: {}", err.what());
-            app_debug("The script that failed\n{}", it->second);
-        }
+    sol::protected_function daily = lua::get_state()["day"];
+    auto res                      = daily(_current_day);
+    if (!res.valid()) {
+        app_error("Scenario's daily (day {}) lua script failed on load.",
+                  _current_day);
+        sol::error err = res;
+        app_error("Error message: {}", err.what());
+        app_debug("The script that failed\n{}", _script);
     }
 }
 
+bool Scenario::load_script(const std::string& script) {
+    _script = script;
+    if (!prepare_lua_state()) {
+        _script.clear();
+        return false;
+    }
+    sol::protected_function initializer = lua::get_state()["init"];
+    auto res                            = initializer();
+    if (!res.valid()) {
+        app_error("Scenario's initializing lua script failed on load.");
+        sol::error err = res;
+        app_error("Error message: {}", err.what());
+        app_debug("The script that failed\n{}", _script);
+        _script.clear();
+        return false;
+    }
+    return true;
+}
+
 int Scenario::current_day() const { return _current_day; }
+
+bool Scenario::prepare_lua_state() const {
+    auto result =
+        lua::get_state().safe_script(_script, sol::script_pass_on_error);
+    if (!result.valid()) {
+        app_error("Scenario's lua script failed on load.");
+        sol::error err = result;
+        app_error("Error message: {}", err.what());
+        app_debug("The script that failed\n{}", _script);
+        return false;
+    }
+    return true;
+}
 
 void GameState::push_action(std::unique_ptr<Action> action) {
     if (action) {

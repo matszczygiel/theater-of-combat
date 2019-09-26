@@ -13,6 +13,12 @@ void lua_push_functions() {
     state["start"]            = &GameState::start;
     state["set_local_player"] = &GameState::set_local_player;
     state["next_player"]      = &GameState::next_player;
+
+    auto scenario                = lua.new_usertype<Scenario>("Scenario",
+                                             sol::constructors<Scenario()>());
+
+    scenario["teams"] = &Scenario::teams;
+    scenario["player_teams"] = &Scenario::player_teams;
 }
 
 }  // namespace gameplay

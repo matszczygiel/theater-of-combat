@@ -19,6 +19,7 @@
 #include "player.h"
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
+#include "core/log.h"
 
 
 class Scenario {
@@ -28,25 +29,41 @@ class Scenario {
     Map map{};
     std::array<std::vector<std::string>, 2> player_teams{};
 
+    bool load_script(const std::string& script);
+
+    void initialize();
     void next_day();
     int current_day() const;
 
     template <class Archive>
-    void serialize(Archive& archive);
+    void save(Archive& archive);
+
+    template <class Archive>
+    void load(Archive& archive);
 
    private:
+    bool prepare_lua_state() const;
+
     int _current_day{1};
-    std::map<int, std::string> _daily_scripts{};
+    std::string _script{};
 };
 
 template <class Archive>
-void Scenario::serialize(Archive& archive) {
+void Scenario::save(Archive& archive) {
     archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
             CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
-            CEREAL_NVP(_daily_scripts));
+            CEREAL_NVP(_script));
 }
 
-Scenario load_scenario(ResourceManager& rm);
+
+template <class Archive>
+void Scenario::load(Archive& archive) {
+    archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
+            CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
+            CEREAL_NVP(_script));
+
+    prepare_lua_state();
+}
 
 enum class GamePhase {
     not_started,

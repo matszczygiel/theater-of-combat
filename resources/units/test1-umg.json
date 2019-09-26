@@ -1,0 +1,57 @@
+{
+    "value0": {
+        "_current_free_id": 2,
+        "_units": [
+            {
+                "key": 0,
+                "value": {
+                    "_name": "test unit 0",
+                    "_type": 1
+                }
+            },
+            {
+                "key": 1,
+                "value": {
+                    "_name": "test unit 1",
+                    "_type": 1
+                }
+            }
+        ],
+        "MovementComponent's": [
+            {
+                "value0": {
+                    "_owner": 0,
+                    "_owner_type": 1
+                },
+                "_total_moving_pts": 20,
+                "moving_pts": 20,
+                "position": {
+                    "nullopt": false,
+                    "data": {
+                        "_x": -1,
+                        "_y": 0,
+                        "_z": 1
+                    }
+                },
+                "immobilized": false
+            },
+            {
+                "value0": {
+                    "_owner": 1,
+                    "_owner_type": 1
+                },
+                "_total_moving_pts": 20,
+                "moving_pts": 20,
+                "position": {
+                    "nullopt": false,
+                    "data": {
+                        "_x": -3,
+                        "_y": 3,
+                        "_z": 0
+                    }
+                },
+                "immobilized": false
+            }
+        ]
+    }
+}

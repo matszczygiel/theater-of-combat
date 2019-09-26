@@ -3,12 +3,16 @@
 
 #include <map>
 #include <memory>
+#include <optional>
 #include <set>
 #include <string>
 #include <vector>
-#include <optional>
 
-#include <sol/load_result.hpp>
+#include <cereal/types/array.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/set.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/vector.hpp>
 
 #include "action.h"
 #include "map/map.h"
@@ -26,10 +30,20 @@ class Scenario {
     void next_day();
     int current_day() const;
 
+    template <class Archive>
+    void serialize(Archive& archive);
+
    private:
     int _current_day{1};
-    std::map<int, sol::load_result> _daily_scripts{};
+    std::map<int, std::string> _daily_scripts{};
 };
+
+template <class Archive>
+void Scenario::serialize(Archive& archive) {
+    archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
+            CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
+            CEREAL_NVP(_daily_scripts));
+}
 
 enum class GamePhase {
     not_started,
@@ -55,6 +69,9 @@ class GameState {
     const Player& current_player() const;
     const Player& opposite_player() const;
 
+    template <class Archive>
+    void serialize(Archive& archive);
+
    private:
     friend class UndoPreviousAction;
 
@@ -66,5 +83,11 @@ class GameState {
     std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>
         _action_stack{};
 };
+
+template <class Archive>
+void GameState::serialize(Archive& archive) {
+    archive(CEREAL_NVP(*scenario), CEREAL_NVP(phase), CEREAL_NVP(players),
+            CEREAL_NVP(current_player_index), CEREAL_NVP(_action_stack));
+}
 
 #endif

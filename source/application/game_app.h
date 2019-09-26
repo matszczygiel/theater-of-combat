@@ -54,11 +54,6 @@ class Game : public Application {
 
     debug_info::DebugInfoSystem debug_info{_state};
 
-    enum class ActionProvider { local, remote };
-    ActionProvider _action_provider{ActionProvider::local};
-
-    std::string _local_player_name{"Your name"};
-
     std::vector<std::unique_ptr<Action>> _pending_actions{};
 
     enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };

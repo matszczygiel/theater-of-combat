@@ -74,19 +74,6 @@ void Game::initialize() {
     _state.players = {Player("player 0", {"team 0"}),
                       Player("player 1", {"team 1"})};
 
-    lua["switch_action_provider"] = [&]() {
-        switch (_action_provider) {
-            case ActionProvider::remote:
-                _action_provider = ActionProvider::local;
-                app_info("_action_provider switched to local.");
-                return;
-            case ActionProvider::local:
-                _action_provider = ActionProvider::remote;
-                app_info("_action_provider switched to remote.");
-                return;
-        }
-    };
-
     lua["undo_action"] = [&]() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
@@ -112,7 +99,7 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    if (_action_provider == ActionProvider::local) {
+    if (_state.is_local_player_now()) {
         for (auto& a : _pending_actions) {
             auto header = static_cast<sf::Int8>(PacketHeader::action);
             std::ostringstream ss{std::ios::out | std::ios::binary};
@@ -127,7 +114,7 @@ void Game::update(const sf::Time& elapsed_time) {
             app_debug("Done");
         }
 
-    } else if (_action_provider == ActionProvider::remote) {
+    } else {
         _pending_actions.clear();
 
         sf::Int8 header = 0;

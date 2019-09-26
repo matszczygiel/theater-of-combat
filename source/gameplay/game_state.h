@@ -20,6 +20,7 @@
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
 
+
 class Scenario {
    public:
     std::map<std::string, std::set<Unit::IdType>> teams{};
@@ -44,6 +45,8 @@ void Scenario::serialize(Archive& archive) {
             CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
             CEREAL_NVP(_daily_scripts));
 }
+
+Scenario load_scenario(ResourceManager& rm);
 
 enum class GamePhase {
     not_started,

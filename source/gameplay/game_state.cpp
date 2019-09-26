@@ -1,10 +1,21 @@
 #include "game_state.h"
 
+#include "core/log.h"
+#include "core/lua_vm.h"
+
 void Scenario::next_day() {
     ++_current_day;
     if (auto it = _daily_scripts.find(_current_day);
         it != _daily_scripts.end()) {
-        it->second();
+        auto result =
+            lua::get_state().safe_script(it->second, sol::script_pass_on_error);
+        if (!result.valid()) {
+            app_error("Scenario's daily (day {}) lua script failed",
+                      _current_day);
+            sol::error err = result;
+            app_error("Error message: {}", err.what());
+            app_debug("The script that failed\n{}", it->second);
+        }
     }
 }
 
@@ -51,6 +62,7 @@ void GameState::next_phase() {
             break;
         case GamePhase::battles:
             phase = GamePhase::movement;
+            scenario->next_day();
             break;
         default:
             break;

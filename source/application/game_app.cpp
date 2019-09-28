@@ -40,8 +40,6 @@ void Game::initialize() {
     _gfx_state.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
 
     auto& map = _state.scenario->map;
-    map       = Map::create_test_map();
-
     auto& lua = lua::get_state();
     map::lua_push_functions();
     lua["game_map"]      = std::ref(map);
@@ -61,20 +59,6 @@ void Game::initialize() {
     lua["load_units_json"] = [&](std::string name) {
         units = _res_manager.load_json<UnitManager>(name);
     };
-
-    auto unit_id_0  = units.create(UnitType::mechanized, "test unit 0", true);
-    auto unit_id_1  = units.create(UnitType::mechanized, "test unit 1", true);
-    auto cmp_0      = units.get_component<MovementComponent>(unit_id_0);
-    cmp_0->position = HexCoordinate(-1, 1);
-
-    auto cmp_1      = units.get_component<MovementComponent>(unit_id_1);
-    cmp_1->position = HexCoordinate(-3, 0);
-
-    _state.scenario->teams["team 0"] = {unit_id_0};
-    _state.scenario->teams["team 1"] = {unit_id_1};
-
-    _state.players = {Player("player 0", {"team 0"}),
-                      Player("player 1", {"team 1"})};
 
     lua["undo_action"] = [&]() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
@@ -288,10 +272,12 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
             }
         }
     } else {
-        _gfx_state.highlighted_hexes.push_back(
-            std::find_if(_gfx_state.map.hexes.cbegin(),
-                         _gfx_state.map.hexes.cend(),
-                         [&](const auto& hex) { return hex.first == coord; })
-                ->second.highlighting_shape());
+        if (!_gfx_state.map.hexes.empty()) {
+            _gfx_state.highlighted_hexes.push_back(
+                std::find_if(
+                    _gfx_state.map.hexes.cbegin(), _gfx_state.map.hexes.cend(),
+                    [&](const auto& hex) { return hex.first == coord; })
+                    ->second.highlighting_shape());
+        }
     }
 }

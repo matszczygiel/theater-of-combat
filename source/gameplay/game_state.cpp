@@ -38,15 +38,15 @@ bool Scenario::load_script(const std::string& script) {
 int Scenario::current_day() const { return _current_day; }
 
 bool Scenario::prepare_lua_state() const {
-    auto result =
-        lua::get_state().safe_script(_script, sol::script_pass_on_error);
-    if (!result.valid()) {
+    app_info("Loading scenario's lua script.");
+    try {
+        lua::get_state().safe_script(_script, lua::error_handler);
+    } catch (sol::error& err) {
         app_error("Scenario's lua script failed on load.");
-        sol::error err = result;
-        app_error("Error message: {}", err.what());
         app_debug("The script that failed\n{}", _script);
         return false;
     }
+
     return true;
 }
 

@@ -21,7 +21,14 @@ function day(day_no)
 end
 
 graphics_config = {
-    
+    units = {
+        file = 'units.png',
+        token_size = 90,
+        specific_tokens = {
+            [0] = {x = 1, y = 0},
+            [1] = {x = 1, y = 1}
+        }
+    },
 }
 
     

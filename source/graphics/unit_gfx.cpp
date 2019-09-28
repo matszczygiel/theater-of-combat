@@ -14,6 +14,7 @@ void UnitGfx::setup(
     if (!loaded)
         app_error("Cannot load texture from file: {}", texture_path);
 
+    _texture.setSmooth(true);
     for (const auto& [id, unit] : manager.units()) {
         if (auto it = texture_positions.find(id);
             it != texture_positions.end() && loaded) {

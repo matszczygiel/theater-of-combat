@@ -76,7 +76,31 @@ void Game::initialize() {
         std::string str((std::istreambuf_iterator<char>(lua_script)),
                         std::istreambuf_iterator<char>());
 
-        return _state.scenario->load_script(str);
+        if (!_state.scenario->load_script(str))
+            return false;
+
+        auto units_config = lua["graphics_config"]["units"];
+        if (!units_config.valid())
+            return false;
+
+        std::string texture_path = units_config["file"];
+        texture_path             = "resources/textures/" + texture_path;
+        const int size           = units_config["token_size"].get_or(0);
+
+        std::map<Unit::IdType, sf::IntRect> texture_rects;
+        for (const auto& [id, _] : _state.scenario->units.units()) {
+            auto vec = units_config["specific_tokens"][id];
+            if (vec.valid()) {
+                const int x = vec["x"].get_or(0);
+                const int y = vec["y"].get_or(0);
+                texture_rects.emplace(
+                    id, sf::IntRect(size * x, size * y, size, size));
+            }
+        }
+
+        _gfx_state.units.setup(_state.scenario->units, texture_path,
+                               texture_rects);
+        return true;
     };
 
     lua["local_player_name"]       = std::ref(_local_player_name);
@@ -90,11 +114,6 @@ void Game::initialize() {
     set_local_player_index(0)
     game_state:start()
     )");
-
-    std::map<Unit::IdType, sf::IntRect> texture_rects = {
-        {0, sf::IntRect(90, 0, 90, 90)}, {1, sf::IntRect(90, 90, 90, 90)}};
-    _gfx_state.units.setup(_state.scenario->units,
-                           "resources/textures/units.png", texture_rects);
 }
 
 void Game::update(const sf::Time& elapsed_time) {

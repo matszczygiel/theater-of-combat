@@ -7,6 +7,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <stack>
 
 #include <cereal/types/array.hpp>
 #include <cereal/types/map.hpp>
@@ -16,7 +17,6 @@
 
 #include "action.h"
 #include "map/map.h"
-#include "player.h"
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
 #include "core/log.h"
@@ -31,7 +31,6 @@ class Scenario {
 
     bool load_script(const std::string& script);
 
-    void initialize();
     void next_day();
     int current_day() const;
 
@@ -44,7 +43,7 @@ class Scenario {
    private:
     bool prepare_lua_state() const;
 
-    int _current_day{1};
+    int _current_day{0};
     std::string _script{};
 };
 
@@ -77,17 +76,18 @@ class GameState {
 
     std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
     GamePhase phase{GamePhase::not_started};
-    std::array<Player, 2> players{};
+    std::array<std::string, 2> player_names{};
 
     void start();
-    bool set_local_player(std::string name);
-
     void next_player();
+    
+    bool set_local_player(std::string name);
+    void set_local_player(int index);
 
     bool is_local_player_now() const;
 
-    const Player& current_player() const;
-    const Player& opposite_player() const;
+    int current_player_index() const;
+    int opposite_player_index() const;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -97,8 +97,8 @@ class GameState {
 
     void next_phase();
 
-    int current_player_index{-1};
-    std::optional<int> local_player_index{};
+    int _current_player_index{-1};
+    std::optional<int> _local_player_index{};
 
     std::stack<std::unique_ptr<Action>, std::vector<std::unique_ptr<Action>>>
         _action_stack{};
@@ -106,8 +106,8 @@ class GameState {
 
 template <class Archive>
 void GameState::serialize(Archive& archive) {
-    archive(CEREAL_NVP(*scenario), CEREAL_NVP(phase), CEREAL_NVP(players),
-            CEREAL_NVP(current_player_index), CEREAL_NVP(_action_stack));
+    archive(CEREAL_NVP(*scenario), CEREAL_NVP(phase), CEREAL_NVP(player_names),
+            CEREAL_NVP(_current_player_index), CEREAL_NVP(_action_stack));
 }
 
 #endif

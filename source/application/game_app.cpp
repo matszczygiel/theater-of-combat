@@ -78,6 +78,12 @@ void Game::initialize() {
 
         return _state.scenario->load_script(str);
     };
+
+    lua["local_player_name"]       = std::ref(_local_player_name);
+    lua["parse_local_player_name"] = [&]() {
+        return _state.set_local_player(_local_player_name);
+    };
+    lua["set_local_player_index"] = [&](int i) { _state.set_local_player(i); };
 }
 
 void Game::update(const sf::Time& elapsed_time) {
@@ -222,8 +228,11 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 _state.phase == GamePhase::movement) {
                 if (!_moving_system.is_moving()) {
                     _moving_system.init_movement(
-                        coord, _state.current_player().teams(),
-                        _state.opposite_player().teams());
+                        coord,
+                        _state.scenario
+                            ->player_teams[_state.current_player_index()],
+                        _state.scenario
+                            ->player_teams[_state.opposite_player_index()]);
                 } else {
                     auto action = _moving_system.move_target(coord);
                     _pending_actions.push_back(std::move(action));

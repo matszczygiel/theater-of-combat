@@ -47,6 +47,8 @@ class Game : public Application {
     bool _moving_view_right{false};
     bool _moving_view_left{false};
 
+    std::string _local_player_name{};
+
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
 

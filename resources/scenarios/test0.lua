@@ -1,5 +1,6 @@
 
 function init()
+    print('Initializing scenario')
     load_map_json('test')
     load_units_json('test1')
     

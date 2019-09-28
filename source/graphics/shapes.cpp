@@ -34,7 +34,8 @@ const sf::ConvexShape& HexShape::outline_shape() const {
     return _outline_shape;
 }
 
-HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site)
+HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
+                   const sf::Texture* texture, const sf::IntRect& texture_rect)
     : _layout{layout}, _shape{6}, _highlighting_shape{6}, _outline_shape{6} {
     update(site);
 
@@ -45,6 +46,12 @@ HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site)
     _highlighting_shape.setFillColor(sf::Color(255, 0, 0, 120));
 
     _shape.setOutlineThickness(0.f);
+    if (texture) {
+        _shape.setTexture(texture);
+        _shape.setTextureRect(texture_rect);
+    } else {
+        _shape.setFillColor(site_color(site.type()));
+    }
 }
 
 void HexShape::update(const HexSite& site) {
@@ -63,8 +70,6 @@ void HexShape::update(const HexSite& site) {
 
     const auto thickness = std::min(_layout->size.x, _layout->size.y) * 0.04f;
     _outline_shape.setOutlineThickness(thickness);
-
-    _shape.setFillColor(site_color(site.type()));
 }
 
 RiverShape::RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site)

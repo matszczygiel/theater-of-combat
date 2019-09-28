@@ -1,12 +1,32 @@
 #include "map_gfx.h"
 
+#include "core/log.h"
+
 MapGfx::MapGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
+
+void MapGfx::setup(const Map& map, std::string texture_path,
+                   const std::map<HexType, sf::IntRect>& texture_positions) {
+    _texture_positions = texture_positions;
+
+    const auto loaded = _texture.loadFromFile(texture_path);
+    if (!loaded)
+        app_error("Cannot load tiles texture from file: {}", texture_path);
+
+    _texture.setSmooth(true);
+    update(map);
+}
 
 void MapGfx::update(const Map& map) {
     clear();
     for (const auto& [id, site] : map.hexes()) {
-        hexes.emplace_back(
-            std::make_pair(site.coord(), HexShape{_layout, site}));
+        if (auto it = _texture_positions.find(site.type());
+            it != _texture_positions.end()) {
+            hexes.emplace_back(std::make_pair(
+                site.coord(), HexShape{_layout, site, &_texture, it->second}));
+        } else {
+            hexes.emplace_back(std::make_pair(
+                site.coord(), HexShape{_layout, site, nullptr, sf::IntRect()}));
+        }
     }
 
     for (const auto& [id, site] : map.rivers()) {

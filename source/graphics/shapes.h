@@ -15,7 +15,8 @@ sf::Color site_color(RiverType type);
 
 class HexShape {
    public:
-    HexShape(std::shared_ptr<Layout> layout, const HexSite& site);
+    HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
+             const sf::Texture* texture, const sf::IntRect& texture_rect);
 
     void update(const HexSite& site);
 

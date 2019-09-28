@@ -100,6 +100,26 @@ void Game::initialize() {
 
         _gfx_state.units.setup(_state.scenario->units, texture_path,
                                texture_rects);
+
+        auto map_config = lua["graphics_config"]["map"];
+        if (!map_config.valid())
+            return false;
+
+        texture_path        = map_config["tiles_file"];
+        texture_path        = "resources/textures/" + texture_path;
+        const int tile_size = map_config["tile_size"].get_or(0);
+
+        sol::table hex_tiles = map_config["hex_tiles"];
+        std::map<HexType, sf::IntRect> tile_rects;
+        for (const auto& entry : hex_tiles) {
+            const auto key = static_cast<HexType>(entry.first.as<int>());
+            const int x    = entry.second.as<sol::table>()["x"].get_or(0);
+            const int y    = entry.second.as<sol::table>()["y"].get_or(0);
+            tile_rects.emplace(key, sf::IntRect(tile_size * x, tile_size * y,
+                                                tile_size, tile_size));
+        }
+        _gfx_state.map.setup(_state.scenario->map, texture_path, tile_rects);
+
         return true;
     };
 
@@ -312,11 +332,13 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
         }
     } else {
         if (!_gfx_state.map.hexes.empty()) {
-            _gfx_state.highlighted_hexes.push_back(
-                std::find_if(
+            if (auto it = std::find_if(
                     _gfx_state.map.hexes.cbegin(), _gfx_state.map.hexes.cend(),
-                    [&](const auto& hex) { return hex.first == coord; })
-                    ->second.highlighting_shape());
+                    [&](const auto& hex) { return hex.first == coord; });
+                it != _gfx_state.map.hexes.cend()) {
+                _gfx_state.highlighted_hexes
+                    .push_back(it->second.highlighting_shape());
+            }
         }
     }
 }

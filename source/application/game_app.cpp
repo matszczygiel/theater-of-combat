@@ -84,6 +84,17 @@ void Game::initialize() {
         return _state.set_local_player(_local_player_name);
     };
     lua["set_local_player_index"] = [&](int i) { _state.set_local_player(i); };
+
+    lua.script(R"(
+    load_scenario_script('test0')
+    set_local_player_index(0)
+    game_state:start()
+    )");
+
+    std::map<Unit::IdType, sf::IntRect> texture_rects = {
+        {0, sf::IntRect(90, 0, 90, 90)}, {1, sf::IntRect(90, 90, 90, 90)}};
+    _gfx_state.units.setup(_state.scenario->units,
+                           "resources/textures/units.png", texture_rects);
 }
 
 void Game::update(const sf::Time& elapsed_time) {

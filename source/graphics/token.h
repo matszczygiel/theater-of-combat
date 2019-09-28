@@ -10,7 +10,8 @@
 
 class Token {
    public:
-    Token(std::shared_ptr<Layout> layout, const HexCoordinate& site);
+    Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
+          const sf::Texture* texture, const sf::IntRect& texture_rect);
 
     void update(const HexCoordinate& site);
 

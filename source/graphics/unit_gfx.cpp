@@ -1,8 +1,31 @@
 #include "unit_gfx.h"
 
+#include "core/log.h"
 #include "unit/unit_components.h"
 
 UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
+
+void UnitGfx::setup(
+    UnitManager& manager, std::string texture_path,
+    const std::map<Unit::IdType, sf::IntRect>& texture_positions) {
+    _all_tokens.clear();
+
+    const auto loaded = _texture.loadFromFile(texture_path);
+    if (!loaded)
+        app_error("Cannot load texture from file: {}", texture_path);
+
+    for (const auto& [id, unit] : manager.units()) {
+        if (auto it = texture_positions.find(id);
+            it != texture_positions.end() && loaded) {
+            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
+                                          &_texture, it->second));
+        } else {
+            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
+                                          nullptr, sf::IntRect()));
+        }
+    }
+    update(manager);
+}
 
 void UnitGfx::update(UnitManager& manager) {
     clear();
@@ -15,7 +38,9 @@ void UnitGfx::update(UnitManager& manager) {
         if (!pos)
             continue;
 
-        tokens.emplace_back(std::make_pair(id, Token(_layout, *pos)));
+        _all_tokens.at(id).update(*pos);
+
+        tokens.emplace_back(std::make_pair(id, _all_tokens.at(id)));
     }
 }
 

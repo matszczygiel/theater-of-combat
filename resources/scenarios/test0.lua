@@ -20,5 +20,9 @@ function day(day_no)
     end
 end
 
+graphics_config = {
+    
+}
+
     
 

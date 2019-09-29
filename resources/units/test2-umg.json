@@ -1,6 +1,6 @@
 {
     "value0": {
-        "_current_free_id": 2,
+        "_current_free_id": 3,
         "_units": [
             {
                 "key": 0,
@@ -14,6 +14,13 @@
                 "value": {
                     "_name": "test unit 1",
                     "_type": 1
+                }
+            },
+            {
+                "key": 2,
+                "value": {
+                    "_name": "test unit 2",
+                    "_type": 0
                 }
             }
         ],
@@ -51,9 +58,25 @@
                     }
                 },
                 "immobilized": false
+            },
+            {
+                "value0": {
+                    "_owner": 2,
+                    "_owner_type": 0
+                },
+                "_total_moving_pts": 12,
+                "moving_pts": 12,
+                "position": {
+                    "nullopt": false,
+                    "data": {
+                        "_x": -2,
+                        "_y": 0,
+                        "_z": 2
+                    }
+                },
+                "immobilized": false
             }
         ],
-        "FightComponents": [
-        ]
+        "FightComponents": []
     }
 }

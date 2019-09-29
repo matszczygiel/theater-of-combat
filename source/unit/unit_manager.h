@@ -56,6 +56,8 @@ class UnitManager {
     template <class Component>
     void apply_for_each(const std::function<bool(Component&)>& operation);
 
+    static UnitManager create_test_manager();
+
     template <class Archive>
     void serialize(Archive& archive);
 
@@ -72,8 +74,10 @@ template <class Archive>
 void UnitManager::serialize(Archive& archive) {
     archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_units),
             // list all posible components
-            cereal::make_nvp("MovementComponent's",
-                             _components.get_container<MovementComponent>()));
+            cereal::make_nvp("MovementComponents",
+                             _components.get_container<MovementComponent>()),
+            cereal::make_nvp("FightComponents",
+                             _components.get_container<FightComponent>()));
 }
 
 template <class Component, class... Args>

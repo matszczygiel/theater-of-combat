@@ -60,6 +60,10 @@ void Game::initialize() {
         units = _res_manager.load_json<UnitManager>(name);
     };
 
+    lua["load_units_test"] = [&]() {
+        units = UnitManager::create_test_manager();
+    };
+
     lua["undo_action"] = [&]() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
@@ -336,8 +340,8 @@ void Game::mouse_moved_event(const sf::Vector2f& position) {
                     _gfx_state.map.hexes.cbegin(), _gfx_state.map.hexes.cend(),
                     [&](const auto& hex) { return hex.first == coord; });
                 it != _gfx_state.map.hexes.cend()) {
-                _gfx_state.highlighted_hexes
-                    .push_back(it->second.highlighting_shape());
+                _gfx_state.highlighted_hexes.push_back(
+                    it->second.highlighting_shape());
             }
         }
     }

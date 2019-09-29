@@ -2,9 +2,9 @@
 function init()
     print('Initializing scenario')
     load_map_json('test')
-    load_units_json('test1')
+    load_units_test()
     
-    game_scenario.teams['team 0'] = {0}
+    game_scenario.teams['team 0'] = {0, 2}
     game_scenario.teams['team 1'] = {1}
 
     game_scenario.player_teams[1] = {'team 0'}
@@ -26,7 +26,8 @@ graphics_config = {
         token_size = 90,
         specific_tokens = {
             [0] = {x = 1, y = 0},
-            [1] = {x = 1, y = 1}
+            [1] = {x = 1, y = 1},
+            [2] = {x = 0, y = 0}
         }
     },
     map = {

@@ -10,7 +10,7 @@
                 }
             }
         ],
-        "MovementComponent's": [
+        "MovementComponents": [
             {
                 "value0": {
                     "_owner": 0,

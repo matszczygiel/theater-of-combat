@@ -24,7 +24,7 @@ int exception_handler(lua_State* L,
 }
 
 sol::protected_function_result error_handler(
-    lua_State* L, sol::protected_function_result result) {
+    lua_State*, sol::protected_function_result result) {
         if(!result.valid()) {
             sol::error err = result;
             engine_error("Lua error: {}", err.what());

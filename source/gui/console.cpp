@@ -218,8 +218,10 @@ void ConsoleWindow::show(bool* p_open) {
         _in_buffer.erase(0, _in_buffer.find_first_not_of(" \n\r\t"));
         _in_buffer.erase(_in_buffer.find_last_not_of(" \n\r\t") + 1);
 
-        if (!_in_buffer.empty())
+        if (!_in_buffer.empty()) {
             execute_command(_in_buffer);
+            
+        }
         reclaim_focus = true;
         clear_buffer();
     }

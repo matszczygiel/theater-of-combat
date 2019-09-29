@@ -195,6 +195,11 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
                "Unit {} has negative number of moving pts.", new_cmp.owner());
     new_cmp.position    = _scenario->map.get_hex_coord(true_dest_id);
     new_cmp.immobilized = immobilized;
+    if (auto fc = _scenario->units.get_component<FightComponent>(
+            _target_component->owner());
+        immobilized && fc) {
+        fc->in_fight = true;
+    }
     reset();
     return std::make_unique<MovementAction>(std::move(new_cmp));
 }

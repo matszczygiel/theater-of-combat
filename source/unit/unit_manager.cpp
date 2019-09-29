@@ -31,9 +31,11 @@ void UnitManager::assign_default_components(Unit::IdType id, UnitType type) {
     switch (type) {
         case UnitType::heavy:
             assign_component<MovementComponent>(id, 12);
+            assign_component<FightComponent>(id, 6);
             break;
         case UnitType::mechanized:
             assign_component<MovementComponent>(id, 20);
+            assign_component<FightComponent>(id, 4);
             break;
         default:
             app_assert(false, "Unknown unit type.");

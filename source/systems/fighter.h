@@ -15,7 +15,7 @@ class FightingSystem {
    public:
     explicit FightingSystem(const GameState& state);
 
-    void make_fight_stack();
+    void make_fight_stack(const int attacking_player_index);
 
    private:
     std::shared_ptr<Scenario> _scenario{nullptr};

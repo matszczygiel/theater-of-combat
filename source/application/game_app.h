@@ -13,6 +13,7 @@
 #include "networking/client.h"
 #include "networking/server.h"
 #include "systems/mover.h"
+#include "systems/fighter.h"
 #include "systems/debug_info.h"
 #include "unit/unit.h"
 
@@ -55,6 +56,7 @@ class Game : public Application {
     ResourceManager _res_manager{"resources/"};
 
     mover::MovementSystem _moving_system{_state};
+    FightingSystem _fight_system{_state};
 
     debug_info::DebugInfoSystem debug_info{_state};
 

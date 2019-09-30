@@ -1,5 +1,11 @@
 #include "fighter.h"
 
+#include <algorithm>
+#include <iterator>
+#include <numeric>
+
+#include "core/randomize.h"
+
 FightingSystem::FightingSystem(const GameState& state) : _scenario{state.scenario} {
     app_assert(_scenario != nullptr, "Scenario is not initialized.");
 }
@@ -8,7 +14,7 @@ void FightingSystem::make_fight_stack(const int attacking_player_index) {
     app_assert(_fight_stack.empty(), "_fight_stack must be cleared first.");
 
     std::array<std::set<Unit::IdType>, 2> all_units;
-    for (int pl_index = 0; pl_index < all_units.size(); ++pl_index) {
+    for (int pl_index = 0; pl_index < static_cast<int>(all_units.size()); ++pl_index) {
         for (const auto& t : _scenario->player_teams[pl_index]) {
             if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
                 auto set = it->second;
@@ -25,8 +31,8 @@ void FightingSystem::make_fight_stack(const int attacking_player_index) {
     auto get_opponent_units_in_control_zone = [&](Unit::IdType id) -> decltype(auto) {
         std::set<Unit::IdType> res;
 
-        for (int i = 0; i < all_units.size(); ++i)
-            if (all_units.at(i).count(id) == 1)
+        for (int i = 0; i < static_cast<int>(all_units.size()); ++i)
+            if (all_units.at(i).count(id) == 1) {
                 if (const auto mc = um.get_component<MovementComponent>(id); mc) {
                     if (mc->position) {
                         const auto controlable = map.get_controlable_hexes_from(
@@ -47,6 +53,8 @@ void FightingSystem::make_fight_stack(const int attacking_player_index) {
                         }
                     }
                 }
+                break;
+            }
         return res;
     };
 
@@ -61,24 +69,113 @@ void FightingSystem::make_fight_stack(const int attacking_player_index) {
             continue;
 
         FightData fd;
+        fd.attackers_index = attacking_player_index;
         fd.ids.at(attacking_player_index).insert(att_unit);
-        fd.ids.at(deffending_player_index).insert(defenders.begin(), defenders.end());
-        involved_units.merge(defenders);
+        fd.ids.at(deffending_player_index).merge(defenders);
         involved_units.insert(att_unit);
 
         for (int pl_id = deffending_player_index;; pl_id = (pl_id + 1) % 2) {
+            std::set<Unit::IdType> to_insert{};
             for (const auto& u_id : fd.ids.at(pl_id)) {
                 if (involved_units.count(u_id) == 1)
                     continue;
-                auto opponents = get_opponent_units_in_control_zone(u_id);
-                if (opponents.empty())
-                    continue;
+                to_insert.merge(get_opponent_units_in_control_zone(u_id));
+            }
+            if (to_insert.empty())
+                break;
 
-                involved_units.insert(opponents.begin(), opponents.end());
-                fd.ids.at((pl_id + 1) % 2).merge(opponents);
+            involved_units.insert(fd.ids.at(pl_id).cbegin(), fd.ids.at(pl_id).cend());
+            fd.ids.at((pl_id + 1) % 2).merge(to_insert);
+        }
+
+        for (const auto& player_units : fd.ids)
+            for (const auto& unit : player_units) {
+                const auto pos =
+                    map.get_hex_id(
+                           um.get_component<MovementComponent>(unit)->position.value())
+                        .value();
+                fd.area.insert(pos);
+            }
+
+        _fight_stack.push_back(fd);
+    }
+}
+
+void FightingSystem::compute_fight_result() {
+    auto& um = _scenario->units;
+    for (auto& fd : _fight_stack) {
+        const int attackers_sum = std::accumulate(
+            std::begin(fd.ids.at(fd.attackers_index)),
+            std::end(fd.ids.at(fd.attackers_index)), 0, [&](int sum, int unit) {
+                const auto fc = um.get_component<FightComponent>(unit);
+                if (fc)
+                    sum += fc->strength_pts;
+
+                return sum;
+            });
+
+        const int defenders_sum = std::accumulate(
+            std::begin(fd.ids.at((fd.attackers_index + 1) % 2)),
+            std::end(fd.ids.at((fd.attackers_index + 1) % 2)), 0, [&](int sum, int unit) {
+                const auto fc = um.get_component<FightComponent>(unit);
+                if (fc)
+                    sum += fc->strength_pts;
+
+                return sum;
+            });
+
+        const int attackers_loss =
+            std::uniform_int_distribution{0, defenders_sum / 3}(randomize::engine());
+        const int defenders_loss =
+            std::uniform_int_distribution{0, attackers_sum / 4}(randomize::engine());
+
+        fd.retreat_distance = defenders_loss * 2 / attackers_loss;
+
+        for (int i = 0; i < attackers_loss;) {
+            int idx = std::uniform_int_distribution{
+                0, static_cast<int>(
+                       fd.ids.at(fd.attackers_index).size())}(randomize::engine());
+
+            auto it = fd.ids.at(fd.attackers_index).begin();
+            while (idx++ != 0)
+                it++;
+            const auto unit = *it;
+
+            auto& str_pts = um.get_component<FightComponent>(unit)->strength_pts;
+            if (str_pts == 0)
+                continue;
+
+            ++i;
+            if (--str_pts == 0) {
+                auto mc         = um.get_component<MovementComponent>(unit);
+                mc->position    = {};
+                mc->immobilized = false;
             }
         }
 
-        _fight_stack.push_back(fd);
+        for (int i = 0; i < defenders_loss;) {
+            int idx =
+                std::uniform_int_distribution{
+                    0, static_cast<int>(fd.ids.at((fd.attackers_index + 1) % 2).size())}(
+                    randomize::engine());
+
+            auto it = fd.ids.at((fd.attackers_index + 1) % 2).begin();
+            while (idx++ != 0)
+                it++;
+            const auto unit = *it;
+
+            auto& str_pts = um.get_component<FightComponent>(unit)->strength_pts;
+            if (str_pts == 0)
+                continue;
+
+            ++i;
+            if (--str_pts == 0) {
+                auto mc         = um.get_component<MovementComponent>(unit);
+                mc->position    = {};
+                mc->immobilized = false;
+            }
+        }
+
+        fd.result_computed = true;
     }
 }

@@ -73,6 +73,10 @@ class ComponentChangeAction : public Action {
     Component _new_component{};
     std::optional<Component> _old_component{};
 };
+/*
+template <class Component>
+ComponentChangeAction<Component>::ComponentChangeAction(const Component& component)
+    : _new_component{component} {}
 
 template <class Component>
 void ComponentChangeAction<Component>::execute(GameState* state) {
@@ -108,5 +112,5 @@ template <class Archive>
 void ComponentChangeAction<Component>::serialize(Archive& ar) {
     ar(CEREAL_NVP(_new_component));
 }
-
+*/
 #endif

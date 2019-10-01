@@ -26,7 +26,8 @@ class MovementSystem {
     std::vector<int> path_indices(HexCoordinate destination) const;
     std::vector<HexCoordinate> path_preview(HexCoordinate destination) const;
 
-    std::unique_ptr<MovementAction> move_target(HexCoordinate destination);
+    std::unique_ptr<ComponentChangeAction<MovementComponent>> move_target(
+        HexCoordinate destination);
 
    private:
     const MovementComponent* _target_component{nullptr};

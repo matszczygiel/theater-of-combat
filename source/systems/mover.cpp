@@ -173,7 +173,7 @@ void MovementSystem::reset() {
     _sticky_sites.clear();
 }
 
-std::unique_ptr<MovementAction> MovementSystem::move_target(
+std::unique_ptr<ComponentChangeAction<MovementComponent>> MovementSystem::move_target(
     HexCoordinate destination) {
     const auto path = path_indices(destination);
 
@@ -196,7 +196,7 @@ std::unique_ptr<MovementAction> MovementSystem::move_target(
     new_cmp.position    = _scenario->map.get_hex_coord(true_dest_id);
     new_cmp.immobilized = immobilized;
     reset();
-    return std::make_unique<MovementAction>(std::move(new_cmp));
+    return std::make_unique<ComponentChangeAction<MovementComponent>>(std::move(new_cmp));
 }
 
 std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {

@@ -63,3 +63,49 @@ void MovementAction::revert(GameState* state) {
 
 CEREAL_REGISTER_TYPE(MovementAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, MovementAction);
+
+
+template <class Component>
+ComponentChangeAction<Component>::ComponentChangeAction(const Component& component)
+    : _new_component{component} {}
+
+template <class Component>
+void ComponentChangeAction<Component>::execute(GameState* state) {
+    app_assert(!_old_component, "ComponentChangeAction<{}> executed more than once.",
+               typeid(Component).name());
+    auto& unit_man = state->scenario->units;
+
+    const auto& owner = _new_component.owner();
+    auto cmp          = unit_man.get_component<Component>(owner);
+    app_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
+               typeid(Component).name(), owner);
+    _old_component = *cmp;
+    *cmp           = _new_component;
+}
+
+template <class Component>
+void ComponentChangeAction<Component>::revert(GameState* state) {
+    app_assert(_old_component.has_value(),
+               "ComponentChangeAction<{}> reverted before executed.",
+               typeid(Component).name());
+    auto& unit_man = state->scenario->units;
+
+    const auto& owner = _old_component.value().owner();
+    auto cmp          = unit_man.get_component<Component>(owner);
+    app_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
+               typeid(Component).name(), owner);
+    *cmp = _old_component.value();
+    _old_component.reset();
+}
+
+template <class Component>
+template <class Archive>
+void ComponentChangeAction<Component>::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_new_component));
+}
+
+//List all components
+template class ComponentChangeAction<MovementComponent>;
+
+CEREAL_REGISTER_TYPE(ComponentChangeAction<MovementComponent>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<MovementComponent>);

@@ -8,26 +8,31 @@
 #include "core/log.h"
 #include "game_state.h"
 
-void UndoPreviousAction::execute(GameState* state) {
+bool UndoPreviousAction::execute(GameState* state) {
     app_assert(!_executed, "UndoPreviousAction executed more than once.");
 
     auto& actions = state->_action_stack;
     app_assert(actions.size() > 0,
                "UndoPreviousAction cannot be executed on empty _action_stack.");
+    _executed = actions.top()->revert(state);
+    if (!_executed)
+        return false;
 
     _reverted_action = std::move(actions.top());
     actions.pop();
-    _reverted_action->revert(state);
-    _executed = true;
+    return true;
 }
 
-void UndoPreviousAction::revert(GameState* state) {
+bool UndoPreviousAction::revert(GameState* state) {
     app_assert(_executed, "UndoPreviousAction reverted before executed.");
     auto& actions = state->_action_stack;
-    _reverted_action->execute(state);
+    _executed     = !_reverted_action->execute(state);
+    if (_executed)
+        return false;
+
     actions.push(std::move(_reverted_action));
     _reverted_action = nullptr;
-    _executed        = false;
+    return true;
 }
 
 CEREAL_REGISTER_TYPE(UndoPreviousAction);
@@ -38,7 +43,7 @@ ComponentChangeAction<Component>::ComponentChangeAction(const Component& compone
     : _new_component{component} {}
 
 template <class Component>
-void ComponentChangeAction<Component>::execute(GameState* state) {
+bool ComponentChangeAction<Component>::execute(GameState* state) {
     app_assert(!_old_component, "ComponentChangeAction<{}> executed more than once.",
                typeid(Component).name());
     auto& unit_man = state->scenario->units;
@@ -49,10 +54,11 @@ void ComponentChangeAction<Component>::execute(GameState* state) {
                typeid(Component).name(), owner);
     _old_component = *cmp;
     *cmp           = _new_component;
+    return true;
 }
 
 template <class Component>
-void ComponentChangeAction<Component>::revert(GameState* state) {
+bool ComponentChangeAction<Component>::revert(GameState* state) {
     app_assert(_old_component.has_value(),
                "ComponentChangeAction<{}> reverted before executed.",
                typeid(Component).name());
@@ -64,6 +70,7 @@ void ComponentChangeAction<Component>::revert(GameState* state) {
                typeid(Component).name(), owner);
     *cmp = _old_component.value();
     _old_component.reset();
+    return true;
 }
 
 template <class Component>
@@ -82,3 +89,13 @@ template class ComponentChangeAction<FightComponent>;
 
 CEREAL_REGISTER_TYPE(ComponentChangeAction<FightComponent>);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<FightComponent>);
+
+bool NextPhaseAction::execute(GameState* state) {
+    state->next_phase();
+    return true;
+}
+
+bool NextPhaseAction::revert(GameState* state) { return false; }
+
+CEREAL_REGISTER_TYPE(NextPhaseAction);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, NextPhaseAction);

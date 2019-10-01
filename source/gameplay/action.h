@@ -12,16 +12,16 @@ class GameState;
 
 class Action {
    public:
-    virtual void execute(GameState* state) = 0;
-    virtual void revert(GameState* state)  = 0;
+    virtual bool execute(GameState* state) = 0;
+    virtual bool revert(GameState* state)  = 0;
 
     virtual ~Action() = default;
 };
 
 class UndoPreviousAction : public Action {
    public:
-    virtual void execute(GameState* state) override;
-    virtual void revert(GameState* state) override;
+    virtual bool execute(GameState* state) override;
+    virtual bool revert(GameState* state) override;
 
     template <class Archive>
     void serialize(Archive& ar);
@@ -42,8 +42,8 @@ class ComponentChangeAction : public Action {
     ComponentChangeAction() = default;
     ComponentChangeAction(const Component& component);
 
-    virtual void execute(GameState* state) override;
-    virtual void revert(GameState* state) override;
+    virtual bool execute(GameState* state) override;
+    virtual bool revert(GameState* state) override;
 
     template <class Archive>
     void serialize(Archive& ar);
@@ -52,5 +52,17 @@ class ComponentChangeAction : public Action {
     Component _new_component{};
     std::optional<Component> _old_component{};
 };
+
+class NextPhaseAction : public Action {
+   public:
+    virtual bool execute(GameState* state) override;
+    virtual bool revert(GameState* state) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
+};
+
+template <class Archive>
+void NextPhaseAction::serialize(Archive&) {}
 
 #endif

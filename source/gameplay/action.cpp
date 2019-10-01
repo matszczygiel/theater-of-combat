@@ -33,38 +33,6 @@ void UndoPreviousAction::revert(GameState* state) {
 CEREAL_REGISTER_TYPE(UndoPreviousAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, UndoPreviousAction);
 
-MovementAction::MovementAction(const MovementComponent& component)
-    : _new_component{component} {}
-
-void MovementAction::execute(GameState* state) {
-    app_assert(!_old_component, "MovementAction executed more than once.");
-    auto& unit_man = state->scenario->units;
-
-    const auto& owner = _new_component.owner();
-    auto cmp          = unit_man.get_component<MovementComponent>(owner);
-    app_assert(cmp, "Procesing nonexistent MovementComponent. Owner: {}.",
-               owner);
-    _old_component = *cmp;
-    *cmp           = _new_component;
-}
-
-void MovementAction::revert(GameState* state) {
-    app_assert(_old_component.has_value(),
-               "MovementAction reverted before executed.");
-    auto& unit_man = state->scenario->units;
-
-    const auto& owner = _old_component.value().owner();
-    auto cmp          = unit_man.get_component<MovementComponent>(owner);
-    app_assert(cmp, "Procesing nonexistent MovementComponent. Owner: {}.",
-               owner);
-    *cmp = _old_component.value();
-    _old_component.reset();
-}
-
-CEREAL_REGISTER_TYPE(MovementAction);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, MovementAction);
-
-
 template <class Component>
 ComponentChangeAction<Component>::ComponentChangeAction(const Component& component)
     : _new_component{component} {}
@@ -104,7 +72,7 @@ void ComponentChangeAction<Component>::serialize(Archive& ar) {
     ar(CEREAL_NVP(_new_component));
 }
 
-//List all components
+// List all components
 template class ComponentChangeAction<MovementComponent>;
 
 CEREAL_REGISTER_TYPE(ComponentChangeAction<MovementComponent>);

@@ -93,8 +93,12 @@ void GameState::next_phase() {
             phase = GamePhase::battles;
             break;
         case GamePhase::battles:
-            phase = GamePhase::retreats;
+            // phase = GamePhase::retreats;
             next_player();
+            if (current_player_index() == 0)
+                phase = GamePhase::new_day;
+            else
+                phase = GamePhase::movement;
             break;
         case GamePhase::retreats:
             phase = GamePhase::chases;
@@ -106,6 +110,10 @@ void GameState::next_phase() {
             if (current_player_index() == 0)
                 scenario->next_day();
 
+            break;
+        case GamePhase::new_day:
+            phase = GamePhase::movement;
+            scenario->next_day();
             break;
         default:
             break;

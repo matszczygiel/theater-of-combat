@@ -70,6 +70,7 @@ enum class GamePhase {
     battles,
     retreats,
     chases,
+    new_day,
 };
 
 class GameState {

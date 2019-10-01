@@ -148,14 +148,16 @@ std::vector<std::unique_ptr<Action>> FightingSystem::compute_fight_result() {
 
                 ++i;
                 auto new_fc = *fc;
+                auto new_mc = *um.get_component<MovementComponent>(unit);
                 if (--new_fc.strength_pts == 0) {
-                    auto new_mc        = *um.get_component<MovementComponent>(unit);
-                    new_mc.position    = {};
-                    new_mc.immobilized = false;
-                    res.push_back(
-                        std::make_unique<ComponentChangeAction<MovementComponent>>(
-                            new_mc));
+                    new_mc.position = {};
+                    fd.ids.at(index).erase(unit);
                 }
+                
+                new_mc.immobilized = false;
+                res.push_back(
+                    std::make_unique<ComponentChangeAction<MovementComponent>>(new_mc));
+
                 res.push_back(
                     std::make_unique<ComponentChangeAction<FightComponent>>(new_fc));
             }

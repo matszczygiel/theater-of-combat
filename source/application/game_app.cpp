@@ -64,13 +64,12 @@ void Game::initialize() {
         _pending_actions.push_back(std::make_unique<UndoPreviousAction>());
     };
 
+    gameplay::lua_push_functions();
+    lua["game_state"]        = std::ref(_state);
+    lua["game_scenario"]     = std::ref(*_state.scenario);
     lua["next_phase_action"] = [&]() {
         _pending_actions.push_back(std::make_unique<NextPhaseAction>());
     };
-
-    gameplay::lua_push_functions();
-    lua["game_state"]           = std::ref(_state);
-    lua["game_scenario"]        = std::ref(*_state.scenario);
     lua["load_scenario_script"] = [&](std::string name) {
         std::ifstream lua_script(_res_manager.resources_path().string() + "/scenarios/" +
                                  name + ".lua");
@@ -210,11 +209,24 @@ void Game::update(const sf::Time& elapsed_time) {
 
     _gfx_state.update();
 
-    if (_state.phase == GamePhase::battles) {
+    if (_state.phase == GamePhase::battles && _state.is_local_player_now()) {
         _fight_system.make_fight_stack(_state.current_player_index());
         auto actions = _fight_system.compute_fight_result();
+        _fight_system.clear();
         std::move(std::begin(actions), std::end(actions),
                   std::back_inserter(_pending_actions));
+        _pending_actions.push_back(std::make_unique<NextPhaseAction>());
+    }
+
+    if (_state.phase == GamePhase::new_day && _state.is_local_player_now()) {
+        _state.scenario->units.apply_for_each<MovementComponent>([&](auto& mc) {
+            MovementComponent new_mc = mc;
+            new_mc.moving_pts        = new_mc.total_moving_pts();
+            _pending_actions.push_back(
+                std::make_unique<ComponentChangeAction<MovementComponent>>(new_mc));
+
+            return true;
+        });
         _pending_actions.push_back(std::make_unique<NextPhaseAction>());
     }
 

@@ -58,23 +58,19 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
 
                 for (const auto& neighbor : neighbors) {
                     const auto w = res.weight(neighbor, node);
-                    res.change_edge_weight(neighbor, node,
-                                           w + hex_tab.at(hex_type));
+                    res.change_edge_weight(neighbor, node, w + hex_tab.at(hex_type));
                 }
             } break;
             case Map::SiteType::river: {
                 const auto riv_type = map.rivers().at(node).type();
-                app_assert(neighbors.size() == 2,
-                           "River should have 2 neighbors.");
+                app_assert(neighbors.size() == 2, "River should have 2 neighbors.");
                 const auto hex1 = *neighbors.begin();
                 const auto hex2 = *(++neighbors.begin());
 
-                const auto w12 = res.weight(hex1, node) +
-                                 res.weight(node, hex2) +
+                const auto w12 = res.weight(hex1, node) + res.weight(node, hex2) +
                                  river_tab.at(riv_type);
 
-                const auto w21 = res.weight(hex2, node) +
-                                 res.weight(node, hex1) +
+                const auto w21 = res.weight(hex2, node) + res.weight(node, hex1) +
                                  river_tab.at(riv_type);
 
                 res.remove_node(node);
@@ -82,19 +78,16 @@ WeightedBidirectionalGraph make_weighted_graph(const Map& map, UnitType type) {
             } break;
 
             default:
-                app_assert(false,
-                           "Unknown site type in computing weighted graph.");
+                app_assert(false, "Unknown site type in computing weighted graph.");
                 break;
         }
     }
     return res;
 }
 
-MovementSystem::MovementSystem(const GameState& state)
-    : _scenario{state.scenario} {}
+MovementSystem::MovementSystem(const GameState& state) : _scenario{state.scenario} {}
 
-bool MovementSystem::init_movement(HexCoordinate coord,
-                                   std::vector<std::string> teams,
+bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string> teams,
                                    std::vector<std::string> hostile_teams) {
     app_assert(!is_moving(), "Already moving unit.");
     app_info("Initiating MovementSystem.");
@@ -136,12 +129,7 @@ bool MovementSystem::init_movement(HexCoordinate coord,
         return true;
     });
 
-    {
-        std::string log;
-        for (const auto& site : _sticky_sites)
-            log += " " + std::to_string(site);
-        app_debug("_sticky sites ids: {}", log);
-    }
+    _sticky_sites.erase(_scenario->map.get_hex_id(coord).value());
 
     const auto graph =
         make_weighted_graph(_scenario->map, _target_component->owner_type());
@@ -182,8 +170,8 @@ std::unique_ptr<ComponentChangeAction<MovementComponent>> MovementSystem::move_t
         return nullptr;
     }
 
-    const auto find = std::find_first_of(
-        path.begin(), path.end(), _sticky_sites.begin(), _sticky_sites.end());
+    const auto find = std::find_first_of(path.begin(), path.end(), _sticky_sites.begin(),
+                                         _sticky_sites.end());
 
     const bool immobilized  = find != path.end();
     const auto true_dest_id = immobilized ? *find : path.back();
@@ -191,8 +179,8 @@ std::unique_ptr<ComponentChangeAction<MovementComponent>> MovementSystem::move_t
     const auto cost = _distances.at(true_dest_id);
     auto new_cmp    = *_target_component;
     new_cmp.moving_pts -= cost;
-    app_assert(new_cmp.moving_pts >= 0,
-               "Unit {} has negative number of moving pts.", new_cmp.owner());
+    app_assert(new_cmp.moving_pts >= 0, "Unit {} has negative number of moving pts.",
+               new_cmp.owner());
     new_cmp.position    = _scenario->map.get_hex_coord(true_dest_id);
     new_cmp.immobilized = immobilized;
     reset();
@@ -221,8 +209,7 @@ std::vector<int> MovementSystem::path_indices(HexCoordinate destination) const {
     return res;
 }
 
-std::vector<HexCoordinate> MovementSystem::path_preview(
-    HexCoordinate destination) const {
+std::vector<HexCoordinate> MovementSystem::path_preview(HexCoordinate destination) const {
     const auto ids = path_indices(destination);
     std::vector<HexCoordinate> res;
     res.reserve(ids.size());

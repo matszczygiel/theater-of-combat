@@ -95,7 +95,7 @@ bool NextPhaseAction::execute(GameState* state) {
     return true;
 }
 
-bool NextPhaseAction::revert(GameState* state) { return false; }
+bool NextPhaseAction::revert(GameState* ) { return false; }
 
 CEREAL_REGISTER_TYPE(NextPhaseAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, NextPhaseAction);

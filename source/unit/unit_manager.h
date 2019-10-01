@@ -39,8 +39,7 @@ std::vector<Component>& ComponentPoll::get_container() {
 
 class UnitManager {
    public:
-    Unit::IdType create(UnitType type, std::string name,
-                        bool assign_components = false);
+    Unit::IdType create(UnitType type, std::string name, bool assign_components = false);
 
     template <class Component, class... Args>
     Component& assign_component(Unit::IdType id, Args&&... args);
@@ -72,12 +71,12 @@ class UnitManager {
 
 template <class Archive>
 void UnitManager::serialize(Archive& archive) {
-    archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_units),
-            // list all posible components
-            cereal::make_nvp("MovementComponents",
-                             _components.get_container<MovementComponent>()),
-            cereal::make_nvp("FightComponents",
-                             _components.get_container<FightComponent>()));
+    archive(
+        CEREAL_NVP(_current_free_id), CEREAL_NVP(_units),
+        // list all posible components
+        cereal::make_nvp("MovementComponents",
+                         _components.get_container<MovementComponent>()),
+        cereal::make_nvp("FightComponents", _components.get_container<FightComponent>()));
 }
 
 template <class Component, class... Args>
@@ -86,10 +85,9 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
     app_assert(_units.count(id) == 1, "Unit with id: {} does not exists.", id);
 
     auto& vec = _components.get_container<Component>();
-    app_assert(std::none_of(vec.begin(), vec.end(),
-                            [&](auto& cmp) { return cmp._owner == id; }),
-               "Reassigning a component: {} to a unit: {}",
-               typeid(Component).name(), id);
+    app_assert(
+        std::none_of(vec.begin(), vec.end(), [&](auto& cmp) { return cmp._owner == id; }),
+        "Reassigning a component: {} to a unit: {}", typeid(Component).name(), id);
 
     auto& com       = vec.emplace_back(std::forward<Args>(args)...);
     com._owner      = id;
@@ -104,8 +102,8 @@ Component* UnitManager::get_component(Unit::IdType id) {
 
     auto& vec = _components.get_container<Component>();
 
-    auto res = std::find_if(vec.begin(), vec.end(),
-                            [&](auto& com) { return com._owner == id; });
+    auto res =
+        std::find_if(vec.begin(), vec.end(), [&](auto& com) { return com._owner == id; });
 
     if (res != vec.end()) {
         return &(*res);
@@ -126,8 +124,7 @@ void UnitManager::remove_component(Unit::IdType id) {
 }
 
 template <class Component>
-void UnitManager::apply_for_each(
-    const std::function<bool(Component&)>& operation) {
+void UnitManager::apply_for_each(const std::function<bool(Component&)>& operation) {
     for (auto& cmp : _components.get_container<Component>())
         if (!operation(cmp))
             break;

@@ -213,8 +213,10 @@ void Game::update(const sf::Time& elapsed_time) {
     _gfx_state.update();
 
     if(_state.phase == GamePhase::battles){
+        _state.next_phase();
         _fight_system.make_fight_stack(_state.current_player_index());
-
+        auto actions = _fight_system.compute_fight_result();
+        std::move(std::begin(actions), std::end(actions), std::back_inserter(_pending_actions));
     }
 
     // engine_trace("Updating");

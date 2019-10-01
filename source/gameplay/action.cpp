@@ -77,3 +77,8 @@ template class ComponentChangeAction<MovementComponent>;
 
 CEREAL_REGISTER_TYPE(ComponentChangeAction<MovementComponent>);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<MovementComponent>);
+
+template class ComponentChangeAction<FightComponent>;
+
+CEREAL_REGISTER_TYPE(ComponentChangeAction<FightComponent>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<FightComponent>);

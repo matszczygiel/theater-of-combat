@@ -68,6 +68,8 @@ enum class GamePhase {
     not_started,
     movement,
     battles,
+    retreats,
+    chases,
 };
 
 class GameState {
@@ -79,7 +81,7 @@ class GameState {
     std::array<std::string, 2> player_names{};
 
     void start();
-    void next_player();
+    void next_phase();
     
     bool set_local_player(std::string name);
     void set_local_player(int index);
@@ -95,7 +97,7 @@ class GameState {
    private:
     friend class UndoPreviousAction;
 
-    void next_phase();
+    void next_player();
 
     int _current_player_index{-1};
     std::optional<int> _local_player_index{};

@@ -101,7 +101,8 @@ void FightingSystem::make_fight_stack(const int attacking_player_index) {
     }
 }
 
-void FightingSystem::compute_fight_result() {
+std::vector<std::unique_ptr<Action>> FightingSystem::compute_fight_result() {
+    std::vector<std::unique_ptr<Action>> res;
     auto& um = _scenario->units;
     for (auto& fd : _fight_stack) {
         const int attackers_sum = std::accumulate(
@@ -129,53 +130,42 @@ void FightingSystem::compute_fight_result() {
         const int defenders_loss =
             std::uniform_int_distribution{0, attackers_sum / 4}(randomize::engine());
 
-        fd.retreat_distance = defenders_loss * 2 / attackers_loss;
+        fd.retreat_distance = defenders_loss * 2 / (attackers_loss + 1);
 
-        for (int i = 0; i < attackers_loss;) {
-            int idx = std::uniform_int_distribution{
-                0, static_cast<int>(
-                       fd.ids.at(fd.attackers_index).size())}(randomize::engine());
+        auto make_loses = [&](int loss, int index) {
+            for (int i = 0; i < loss;) {
+                int idx = std::uniform_int_distribution{
+                    0, static_cast<int>(fd.ids.at(index).size())}(randomize::engine());
 
-            auto it = fd.ids.at(fd.attackers_index).begin();
-            while (idx++ != 0)
-                it++;
-            const auto unit = *it;
+                auto it = fd.ids.at(index).begin();
+                while (idx-- != 0)
+                    std::next(it);
+                const auto unit = *it;
 
-            auto& str_pts = um.get_component<FightComponent>(unit)->strength_pts;
-            if (str_pts == 0)
-                continue;
+                const auto fc = um.get_component<FightComponent>(unit);
+                if (fc->strength_pts == 0)
+                    continue;
 
-            ++i;
-            if (--str_pts == 0) {
-                auto mc         = um.get_component<MovementComponent>(unit);
-                mc->position    = {};
-                mc->immobilized = false;
+                ++i;
+                auto new_fc = *fc;
+                if (--new_fc.strength_pts == 0) {
+                    auto new_mc        = *um.get_component<MovementComponent>(unit);
+                    new_mc.position    = {};
+                    new_mc.immobilized = false;
+                    res.push_back(
+                        std::make_unique<ComponentChangeAction<MovementComponent>>(
+                            new_mc));
+                }
+                res.push_back(
+                    std::make_unique<ComponentChangeAction<FightComponent>>(new_fc));
             }
-        }
+        };
 
-        for (int i = 0; i < defenders_loss;) {
-            int idx =
-                std::uniform_int_distribution{
-                    0, static_cast<int>(fd.ids.at((fd.attackers_index + 1) % 2).size())}(
-                    randomize::engine());
-
-            auto it = fd.ids.at((fd.attackers_index + 1) % 2).begin();
-            while (idx++ != 0)
-                it++;
-            const auto unit = *it;
-
-            auto& str_pts = um.get_component<FightComponent>(unit)->strength_pts;
-            if (str_pts == 0)
-                continue;
-
-            ++i;
-            if (--str_pts == 0) {
-                auto mc         = um.get_component<MovementComponent>(unit);
-                mc->position    = {};
-                mc->immobilized = false;
-            }
-        }
-
+        make_loses(attackers_loss, fd.attackers_index);
+        make_loses(defenders_loss, (fd.attackers_index + 1) % 2);
         fd.result_computed = true;
     }
+    return res;
 }
+
+void FightingSystem::clear() { _fight_stack.clear(); }

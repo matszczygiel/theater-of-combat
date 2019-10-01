@@ -8,8 +8,7 @@ void Scenario::next_day() {
     sol::protected_function daily = lua::get_state()["day"];
     auto res                      = daily(_current_day);
     if (!res.valid()) {
-        app_error("Scenario's daily (day {}) lua script failed on load.",
-                  _current_day);
+        app_error("Scenario's daily (day {}) lua script failed on load.", _current_day);
         sol::error err = res;
         app_error("Error message: {}", err.what());
         app_debug("The script that failed\n{}", _script);
@@ -59,8 +58,7 @@ void GameState::push_action(std::unique_ptr<Action> action) {
 
 bool GameState::set_local_player(std::string name) {
     app_assert(phase == GamePhase::not_started, "Game already started.");
-    auto pos =
-        std::find(std::begin(player_names), std::end(player_names), name);
+    auto pos = std::find(std::begin(player_names), std::end(player_names), name);
     if (pos != std::end(player_names)) {
         _local_player_index = std::distance(player_names.begin(), pos);
         return true;
@@ -78,7 +76,6 @@ void GameState::next_player() {
     app_assert(phase != GamePhase::not_started, "Game not started.");
     if (++_current_player_index == static_cast<int>(player_names.size())) {
         _current_player_index = 0;
-        next_phase();
     }
 }
 
@@ -96,8 +93,19 @@ void GameState::next_phase() {
             phase = GamePhase::battles;
             break;
         case GamePhase::battles:
+            phase = GamePhase::retreats;
+            next_player();
+            break;
+        case GamePhase::retreats:
+            phase = GamePhase::chases;
+            next_player();
+            break;
+        case GamePhase::chases:
             phase = GamePhase::movement;
-            scenario->next_day();
+            next_player();
+            if (current_player_index() == 0)
+                scenario->next_day();
+
             break;
         default:
             break;
@@ -110,6 +118,4 @@ bool GameState::is_local_player_now() const {
 
 int GameState::current_player_index() const { return _current_player_index; }
 
-int GameState::opposite_player_index() const {
-    return (_current_player_index + 1) % 2;
-}
+int GameState::opposite_player_index() const { return (_current_player_index + 1) % 2; }

@@ -11,7 +11,7 @@ void lua_push_functions() {
     auto state                = lua.new_usertype<GameState>("GameState",
                                              sol::constructors<GameState()>());
     state["start"]            = &GameState::start;
-    state["next_player"]      = &GameState::next_player;
+    state["next_phase"]      = &GameState::next_phase;
 
     auto scenario                = lua.new_usertype<Scenario>("Scenario",
                                              sol::constructors<Scenario()>());

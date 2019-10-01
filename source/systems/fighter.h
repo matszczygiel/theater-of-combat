@@ -19,10 +19,10 @@ class FightingSystem {
     explicit FightingSystem(const GameState& state);
 
     void make_fight_stack(const int attacking_player_index);
-//    std::vector<FightAction> compute_fight_result();
-    void compute_fight_result();
+    std::vector<std::unique_ptr<Action>> compute_fight_result();
 
     const std::vector<FightData>& stack() const;
+    void clear();
 
    private:
     std::shared_ptr<Scenario> _scenario{nullptr};

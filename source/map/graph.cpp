@@ -4,57 +4,6 @@
 #include <limits>
 #include <queue>
 
-BidirectionalGraph& BidirectionalGraph::insert_node(
-    int node, const std::set<int>& neighbors) {
-    for (const auto& n : neighbors) {
-        if (_adjacency_matrix.count(n) == 1) {
-            assert(_adjacency_matrix[n].insert(node).second);
-        } else {
-            throw std::runtime_error("Neighbors not present in the graph.");
-        }
-    }
-    if (!_adjacency_matrix.insert({node, neighbors}).second)
-        throw std::runtime_error("Node already present in the graph.");
-
-    return *this;
-}
-
-BidirectionalGraph& BidirectionalGraph::remove_node(int node) {
-    if (_adjacency_matrix.erase(node) != 1)
-        throw std::runtime_error("Removing nonexistent node.");
-
-    for (auto& n : _adjacency_matrix)
-        n.second.erase(node);
-
-    return *this;
-}
-
-BidirectionalGraph& BidirectionalGraph::remove_edge(int node1, int node2) {
-    if (_adjacency_matrix.count(node1) != 1 ||
-        _adjacency_matrix.count(node2) != 1)
-        throw std::logic_error("Removing edge connecting nonexistent nodes.");
-
-    if (_adjacency_matrix[node1].erase(node2) != 1)
-        throw std::logic_error("Removing nonexistent edge.");
-
-    if (_adjacency_matrix[node2].erase(node1) != 1)
-        throw std::logic_error("Removing nonexistent edge.");
-
-    return *this;
-}
-
-const std::map<int, std::set<int>>& BidirectionalGraph::adjacency_matrix()
-    const {
-    return _adjacency_matrix;
-}
-
-bool operator==(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs) {
-    return lhs.adjacency_matrix() == rhs.adjacency_matrix();
-}
-
-bool operator!=(const BidirectionalGraph& lhs, const BidirectionalGraph& rhs) {
-    return !(lhs == rhs);
-}
 
 WeightedBidirectionalGraph::WeightedBidirectionalGraph(
     const BidirectionalGraph& graph, int default_weight) {

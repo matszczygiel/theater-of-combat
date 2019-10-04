@@ -15,7 +15,7 @@
 
 template <typename T>
 class HexCoordinates {
-    static_assert(std::is_arithmetic<T>::value,
+    static_assert(std::is_arithmetic_v<T>,
                   "HexCoordinates is parametrized by arithmetic types.");
 
    public:

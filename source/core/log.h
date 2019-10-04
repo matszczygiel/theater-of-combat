@@ -1,6 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <cassert>
 #include <memory>
 
 #include <spdlog/logger.h>
@@ -73,10 +74,27 @@ inline void app_critical(const char* fmt, const Args&... args) {
 }
 
 template <typename... Args>
+inline void engine_assert_throw(bool condition, const char* message,
+                                const Args&... args) {
+    if (!condition) {
+        engine_critical(message, args...);
+        throw std::runtime_error("Paused on engine_throw. Check logs for more info.");
+    }
+}
+
+template <typename... Args>
+inline void app_assert_throw(bool condition, const char* message, const Args&... args) {
+    if (!condition) {
+        app_critical(message, args...);
+        throw std::runtime_error("Paused on app_throw. Check logs for more info.");
+    }
+}
+
+template <typename... Args>
 inline void engine_assert(bool condition, const char* message, const Args&... args) {
     if (!condition) {
         engine_critical(message, args...);
-        throw std::runtime_error("Paused on assert. Check logs for more info.");
+        assert(condition);
     }
 }
 
@@ -84,7 +102,7 @@ template <typename... Args>
 inline void app_assert(bool condition, const char* message, const Args&... args) {
     if (!condition) {
         app_critical(message, args...);
-        throw std::runtime_error("Paused on assert. Check logs for more info.");
+        assert(condition);
     }
 }
 

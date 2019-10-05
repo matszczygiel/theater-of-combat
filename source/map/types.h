@@ -20,8 +20,8 @@ class HexSite {
     HexSite() = default;
     HexSite(HexCoordinate coord, HexType type) noexcept;
 
-    const HexCoordinate& coord() const;
-    const HexType& type() const;
+    const HexCoordinate& coord() const noexcept;
+    const HexType& type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -38,11 +38,11 @@ void HexSite::serialize(Archive& archive) {
 
 class RiverSite {
    public:
-    RiverSite();
+    RiverSite() noexcept;
     RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
 
-    std::pair<HexCoordinate, HexCoordinate> sides() const;
-    const RiverType& type() const;
+    std::pair<HexCoordinate, HexCoordinate> sides() const noexcept;
+    const RiverType& type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);

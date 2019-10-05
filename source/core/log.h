@@ -4,6 +4,7 @@
 #include <cassert>
 #include <memory>
 
+#include <spdlog/fmt/ostr.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/dist_sink.h>
 

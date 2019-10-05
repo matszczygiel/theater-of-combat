@@ -19,24 +19,24 @@ class Map {
 
     using SiteId = int;
 
-    const std::map<SiteId, HexSite>& hexes() const;
-    const std::map<SiteId, RiverSite>& rivers() const;
-    const BidirectionalGraph& graph() const;
+    const std::map<SiteId, HexSite>& hexes() const noexcept;
+    const std::map<SiteId, RiverSite>& rivers() const noexcept;
+    const BidirectionalGraph<SiteId>& graph() const noexcept;
 
-    void insert(HexSite site);
-    void insert(RiverSite site);
+    Map& insert(HexSite site);
+    Map& insert(RiverSite site);
 
     SiteType type_of(SiteId id) const;
 
-    static Map create_test_map();
-
-    std::optional<SiteId> get_hex_id(HexCoordinate coord) const;
-    std::optional<HexCoordinate> get_hex_coord(SiteId id) const;
+    std::optional<SiteId> get_hex_id(HexCoordinate coord) const noexcept;
+    std::optional<HexCoordinate> get_hex_coord(SiteId id) const noexcept;
 
     std::set<SiteId> get_controlable_hexes_from(SiteId id) const;
 
     template <class Archive>
     void serialize(Archive& archive);
+
+    static Map create_test_map();
 
    private:
     SiteId fetch_id();
@@ -44,15 +44,14 @@ class Map {
     std::map<SiteId, HexSite> _hexes{};
     std::map<SiteId, RiverSite> _rivers{};
 
-    BidirectionalGraph _graph{};
-
+    BidirectionalGraph<SiteId> _graph{};
     SiteId _current_free_id{0};
 };
 
 template <class Archive>
 void Map::serialize(Archive& archive) {
-    archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_graph),
-            CEREAL_NVP(_hexes), CEREAL_NVP(_rivers));
+    archive(CEREAL_NVP(_current_free_id), CEREAL_NVP(_graph), CEREAL_NVP(_hexes),
+            CEREAL_NVP(_rivers));
 }
 
 #endif

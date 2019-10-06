@@ -25,5 +25,18 @@ target_include_directories(moving-test PRIVATE ../source)
 target_compile_features(moving-test PRIVATE cxx_std_17)
 target_link_libraries(moving-test PRIVATE doctest::doctest)
 add_test(moving moving-test)
+
+
+
+file(GLOB_RECURSE units_sources CONFIGURE_DEPENDS 
+    ../source/unit/*.cpp
+    ../source/map/*.cpp
+    ../source/core/log.cpp
+    )
+add_executable(units-test source/units.cpp ${units_sources})
+target_include_directories(units-test PRIVATE ../source ../deps)
+target_compile_features(units-test PRIVATE cxx_std_17)
+target_link_libraries(units-test PRIVATE doctest::doctest)
+add_test(units units-test)
                
 

@@ -19,9 +19,9 @@ class Map {
 
     using SiteId = int;
 
-    const std::map<SiteId, HexSite>& hexes() const noexcept;
-    const std::map<SiteId, RiverSite>& rivers() const noexcept;
-    const BidirectionalGraph<SiteId>& graph() const noexcept;
+    constexpr const std::map<SiteId, HexSite>& hexes() const noexcept;
+    constexpr const std::map<SiteId, RiverSite>& rivers() const noexcept;
+    constexpr const BidirectionalGraph<SiteId>& graph() const noexcept;
 
     Map& insert(HexSite site);
     Map& insert(RiverSite site);
@@ -39,7 +39,7 @@ class Map {
     static Map create_test_map();
 
    private:
-    SiteId fetch_id();
+    constexpr SiteId fetch_id() noexcept;
 
     std::map<SiteId, HexSite> _hexes{};
     std::map<SiteId, RiverSite> _rivers{};

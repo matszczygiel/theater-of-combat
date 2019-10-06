@@ -1,11 +1,10 @@
 #include "unit.h"
 
-const std::string& Unit::name() const { return _name; }
+const std::string& Unit::name() const noexcept { return _name; }
 
-UnitType Unit::type() { return _type; }
+UnitType Unit::type() const noexcept { return _type; }
 
-Unit::IdType ComponentBase::owner() const { return _owner; }
+Unit::IdType ComponentBase::owner() const noexcept { return _owner; }
 
-UnitType ComponentBase::owner_type() const { return _owner_type; }
-
+UnitType ComponentBase::owner_type() const noexcept { return _owner_type; }
 

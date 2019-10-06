@@ -2,16 +2,12 @@
 
 #include "core/log.h"
 
-MovementComponent::MovementComponent(int moving_points) noexcept
+MovementComponent::MovementComponent(int moving_points)
     : moving_pts{moving_points}, position{}, _total_moving_pts{moving_points} {
-    app_assert(
+    engine_assert_throw(
         moving_points >= 0,
-        "MovementComponent should be initialized with positive number of moving pts.");
+        "MovementComponent should be initialized with positive number ({}) of moving pts.",
+        moving_pts);
 }
 
-const int& MovementComponent::total_moving_pts() const {
-    return _total_moving_pts;
-}
 
-FightComponent::FightComponent(int strength_points) noexcept
-    : strength_pts{strength_points} {}

@@ -11,14 +11,14 @@
 #include "unit.h"
 
 struct MovementComponent : public ComponentBase {
-    MovementComponent() = default;
-    explicit MovementComponent(int moving_points) noexcept;
+    constexpr MovementComponent() = default;
+    explicit MovementComponent(int moving_points);
 
     int moving_pts{};
     std::optional<HexCoordinate> position{};
     bool immobilized{false};
 
-    const int& total_moving_pts() const;
+    constexpr int total_moving_pts() const noexcept { return _total_moving_pts; }
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -34,8 +34,9 @@ void MovementComponent::serialize(Archive& archive) {
 }
 
 struct FightComponent : public ComponentBase {
-    FightComponent() = default;
-    explicit FightComponent(int strength_points) noexcept;
+    constexpr FightComponent() = default;
+    constexpr FightComponent(int strength_points) noexcept
+        : strength_pts{strength_points} {}
 
     int strength_pts{};
     bool in_fight{false};

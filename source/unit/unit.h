@@ -5,16 +5,14 @@
 
 #include <cereal/types/string.hpp>
 
-#include "core/log.h"
-
 enum class UnitType { heavy, mechanized };
 
 class Unit {
    public:
     using IdType = int;
 
-    const std::string& name() const;
-    UnitType type();
+    const std::string& name() const noexcept;
+    UnitType type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -32,14 +30,15 @@ void Unit::serialize(Archive& archive) {
 }
 
 struct ComponentBase {
-    Unit::IdType owner() const;
-    UnitType owner_type() const;
+    Unit::IdType owner() const noexcept;
+    UnitType owner_type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
 
    private:
     friend class UnitManager;
+
     Unit::IdType _owner{};
     UnitType _owner_type{};
 };

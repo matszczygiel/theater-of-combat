@@ -12,13 +12,17 @@
 
 #include "core/log.h"
 
-const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept { return _hexes; }
+constexpr const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept {
+    return _hexes;
+}
 
-const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept { return _rivers; }
+constexpr const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept {
+    return _rivers;
+}
 
-const BidirectionalGraph<int>& Map::graph() const noexcept { return _graph; }
+constexpr const BidirectionalGraph<int>& Map::graph() const noexcept { return _graph; }
 
-Map::SiteId Map::fetch_id() { return _current_free_id++; }
+constexpr Map::SiteId Map::fetch_id() noexcept { return _current_free_id++; }
 
 Map& Map::insert(HexSite site) {
     if (auto it = std::find_if(

@@ -12,7 +12,7 @@ const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept { return _hexe
 
 const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept { return _rivers; }
 
-const BidirectionalGraph<int>& Map::graph() const noexcept { return _graph; }
+const BidirectionalGraph<Map::SiteId>& Map::graph() const noexcept { return _graph; }
 
 Map& Map::insert(HexSite site) {
     if (auto it = std::find_if(

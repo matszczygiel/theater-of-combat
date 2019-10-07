@@ -2,15 +2,17 @@
 
 #include "core/log.h"
 
-MapGfx::MapGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
+MapGfx::MapGfx(std::shared_ptr<Layout>& layout) {
+    if (layout)
+        _layout = layout;
+}
 
 void MapGfx::setup(const Map& map, std::string texture_path,
                    const std::map<HexType, sf::IntRect>& texture_positions) {
     _texture_positions = texture_positions;
 
     const auto loaded = _texture.loadFromFile(texture_path);
-    if (!loaded)
-        app_error("Cannot load tiles texture from file: {}", texture_path);
+    engine_assert_throw(loaded, "Cannot load tiles texture from file: {}", texture_path);
 
     _texture.setSmooth(true);
     update(map);
@@ -48,15 +50,14 @@ void MapGfx::draw_outlines(sf::RenderTarget& target) const {
 
 void MapGfx::draw_coords(sf::RenderTarget& target, const sf::Font& font) const {
     for (const auto& [coord, shape] : hexes) {
-        auto text = sf::Text{
-            std::to_string(coord.q()) + "    " + std::to_string(coord.p()),
-            font, static_cast<unsigned int>(_layout->size.x * 0.3)};
+        auto text =
+            sf::Text{std::to_string(coord.q()) + "    " + std::to_string(coord.p()), font,
+                     static_cast<unsigned int>(_layout->size.x * 0.3)};
 
         text.setFillColor(sf::Color::Magenta);
         text.setOutlineColor(sf::Color::Magenta);
         text.setStyle(sf::Text::Bold);
-        text.setOrigin(text.getLocalBounds().width / 2.0,
-                       text.getLocalBounds().height);
+        text.setOrigin(text.getLocalBounds().width / 2.0, text.getLocalBounds().height);
         text.setPosition(shape.shape().getPosition());
         target.draw(text);
     }
@@ -68,7 +69,7 @@ void MapGfx::draw_rivers(sf::RenderTarget& target) const {
     }
 }
 
-void MapGfx::clear() {
+void MapGfx::clear() noexcept {
     rivers.clear();
     hexes.clear();
 }

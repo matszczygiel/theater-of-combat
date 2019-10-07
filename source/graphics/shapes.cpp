@@ -1,41 +1,41 @@
 #include "shapes.h"
 
-sf::Color site_color(HexType type) {
+#include "core/log.h"
+
+static sf::Color site_color(HexType type) noexcept {
     switch (type) {
         case HexType::field:
             return sf::Color::Green;
         case HexType::forest:
             return sf::Color(100, 140, 20);
         default:
-            static_assert(true);
+            engine_assert(false, "Unknown HexType.");
     }
     return sf::Color::Magenta;
 }
 
-sf::Color site_color(RiverType type) {
+static sf::Color site_color(RiverType type) noexcept {
     switch (type) {
         case RiverType::small:
             return sf::Color::Blue;
         case RiverType::stream:
             return sf::Color::Cyan;
         default:
-            static_assert(true);
+            engine_assert(false, "Unknown RiverType.");
     }
     return sf::Color::Magenta;
 }
 
-const sf::ConvexShape& HexShape::shape() const { return _shape; }
+const sf::ConvexShape& HexShape::shape() const noexcept { return _shape; }
 
-const sf::ConvexShape& HexShape::highlighting_shape() const {
+const sf::ConvexShape& HexShape::highlighting_shape() const noexcept {
     return _highlighting_shape;
 }
 
-const sf::ConvexShape& HexShape::outline_shape() const {
-    return _outline_shape;
-}
+const sf::ConvexShape& HexShape::outline_shape() const noexcept { return _outline_shape; }
 
 HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
-                   const sf::Texture* texture, const sf::IntRect& texture_rect)
+                   const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept
     : _layout{layout}, _shape{6}, _highlighting_shape{6}, _outline_shape{6} {
     update(site);
 
@@ -54,7 +54,7 @@ HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
     }
 }
 
-void HexShape::update(const HexSite& site) {
+void HexShape::update(const HexSite& site) noexcept {
     for (int i = 0; i < 6; ++i) {
         const auto offset = _layout->cornerr_offset(i);
         _shape.setPoint(i, offset);
@@ -72,13 +72,13 @@ void HexShape::update(const HexSite& site) {
     _outline_shape.setOutlineThickness(thickness);
 }
 
-RiverShape::RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site)
+RiverShape::RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site) noexcept
     : _layout{layout}, _shape{4} {
     _shape.setOutlineThickness(0.0);
     update(site);
 }
 
-void RiverShape::update(const RiverSite& site) {
+void RiverShape::update(const RiverSite& site) noexcept {
     const auto [coord1, coord2] = site.sides();
 
     const auto vec1 = hex_to_world_point(coord1, *_layout);
@@ -100,4 +100,4 @@ void RiverShape::update(const RiverSite& site) {
     _shape.setFillColor(site_color(site.type()));
 }
 
-const sf::ConvexShape& RiverShape::shape() const { return _shape; }
+const sf::ConvexShape& RiverShape::shape() const noexcept { return _shape; }

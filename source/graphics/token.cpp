@@ -1,7 +1,7 @@
 #include "token.h"
 
 Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
-             const sf::Texture* texture, const sf::IntRect& texture_rect)
+             const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept
     : _layout{layout}, _shape{4}, _highlighting_shape{4} {
     _highlighting_shape.setOutlineThickness(0.f);
     _highlighting_shape.setFillColor(sf::Color(255, 0, 0, 120));
@@ -14,7 +14,7 @@ Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
     update(site);
 }
 
-void Token::update(const HexCoordinate& site) {
+void Token::update(const HexCoordinate& site) noexcept {
     const auto size = _layout->size;
 
     _shape.setPoint(0, {size.x / 2, -size.y / 2});
@@ -32,8 +32,8 @@ void Token::update(const HexCoordinate& site) {
     _highlighting_shape.setPosition(position);
 }
 
-const sf::ConvexShape& Token::shape() const { return _shape; }
+const sf::ConvexShape& Token::shape() const noexcept { return _shape; }
 
-const sf::ConvexShape& Token::highlighting_shape() const {
+const sf::ConvexShape& Token::highlighting_shape() const noexcept {
     return _highlighting_shape;
 }

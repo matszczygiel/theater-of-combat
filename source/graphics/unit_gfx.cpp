@@ -3,26 +3,24 @@
 #include "core/log.h"
 #include "unit/unit_components.h"
 
-UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) : _layout{layout} {}
+UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) noexcept : _layout{layout} {}
 
-void UnitGfx::setup(
-    UnitManager& manager, std::string texture_path,
-    const std::map<Unit::IdType, sf::IntRect>& texture_positions) {
+void UnitGfx::setup(UnitManager& manager, std::string texture_path,
+                    const std::map<Unit::IdType, sf::IntRect>& texture_positions) {
     _all_tokens.clear();
 
     const auto loaded = _texture.loadFromFile(texture_path);
-    if (!loaded)
-        app_error("Cannot load texture from file: {}", texture_path);
+    engine_assert_throw(loaded, "Cannot load texture from file: {}", texture_path);
 
     _texture.setSmooth(true);
     for (const auto& [id, unit] : manager.units()) {
         if (auto it = texture_positions.find(id);
             it != texture_positions.end() && loaded) {
-            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
-                                          &_texture, it->second));
+            _all_tokens.emplace(
+                id, Token(_layout, HexCoordinate::origin(), &_texture, it->second));
         } else {
-            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
-                                          nullptr, sf::IntRect()));
+            _all_tokens.emplace(
+                id, Token(_layout, HexCoordinate::origin(), nullptr, sf::IntRect()));
         }
     }
     update(manager);
@@ -52,21 +50,19 @@ void UnitGfx::draw_tokens(sf::RenderTarget& target) const {
 }
 
 void UnitGfx::draw_ids(sf::RenderTarget& target, const sf::Font& font) const {
-    const sf::Color dark_magenta(139, 0, 139);
+    static const sf::Color dark_magenta(139, 0, 139);
 
     for (const auto& [id, token] : tokens) {
         std::string text_str = "Id: " + std::to_string(id);
-        sf::Text text{text_str, font,
-                      static_cast<unsigned int>(_layout->size.x * 0.25)};
+        sf::Text text{text_str, font, static_cast<unsigned int>(_layout->size.x * 0.25)};
 
         text.setFillColor(dark_magenta);
         text.setOutlineColor(dark_magenta);
         text.setStyle(sf::Text::Bold);
-        text.setOrigin(text.getLocalBounds().width / 2.0,
-                       text.getLocalBounds().height);
+        text.setOrigin(text.getLocalBounds().width / 2.0, text.getLocalBounds().height);
         text.setPosition(token.shape().getPosition());
         target.draw(text);
     }
 }
 
-void UnitGfx::clear() { tokens.clear(); }
+void UnitGfx::clear() noexcept { tokens.clear(); }

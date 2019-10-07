@@ -9,20 +9,16 @@
 #include "map/map.h"
 #include "map/types.h"
 
-sf::Color site_color(HexType type);
-
-sf::Color site_color(RiverType type);
-
 class HexShape {
    public:
     HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
-             const sf::Texture* texture, const sf::IntRect& texture_rect);
+             const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept;
 
-    void update(const HexSite& site);
+    void update(const HexSite& site) noexcept;
 
-    const sf::ConvexShape& shape() const;
-    const sf::ConvexShape& highlighting_shape() const;
-    const sf::ConvexShape& outline_shape() const;
+    const sf::ConvexShape& shape() const noexcept;
+    const sf::ConvexShape& highlighting_shape() const noexcept;
+    const sf::ConvexShape& outline_shape() const noexcept;
 
    private:
     std::shared_ptr<Layout> _layout;
@@ -33,11 +29,11 @@ class HexShape {
 
 class RiverShape {
    public:
-    RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site);
+    RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site) noexcept;
 
-    void update(const RiverSite& site);
+    void update(const RiverSite& site) noexcept;
 
-    const sf::ConvexShape& shape() const;
+    const sf::ConvexShape& shape() const noexcept;
 
    private:
     std::shared_ptr<Layout> _layout;

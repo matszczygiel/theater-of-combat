@@ -11,17 +11,17 @@
 class Token {
    public:
     Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
-          const sf::Texture* texture, const sf::IntRect& texture_rect);
+          const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept;
 
-    void update(const HexCoordinate& site);
+    void update(const HexCoordinate& site) noexcept;
 
-    const sf::ConvexShape& shape() const;
-    const sf::ConvexShape& highlighting_shape() const;
+    const sf::ConvexShape& shape() const noexcept;
+    const sf::ConvexShape& highlighting_shape() const noexcept;
 
    private:
-    std::shared_ptr<Layout> _layout;
-    sf::ConvexShape _shape;
-    sf::ConvexShape _highlighting_shape;
+    std::shared_ptr<Layout> _layout{};
+    sf::ConvexShape _shape{};
+    sf::ConvexShape _highlighting_shape{};
 };
 
 #endif

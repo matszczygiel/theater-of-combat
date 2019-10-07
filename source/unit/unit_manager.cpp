@@ -1,13 +1,15 @@
 #include "unit_manager.h"
 
-Unit::IdType UnitManager::create(UnitType type, std::string name,
+Unit::IdType UnitManager::create(UnitType type, const std::string& name,
                                  bool assign_components) {
-    const auto id = fetch_id();
+    const auto id = _id_gen.fetch();
     engine_assert(_units.count(id) == 0,
                   "Error in UnitManager, creating unit with currently used id {}.", id);
-    auto& unit = _units[id];
-    unit._name = name;
-    unit._type = type;
+    auto [unit_it, success] = _units.insert({id, Unit()});
+    engine_assert(success, "");
+
+    unit_it->second._name = name;
+    unit_it->second._type = type;
 
     if (assign_components)
         assign_default_components(id, type);
@@ -43,6 +45,4 @@ void UnitManager::assign_default_components(Unit::IdType id, UnitType type) {
     }
 }
 
-constexpr const std::map<Unit::IdType, Unit>& UnitManager::units() const noexcept { return _units; }
-
-constexpr Unit::IdType UnitManager::fetch_id() noexcept { return _current_free_id++; }
+const std::map<Unit::IdType, Unit>& UnitManager::units() const noexcept { return _units; }

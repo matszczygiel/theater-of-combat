@@ -1,26 +1,5 @@
 #include "hexagons.h"
 
-#include <cmath>
-
-HexCoordinate round(const HexCoordinateFractional& hex) {
-    int rx = std::lround(hex.x());
-    int ry = std::lround(hex.y());
-    int rz = std::lround(hex.z());
-
-    const auto x_diff = std::abs(rx - hex.x());
-    const auto y_diff = std::abs(ry - hex.y());
-    const auto z_diff = std::abs(rz - hex.z());
-
-    if (x_diff > y_diff && x_diff > z_diff) {
-        rx = -ry - rz;
-    } else if (y_diff > z_diff) {
-        ry = -rx - rz;
-    } else {
-        rz = -rx - ry;
-    }
-    return HexCoordinate(rx, ry, rz);
-}
-
 const Orientation Orientation::Pointy{
     {std::sqrt(3.f), std::sqrt(3.f) / 2.f, 0.f, 3.f / 2.f},
     {std::sqrt(3.f) / 3.f, -1.f / 3.f, 0.f, 2.f / 3.f},

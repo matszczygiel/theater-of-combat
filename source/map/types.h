@@ -17,18 +17,19 @@ enum class RiverType {
 
 class HexSite {
    public:
-    HexSite() = default;
-    HexSite(HexCoordinate coord, HexType type) noexcept;
+    constexpr HexSite() = default;
+    constexpr explicit HexSite(HexCoordinate coord, HexType type) noexcept
+        : _coord{coord}, _type{type} {}
 
-    const HexCoordinate& coord() const noexcept;
-    const HexType& type() const noexcept;
+    constexpr const HexCoordinate& coord() const noexcept { return _coord; };
+    constexpr HexType type() const noexcept { return _type; };
 
     template <class Archive>
     void serialize(Archive& archive);
 
    private:
     HexCoordinate _coord{};
-    HexType _type{};
+    HexType _type{HexType::field};
 };
 
 template <class Archive>
@@ -38,11 +39,12 @@ void HexSite::serialize(Archive& archive) {
 
 class RiverSite {
    public:
-    RiverSite() noexcept;
-    RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
+    constexpr RiverSite() noexcept
+        : _side1{0, 0}, _side2{1, 0}, _type{RiverType::small} {}
+    explicit RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
 
-    std::pair<HexCoordinate, HexCoordinate> sides() const noexcept;
-    const RiverType& type() const noexcept;
+    constexpr std::pair<HexCoordinate, HexCoordinate> sides() const noexcept;
+    constexpr RiverType type() const noexcept { return _type; }
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -52,6 +54,10 @@ class RiverSite {
     HexCoordinate _side2{};
     RiverType _type{};
 };
+
+constexpr std::pair<HexCoordinate, HexCoordinate> RiverSite::sides() const noexcept {
+    return std::make_pair(_side1, _side2);
+}
 
 template <class Archive>
 void RiverSite::serialize(Archive& archive) {

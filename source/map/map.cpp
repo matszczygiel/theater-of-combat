@@ -1,10 +1,6 @@
 #include "map.h"
 
 #include <algorithm>
-#include <cassert>
-#include <fstream>
-#include <iterator>
-#include <sstream>
 #include <tuple>
 #include <vector>
 
@@ -12,17 +8,11 @@
 
 #include "core/log.h"
 
-constexpr const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept {
-    return _hexes;
-}
+const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept { return _hexes; }
 
-constexpr const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept {
-    return _rivers;
-}
+const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept { return _rivers; }
 
-constexpr const BidirectionalGraph<int>& Map::graph() const noexcept { return _graph; }
-
-constexpr Map::SiteId Map::fetch_id() noexcept { return _current_free_id++; }
+const BidirectionalGraph<int>& Map::graph() const noexcept { return _graph; }
 
 Map& Map::insert(HexSite site) {
     if (auto it = std::find_if(
@@ -43,7 +33,7 @@ Map& Map::insert(HexSite site) {
         }
     }
 
-    const auto id = fetch_id();
+    const auto id = _id_gen.fetch();
     engine_assert(_hexes.insert({id, site}).second, "");
     _graph.insert_node(id, found_neighbors);
     return *this;
@@ -83,7 +73,7 @@ Map& Map::insert(RiverSite site) {
         return *this;
     }
 
-    const auto id = fetch_id();
+    const auto id = _id_gen.fetch();
     engine_assert(_rivers.insert({id, site}).second, "");
     _graph.insert_node(id, {found_hexes[0], found_hexes[1]})
         .remove_edge(found_hexes[0], found_hexes[1]);

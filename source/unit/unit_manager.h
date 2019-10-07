@@ -7,6 +7,7 @@
 
 #include <cereal/types/vector.hpp>
 
+#include "core/id_gen.h"
 #include "unit.h"
 #include "unit_components.h"
 
@@ -42,7 +43,8 @@ std::vector<Component>& ComponentPoll::get_container() {
 
 class UnitManager {
    public:
-    Unit::IdType create(UnitType type, std::string name, bool assign_components = false);
+    Unit::IdType create(UnitType type, const std::string& name,
+                        bool assign_components = false);
 
     template <class Component, class... Args>
     Component& assign_component(Unit::IdType id, Args&&... args);
@@ -53,7 +55,7 @@ class UnitManager {
     template <class Component>
     void remove_component(Unit::IdType id);
 
-    constexpr const std::map<Unit::IdType, Unit>& units() const noexcept;
+    const std::map<Unit::IdType, Unit>& units() const noexcept;
 
     template <class Component>
     void apply_for_each(const std::function<bool(Component&)>& operation);
@@ -65,18 +67,17 @@ class UnitManager {
 
    private:
     void assign_default_components(Unit::IdType id, UnitType type);
-    constexpr Unit::IdType fetch_id() noexcept;
 
     ComponentPoll _components{};
 
-    Unit::IdType _current_free_id{0};
     std::map<Unit::IdType, Unit> _units{};
+    IdGenerator<Unit::IdType> _id_gen{0};
 };
 
 template <class Archive>
 void UnitManager::serialize(Archive& archive) {
     archive(
-        CEREAL_NVP(_current_free_id), CEREAL_NVP(_units),
+        CEREAL_NVP(_id_gen), CEREAL_NVP(_units),
         // list all possible components
         cereal::make_nvp("MovementComponents",
                          _components.get_container<MovementComponent>()),
@@ -97,7 +98,7 @@ Component& UnitManager::assign_component(Unit::IdType id, Args&&... args) {
 
     auto& com       = vec.emplace_back(std::forward<Args>(args)...);
     com._owner      = id;
-    com._owner_type = _units[id].type();
+    com._owner_type = _units.at(id).type();
     return com;
 }
 

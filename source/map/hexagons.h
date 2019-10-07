@@ -21,11 +21,11 @@ class HexCoordinates {
 
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
-    constexpr HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
-    HexCoordinates(T x, T y, T z);
+    constexpr explicit HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
+    explicit HexCoordinates(T x, T y, T z);
 
-    constexpr HexCoordinates<T> neighbor(int direction) const;
-    constexpr std::array<HexCoordinates<T>, 6> neighbors() const noexcept;
+    const HexCoordinates<T> neighbor(int direction) const;
+    const std::array<HexCoordinates<T>, 6> neighbors() const noexcept;
 
     constexpr const T& p() const noexcept { return _z; }
     constexpr const T& q() const noexcept { return _x; }
@@ -63,8 +63,8 @@ constexpr HexCoordinates<T> HexCoordinates<T>::origin() noexcept {
 
 template <typename T>
 const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::directions = {
-    HexCoordinates<T>(1, -1, 0), HexCoordinates<T>(1, 0, -1), HexCoordinates<T>(0, 1, -1),
-    HexCoordinates<T>(-1, 1, 0), HexCoordinates<T>(-1, 0, 1), HexCoordinates<T>(0, -1, 1),
+    HexCoordinates<T>(1, 0),  HexCoordinates<T>(1, -1), HexCoordinates<T>(0, -1),
+    HexCoordinates<T>(-1, 0), HexCoordinates<T>(-1, 1), HexCoordinates<T>(0, 1),
 };
 
 template <typename T>
@@ -73,19 +73,34 @@ constexpr T HexCoordinates<T>::length() const noexcept {
 }
 
 template <typename T>
-constexpr HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
+const HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
     return *this + directions.at(direction);
 }
 
 template <typename T>
-constexpr std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noexcept {
+const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noexcept {
     std::array<HexCoordinates<T>, 6> res;
     std::generate(res.begin(), res.end(),
                   [i = 0, this]() mutable { return neighbor(i++); });
     return res;
 }
 
-HexCoordinate round(const HexCoordinateFractional& hex);
+constexpr HexCoordinate round(const HexCoordinateFractional& hex) {
+    int rx = std::lround(hex.x());
+    int ry = std::lround(hex.y());
+    int rz = std::lround(hex.z());
+
+    const auto x_diff = std::abs(rx - hex.x());
+    const auto y_diff = std::abs(ry - hex.y());
+    const auto z_diff = std::abs(rz - hex.z());
+
+    if (x_diff > y_diff && x_diff > z_diff) {
+        rx = -ry - rz;
+    } else if (y_diff <= z_diff) {
+        rz = -rx - ry;
+    }
+    return HexCoordinate(rx, rz);
+}
 
 template <typename T, typename U>
 constexpr typename std::common_type<T, U>::type distance(

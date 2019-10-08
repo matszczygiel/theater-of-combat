@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-namespace loggger {
+namespace logger {
 std::shared_ptr<spdlog::sinks::dist_sink_mt>& get_distributing_sink() noexcept {
     static auto sink = std::make_shared<spdlog::sinks::dist_sink_mt>();
     return sink;

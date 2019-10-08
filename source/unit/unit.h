@@ -10,10 +10,11 @@ enum class UnitType { heavy, mechanized };
 
 class Unit {
     friend class UnitManager;
-    friend class cereal::access;
 
    public:
     using IdType = int;
+
+    Unit() = default;
 
     const std::string& name() const noexcept;
     UnitType type() const noexcept;
@@ -22,8 +23,6 @@ class Unit {
     void serialize(Archive& archive);
 
    private:
-    Unit() = default;
-
     std::string _name{};
     UnitType _type{};
 };

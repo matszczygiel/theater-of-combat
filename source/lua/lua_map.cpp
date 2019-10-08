@@ -22,19 +22,16 @@ void lua_push_functions() {
         "HexSite", sol::constructors<HexSite(HexCoordinate, HexType)>());
     hex["type"] = &HexSite::type;
 
-    lua.new_enum("RiverType", "small", RiverType::small, "stream",
-                 RiverType::stream);
+    lua.new_enum("RiverType", "small", RiverType::small, "stream", RiverType::stream);
 
     auto river = lua.new_usertype<RiverSite>(
-        "RiverSite", sol::constructors<RiverSite(HexCoordinate, HexCoordinate,
-                                                 RiverType)>());
+        "RiverSite",
+        sol::constructors<RiverSite(HexCoordinate, HexCoordinate, RiverType)>());
     river["type"] = &RiverSite::type;
 
-
-    auto map = lua.new_usertype<Map>(
-        "Map", sol::constructors<Map()>());
-    map["test_map"] = &Map::create_test_map;
-    map["insert_hex"] = sol::resolve<void(HexSite)>(&Map::insert);
-    map["insert_river"] = sol::resolve<void(RiverSite)>(&Map::insert);
+    auto map = lua.new_usertype<Map>("Map", sol::constructors<Map(), Map(const Map&)>());
+    map["test_map"]     = &Map::create_test_map;
+    map["insert_hex"]   = sol::resolve<Map&(HexSite)>(&Map::insert);
+    map["insert_river"] = sol::resolve<Map&(RiverSite)>(&Map::insert);
 }
 }  // namespace map

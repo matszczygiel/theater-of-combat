@@ -42,11 +42,12 @@ void Game::initialize() {
     auto& map = _state.scenario->map;
     auto& lua = lua::get_state();
     map::lua_push_functions();
-    lua["game_map"]      = std::ref(map);
+    lua["get_game_map"]  = [&map]()->Map& { return map; };
     lua["save_map_json"] = [&](std::string name) { _res_loader.save_json(map, name); };
     lua["load_map_json"] = [&](std::string name) {
         map = _res_loader.load_json<Map>(name);
     };
+    lua["set_game_map"] = [&map](const Map& m) { map = m; };
 
     units::lua_push_functions();
     auto& units            = _state.scenario->units;

@@ -1,5 +1,8 @@
 #include "lua_map.h"
 
+#include <sstream>
+
+#include <cereal/archives/json.hpp>
 #include <sol/sol.hpp>
 
 #include "core/lua_vm.h"
@@ -30,8 +33,16 @@ void lua_push_functions() {
     river["type"] = &RiverSite::type;
 
     auto map = lua.new_usertype<Map>("Map", sol::constructors<Map(), Map(const Map&)>());
-    map["test_map"]     = &Map::create_test_map;
-    map["insert_hex"]   = sol::resolve<Map&(HexSite)>(&Map::insert);
-    map["insert_river"] = sol::resolve<Map&(RiverSite)>(&Map::insert);
+    map["test_map"]                    = &Map::create_test_map;
+    map["insert_hex"]                  = sol::resolve<Map&(HexSite)>(&Map::insert);
+    map["insert_river"]                = sol::resolve<Map&(RiverSite)>(&Map::insert);
+    map[sol::meta_function::to_string] = [](const Map& map) {
+        std::stringstream ss;
+        {
+            cereal::JSONOutputArchive ar(ss);
+            ar(map);
+        }
+        return ss.str();
+    };
 }
 }  // namespace map

@@ -3,6 +3,8 @@ function init()
     print('Initializing scenario')
     --load_map_json('test2')
     --game_map.new(Map.test_map())
+    local map = Map.test_map()
+    set_game_map(map)
     load_units_test()
     
     game_scenario.teams['team 0'] = {0, 2}

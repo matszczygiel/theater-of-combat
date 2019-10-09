@@ -21,18 +21,12 @@ static Map simple_test_map() {
     res.insert(HexSite(HexCoordinate(0, 1), HexType::field));
 
     // rivers
-    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0),
-                         RiverType::small));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0),
-                         RiverType::small));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1),
-                         RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1),
-                         RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1),
-                         RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(-1, 1), HexCoordinate(0, 1),
-                         RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::small));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::small));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), RiverType::stream));
+    res.insert(RiverSite(HexCoordinate(-1, 1), HexCoordinate(0, 1), RiverType::stream));
     return res;
 }
 
@@ -78,71 +72,76 @@ TEST_CASE("hexagons") {
 }
 
 TEST_CASE("graph") {
-    SUBCASE("inserting") {
-        BidirectionalGraph bg;
-        bg.insert_node(0, {})
-            .insert_node(1, {})
+    SUBCASE("BidirectionalGraph") {
+        BidirectionalGraph<int> bg;
+        bg.insert_node(0)
+            .insert_node(1)
             .insert_node(2, {1})
             .insert_node(3, {1, 2})
-            .insert_node(4, {0, 3});
+            .insert_node(4, {0, 3})
+            .insert_edge(3, 5);
 
         std::map<int, std::set<int>> expected = {
-            {0, {4}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 4}}, {4, {0, 3}}};
+            {0, {4}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 4, 5}}, {4, {0, 3}}, {5, {3}}};
 
         CHECK_EQ(bg.adjacency_matrix(), expected);
-    }
-
-    SUBCASE("removing") {
-        BidirectionalGraph bg;
-        bg.insert_node(0, {})
-            .insert_node(1, {})
-            .insert_node(2, {1})
-            .insert_node(3, {1, 2})
-            .insert_node(4, {0, 3});
 
         bg.remove_node(4);
-
-        std::map<int, std::set<int>> expected = {
-            {0, {}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2}}};
+        expected = {{0, {}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 5}}, {5, {3}}};
 
         CHECK_EQ(bg.adjacency_matrix(), expected);
 
         bg.remove_edge(1, 3);
-        std::map<int, std::set<int>> expected2 = {
-            {0, {}}, {1, {2}}, {2, {1, 3}}, {3, {2}}};
+        expected = {{0, {}}, {1, {2}}, {2, {1, 3}}, {3, {2, 5}}, {5, {3}}};
 
-        CHECK_EQ(bg.adjacency_matrix(), expected2);
+        CHECK_EQ(bg.adjacency_matrix(), expected);
     }
 
-    SUBCASE("inserting") {
-        BidirectionalGraph bg;
-        bg.insert_node(0, {})
-            .insert_node(1, {})
+    SUBCASE("WeightedBidirectionalGraph") {
+        BidirectionalGraph<int> bg;
+        bg.insert_node(0)
+            .insert_node(1)
             .insert_node(2, {1})
             .insert_node(3, {1, 2})
-            .insert_node(4, {0, 3});
+            .insert_node(4, {0, 3})
+            .insert_edge(3, 5);
 
-        WeightedBidirectionalGraph wbg_expected(bg, 1);
+        WeightedBidirectionalGraph<int, int> wbg_expected(bg, 1);
 
-        WeightedBidirectionalGraph wbg;
+        WeightedBidirectionalGraph<int, int> wbg;
         wbg.insert_edge(1, 2, 1, 1)
             .insert_edge(1, 3, 1, 1)
             .insert_edge(0, 4, 1, 1)
             .insert_edge(2, 3, 1, 1)
-            .insert_edge(3, 4, 1, 1);
-
+            .insert_edge(3, 4, 1, 1)
+            .insert_edge(3, 5, 1, 1);
         CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
-    }
 
-    SUBCASE("changing_weight") {
-        BidirectionalGraph bg;
-        bg.insert_node(0, {})
-            .insert_node(1, {})
+        auto expected_adj = wbg.adjacency_matrix();
+        wbg.insert_node(6);
+        expected_adj[6] = {};
+        CHECK_EQ(wbg.adjacency_matrix(), expected_adj);
+
+        wbg = WeightedBidirectionalGraph(bg, 1);
+        bg.remove_node(4);
+        wbg_expected = WeightedBidirectionalGraph(bg, 1);
+        wbg.remove_node(4);
+        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
+        wbg = WeightedBidirectionalGraph(bg, 1);
+        bg.remove_edge(1, 2);
+        wbg_expected = WeightedBidirectionalGraph(bg, 1);
+        wbg.remove_edge(1, 2);
+        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
+        bg = BidirectionalGraph();
+        bg.insert_node(0)
+            .insert_node(1)
             .insert_node(2, {1})
             .insert_node(3, {1, 2})
             .insert_node(4, {0, 3});
 
-        WeightedBidirectionalGraph wbg_expected(bg, 0);
+        wbg_expected = WeightedBidirectionalGraph(bg, 0);
 
         wbg_expected.change_edge_weight(1, 2, 3)
             .change_edge_weight(1, 3, 0)
@@ -155,7 +154,7 @@ TEST_CASE("graph") {
             .change_edge_weight(3, 2, 3)
             .change_edge_weight(4, 3, 0);
 
-        WeightedBidirectionalGraph wbg;
+        wbg = WeightedBidirectionalGraph();
         wbg.insert_edge(1, 2, 3, 4)
             .insert_edge(1, 3, 0, 4)
             .insert_edge(0, 4, 1, 3)
@@ -165,33 +164,8 @@ TEST_CASE("graph") {
         CHECK_EQ(wbg, wbg_expected);
     }
 
-    SUBCASE("removing") {
-        BidirectionalGraph bg;
-        bg.insert_node(0, {})
-            .insert_node(1, {})
-            .insert_node(2, {1})
-            .insert_node(3, {1, 2})
-            .insert_node(4, {0, 3});
-
-        WeightedBidirectionalGraph wbg(bg, 1);
-
-        bg.remove_node(4);
-        WeightedBidirectionalGraph wbg_expected(bg, 1);
-
-        wbg.remove_node(4);
-
-        BidirectionalGraph bg_expected;
-        bg_expected.insert_node(0, {})
-            .insert_node(1, {})
-            .insert_node(2, {1})
-            .insert_node(3, {1, 2});
-
-        CHECK_EQ(bg.adjacency_matrix(), bg_expected.adjacency_matrix());
-        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
-    }
-
     SUBCASE("dijkstra") {
-        WeightedBidirectionalGraph wbg;
+        WeightedBidirectionalGraph<int, int> wbg;
         wbg.insert_edge(1, 2, 3, 4)
             .insert_edge(1, 3, 0, 4)
             .insert_edge(0, 4, 1, 3)
@@ -200,8 +174,7 @@ TEST_CASE("graph") {
 
         auto [dist, prev] = wbg.dijkstra(3);
 
-        std::map<int, int> dist_expected = {
-            {0, 4}, {1, 4}, {2, 3}, {3, 0}, {4, 1}};
+        std::map<int, int> dist_expected = {{0, 4}, {1, 4}, {2, 3}, {3, 0}, {4, 1}};
         std::map<int, int> prev_expected = {{0, 4}, {1, 3}, {2, 3}, {4, 3}};
 
         CHECK_EQ(dist, dist_expected);
@@ -211,28 +184,28 @@ TEST_CASE("graph") {
 
 TEST_CASE("site types") {
     SUBCASE("river") {
-        CHECK_NOTHROW(RiverSite(HexCoordinate(1, -1), HexCoordinate(0, 0),
-                                RiverType::stream));
-        CHECK_NOTHROW(RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1),
-                                RiverType::stream));
-        CHECK_THROWS(RiverSite(HexCoordinate(1, -1), HexCoordinate(-1, 0),
-                               RiverType::stream));
-        CHECK_THROWS(RiverSite(HexCoordinate(0, -1), HexCoordinate(0, 1),
-                               RiverType::stream));
+        CHECK_NOTHROW(
+            RiverSite(HexCoordinate(1, -1), HexCoordinate(0, 0), RiverType::stream));
+        CHECK_NOTHROW(
+            RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
+        CHECK_THROWS(
+            RiverSite(HexCoordinate(1, -1), HexCoordinate(-1, 0), RiverType::stream));
+        CHECK_THROWS(
+            RiverSite(HexCoordinate(0, -1), HexCoordinate(0, 1), RiverType::stream));
     }
 }
 
 TEST_CASE("map") {
-    SUBCASE("hex insertions") {
-        Map map;
+    SUBCASE("insertions") {
+        Map map{};
         for (int r = -1; r <= 1; ++r) {
             for (int q = -1; q <= 1; ++q) {
                 map.insert(HexSite(HexCoordinate(q, r), HexType::field));
             }
         }
-        BidirectionalGraph graph;
+        BidirectionalGraph<int> graph{};
 
-        graph.insert_node(0, {})
+        graph.insert_node(0)
             .insert_node(1, {0})
             .insert_node(2, {1})
             .insert_node(3, {0, 1})
@@ -243,37 +216,23 @@ TEST_CASE("map") {
             .insert_node(8, {5, 7});
 
         CHECK_EQ(map.graph(), graph);
-    }
 
-    SUBCASE("river insertions") {
-        Map map;
+        map.insert(
+               RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1), RiverType::stream))
+            .insert(
+                RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1), RiverType::stream))
+            .insert(
+                RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::stream))
+            .insert(
+                RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
 
-        for (int r = -1; r <= 1; ++r) {
-            for (int q = -1; q <= 1; ++q) {
-                map.insert(HexSite(HexCoordinate(q, r), HexType::field));
-            }
-        }
+        CHECK_THROWS(map.insert(
+            RiverSite(HexCoordinate(8, -1), HexCoordinate(9, -1), RiverType::stream)));
 
-        map.insert(RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1),
-                             RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1),
-                             RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0),
-                             RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1),
-                             RiverType::stream));
-
-        BidirectionalGraph graph;
-
-        graph.insert_node(0, {})
-            .insert_node(1, {0})
-            .insert_node(2, {})
-            .insert_node(3, {0, 1})
-            .insert_node(4, {3, 1})
-            .insert_node(5, {2})
-            .insert_node(6, {3, 4})
-            .insert_node(7, {6, 4})
-            .insert_node(8, {5, 7})
+        graph.remove_edge(1, 2)
+            .remove_edge(2, 4)
+            .remove_edge(4, 5)
+            .remove_edge(5, 7)
             .insert_node(9, {1, 2})
             .insert_node(10, {2, 4})
             .insert_node(11, {4, 5})
@@ -286,16 +245,15 @@ TEST_CASE("map") {
         const auto map               = simple_test_map();
         const auto neighbors         = map.get_controlable_hexes_from(5);
         const std::set<int> expected = {1, 2, 4, 6, 8, 9};
+
         CHECK_EQ(neighbors, expected);
     }
 
-    SUBCASE("id from coord") {
+    SUBCASE("id and coords") {
         const auto map = simple_test_map();
-        CHECK_EQ(map.get_hex_coord(7), HexCoordinate(-2, 1));
-    }
 
-    SUBCASE("coord from id") {
-        const auto map = simple_test_map();
+        CHECK_EQ(map.get_hex_coord(7), HexCoordinate(-2, 1));
+
         CHECK_EQ(map.get_hex_id(HexCoordinate(1, -1)), 2);
     }
 }

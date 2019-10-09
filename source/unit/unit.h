@@ -1,3 +1,4 @@
+
 #ifndef UNIT_H
 #define UNIT_H
 
@@ -5,23 +6,23 @@
 
 #include <cereal/types/string.hpp>
 
-#include "core/log.h"
-
 enum class UnitType { heavy, mechanized };
 
 class Unit {
+    friend class UnitManager;
+
    public:
     using IdType = int;
 
-    const std::string& name() const;
-    UnitType type();
+    Unit() = default;
+
+    const std::string& name() const noexcept;
+    UnitType type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
 
    private:
-    friend class UnitManager;
-
     std::string _name{};
     UnitType _type{};
 };
@@ -32,16 +33,22 @@ void Unit::serialize(Archive& archive) {
 }
 
 struct ComponentBase {
-    Unit::IdType owner() const;
-    UnitType owner_type() const;
+    friend class UnitManager;
+    friend class cereal::access;
+
+   public:
+    constexpr Unit::IdType owner() const noexcept { return _owner; };
+    constexpr UnitType owner_type() const noexcept { return _owner_type; };
 
     template <class Archive>
     void serialize(Archive& archive);
 
+   protected:
+    constexpr ComponentBase() = default;
+
    private:
-    friend class UnitManager;
     Unit::IdType _owner{};
-    UnitType _owner_type{};
+    UnitType _owner_type{UnitType::mechanized};
 };
 
 template <class Archive>

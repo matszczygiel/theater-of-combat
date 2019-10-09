@@ -1,8 +1,6 @@
 #include "graphics_state.h"
 
-GfxState::GfxState(const GameState& state) : _scenario{state.scenario} {
-    update();
-}
+GfxState::GfxState(const GameState& state) : _scenario{state.scenario} { update(); }
 
 void GfxState::update() {
     if (!_scenario) {
@@ -10,7 +8,7 @@ void GfxState::update() {
         units.clear();
         return;
     }
-    
+
     map.update(_scenario->map);
     units.update(_scenario->units);
 }

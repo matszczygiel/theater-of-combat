@@ -6,39 +6,37 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <ostream>
 #include <stdexcept>
 
 #include <SFML/System/Vector2.hpp>
 #include <cereal/types/utility.hpp>
 
+#include "core/log.h"
+
 template <typename T>
 class HexCoordinates {
-    static_assert(std::is_arithmetic<T>::value,
+    static_assert(std::is_arithmetic_v<T>,
                   "HexCoordinates is parametrized by arithmetic types.");
 
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
+    constexpr explicit HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
+    explicit HexCoordinates(T x, T y, T z);
 
-    HexCoordinates(T x, T y, T z) : _x{x}, _y{y}, _z{z} {
-        if (x + y + z != 0)
-            throw std::domain_error("Sum of x + y + z must be equal 0.");
-    }
+    const HexCoordinates<T> neighbor(int direction) const;
+    const std::array<HexCoordinates<T>, 6> neighbors() const noexcept;
 
-    constexpr HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
+    constexpr const T& p() const noexcept { return _z; }
+    constexpr const T& q() const noexcept { return _x; }
 
-    HexCoordinates<T> neighbor(int direction) const;
-    std::array<HexCoordinates<T>, 6> neighbors() const;
+    constexpr const T& x() const noexcept { return _x; }
+    constexpr const T& y() const noexcept { return _y; }
+    constexpr const T& z() const noexcept { return _z; }
 
-    const T& p() const { return _z; }
-    const T& q() const { return _x; }
+    constexpr T length() const noexcept;
 
-    const T& x() const { return _x; }
-    const T& y() const { return _y; }
-    const T& z() const { return _z; }
-
-    T length() const;
-
-    static HexCoordinates<T> origin() { return HexCoordinates<T>(); }
+    constexpr static HexCoordinates<T> origin() noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -54,72 +52,98 @@ using HexCoordinate           = HexCoordinates<int>;
 using HexCoordinateFractional = HexCoordinates<float>;
 
 template <typename T>
-const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::directions = {
-    HexCoordinates<T>(1, -1, 0), HexCoordinates<T>(1, 0, -1),
-    HexCoordinates<T>(0, 1, -1), HexCoordinates<T>(-1, 1, 0),
-    HexCoordinates<T>(-1, 0, 1), HexCoordinates<T>(0, -1, 1),
-};
-
-HexCoordinate round(const HexCoordinateFractional& hex);
+HexCoordinates<T>::HexCoordinates(T x, T y, T z) : _x{x}, _y{y}, _z{z} {
+    engine_assert_throw(x + y + z == 0, "HexCoordinates x + y + z must equal 0.");
+}
 
 template <typename T>
-T HexCoordinates<T>::length() const {
+constexpr HexCoordinates<T> HexCoordinates<T>::origin() noexcept {
+    return HexCoordinates<T>();
+}
+
+template <typename T>
+const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::directions = {
+    HexCoordinates<T>(1, 0),  HexCoordinates<T>(1, -1), HexCoordinates<T>(0, -1),
+    HexCoordinates<T>(-1, 0), HexCoordinates<T>(-1, 1), HexCoordinates<T>(0, 1),
+};
+
+template <typename T>
+constexpr T HexCoordinates<T>::length() const noexcept {
     return (std::abs(_x) + std::abs(_y) + std::abs(_z)) / 2.0;
 }
 
-template <typename T, typename U>
-typename std::common_type<T, U>::type distance(const HexCoordinates<T>& lhs,
-                                               const HexCoordinates<U>& rhs) {
-    return (lhs - rhs).length();
-}
-
 template <typename T>
-bool operator==(const HexCoordinates<T>& lhs, const HexCoordinates<T>& rhs) {
-    return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
-}
-
-template <typename T>
-bool operator!=(const HexCoordinates<T>& lhs, const HexCoordinates<T>& rhs) {
-    return !(lhs == rhs);
-}
-
-template <typename T, typename U>
-HexCoordinates<typename std::common_type<T, U>::type> operator+(
-    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) {
-    return HexCoordinates<typename std::common_type<T, U>::type>(
-        lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z());
-}
-
-template <typename T, typename U>
-HexCoordinates<typename std::common_type<T, U>::type> operator-(
-    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) {
-    return HexCoordinates<typename std::common_type<T, U>::type>(
-        lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z());
-}
-
-template <typename T>
-HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
+const HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
     return *this + directions.at(direction);
 }
 
 template <typename T>
-std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const {
+const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noexcept {
     std::array<HexCoordinates<T>, 6> res;
     std::generate(res.begin(), res.end(),
                   [i = 0, this]() mutable { return neighbor(i++); });
     return res;
 }
 
+constexpr HexCoordinate round(const HexCoordinateFractional& hex) {
+    int rx = std::lround(hex.x());
+    int ry = std::lround(hex.y());
+    int rz = std::lround(hex.z());
+
+    const auto x_diff = std::abs(rx - hex.x());
+    const auto y_diff = std::abs(ry - hex.y());
+    const auto z_diff = std::abs(rz - hex.z());
+
+    if (x_diff > y_diff && x_diff > z_diff) {
+        rx = -ry - rz;
+    } else if (y_diff <= z_diff) {
+        rz = -rx - ry;
+    }
+    return HexCoordinate(rx, rz);
+}
+
 template <typename T, typename U>
-HexCoordinates<typename std::common_type<T, U>::type> operator*(
-    const T& lhs, const HexCoordinates<U>& rhs) {
+constexpr typename std::common_type<T, U>::type distance(
+    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) noexcept {
+    return (lhs - rhs).length();
+}
+
+template <typename T>
+constexpr bool operator==(const HexCoordinates<T>& lhs,
+                          const HexCoordinates<T>& rhs) noexcept {
+    return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
+}
+
+template <typename T>
+constexpr bool operator!=(const HexCoordinates<T>& lhs,
+                          const HexCoordinates<T>& rhs) noexcept {
+    return !(lhs == rhs);
+}
+
+template <typename T, typename U>
+constexpr HexCoordinates<typename std::common_type<T, U>::type> operator+(
+    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) noexcept {
+    return HexCoordinates<typename std::common_type<T, U>::type>(
+        lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z());
+}
+
+template <typename T, typename U>
+constexpr HexCoordinates<typename std::common_type<T, U>::type> operator-(
+    const HexCoordinates<T>& lhs, const HexCoordinates<U>& rhs) noexcept {
+    return HexCoordinates<typename std::common_type<T, U>::type>(
+        lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z());
+}
+
+template <typename T, typename U>
+constexpr HexCoordinates<typename std::common_type<T, U>::type> operator*(
+    const T& lhs, const HexCoordinates<U>& rhs) noexcept {
     return HexCoordinates<typename std::common_type<T, U>::type>(
         lhs * rhs.x(), lhs * rhs.y(), lhs * rhs.z());
 }
 
 template <typename T, typename U>
-HexCoordinates<typename std::common_type<T, U>::type> operator*(
-    const HexCoordinates<T>& lhs, const U& rhs) {
+constexpr HexCoordinates<typename std::common_type<T, U>::type> operator*(
+    const HexCoordinates<T>& lhs, const U& rhs) noexcept {
     return rhs * lhs;
 }
 
@@ -129,13 +153,18 @@ void HexCoordinates<T>::serialize(Archive& archive) {
     archive(CEREAL_NVP(_x), CEREAL_NVP(_y), CEREAL_NVP(_z));
 }
 
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const HexCoordinates<T>& h) {
+    return os << "(" << h.q() << "," << h.p() << ")";
+}
+
 struct Orientation {
    public:
     Orientation() = delete;
     // orientation matrix (used in the conversion to pixel point), row major
-    std::array<float, 4> m;
-    std::array<float, 4> minv;
-    float start_angle;
+    std::array<float, 4> m{};
+    std::array<float, 4> minv{};
+    float start_angle{};
 
    public:
     static const Orientation Pointy;
@@ -147,10 +176,10 @@ struct Layout {
     sf::Vector2f size{50.0, 50.0};
     sf::Vector2f origin{0.0, 0.0};
 
-    sf::Vector2f cornerr_offset(int corner) const;
+    sf::Vector2f cornerr_offset(int corner) const noexcept;
 };
 
-sf::Vector2f hex_to_world_point(const HexCoordinate& hex, const Layout& layout);
-HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout& layout);
+sf::Vector2f hex_to_world_point(const HexCoordinate& hex, const Layout& layout) noexcept;
+HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout& layout) noexcept;
 
 #endif

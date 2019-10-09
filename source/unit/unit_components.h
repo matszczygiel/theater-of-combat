@@ -10,21 +10,22 @@
 #include "map/hexagons.h"
 #include "unit.h"
 
+using Movability = int;
 struct MovementComponent : public ComponentBase {
-    MovementComponent() = default;
-    explicit MovementComponent(int moving_points) noexcept;
+    constexpr MovementComponent() = default;
+    explicit MovementComponent(Movability moving_points);
 
-    int moving_pts{};
+    Movability moving_pts{};
     std::optional<HexCoordinate> position{};
     bool immobilized{false};
 
-    const int& total_moving_pts() const;
+    constexpr Movability total_moving_pts() const noexcept { return _total_moving_pts; }
 
     template <class Archive>
     void serialize(Archive& archive);
 
    private:
-    int _total_moving_pts{};
+    Movability _total_moving_pts{};
 };
 
 template <class Archive>
@@ -33,11 +34,13 @@ void MovementComponent::serialize(Archive& archive) {
             CEREAL_NVP(moving_pts), CEREAL_NVP(position), CEREAL_NVP(immobilized));
 }
 
+using Strength = int;
 struct FightComponent : public ComponentBase {
-    FightComponent() = default;
-    explicit FightComponent(int strength_points) noexcept;
+    constexpr FightComponent() = default;
+    constexpr FightComponent(Strength strength_points) noexcept
+        : strength_pts{strength_points} {}
 
-    int strength_pts{};
+    Strength strength_pts{};
     bool in_fight{false};
 
     template <class Archive>

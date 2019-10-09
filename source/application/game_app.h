@@ -4,7 +4,7 @@
 #include <variant>
 
 #include "application.h"
-#include "core/resource_manager.h"
+#include "core/resource_loader.h"
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
 #include "gui/console.h"
@@ -53,7 +53,7 @@ class Game : public Application {
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
 
-    ResourceManager _res_manager{"resources/"};
+    ResourceLoader _res_loader{"resources/"};
 
     mover::MovementSystem _moving_system{_state};
     FightingSystem _fight_system{_state};

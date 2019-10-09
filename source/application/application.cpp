@@ -63,19 +63,17 @@ void Application::handle_event(const sf::Event& event) {
         case sf::Event::MouseButtonPressed:
             if (io.WantCaptureMouse)
                 break;
-            mouse_button_pressed_event(
-                event.mouseButton.button,
-                _window.mapPixelToCoords(
-                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
+            mouse_button_pressed_event(event.mouseButton.button,
+                                       _window.mapPixelToCoords(sf::Vector2i(
+                                           event.mouseButton.x, event.mouseButton.y)));
             break;
 
         case sf::Event::MouseButtonReleased:
             if (io.WantCaptureMouse)
                 break;
-            mouse_button_released_event(
-                event.mouseButton.button,
-                _window.mapPixelToCoords(
-                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y)));
+            mouse_button_released_event(event.mouseButton.button,
+                                        _window.mapPixelToCoords(sf::Vector2i(
+                                            event.mouseButton.x, event.mouseButton.y)));
             break;
 
         case sf::Event::Resized:
@@ -97,4 +95,3 @@ void Application::handle_event(const sf::Event& event) {
             break;
     }
 }
-

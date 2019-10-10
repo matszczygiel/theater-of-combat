@@ -7,7 +7,7 @@
 
 #include "cereal/optional.hpp"
 
-#include "map/hexagons.h"
+#include "toc/map/hexagons.h"
 #include "unit.h"
 
 using Movability = int;

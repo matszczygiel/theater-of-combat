@@ -5,7 +5,7 @@
 
 #include "gameplay/action.h"
 #include "gameplay/game_state.h"
-#include "map/graph.h"
+#include "toc/map/graph.h"
 #include "toc/map/map.h"
 #include "unit/unit_manager.h"
 

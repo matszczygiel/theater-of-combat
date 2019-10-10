@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "core/id_gen.h"
+#include "toc/core/id_gen.h"
 
 TEST_CASE("IdGenerator") {
     SUBCASE("generating ids") {

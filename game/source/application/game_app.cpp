@@ -9,10 +9,11 @@
 #include <cereal/types/memory.hpp>
 #include <sol/sol.hpp>
 
-#include "core/log.h"
-#include "core/lua_vm.h"
-#include "gui/dock_space.h"
-#include "gui/log_window.h"
+#include "toc/core/log.h"
+#include "toc/core/lua_vm.h"
+#include "toc/gui/dock_space.h"
+#include "toc/gui/log_window.h"
+
 #include "gui/network_prompt.h"
 #include "lua/lua_gameplay.h"
 #include "lua/lua_map.h"
@@ -42,7 +43,7 @@ void Game::initialize() {
     auto& map = _state.scenario->map;
     auto& lua = lua::get_state();
     map::lua_push_functions();
-    lua["get_game_map"]  = [&map]()->Map& { return map; };
+    lua["get_game_map"]  = [&map]() -> Map& { return map; };
     lua["save_map_json"] = [&](std::string name) { _res_loader.save_json(map, name); };
     lua["load_map_json"] = [&](std::string name) {
         map = _res_loader.load_json<Map>(name);

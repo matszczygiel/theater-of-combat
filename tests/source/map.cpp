@@ -1,10 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "map/graph.h"
-#include "map/hexagons.h"
+#include "toc/map/graph.h"
+#include "toc/map/hexagons.h"
 #include "toc/map/map.h"
-#include "map/types.h"
+#include "toc/map/types.h"
 
 static Map simple_test_map() {
     Map res;

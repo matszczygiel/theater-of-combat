@@ -5,7 +5,7 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-#include "core/log.h"
+#include "toc/core/log.h"
 #include "game_state.h"
 
 bool UndoPreviousAction::execute(GameState* state) {

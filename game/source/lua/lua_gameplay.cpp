@@ -2,7 +2,7 @@
 
 #include <sol/sol.hpp>
 
-#include "core/lua_vm.h"
+#include "toc/core/lua_vm.h"
 #include "gameplay/game_state.h"
 
 namespace gameplay {

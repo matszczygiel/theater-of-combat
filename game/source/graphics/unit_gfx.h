@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "graphics/map_gfx.h"
+#include "toc/graphics/map_gfx.h"
 #include "token.h"
 #include "unit/unit_manager.h"
 

@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include "map/hexagons.h"
+#include "toc/map/hexagons.h"
 #include "shapes.h"
 
 struct MapGfx {

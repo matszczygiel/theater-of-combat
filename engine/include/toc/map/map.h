@@ -7,7 +7,7 @@
 
 #include <cereal/types/map.hpp>
 
-#include "core/id_gen.h"
+#include "toc/core/id_gen.h"
 #include "graph.h"
 #include "types.h"
 

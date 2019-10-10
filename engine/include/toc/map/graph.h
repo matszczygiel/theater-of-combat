@@ -9,7 +9,7 @@
 #include <cereal/types/map.hpp>
 #include <cereal/types/set.hpp>
 
-#include "core/log.h"
+#include "toc/core/log.h"
 
 template <typename Index = int>
 class BidirectionalGraph {

@@ -5,9 +5,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "map/hexagons.h"
-#include "map/map.h"
-#include "map/types.h"
+#include "toc/map/hexagons.h"
+#include "toc/map/map.h"
+#include "toc/map/types.h"
 
 class HexShape {
    public:

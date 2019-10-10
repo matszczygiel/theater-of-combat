@@ -1,7 +1,7 @@
 #include "game_state.h"
 
-#include "core/log.h"
-#include "core/lua_vm.h"
+#include "toc/core/log.h"
+#include "toc/core/lua_vm.h"
 
 void Scenario::next_day() {
     ++_current_day;

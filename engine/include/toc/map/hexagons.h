@@ -12,7 +12,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <cereal/types/utility.hpp>
 
-#include "core/log.h"
+#include "toc/core/log.h"
 
 template <typename T>
 class HexCoordinates {

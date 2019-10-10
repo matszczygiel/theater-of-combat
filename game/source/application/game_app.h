@@ -3,17 +3,18 @@
 
 #include <variant>
 
-#include "toc/core/application.h"
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
-#include "toc/gui/console.h"
-#include "toc/gui/log_window.h"
-#include "toc/toc/map/map.h"
 #include "networking/client.h"
 #include "networking/server.h"
-#include "systems/mover.h"
-#include "systems/fighter.h"
 #include "systems/debug_info.h"
+#include "systems/fighter.h"
+#include "systems/mover.h"
+#include "toc/core/application.h"
+#include "toc/core/resource_loader.h"
+#include "toc/gui/console.h"
+#include "toc/gui/log_window.h"
+#include "toc/map/map.h"
 #include "unit/unit.h"
 
 class Game : public Application {
@@ -34,8 +35,7 @@ class Game : public Application {
     void mouse_button_released_event(const sf::Mouse::Button& button,
                                      const sf::Vector2f& position) final;
     void mouse_wheel_scrolled_event(const float& delta) final;
-    void window_resize_event(const unsigned& width,
-                             const unsigned& height) final;
+    void window_resize_event(const unsigned& width, const unsigned& height) final;
     void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:

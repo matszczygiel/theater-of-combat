@@ -19,7 +19,7 @@
 #include "toc/map/map.h"
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
-#include "core/log.h"
+#include "toc/core/log.h"
 
 
 class Scenario {

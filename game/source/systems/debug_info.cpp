@@ -6,7 +6,7 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/types/memory.hpp>
 
-#include "core/log.h"
+#include "toc/core/log.h"
 
 namespace debug_info {
 DebugInfoSystem::DebugInfoSystem(const GameState& state)

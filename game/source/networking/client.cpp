@@ -1,6 +1,6 @@
 #include "client.h"
 
-#include "core/log.h"
+#include "toc/core/log.h"
 
 bool Client::connect_to_server(const sf::IpAddress& ip,
                                const unsigned short& port) {

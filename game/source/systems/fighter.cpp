@@ -4,7 +4,7 @@
 #include <iterator>
 #include <numeric>
 
-#include "core/randomize.h"
+#include "toc/core/randomize.h"
 
 FightingSystem::FightingSystem(const GameState& state) : _scenario{state.scenario} {
     app_assert(_scenario != nullptr, "Scenario is not initialized.");

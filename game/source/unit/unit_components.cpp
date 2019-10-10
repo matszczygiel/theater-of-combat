@@ -1,6 +1,6 @@
 #include "unit_components.h"
 
-#include "core/log.h"
+#include "toc/core/log.h"
 
 MovementComponent::MovementComponent(Movability moving_points)
     : moving_pts{moving_points}, position{}, _total_moving_pts{moving_points} {

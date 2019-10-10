@@ -2,7 +2,7 @@
 
 #include <sol/sol.hpp>
 
-#include "core/lua_vm.h"
+#include "toc/core/lua_vm.h"
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
 #include "unit/unit_components.h"

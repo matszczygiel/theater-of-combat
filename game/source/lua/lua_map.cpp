@@ -5,10 +5,10 @@
 #include <cereal/archives/json.hpp>
 #include <sol/sol.hpp>
 
-#include "core/lua_vm.h"
-#include "map/hexagons.h"
+#include "toc/core/lua_vm.h"
+#include "toc/map/hexagons.h"
 #include "toc/map/map.h"
-#include "map/types.h"
+#include "toc/map/types.h"
 
 namespace map {
 void lua_push_functions() {

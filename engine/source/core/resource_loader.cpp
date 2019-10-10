@@ -1,4 +1,4 @@
-#include "resource_loader.h"
+#include "core/resource_loader.h"
 
 ResourceLoader::ResourceLoader(std::string resources_path)
     : _resources_path{resources_path} {

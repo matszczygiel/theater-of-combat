@@ -16,7 +16,7 @@
 #include <cereal/types/vector.hpp>
 
 #include "action.h"
-#include "map/map.h"
+#include "toc/map/map.h"
 #include "unit/unit.h"
 #include "unit/unit_manager.h"
 #include "core/log.h"

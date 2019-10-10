@@ -3,7 +3,7 @@
 
 #include "map/graph.h"
 #include "map/hexagons.h"
-#include "map/map.h"
+#include "toc/map/map.h"
 #include "map/types.h"
 
 static Map simple_test_map() {

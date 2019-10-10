@@ -1,4 +1,4 @@
-#include "dock_space.h"
+#include "gui/dock_space.h"
 
 #include <imgui.h>
 

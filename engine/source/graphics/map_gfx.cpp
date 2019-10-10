@@ -1,4 +1,4 @@
-#include "map_gfx.h"
+#include "graphics/map_gfx.h"
 
 #include "core/log.h"
 

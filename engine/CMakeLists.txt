@@ -15,10 +15,8 @@ find_package(spdlog REQUIRED)
 add_library(toc-engine STATIC ${toc_engine_sources})
 
 target_include_directories(toc-engine 
-                            #PRIVATE source
-                            PUBLIC source ${LUA_INCLUDE_DIR}
-                            INTERFACE include 
-                            )
+                            PRIVATE include/toc ${LUA_INCLUDE_DIR}
+                            INTERFACE  include ${LUA_INCLUDE_DIR})
 
 target_compile_features(toc-engine PRIVATE 
                         cxx_std_17)

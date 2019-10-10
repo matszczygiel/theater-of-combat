@@ -3,12 +3,12 @@
 
 #include <variant>
 
-#include "toc/core.h"
+#include "toc/core/application.h"
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
-#include "gui/console.h"
-#include "gui/log_window.h"
-#include "map/map.h"
+#include "toc/gui/console.h"
+#include "toc/gui/log_window.h"
+#include "toc/toc/map/map.h"
 #include "networking/client.h"
 #include "networking/server.h"
 #include "systems/mover.h"

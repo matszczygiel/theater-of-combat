@@ -1,8 +1,8 @@
-#include "lua_vm.h"
+#include "core/lua_vm.h"
 
 #include <sstream>
 
-#include "log.h"
+#include "core/log.h"
 
 namespace lua {
 int exception_handler(lua_State* L,

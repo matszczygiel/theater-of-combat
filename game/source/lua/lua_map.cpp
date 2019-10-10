@@ -7,7 +7,7 @@
 
 #include "core/lua_vm.h"
 #include "map/hexagons.h"
-#include "map/map.h"
+#include "toc/map/map.h"
 #include "map/types.h"
 
 namespace map {

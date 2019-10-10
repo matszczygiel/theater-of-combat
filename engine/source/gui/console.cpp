@@ -1,4 +1,4 @@
-#include "console.h"
+#include "gui/console.h"
 
 #include <algorithm>
 

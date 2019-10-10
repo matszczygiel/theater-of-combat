@@ -1,4 +1,4 @@
-#include "log_window.h"
+#include "gui/log_window.h"
 
 #include <imgui.h>
 

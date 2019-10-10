@@ -3,8 +3,7 @@
 
 #include <variant>
 
-#include "application.h"
-#include "core/resource_loader.h"
+#include "toc/core.h"
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
 #include "gui/console.h"

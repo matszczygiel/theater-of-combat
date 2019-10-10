@@ -11,7 +11,9 @@
 #include "unit.h"
 #include "unit_components.h"
 
-struct ComponentVecBase {};
+struct ComponentVecBase {
+    virtual ~ComponentVecBase() = default;
+};
 
 template <class Component>
 struct ComponentVec : public ComponentVecBase {

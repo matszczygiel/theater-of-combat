@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.8)
-
-project(theater-of-combat VERSION 0.1.0 LANGUAGES CXX)
-
 find_package(doctest REQUIRED)
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 find_package(ImGui-SFML REQUIRED)

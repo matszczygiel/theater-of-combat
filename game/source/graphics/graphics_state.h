@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "map_gfx.h"
+#include "graphics/map_gfx.h"
 #include "unit_gfx.h"
 
 #include "gameplay/game_state.h"

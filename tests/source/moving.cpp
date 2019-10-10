@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "../../source/systems/mover.h"
+#include "systems/mover.h"
 
 static Map simple_test_map() {
     Map res;

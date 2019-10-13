@@ -7,9 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "graphics/map_gfx.h"
+#include "map_gfx.h"
 #include "token.h"
-#include "unit/unit_manager.h"
+#include "toc/unit/unit_manager.h"
 
 struct UnitGfx {
     UnitGfx(std::shared_ptr<Layout>& layout) noexcept;

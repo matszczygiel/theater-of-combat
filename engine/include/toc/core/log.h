@@ -9,7 +9,7 @@
 #include <spdlog/logger.h>
 #include <spdlog/sinks/dist_sink.h>
 
-#include "core/exception.h"
+#include "exception.h"
 
 namespace logger {
 std::shared_ptr<spdlog::sinks::dist_sink_mt>& get_distributing_sink() noexcept;

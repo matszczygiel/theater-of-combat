@@ -17,8 +17,8 @@
 
 #include "action.h"
 #include "toc/map/map.h"
-#include "unit/unit.h"
-#include "unit/unit_manager.h"
+#include "toc/unit/unit.h"
+#include "toc/unit/unit_manager.h"
 #include "toc/core/log.h"
 
 

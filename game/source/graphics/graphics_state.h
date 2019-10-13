@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "toc/graphics/map_gfx.h"
-#include "unit_gfx.h"
+#include "toc/graphics/unit_gfx.h"
 
 #include "gameplay/game_state.h"
 

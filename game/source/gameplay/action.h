@@ -6,7 +6,7 @@
 
 #include <cereal/macros.hpp>
 
-#include "unit/unit_components.h"
+#include "toc/unit/unit_components.h"
 
 class GameState;
 

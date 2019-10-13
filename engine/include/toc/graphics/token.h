@@ -6,7 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "map/hexagons.h"
+#include "toc/map/hexagons.h"
 
 class Token {
    public:

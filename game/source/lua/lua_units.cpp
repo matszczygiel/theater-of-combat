@@ -3,9 +3,9 @@
 #include <sol/sol.hpp>
 
 #include "toc/core/lua_vm.h"
-#include "unit/unit.h"
-#include "unit/unit_manager.h"
-#include "unit/unit_components.h"
+#include "toc/unit/unit.h"
+#include "toc/unit/unit_manager.h"
+#include "toc/unit/unit_components.h"
 
 namespace units {
 static void lua_push_components(sol::usertype<UnitManager>& manager) {

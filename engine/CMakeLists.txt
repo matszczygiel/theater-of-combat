@@ -3,6 +3,7 @@ file(GLOB_RECURSE toc_engine_sources CONFIGURE_DEPENDS
     source/gui/*.cpp            source/gui/*.h
     source/graphics/*.cpp       source/graphics/*.h
     source/core/*.cpp           source/core/*.h
+    source/unit/*.cpp           source/unit/*.h
     )
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
@@ -15,7 +16,7 @@ find_package(Cereal REQUIRED)
 add_library(toc-engine STATIC ${toc_engine_sources})
 
 target_include_directories(toc-engine 
-                            PUBLIC include ${LUA_INCLUDE_DIR} ${CEREAL_INCLUDE_DIRS}
+                            PUBLIC include ${LUA_INCLUDE_DIR} ${CEREAL_INCLUDE_DIRS} deps_mods
                             PRIVATE include/toc)
 
 target_compile_features(toc-engine PRIVATE 

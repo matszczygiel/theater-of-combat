@@ -3,10 +3,13 @@
 
 #include <cassert>
 #include <memory>
+#include <string>
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/logger.h>
 #include <spdlog/sinks/dist_sink.h>
+
+#include "core/exception.h"
 
 namespace logger {
 std::shared_ptr<spdlog::sinks::dist_sink_mt>& get_distributing_sink() noexcept;
@@ -78,16 +81,20 @@ template <typename... Args>
 inline void engine_assert_throw(bool condition, const char* message,
                                 const Args&... args) {
     if (!condition) {
-        engine_critical(message, args...);
-        throw std::runtime_error("Paused on engine_throw. Check logs for more info.");
+        std::string msg = "Throwing EngineException: ";
+        msg += message;
+        engine_critical(msg.c_str(), args...);
+        throw EngineException("engine_assert_throw failed. Check logs for more info.");
     }
 }
 
 template <typename... Args>
 inline void app_assert_throw(bool condition, const char* message, const Args&... args) {
     if (!condition) {
-        app_critical(message, args...);
-        throw std::runtime_error("Paused on app_throw. Check logs for more info.");
+        std::string msg = "Throwing ClientException: ";
+        msg += message;
+        app_critical(msg.c_str(), args...);
+        throw ClientException("app_assert_throw failed. Check logs for more info.");
     }
 }
 

@@ -1,4 +1,4 @@
-#include "token.h"
+#include "graphics/token.h"
 
 Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
              const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept

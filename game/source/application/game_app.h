@@ -15,7 +15,7 @@
 #include "toc/gui/console.h"
 #include "toc/gui/log_window.h"
 #include "toc/map/map.h"
-#include "unit/unit.h"
+#include "toc/unit/unit.h"
 
 class Game : public Application {
    public:

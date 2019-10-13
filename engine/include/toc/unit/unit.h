@@ -34,8 +34,6 @@ void Unit::serialize(Archive& archive) {
 
 struct ComponentBase {
     friend class UnitManager;
-    friend class cereal::access;
-
    public:
     constexpr Unit::IdType owner() const noexcept { return _owner; };
     constexpr UnitType owner_type() const noexcept { return _owner_type; };

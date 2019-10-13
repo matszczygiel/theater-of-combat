@@ -3,6 +3,4 @@
 int main() {
     Game app;
     app.run();
-
-    return EXIT_SUCCESS;
 }

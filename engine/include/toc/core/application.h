@@ -11,6 +11,8 @@ class Application {
     void run();
 
    protected:
+    Application() noexcept;
+
     virtual void initialize()                         = 0;
     virtual void update(const sf::Time& elapsed_time) = 0;
     virtual void render()                             = 0;

@@ -1,9 +1,47 @@
 #include "core/application.h"
 
+#include <exception>
+#include <iostream>
+
 #include <imgui-SFML.h>
 #include <imgui.h>
 
 #include "core/log.h"
+
+Application::Application() noexcept {
+    std::set_terminate([]() {
+        auto eptr = std::current_exception();
+
+        std::cerr << "Terminating program due to unhandled exception.\n";
+        engine_critical("Terminating program due to unhandled exception.");
+
+        try {
+            if (eptr)
+                std::rethrow_exception(eptr);
+
+        } catch (const EngineException& e) {
+            std::cerr << "Uncaught EngineException: " << e.what() << '\n';
+            engine_critical("Uncaught EngineException: {}", e.what());
+
+        } catch (const ClientException& e) {
+            std::cerr << "Uncaught ClientException: " << e.what() << '\n';
+            engine_critical("Uncaught ClientException: {}", e.what());
+
+        } catch (const std::exception& e) {
+            std::cerr << "Uncaught std::exception: " << e.what() << '\n';
+            engine_critical("Uncaught std::exception: {}", e.what());
+
+        } catch (...) {
+            std::cerr << "Uncaught exception of unknown type\n";
+            engine_critical("Uncaught exception of unknown type");
+        }
+
+        std::cerr << "Aborting...\n";
+        engine_critical("Aborting...");
+
+        std::abort();
+    });
+}
 
 void Application::run() {
     engine_info("Initializing application.");

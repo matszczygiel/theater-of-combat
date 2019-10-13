@@ -10,12 +10,12 @@ find_package(ImGui-SFML REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(Lua REQUIRED)
 find_package(spdlog REQUIRED)
-#find_package(cereal REQUIRED)
+find_package(Cereal REQUIRED)
 
 add_library(toc-engine STATIC ${toc_engine_sources})
 
 target_include_directories(toc-engine 
-                            PUBLIC include ${LUA_INCLUDE_DIR}
+                            PUBLIC include ${LUA_INCLUDE_DIR} ${CEREAL_INCLUDE_DIRS}
                             PRIVATE include/toc)
 
 target_compile_features(toc-engine PRIVATE 
@@ -29,6 +29,7 @@ target_compile_definitions(toc-engine
 
 
 target_link_libraries(toc-engine 
-                        PUBLIC sfml-window sfml-graphics sfml-system sfml-network
+                        PUBLIC sol2::sol2 spdlog::spdlog
+                                sfml-window sfml-graphics sfml-system sfml-network
                                 ImGui-SFML::ImGui-SFML ${LUA_LIBRARIES}) 
                                             

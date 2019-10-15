@@ -2,7 +2,6 @@
 
 #include <SFML/Network.hpp>
 
-#include "netwoking_status.h"
 
 class Client {
    public:

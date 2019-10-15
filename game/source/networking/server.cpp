@@ -8,6 +8,7 @@ bool Server::listen_at_port(const unsigned short& port) {
         engine_warn("Listener failed.");
         return false;
     }
+    engine_info("Server bound to port: {}", get_port());
     return true;
 }
 

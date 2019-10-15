@@ -1,19 +1,17 @@
-#include "lua_map.h"
+#include "map/lua_map.h"
 
 #include <sstream>
 
 #include <cereal/archives/json.hpp>
 #include <sol/sol.hpp>
 
-#include "toc/core/lua_vm.h"
-#include "toc/map/hexagons.h"
-#include "toc/map/map.h"
-#include "toc/map/types.h"
+#include "core/lua_vm.h"
+#include "map/hexagons.h"
+#include "map/map.h"
+#include "map/types.h"
 
 namespace map {
-void lua_push_functions() {
-    auto& lua = lua::get_state();
-
+void lua_push_functions(sol::state& lua) {
     auto coord = lua.new_usertype<HexCoordinate>(
         "Coord", sol::constructors<HexCoordinate(), HexCoordinate(int, int)>());
     coord["q"] = &HexCoordinate::q;

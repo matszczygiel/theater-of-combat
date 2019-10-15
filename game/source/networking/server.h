@@ -2,8 +2,6 @@
 
 #include <SFML/Network.hpp>
 
-#include "netwoking_status.h"
-
 class Server {
    public:
     bool listen_at_port(const unsigned short& port);

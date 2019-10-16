@@ -5,8 +5,7 @@
 
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
-#include "networking/client.h"
-#include "networking/server.h"
+#include "networking/connection.h"
 #include "systems/debug_info.h"
 #include "systems/fighter.h"
 #include "systems/mover.h"

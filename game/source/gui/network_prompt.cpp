@@ -41,8 +41,7 @@ void show_network_prompt(std::variant<Server, Client>& net, std::string title,
                 server_accepting = true;
             }
         }
-    }
-    if (current_item == 1) {
+    } else if (current_item == 1) {
         ImGui::InputInt("Port", &port);
         ImGui::InputText("Ip", &ip);
         server_accepting = false;

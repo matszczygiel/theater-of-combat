@@ -8,9 +8,6 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/memory.hpp>
 #include <sol/sol.hpp>
-
-#include "gui/network_prompt.h"
-#include "lua/lua_gameplay.h"
 #include "toc/core/log.h"
 #include "toc/core/lua_vm.h"
 #include "toc/gui/dock_space.h"
@@ -19,6 +16,10 @@
 #include "toc/unit/lua_units.h"
 #include "toc/unit/unit_components.h"
 #include "toc/unit/unit_manager.h"
+
+#include "gui/menu_bar.h"
+#include "gui/network_prompt.h"
+#include "lua/lua_gameplay.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -197,16 +198,13 @@ void Game::update(const sf::Time& elapsed_time) {
     }
     _pending_actions.clear();
 
-    show_dock_space_window(nullptr);
-
-    static bool show_demo_window{true};
-    if (show_demo_window)
-        ImGui::ShowDemoWindow(&show_demo_window);
-
-    _log.show_window(nullptr);
-    _console.show(nullptr);
-
-    show_network_prompt(_network, "Network status", nullptr);
+    static MenuOptions menu_opts{};
+    show_menu_bar(menu_opts);
+    show_dock_space_window(&menu_opts.show_dock_space);
+    _console.show(std::addressof(menu_opts.show_console));
+    _log.show_window(&menu_opts.show_log_console);
+    ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
+    show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
 
     _gfx_state.update();
 

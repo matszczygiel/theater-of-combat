@@ -8,6 +8,8 @@
 #include <string>
 #include <typeindex>
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
 
@@ -183,7 +185,20 @@ fs::path ResourceLoader::make_path(std::string name) const {
     return path;
 }
 
-//Specializations
+// Specializations
+
+template <>
+sf::Texture ResourceLoader::load<sf::Texture>(std::string name) const;
+
+template <>
+std::unique_ptr<sf::Texture> ResourceLoader::load_ptr<sf::Texture>(
+    std::string name) const;
+
+template <>
+sf::Font ResourceLoader::load<sf::Font>(std::string name) const;
+
+template <>
+std::unique_ptr<sf::Font> ResourceLoader::load_ptr<sf::Font>(std::string name) const;
 
 /*
 template <class Resource>

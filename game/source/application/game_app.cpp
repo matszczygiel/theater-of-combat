@@ -30,6 +30,8 @@ Game::Game() {
 
     _res_loader.register_resource_type<Map>("maps", "map");
     _res_loader.register_resource_type<UnitManager>("units", "umg");
+    _res_loader.register_resource_type<sf::Font>("fonts", "ttf");
+    _res_loader.register_resource_type<sf::Texture>("textures", "png");
 }
 
 void Game::initialize() {
@@ -38,7 +40,7 @@ void Game::initialize() {
     _window.setFramerateLimit(60);
 
     app_info("Loading font.");
-    _gfx_state.font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+    _gfx_state.font = _res_loader.load<decltype(_gfx_state.font)>("OpenSans-Regular");
 
     auto& map = _state.scenario->map;
     auto& lua = lua::get_state();

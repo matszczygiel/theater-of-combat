@@ -200,11 +200,16 @@ void Game::update(const sf::Time& elapsed_time) {
 
     static MenuOptions menu_opts{};
     show_menu_bar(menu_opts);
-    show_dock_space_window(&menu_opts.show_dock_space);
-    _console.show(std::addressof(menu_opts.show_console));
-    _log.show_window(&menu_opts.show_log_console);
-    ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
-    show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
+    if (menu_opts.show_dock_space)
+        show_dock_space_window(&menu_opts.show_dock_space);
+    if (menu_opts.show_console)
+        _console.show(&menu_opts.show_console);
+    if (menu_opts.show_log_console)
+        _log.show_window(&menu_opts.show_log_console);
+    if (menu_opts.show_imgui_demo)
+        ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
+    if (menu_opts.show_network_prompt)
+        show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
 
     _gfx_state.update();
 

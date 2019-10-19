@@ -60,8 +60,7 @@ void ConsoleWindow::execute_command(std::string cmd) {
         add_item(ItemType::error, e.what() + "\n"s);
     }
 
-    _history.erase(std::remove(_history.begin(), _history.end(), cmd),
-                   _history.end());
+    _history.erase(std::remove(_history.begin(), _history.end(), cmd), _history.end());
     if (cmd != "")
         _history.push_back(cmd);
     _history_position = -1;
@@ -83,34 +82,33 @@ void ConsoleWindow::show(bool* p_open) {
         ImGui::EndPopup();
     }
 
-    if (ImGui::SmallButton("Clear")) {
-        clear();
-    }
-    ImGui::SameLine();
-    bool copy_to_clipboard = ImGui::SmallButton("Copy");
-
-    ImGui::Separator();
-
     if (ImGui::BeginPopup("Options")) {
         ImGui::Checkbox("Auto-scroll", &_auto_scroll);
         ImGui::EndPopup();
     }
 
     // Options, Filter
+    ImGui::SameLine();
     if (ImGui::Button("Options"))
         ImGui::OpenPopup("Options");
     ImGui::SameLine();
-    _filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
+    if (ImGui::Button("Clear")) {
+        clear();
+    }
+    ImGui::SameLine();
+    bool copy_to_clipboard = ImGui::Button("Copy");
+    ImGui::Separator();
+
+    _filter.Draw("Filter (\"incl,-excl\") (\"error\")", -60.f);
     ImGui::Separator();
 
     const float footer_height_to_reserve =
         ImGui::GetStyle().ItemSpacing.y +
         ImGui::GetFrameHeightWithSpacing();  // 1 separator, 1 input text
 
-    ImGui::BeginChild(
-        "ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false,
-        ImGuiWindowFlags_HorizontalScrollbar);  // Leave room for 1
-                                                // separator + 1 InputText
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false,
+                      ImGuiWindowFlags_HorizontalScrollbar);  // Leave room for 1
+                                                              // separator + 1 InputText
     if (ImGui::BeginPopupContextWindow()) {
         if (ImGui::Selectable("Clear"))
             clear();
@@ -141,8 +139,7 @@ void ConsoleWindow::show(bool* p_open) {
     // size you may want to implement code similar to what ImGuiListClipper
     // does. Or split your data into fixed height items to allow
     // random-seeking into your list.
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing,
-                        ImVec2(4, 1));  // Tighten spacing
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));  // Tighten spacing
     if (copy_to_clipboard)
         ImGui::LogToClipboard();
     for (const auto& [type, item] : _items) {
@@ -151,16 +148,13 @@ void ConsoleWindow::show(bool* p_open) {
 
         switch (type) {
             case ItemType::command:
-                ImGui::PushStyleColor(ImGuiCol_Text,
-                                      ImVec4(1.0f, 0.8f, 0.6f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.6f, 1.0f));
                 break;
             case ItemType::error:
-                ImGui::PushStyleColor(ImGuiCol_Text,
-                                      ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
                 break;
             case ItemType::output:
-                ImGui::PushStyleColor(ImGuiCol_Text,
-                                      ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
                 break;
         }
         ImGui::TextUnformatted(&item.front(), &item.back());
@@ -178,41 +172,40 @@ void ConsoleWindow::show(bool* p_open) {
     ImGui::EndChild();
     ImGui::Separator();
 
-    constexpr auto history_event_callback =
-        [](ImGuiInputTextCallbackData* data) {
-            assert(data->EventFlag == ImGuiInputTextFlags_CallbackHistory);
-            auto console     = static_cast<ConsoleWindow*>(data->UserData);
-            const auto& hist = console->_history;
-            auto& hist_pos   = console->_history_position;
-            const auto prev_history_pos = hist_pos;
-            const auto history_size     = static_cast<int>(hist.size());
-            if (data->EventKey == ImGuiKey_UpArrow) {
-                if (hist_pos == -1)
-                    hist_pos = history_size - 1;
-                else if (hist_pos > 0)
-                    --hist_pos;
-            } else if (data->EventKey == ImGuiKey_DownArrow) {
-                if (hist_pos != -1)
-                    if (++hist_pos >= history_size)
-                        hist_pos = -1;
-            }
+    constexpr auto history_event_callback = [](ImGuiInputTextCallbackData* data) {
+        assert(data->EventFlag == ImGuiInputTextFlags_CallbackHistory);
+        auto console                = static_cast<ConsoleWindow*>(data->UserData);
+        const auto& hist            = console->_history;
+        auto& hist_pos              = console->_history_position;
+        const auto prev_history_pos = hist_pos;
+        const auto history_size     = static_cast<int>(hist.size());
+        if (data->EventKey == ImGuiKey_UpArrow) {
+            if (hist_pos == -1)
+                hist_pos = history_size - 1;
+            else if (hist_pos > 0)
+                --hist_pos;
+        } else if (data->EventKey == ImGuiKey_DownArrow) {
+            if (hist_pos != -1)
+                if (++hist_pos >= history_size)
+                    hist_pos = -1;
+        }
 
-            // A better implementation would preserve the data on the
-            // current input line along with cursor position.
-            if (prev_history_pos != hist_pos) {
-                const auto history_str = (hist_pos >= 0) ? hist[hist_pos] : "";
-                data->DeleteChars(0, data->BufTextLen);
-                data->InsertChars(0, history_str.c_str());
-            }
-            return 0;
-        };
+        // A better implementation would preserve the data on the
+        // current input line along with cursor position.
+        if (prev_history_pos != hist_pos) {
+            const auto history_str = (hist_pos >= 0) ? hist[hist_pos] : "";
+            data->DeleteChars(0, data->BufTextLen);
+            data->InsertChars(0, history_str.c_str());
+        }
+        return 0;
+    };
 
     // Command-line
     bool reclaim_focus = false;
-    if (ImGui::InputText("Input", &_in_buffer.front(), _in_buffer.size(),
-                         ImGuiInputTextFlags_EnterReturnsTrue |
-                             ImGuiInputTextFlags_CallbackHistory,
-                         history_event_callback, static_cast<void*>(this))) {
+    if (ImGui::InputText(
+            "Input", &_in_buffer.front(), _in_buffer.size(),
+            ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackHistory,
+            history_event_callback, static_cast<void*>(this))) {
         _in_buffer.erase(std::find(_in_buffer.begin(), _in_buffer.end(), '\0'),
                          _in_buffer.end());
         _in_buffer.erase(0, _in_buffer.find_first_not_of(" \n\r\t"));
@@ -220,7 +213,6 @@ void ConsoleWindow::show(bool* p_open) {
 
         if (!_in_buffer.empty()) {
             execute_command(_in_buffer);
-            
         }
         reclaim_focus = true;
         clear_buffer();

@@ -195,7 +195,7 @@ void Game::update(const sf::Time& elapsed_time) {
     }
 
     for (auto& a : _pending_actions) {
-        debug_info.debug_action(a);
+        _debug_info.debug_action(a);
         _state.push_action(std::move(a));
     }
     _pending_actions.clear();
@@ -212,6 +212,8 @@ void Game::update(const sf::Time& elapsed_time) {
         ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
     if (menu_opts.show_network_prompt)
         show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
+
+    _debug_info.debug_unit();
 
     _gfx_state.update();
 
@@ -299,9 +301,9 @@ void Game::key_released_event(const sf::Keyboard::Key& key) {
 
 void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                                       const sf::Vector2f& position) {
+    const auto coord = world_point_to_hex(position, *_gfx_state.layout);
     switch (button) {
         case sf::Mouse::Left: {
-            const auto coord = world_point_to_hex(position, *_gfx_state.layout);
             if (_state.is_local_player_now() && _state.phase == GamePhase::movement) {
                 if (!_moving_system.is_moving()) {
                     _moving_system.init_movement(
@@ -314,7 +316,9 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
                 }
             }
         } break;
-
+        case sf::Mouse::Right: {
+            _debug_info.set_current_unit_position(coord);
+        }
         default:
             break;
     }

@@ -54,7 +54,7 @@ void LogWindow::draw(std::string title, bool* open) {
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
 
     read_sink();
-    _filter.Draw("Filter", -100.0f);
+    _filter.Draw("Filter", -60.0f);
 
     ImGuiListClipper clipper;
     if (_filter.IsActive()) {

@@ -56,7 +56,7 @@ class Game : public Application {
     mover::MovementSystem _moving_system{_state};
     FightingSystem _fight_system{_state};
 
-    debug_info::DebugInfoSystem debug_info{_state};
+    debug_info::DebugInfoSystem _debug_info{_state};
 
     std::vector<std::unique_ptr<Action>> _pending_actions{};
 

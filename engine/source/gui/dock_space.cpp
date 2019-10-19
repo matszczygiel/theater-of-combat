@@ -5,8 +5,7 @@
 #include "core/log.h"
 
 void show_dock_space_window(bool* p_open) {
-    static ImGuiDockNodeFlags dockspace_flags =
-        ImGuiDockNodeFlags_PassthruCentralNode;
+    static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 
     constexpr auto window_flags =
         ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking |
@@ -23,7 +22,11 @@ void show_dock_space_window(bool* p_open) {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-    ImGui::Begin("dockspace", p_open, window_flags);
+    if (!ImGui::Begin("dockspace", p_open, window_flags)) {
+        ImGui::End();
+        return;
+    }
+
     ImGui::PopStyleVar();
     ImGui::PopStyleVar(2);
 
@@ -38,14 +41,12 @@ void show_dock_space_window(bool* p_open) {
 
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Docking")) {
-            if (ImGui::MenuItem(
-                    "Flag: NoSplit", "",
-                    (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))
+            if (ImGui::MenuItem("Flag: NoSplit", "",
+                                (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))
                 dockspace_flags ^= ImGuiDockNodeFlags_NoSplit;
             if (ImGui::MenuItem(
                     "Flag: NoDockingInCentralNode", "",
-                    (dockspace_flags &
-                     ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))
+                    (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))
                 dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
             ImGui::EndMenu();
         }

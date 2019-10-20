@@ -5,7 +5,6 @@
 #include <cereal/archives/json.hpp>
 #include <sol/sol.hpp>
 
-#include "core/lua_vm.h"
 #include "map/hexagons.h"
 #include "map/map.h"
 #include "map/types.h"

@@ -13,6 +13,8 @@ class Messenger {
     bool send(sf::Packet& packet);
     bool receive(sf::Packet& packet);
 
+    void disconnect();
+    
    protected:
     sf::TcpSocket _socket{};
 };
@@ -33,7 +35,6 @@ class Server : public Messenger {
 class Client : public Messenger {
    public:
     bool connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
-    void disconnect();
 };
 
 #endif

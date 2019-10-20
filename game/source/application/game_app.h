@@ -3,18 +3,20 @@
 
 #include <variant>
 
-#include "gameplay/game_state.h"
-#include "graphics/graphics_state.h"
-#include "networking/connection.h"
-#include "systems/debug_info.h"
-#include "systems/fighter.h"
-#include "systems/mover.h"
 #include "toc/core/application.h"
 #include "toc/core/resource_loader.h"
 #include "toc/gui/console.h"
 #include "toc/gui/log_window.h"
 #include "toc/map/map.h"
 #include "toc/unit/unit.h"
+
+#include "gameplay/game_state.h"
+#include "graphics/graphics_state.h"
+#include "networking/connection.h"
+#include "systems/debug_info.h"
+#include "systems/fighter.h"
+#include "systems/mover.h"
+#include "gui/start_prompt.h"
 
 class Game : public Application {
    public:
@@ -50,6 +52,7 @@ class Game : public Application {
 
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
+    StartPrompt _start_prompt{};
 
     ResourceLoader _res_loader{"resources/"};
 

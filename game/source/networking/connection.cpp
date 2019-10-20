@@ -28,6 +28,8 @@ bool Messenger::receive(sf::Packet& packet) {
     return true;
 }
 
+void Messenger::disconnect() { _socket.disconnect(); }
+
 bool Server::listen_at_port(const unsigned short& port) {
     engine_info("Server listening port: {0}", port);
     _listener.setBlocking(true);
@@ -69,5 +71,3 @@ bool Client::connect_to_server(const sf::IpAddress& ip, const unsigned short& po
         return true;
     }
 }
-
-void Client::disconnect() { _socket.disconnect(); }

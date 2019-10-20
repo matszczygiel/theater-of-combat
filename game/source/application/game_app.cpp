@@ -8,6 +8,7 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/memory.hpp>
 #include <sol/sol.hpp>
+
 #include "toc/core/log.h"
 #include "toc/core/lua_vm.h"
 #include "toc/gui/dock_space.h"
@@ -212,6 +213,8 @@ void Game::update(const sf::Time& elapsed_time) {
         ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
     if (menu_opts.show_network_prompt)
         show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
+
+    _start_prompt.show_window();
 
     _debug_info.debug_unit();
 

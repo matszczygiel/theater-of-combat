@@ -26,6 +26,9 @@ struct ComponentPoll {
     template <class Component>
     std::vector<Component>& get_container();
 
+    template <class Component>
+    const std::vector<Component>* get_container() const;
+
     std::map<std::type_index, std::unique_ptr<ComponentVecBase>> components{};
 };
 
@@ -43,6 +46,20 @@ std::vector<Component>& ComponentPoll::get_container() {
     return ptr->vec;
 }
 
+template <class Component>
+const std::vector<Component>* ComponentPoll::get_container() const {
+    static_assert(std::is_base_of_v<ComponentBase, Component>);
+
+    using VecType = ComponentVec<Component>;
+
+    const auto it = components.find(typeid(Component));
+    if (it == components.cend())
+        return nullptr;
+
+    auto ptr = static_cast<VecType*>(it->second.get());
+    return std::addressof(ptr->vec);
+}
+
 class UnitManager {
    public:
     Unit::IdType create(UnitType type, const std::string& name,
@@ -53,6 +70,9 @@ class UnitManager {
 
     template <class Component>
     Component* get_component(Unit::IdType id);
+
+    template <class Component>
+    const Component* get_component(Unit::IdType id) const;
 
     template <class Component>
     void remove_component(Unit::IdType id);
@@ -115,6 +135,23 @@ Component* UnitManager::get_component(Unit::IdType id) {
                             [&id](auto& com) { return com._owner == id; });
 
     if (res != vec.end()) {
+        return std::addressof(*res);
+    } else {
+        return nullptr;
+    }
+}
+
+template <class Component>
+const Component* UnitManager::get_component(Unit::IdType id) const {
+    static_assert(std::is_base_of_v<ComponentBase, Component>);
+
+    engine_assert_throw(_units.count(id) == 1, "Unit with id: {} does not exists.", id);
+
+    const auto vec = _components.get_container<Component>();
+    auto res  = std::find_if(vec->cbegin(), vec->cend(),
+                            [&id](const auto& com) { return com._owner == id; });
+
+    if (res != vec->cend()) {
         return std::addressof(*res);
     } else {
         return nullptr;

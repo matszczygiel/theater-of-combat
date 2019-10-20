@@ -36,8 +36,8 @@ void DebugInfoSystem::debug_unit() {
 }
 
 void DebugInfoSystem::set_current_unit_position(HexCoordinate coord) {
-    MovementComponent* mc{nullptr};
-    _scenario->units.apply_for_each<MovementComponent>([&coord, &mc](auto& cmp) {
+    const MovementComponent* mc{nullptr};
+    _scenario->units.apply_for_each<MovementComponent>([&coord, &mc](const auto& cmp) {
         if (cmp.position == coord) {
             mc = std::addressof(cmp);
             return false;

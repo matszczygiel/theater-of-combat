@@ -17,6 +17,16 @@ Unit::IdType UnitManager::create(UnitType type, const std::string& name,
     return id;
 }
 
+void UnitManager::remove(Unit::IdType id) {
+    engine_assert_throw(_units.count(id) == 1, "Removing nonexistent unit with id {}",
+                        id);
+    engine_assert(_units.erase(id) == 1, "");
+    _id_gen.return_to_poll(id);
+    // list all components
+    remove_component<MovementComponent>(id);
+    remove_component<FightComponent>(id);
+}
+
 UnitManager UnitManager::create_test_manager() {
     UnitManager um{};
     const auto u0 = um.create(UnitType::mechanized, "test unit 0", true);

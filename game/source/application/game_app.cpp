@@ -170,7 +170,7 @@ void Game::update(const sf::Time& elapsed_time) {
             sf::Packet p;
             p << header << ss.str();
             app_debug("Sending packet...");
-            std::visit([&](auto&& net) { net.send(p); }, _network);
+            std::visit([&](auto&& net) { net.send(p); }, _network->net);
             app_debug("Done");
         }
 
@@ -180,7 +180,7 @@ void Game::update(const sf::Time& elapsed_time) {
         sf::Int8 header = 0;
         std::string str;
         sf::Packet p;
-        std::visit([&](auto&& net) { net.receive(p); }, _network);
+        std::visit([&](auto&& net) { net.receive(p); }, _network->net);
         p >> header >> str;
         if (header == 1) {
             app_debug("Received packet");
@@ -212,7 +212,7 @@ void Game::update(const sf::Time& elapsed_time) {
     if (menu_opts.show_imgui_demo)
         ImGui::ShowDemoWindow(&menu_opts.show_imgui_demo);
     if (menu_opts.show_network_prompt)
-        show_network_prompt(_network, "Network status", &menu_opts.show_network_prompt);
+        show_network_prompt(_network->net, "Network status", &menu_opts.show_network_prompt);
 
     _start_prompt.show_window();
 

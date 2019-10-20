@@ -12,7 +12,7 @@
 
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
-#include "networking/connection.h"
+#include "networking/net_manager.h"
 #include "systems/debug_info.h"
 #include "systems/fighter.h"
 #include "systems/mover.h"
@@ -49,10 +49,11 @@ class Game : public Application {
     bool _moving_view_left{false};
 
     std::string _local_player_name{};
+    std::shared_ptr<NetManager> _network;
 
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
-    StartPrompt _start_prompt{};
+    StartPrompt _start_prompt{_network};
 
     ResourceLoader _res_loader{"resources/"};
 
@@ -64,7 +65,6 @@ class Game : public Application {
     std::vector<std::unique_ptr<Action>> _pending_actions{};
 
     enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };
-    std::variant<Server, Client> _network;
 
     constexpr static float _view_moving_speed{0.3f};
 };

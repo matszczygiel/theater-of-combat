@@ -25,7 +25,7 @@ class StartPrompt {
     ConnectionType _connection_t{ConnectionType::none};
     int _server_port{0};
     std::string _server_ip{};
-    Stage _stage{Stage::none};
+    Stage _stage{Stage::setup};
 };
 
 #endif

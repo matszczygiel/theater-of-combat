@@ -46,7 +46,7 @@ void StartPrompt::show_setup_page() {
     ImGui::Combo("Connection type", &current_item, "Server\0Client\0");
     if (current_item == 1) {
         ImGui::InputText("Ip", &_server_ip);
-        ImGui::InputInt("Port", &_server_port);
+        ImGui::InputInt("Port", &_server_port, 0);
     }
 
     ImGui::Separator();
@@ -56,6 +56,7 @@ void StartPrompt::show_setup_page() {
         switch (current_item) {
             case 0:
                 good          = _nm->setup_server(ip, _server_port);
+                _server_ip    = ip.toString();
                 _connection_t = ConnectionType::server;
                 break;
             case 1:
@@ -71,4 +72,23 @@ void StartPrompt::show_setup_page() {
         _stage = Stage::none;
 }
 
-void StartPrompt::show_waiting_page() {}
+void StartPrompt::show_waiting_page() {
+    switch (_connection_t) {
+        case ConnectionType::server:
+            ImGui::Text("Waiting for player ...");
+            ImGui::Separator();
+            ImGui::Text("Port  %d", _server_port);
+            ImGui::Text("Ip    %s", _server_ip.c_str());
+            break;
+        case ConnectionType::client:
+            ImGui::Text("Connecting ...");
+            break;
+        default:
+            break;
+    }
+    if (ImGui::Button("Stop", ImVec2(100, 40)))
+        _stage = Stage::setup;
+
+    if (_nm->is_done())
+        _stage = Stage::selecting;
+}

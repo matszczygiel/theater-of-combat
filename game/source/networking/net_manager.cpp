@@ -43,4 +43,4 @@ bool NetManager::is_server() const { return std::holds_alternative<Server>(net);
 
 bool NetManager::is_client() const { return std::holds_alternative<Client>(net); }
 
-bool NetManager::id_done() const { return !_need_update; }
+bool NetManager::is_done() const { return !_need_update; }

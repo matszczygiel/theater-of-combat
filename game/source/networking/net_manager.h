@@ -15,7 +15,7 @@ class NetManager {
 
     bool is_server() const;
     bool is_client() const;
-    bool id_done() const;
+    bool is_done() const;
 
     std::variant<Server, Client> net;
 

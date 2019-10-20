@@ -49,7 +49,7 @@ class Game : public Application {
     bool _moving_view_left{false};
 
     std::string _local_player_name{};
-    std::shared_ptr<NetManager> _network;
+    std::shared_ptr<NetManager> _network{std::make_shared<NetManager>()};
 
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};

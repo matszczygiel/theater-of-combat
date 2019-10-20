@@ -241,6 +241,8 @@ void Game::update(const sf::Time& elapsed_time) {
         _pending_actions.push_back(std::make_unique<NextPhaseAction>());
     }
 
+    _network->update();
+
     // engine_trace("Updating");
 }
 

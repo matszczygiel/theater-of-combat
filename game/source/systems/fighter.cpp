@@ -153,8 +153,7 @@ std::vector<std::unique_ptr<Action>> FightingSystem::compute_fight_result() {
                     new_mc.position = {};
                     fd.ids.at(index).erase(unit);
                 }
-                
-                new_mc.immobilized = false;
+
                 res.push_back(
                     std::make_unique<ComponentChangeAction<MovementComponent>>(new_mc));
 
@@ -165,6 +164,14 @@ std::vector<std::unique_ptr<Action>> FightingSystem::compute_fight_result() {
 
         make_loses(attackers_loss, fd.attackers_index);
         make_loses(defenders_loss, (fd.attackers_index + 1) % 2);
+
+        for (const auto& id : fd.ids.at(fd.attackers_index)) {
+            auto new_mc        = *um.get_component<MovementComponent>(id);
+            new_mc.immobilized = false;
+            res.push_back(
+                std::make_unique<ComponentChangeAction<MovementComponent>>(new_mc));
+        }
+
         fd.result_computed = true;
     }
     return res;

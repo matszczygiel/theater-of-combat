@@ -114,8 +114,10 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
     _scenario->units.apply_for_each<MovementComponent>(
         [this, &coord, &friendly](auto& cmp) {
             if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
-                _target_component = std::addressof(cmp);
-                return false;
+                if (!cmp.immobilized) {
+                    _target_component = std::addressof(cmp);
+                    return false;
+                }
             }
             return true;
         });

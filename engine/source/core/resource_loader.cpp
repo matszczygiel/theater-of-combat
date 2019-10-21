@@ -23,7 +23,7 @@ sf::Texture ResourceLoader::load<sf::Texture>(std::string name) const {
     const auto path = make_path<sf::Texture>(name);
     engine_info("Loading resource: {}", path.filename().string());
     sf::Texture res;
-    res.loadFromFile(path);
+    res.loadFromFile(path.string());
     return res;
 }
 
@@ -33,7 +33,7 @@ std::unique_ptr<sf::Texture> ResourceLoader::load_ptr<sf::Texture>(
     const auto path = make_path<sf::Texture>(name);
     engine_info("Loading resource: {}", path.filename().string());
     auto res = std::make_unique<sf::Texture>();
-    res->loadFromFile(path);
+    res->loadFromFile(path.string());
     return res;
 }
 
@@ -42,7 +42,7 @@ sf::Font ResourceLoader::load<sf::Font>(std::string name) const {
     const auto path = make_path<sf::Font>(name);
     engine_info("Loading resource: {}", path.filename().string());
     sf::Font res;
-    res.loadFromFile(path);
+    res.loadFromFile(path.string());
     return res;
 }
 
@@ -52,6 +52,6 @@ std::unique_ptr<sf::Font> ResourceLoader::load_ptr<sf::Font>(
     const auto path = make_path<sf::Font>(name);
     engine_info("Loading resource: {}", path.filename().string());
     auto res = std::make_unique<sf::Font>();
-    res->loadFromFile(path);
+    res->loadFromFile(path.string());
     return res;
 }

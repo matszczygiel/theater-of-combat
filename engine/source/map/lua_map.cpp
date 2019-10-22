@@ -41,7 +41,7 @@ static void push_hex_type(sol::state& lua) {
 }
 
 static void push_river_type(sol::state& lua) {
-    lua.new_enum("RiverType", "small", RiverType::small, "stream", RiverType::stream);
+    lua.new_enum("RiverType", "small", RiverType::river, "stream", RiverType::stream);
     auto river = lua.new_usertype<RiverSite>(
         "RiverSite",
         sol::constructors<RiverSite(HexCoordinate, HexCoordinate, RiverType)>());

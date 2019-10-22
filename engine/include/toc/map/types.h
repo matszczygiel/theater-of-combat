@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <utility>
+
 #include <cereal/types/utility.hpp>
 
 #include "hexagons.h"
@@ -11,7 +13,7 @@ enum class HexType {
 };
 
 enum class RiverType {
-    small,
+    river,
     stream,
 };
 
@@ -40,7 +42,7 @@ void HexSite::serialize(Archive& archive) {
 class RiverSite {
    public:
     constexpr RiverSite() noexcept
-        : _side1{0, 0}, _side2{1, 0}, _type{RiverType::small} {}
+        : _side1{0, 0}, _side2{1, 0}, _type{RiverType::river} {}
     explicit RiverSite(HexCoordinate side1, HexCoordinate side2, RiverType type);
 
     constexpr std::pair<HexCoordinate, HexCoordinate> sides() const noexcept;

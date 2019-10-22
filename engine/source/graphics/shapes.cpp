@@ -16,7 +16,7 @@ static sf::Color site_color(HexType type) noexcept {
 
 static sf::Color site_color(RiverType type) noexcept {
     switch (type) {
-        case RiverType::small:
+        case RiverType::river:
             return sf::Color::Blue;
         case RiverType::stream:
             return sf::Color::Cyan;

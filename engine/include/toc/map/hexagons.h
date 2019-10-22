@@ -85,22 +85,7 @@ const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noex
     return res;
 }
 
-constexpr HexCoordinate round(const HexCoordinateFractional& hex) {
-    int rx = std::lround(hex.x());
-    int ry = std::lround(hex.y());
-    int rz = std::lround(hex.z());
-
-    const auto x_diff = std::abs(rx - hex.x());
-    const auto y_diff = std::abs(ry - hex.y());
-    const auto z_diff = std::abs(rz - hex.z());
-
-    if (x_diff > y_diff && x_diff > z_diff) {
-        rx = -ry - rz;
-    } else if (y_diff <= z_diff) {
-        rz = -rx - ry;
-    }
-    return HexCoordinate(rx, rz);
-}
+HexCoordinate round(const HexCoordinateFractional& hex) noexcept;
 
 template <typename T, typename U>
 constexpr typename std::common_type<T, U>::type distance(

@@ -21,8 +21,8 @@ static Map simple_test_map() {
     res.insert(HexSite(HexCoordinate(0, 1), HexType::field));
 
     // rivers
-    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::small));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::small));
+    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::river));
+    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::river));
     res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), RiverType::stream));
     res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), RiverType::stream));
     res.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), RiverType::stream));

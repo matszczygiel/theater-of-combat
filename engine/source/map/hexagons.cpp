@@ -11,7 +11,8 @@ const Orientation Orientation::Flat{
     0.f};
 
 sf::Vector2f Layout::cornerr_offset(int cornerr) const noexcept {
-    const float angle = 2.0 * M_PI * (orientation.start_angle + cornerr) / 6.0;
+    constexpr float pi = 3.14159265358979323846;
+    const float angle = 2.0 * pi * (orientation.start_angle + cornerr) / 6.0;
     return sf::Vector2f{size.x * std::cos(angle), size.y * std::sin(angle)};
 }
 
@@ -30,4 +31,21 @@ HexCoordinate world_point_to_hex(sf::Vector2f point, const Layout& layout) noexc
     const float p = m[2] * pt.x + m[3] * pt.y;
     auto hex      = HexCoordinateFractional(q, p);
     return round(hex);
+}
+
+HexCoordinate round(const HexCoordinateFractional& hex) noexcept {
+    int rx = std::lround(hex.x());
+    int ry = std::lround(hex.y());
+    int rz = std::lround(hex.z());
+
+    const auto x_diff = std::abs(rx - hex.x());
+    const auto y_diff = std::abs(ry - hex.y());
+    const auto z_diff = std::abs(rz - hex.z());
+
+    if (x_diff > y_diff && x_diff > z_diff) {
+        rx = -ry - rz;
+    } else if (y_diff <= z_diff) {
+        rz = -rx - ry;
+    }
+    return HexCoordinate(rx, rz);
 }

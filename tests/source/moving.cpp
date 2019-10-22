@@ -49,8 +49,8 @@ TEST_CASE("creating graph") {
 
     SUBCASE("rivers") {
         Map map = simple_test_map();
-        map.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::small));
-        map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::small));
+        map.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::river));
+        map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::river));
         map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), RiverType::stream));
         map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), RiverType::stream));
         map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), RiverType::stream));

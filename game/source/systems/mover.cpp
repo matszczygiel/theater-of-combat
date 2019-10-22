@@ -28,13 +28,13 @@ static std::map<RiverType, Movability> get_river_table(UnitType type) noexcept {
     switch (type) {
         case UnitType::heavy:
             return {
-                {RiverType::small, 3},
+                {RiverType::river, 3},
                 {RiverType::stream, 4},
             };
 
         case UnitType::mechanized:
             return {
-                {RiverType::small, 3},
+                {RiverType::river, 3},
                 {RiverType::stream, 3},
             };
 

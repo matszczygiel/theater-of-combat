@@ -22,6 +22,13 @@
 #include "toc/core/log.h"
 
 
+struct ScenarioConfig {
+    std::string map{};
+    std::string units{};
+    std::string description{};
+    
+};
+
 class Scenario {
    public:
     std::map<std::string, std::set<Unit::IdType>> teams{};

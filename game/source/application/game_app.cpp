@@ -29,10 +29,11 @@ Game::Game() {
     rot_sink->set_level(spdlog::level::trace);
     logger::get_distributing_sink()->add_sink(rot_sink);
 
-    _res_loader.register_resource_type<Map>("maps", "map");
-    _res_loader.register_resource_type<UnitManager>("units", "umg");
-    _res_loader.register_resource_type<sf::Font>("fonts", "ttf");
-    _res_loader.register_resource_type<sf::Texture>("textures", "png");
+    _res_loader->register_resource_type<Map>("maps", "map");
+    _res_loader->register_resource_type<UnitManager>("units", "umg");
+    _res_loader->register_resource_type<sf::Font>("fonts", "ttf");
+    _res_loader->register_resource_type<sf::Texture>("textures", "png");
+    _res_loader->register_resource_type<Scenario>("scenarios", "scn");
 }
 
 void Game::initialize() {
@@ -41,15 +42,15 @@ void Game::initialize() {
     _window.setFramerateLimit(60);
 
     app_info("Loading font.");
-    _gfx_state.font = _res_loader.load<decltype(_gfx_state.font)>("OpenSans-Regular");
+    _gfx_state.font = _res_loader->load<decltype(_gfx_state.font)>("OpenSans-Regular");
 
     auto& map = _state.scenario->map;
     auto& lua = lua::get_state();
     map::lua_push_functions(lua);
     lua["get_game_map"]  = [&map]() -> Map& { return map; };
-    lua["save_map_json"] = [&](std::string name) { _res_loader.save_json(map, name); };
+    lua["save_map_json"] = [&](std::string name) { _res_loader->save_json(map, name); };
     lua["load_map_json"] = [&](std::string name) {
-        map = _res_loader.load_json<Map>(name);
+        map = _res_loader->load_json<Map>(name);
     };
     lua["set_game_map"] = [&map](const Map& m) { map = m; };
 
@@ -57,10 +58,10 @@ void Game::initialize() {
     auto& units            = _state.scenario->units;
     lua["game_units"]      = std::ref(units);
     lua["save_units_json"] = [&](std::string name) {
-        _res_loader.save_json(units, name);
+        _res_loader->save_json(units, name);
     };
     lua["load_units_json"] = [&](std::string name) {
-        units = _res_loader.load_json<UnitManager>(name);
+        units = _res_loader->load_json<UnitManager>(name);
     };
 
     lua["load_units_test"] = [&]() { units = UnitManager::create_test_manager(); };
@@ -76,7 +77,7 @@ void Game::initialize() {
         _pending_actions.push_back(std::make_unique<NextPhaseAction>());
     };
     lua["load_scenario_script"] = [&](std::string name) {
-        std::ifstream lua_script(_res_loader.resources_path().string() + "/scenarios/" +
+        std::ifstream lua_script(_res_loader->resources_path().string() + "/scenarios/" +
                                  name + ".lua");
         if (!lua_script.is_open())
             return false;

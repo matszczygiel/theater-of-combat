@@ -45,6 +45,11 @@ class ResourceLoader {
     template <class Resource>
     bool is_registered() const;
 
+    std::vector<std::string> list_avaliable(const std::string& path) const;
+
+    template <class Resource>
+    std::vector<std::string> list_avaliable() const;
+
     const fs::path& resources_path() const;
 
    private:
@@ -185,6 +190,16 @@ fs::path ResourceLoader::make_path(std::string name) const {
     return path;
 }
 
+template <class Resource>
+std::vector<std::string> ResourceLoader::list_avaliable() const {
+    if (const auto search =
+            _type_dirs_and_extensions.find(std::type_index(typeid(Resource)));
+        search != _type_dirs_and_extensions.end()) {
+        return list_avaliable(search->second.first);
+    }
+    return list_avaliable("");
+}
+
 // Specializations
 
 template <>
@@ -200,46 +215,4 @@ sf::Font ResourceLoader::load<sf::Font>(std::string name) const;
 template <>
 std::unique_ptr<sf::Font> ResourceLoader::load_ptr<sf::Font>(std::string name) const;
 
-/*
-template <class Resource>
-void ResourceLoader::save(const Resource& res, std::string name) const {
-    static_assert(std::is_default_constructible<Resource>::value,
-                  "Resource type must implement cereal serialization.");
-
-    const auto path = make_path<Resource>(name);
-    engine_info("Saving resource: {}", path.filename().string());
-    std::ofstream file(path);
-    cereal::PortableBinaryOutputArchive ar(file);
-    ar(res);
-}
-
-template <class Resource>
-Resource ResourceLoader::load(std::string name) const {
-    static_assert(std::is_default_constructible<Resource>::value,
-                  "Resource type must implement cereal serialization.");
-
-    const auto path = make_path<Resource>(name);
-    engine_info("Loading resource: {}", path.filename().string());
-    std::ifstream file(path);
-    cereal::PortableBinaryInputArchive ar(file);
-    Resource res;
-    ar(res);
-    return res;
-}
-
-template <class Resource>
-std::unique_ptr<Resource> ResourceLoader::load_ptr(std::string name) const {
-    static_assert(std::is_default_constructible<Resource>::value,
-                  "Resource type must implement cereal serialization.");
-
-    const auto path = make_path<Resource>(name);
-    engine_info("Loading resource: {}", path.filename().string());
-    std::ifstream file(path);
-    cereal::PortableBinaryInputArchive ar(file);
-
-    auto res = std::make_unique<Resource>();
-    ar(*res);
-    return res;
-}
-*/
 #endif

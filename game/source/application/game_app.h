@@ -12,11 +12,11 @@
 
 #include "gameplay/game_state.h"
 #include "graphics/graphics_state.h"
+#include "gui/start_prompt.h"
 #include "networking/net_manager.h"
 #include "systems/debug_info.h"
 #include "systems/fighter.h"
 #include "systems/mover.h"
-#include "gui/start_prompt.h"
 
 class Game : public Application {
    public:
@@ -51,11 +51,9 @@ class Game : public Application {
     std::string _local_player_name{};
     std::shared_ptr<NetManager> _network{std::make_shared<NetManager>()};
 
-    LogWindow _log{"Log console"};
-    ConsoleWindow _console{"Lua console"};
-    StartPrompt _start_prompt{_network};
 
-    ResourceLoader _res_loader{"resources/"};
+    std::shared_ptr<ResourceLoader> _res_loader{
+        std::make_shared<ResourceLoader>("resources/")};
 
     mover::MovementSystem _moving_system{_state};
     FightingSystem _fight_system{_state};
@@ -65,6 +63,10 @@ class Game : public Application {
     std::vector<std::unique_ptr<Action>> _pending_actions{};
 
     enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };
+    
+    LogWindow _log{"Log console"};
+    ConsoleWindow _console{"Lua console"};
+    StartPrompt _start_prompt{_network, _res_loader};
 
     constexpr static float _view_moving_speed{0.3f};
 };

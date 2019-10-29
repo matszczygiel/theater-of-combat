@@ -5,8 +5,13 @@
 
 #include "toc/core/log.h"
 
-StartPrompt::StartPrompt(std::shared_ptr<NetManager>& ptr) noexcept : _nm{ptr} {
+#include "gameplay/game_state.h"
+
+StartPrompt::StartPrompt(std::shared_ptr<NetManager>& ptr,
+                         std::shared_ptr<ResourceLoader>& loader) noexcept
+    : _nm{ptr}, _rl{loader} {
     engine_assert(ptr != nullptr, "Cannot initialize StartPrompt with nullptr");
+    engine_assert(loader != nullptr, "Cannot initialize StartPrompt with nullptr");
 }
 
 void StartPrompt::show_window() {
@@ -29,10 +34,30 @@ void StartPrompt::show_window() {
         case Stage::waiting:
             show_waiting_page();
             break;
+        case Stage::selecting:
+            show_selecting_page();
+            break;
 
         default:
             break;
     }
+    ImGui::End();
+
+    // Debug
+    if (!ImGui::Begin("start window debug", nullptr)) {
+        ImGui::End();
+        return;
+    }
+
+    if (ImGui::Selectable("none", _stage == Stage::none))
+        _stage = Stage::none;
+    if (ImGui::Selectable("setup", _stage == Stage::setup))
+        _stage = Stage::setup;
+    if (ImGui::Selectable("waiting", _stage == Stage::waiting))
+        _stage = Stage::waiting;
+    if (ImGui::Selectable("selecting", _stage == Stage::selecting))
+        _stage = Stage::selecting;
+
     ImGui::End();
 }
 
@@ -89,6 +114,32 @@ void StartPrompt::show_waiting_page() {
     if (ImGui::Button("Stop", ImVec2(100, 40)))
         _stage = Stage::setup;
 
-    if (_nm->is_done())
-        _stage = Stage::selecting;
+    if (_nm->is_done()) {
+        _stage     = Stage::selecting;
+        _scenarios = _rl->list_avaliable<Scenario>();
+    }
+}
+
+void StartPrompt::show_selecting_page() {
+    static int current_item{0};
+    if (ImGui::ListBoxHeader("Select Scenario", _scenarios.size())) {
+        int i{0};
+        for (const auto& sc : _scenarios) {
+            if (ImGui::Selectable(sc.c_str(), current_item == i))
+                current_item = i;
+            ++i;
+        }
+        ImGui::ListBoxFooter();
+    }
+
+    if (ImGui::Button("Select", ImVec2(100, 40)))
+        _stage = Stage::none;
+
+    ImGui::SameLine();
+    if (ImGui::Button("Reload", ImVec2(100, 40)))
+        _scenarios = _rl->list_avaliable<Scenario>();
+
+    ImGui::SameLine();
+    if (ImGui::Button("Back", ImVec2(100, 40)))
+        _stage = Stage::setup;
 }

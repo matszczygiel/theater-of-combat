@@ -28,7 +28,8 @@ target_compile_features(toc-engine PRIVATE
                         cxx_std_17)
 
 if(UNIX)                        
-    target_compile_options(toc-engine PRIVATE 
+    target_compile_options(toc-engine 
+                                    PRIVATE 
                                      -Wall -Wextra -pedantic)
 else()
     if(MSVC)
@@ -47,6 +48,4 @@ target_link_libraries(toc-engine
                                 ImGui-SFML::ImGui-SFML ${LUA_LIBRARIES}
                                 $<$<PLATFORM_ID:Windows>:imgui::imgui>)
                                 
-target_link_options(toc-engine PRIVATE 
-                                $<$<CXX_COMPILER_ID:Clang>:-fuse-ld=lld>)
                                             

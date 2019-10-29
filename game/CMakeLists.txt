@@ -32,6 +32,3 @@ endif()
 
 target_link_libraries(toc-game 
                         PRIVATE toc-engine)
-
-target_link_options(toc-game PRIVATE 
-                                    $<$<CXX_COMPILER_ID:Clang>:-fuse-ld=lld>)                          

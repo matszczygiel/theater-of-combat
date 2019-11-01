@@ -20,6 +20,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 add_subdirectory(engine)
 add_subdirectory(game)
+add_subdirectory(editor)
 
 if(UNIX)
     add_subdirectory(tests)                        

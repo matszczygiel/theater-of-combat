@@ -3,51 +3,6 @@
 #include "toc/core/log.h"
 #include "toc/core/lua_vm.h"
 
-void Scenario::next_day() {
-    ++_current_day;
-    sol::protected_function daily = lua::get_state()["day"];
-    auto res                      = daily(_current_day);
-    if (!res.valid()) {
-        app_error("Scenario's daily (day {}) lua script failed on load.", _current_day);
-        sol::error err = res;
-        app_error("Error message: {}", err.what());
-        app_debug("The script that failed\n{}", _script);
-    }
-}
-
-bool Scenario::load_script(const std::string& script) {
-    _script = script;
-    if (!prepare_lua_state()) {
-        _script.clear();
-        return false;
-    }
-    sol::protected_function initializer = lua::get_state()["init"];
-    auto res                            = initializer();
-    if (!res.valid()) {
-        app_error("Scenario's initializing lua script failed on load.");
-        sol::error err = res;
-        app_error("Error message: {}", err.what());
-        app_debug("The script that failed\n{}", _script);
-        _script.clear();
-        return false;
-    }
-    return true;
-}
-
-int Scenario::current_day() const { return _current_day; }
-
-bool Scenario::prepare_lua_state() const {
-    app_info("Loading scenario's lua script.");
-    try {
-        lua::get_state().safe_script(_script, lua::error_handler);
-    } catch (sol::error& err) {
-        app_error("Scenario's lua script failed on load.");
-        app_debug("The script that failed\n{}", _script);
-        return false;
-    }
-
-    return true;
-}
 
 void GameState::push_action(std::unique_ptr<Action> action) {
     if (action) {

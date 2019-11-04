@@ -5,12 +5,11 @@
 
 #include "toc/graphics/map_gfx.h"
 #include "toc/graphics/unit_gfx.h"
-
-#include "gameplay/game_state.h"
+#include "toc/gameplay/scenario.h"
 
 class GfxState {
    public:
-    explicit GfxState(const GameState& state);
+    explicit GfxState(const std::shared_ptr<Scenario>& sc);
 
     void update();
     void draw(sf::RenderTarget& target) const;

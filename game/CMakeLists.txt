@@ -14,11 +14,10 @@ file(GLOB_RECURSE game_sources CONFIGURE_DEPENDS
 
 add_executable(toc-game ${game_sources})
 
-target_include_directories(toc-game 
-                            PRIVATE source ../deps)
-
 target_compile_features(toc-game 
                         PRIVATE cxx_std_17)
+
+target_include_directories(toc-game PRIVATE source)
 
 if(UNIX)                        
     target_compile_options(toc-game PRIVATE 

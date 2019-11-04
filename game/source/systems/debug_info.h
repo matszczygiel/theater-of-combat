@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "gameplay/game_state.h"
-#include "graphics/graphics_state.h"
+#include "toc/graphics/graphics_state.h"
 
 namespace debug_info {
 

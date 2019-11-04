@@ -1,6 +1,6 @@
-#include "graphics_state.h"
+#include "graphics/graphics_state.h"
 
-GfxState::GfxState(const GameState& state) : _scenario{state.scenario} { update(); }
+GfxState::GfxState(const std::shared_ptr<Scenario>& sc) : _scenario{sc} { update(); }
 
 void GfxState::update() {
     if (!_scenario) {

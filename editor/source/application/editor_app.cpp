@@ -1,4 +1,4 @@
-#include "game_app.h"
+#include "editor_app.h"
 
 #include <sstream>
 
@@ -22,7 +22,7 @@
 #include "gui/network_prompt.h"
 #include "lua/lua_gameplay.h"
 
-Game::Game() {
+Editor::Editor() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
         "tmp/logs/log.txt", 1048576 * 5, 2);
     rot_sink->set_pattern("%^[%c] (thread %t) %n: [%l] %v%$");
@@ -36,7 +36,7 @@ Game::Game() {
     _res_loader->register_resource_type<Scenario>("scenarios", "scn");
 }
 
-void Game::initialize() {
+void Editor::initialize() {
     engine_trace("Creating a window.");
     _window.create(sf::VideoMode(1200, 800), "Theater of combat");
     _window.setFramerateLimit(60);
@@ -85,7 +85,7 @@ void Game::initialize() {
         std::string str((std::istreambuf_iterator<char>(lua_script)),
                         std::istreambuf_iterator<char>());
 
-        if (!_state.scenario->load_script(lua::get_state(), str))
+        if (!_state.scenario->load_script(str))
             return false;
 
         auto units_config = lua["graphics_config"]["units"];

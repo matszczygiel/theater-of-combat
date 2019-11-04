@@ -15,61 +15,11 @@
 #include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
 
-#include "action.h"
-#include "toc/map/map.h"
-#include "toc/unit/unit.h"
-#include "toc/unit/unit_manager.h"
+#include "toc/gameplay/scenario.h"
 #include "toc/core/log.h"
 
+#include "action.h"
 
-struct ScenarioConfig {
-    std::string map{};
-    std::string units{};
-    std::string description{};
-    
-};
-
-class Scenario {
-   public:
-    std::map<std::string, std::set<Unit::IdType>> teams{};
-    UnitManager units{};
-    Map map{};
-    std::array<std::vector<std::string>, 2> player_teams{};
-
-    bool load_script(const std::string& script);
-
-    void next_day();
-    int current_day() const;
-
-    template <class Archive>
-    void save(Archive& archive);
-
-    template <class Archive>
-    void load(Archive& archive);
-
-   private:
-    bool prepare_lua_state() const;
-
-    int _current_day{0};
-    std::string _script{};
-};
-
-template <class Archive>
-void Scenario::save(Archive& archive) {
-    archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
-            CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
-            CEREAL_NVP(_script));
-}
-
-
-template <class Archive>
-void Scenario::load(Archive& archive) {
-    archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
-            CEREAL_NVP(player_teams), CEREAL_NVP(_current_day),
-            CEREAL_NVP(_script));
-
-    prepare_lua_state();
-}
 
 enum class GamePhase {
     not_started,

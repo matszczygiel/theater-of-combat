@@ -72,8 +72,7 @@ bool ComponentPoll::is_container_present() const {
 
 class UnitManager {
    public:
-    Unit::IdType create(Unit::KindType type, const std::string& name,
-                        bool assign_components = false);
+    Unit::IdType create(Unit::KindType type, const std::string& name);
 
     void remove(Unit::IdType id);
 
@@ -114,11 +113,8 @@ class UnitManager {
 template <class Archive>
 void UnitManager::serialize(Archive& archive) {
     archive(CEREAL_NVP(_id_gen), CEREAL_NVP(_units),
-            // list all possible components
-            cereal::make_nvp("MovementComponents",
-                             *_components.get_container<MovementComponent>()),
-            cereal::make_nvp("FightComponents",
-                             *_components.get_container<FightComponent>()));
+            cereal::make_nvp("PositionComponents",
+                             *_components.get_container<PositionComponent>());
 }
 
 template <class Component, class... Args>

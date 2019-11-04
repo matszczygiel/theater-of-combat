@@ -53,4 +53,19 @@ void FightComponent::serialize(Archive& archive) {
             CEREAL_NVP(in_fight));
 }
 
+struct PositionComponent : public ComponentBase {
+    constexpr PositionComponent() = default;
+    std::optional<HexCoordinate> position{};
+    int direction{0};
+
+    template <class Archive>
+    void serialize(Archive& archive);
+};
+
+template <class Archive>
+void PositionComponent::serialize(Archive& archive) {
+    archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(position),
+            CEREAL_NVP(direction));
+}
+
 #endif

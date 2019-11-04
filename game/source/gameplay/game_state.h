@@ -15,10 +15,10 @@
 #include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
 
-#include "action.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/core/log.h"
 
+#include "action.h"
 
 
 enum class GamePhase {

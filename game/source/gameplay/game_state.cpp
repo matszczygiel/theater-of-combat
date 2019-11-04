@@ -39,7 +39,7 @@ void GameState::start() {
     app_assert(_local_player_index.has_value(), "Local player not defined.");
     _current_player_index = 0;
     phase                 = GamePhase::movement;
-    scenario->next_day();
+    scenario->next_turn(lua::get_state());
 }
 
 void GameState::next_phase() {
@@ -63,12 +63,12 @@ void GameState::next_phase() {
             phase = GamePhase::movement;
             next_player();
             if (current_player_index() == 0)
-                scenario->next_day();
+                scenario->next_turn(lua::get_state());
 
             break;
         case GamePhase::new_day:
             phase = GamePhase::movement;
-            scenario->next_day();
+            scenario->next_turn(lua::get_state());
             break;
         default:
             break;

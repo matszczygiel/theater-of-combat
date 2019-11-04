@@ -14,11 +14,12 @@
 #include <cereal/types/set.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
+#include <sol/state.hpp>
 
-#include "core/log.h"
-#include "map/map.h"
-#include "unit/unit.h"
-#include "unit/unit_manager.h"
+#include "toc/core/log.h"
+#include "toc/map/map.h"
+#include "toc/unit/unit.h"
+#include "toc/unit/unit_manager.h"
 
 class Scenario {
    public:

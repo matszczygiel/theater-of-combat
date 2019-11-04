@@ -1,11 +1,11 @@
-#include "game_state.h"
+#include "gameplay/scenario.h"
 
 #include "core/log.h"
 #include "core/lua_vm.h"
 
 void Scenario::next_turn(sol::state& lua) {
     sol::protected_function turn_fun = lua["turn"];
-    auto res                         = turn_fun(++_current_day);
+    auto res                         = turn_fun(++_current_turn);
     if (!res.valid()) {
         engine_error("Scenario's turn_fun (turn {}) lua script failed on load.",
                      _current_turn);

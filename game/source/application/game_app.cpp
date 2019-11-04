@@ -85,7 +85,7 @@ void Game::initialize() {
         std::string str((std::istreambuf_iterator<char>(lua_script)),
                         std::istreambuf_iterator<char>());
 
-        if (!_state.scenario->load_script(str))
+        if (!_state.scenario->load_script(lua::get_state(), str))
             return false;
 
         auto units_config = lua["graphics_config"]["units"];

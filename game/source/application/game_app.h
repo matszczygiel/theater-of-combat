@@ -9,9 +9,9 @@
 #include "toc/gui/log_window.h"
 #include "toc/map/map.h"
 #include "toc/unit/unit.h"
+#include "toc/graphics/graphics_state.h"
 
 #include "gameplay/game_state.h"
-#include "graphics/graphics_state.h"
 #include "gui/start_prompt.h"
 #include "networking/net_manager.h"
 #include "systems/debug_info.h"
@@ -41,7 +41,7 @@ class Game : public Application {
 
    private:
     GameState _state{};
-    GfxState _gfx_state{_state};
+    GfxState _gfx_state{_state.scenario};
 
     bool _moving_view_up{false};
     bool _moving_view_down{false};

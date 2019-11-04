@@ -4,6 +4,7 @@ file(GLOB_RECURSE toc_engine_sources CONFIGURE_DEPENDS
     source/graphics/*.cpp       source/graphics/*.h
     source/core/*.cpp           source/core/*.h
     source/unit/*.cpp           source/unit/*.h
+    source/gameplay/*.cpp       source/gameplay/*.h
     )
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

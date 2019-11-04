@@ -9,7 +9,7 @@
 
 class GfxState {
    public:
-    explicit GfxState(const Scenario& sc);
+    explicit GfxState(const std::shared_ptr<Scenario>& sc);
 
     void update();
     void draw(sf::RenderTarget& target) const;

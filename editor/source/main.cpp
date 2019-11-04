@@ -1,6 +1,6 @@
-#include "application/game_app.h"
+#include "application/editor_app.h"
 
 int main() {
-    Game app;
+    Editor app;
     app.run();
 }

@@ -39,32 +39,20 @@ class Editor : public Application {
 
    private:
     Scenario _scenario{};
-    GfxState _gfx_state{_state};
 
     bool _moving_view_up{false};
     bool _moving_view_down{false};
     bool _moving_view_right{false};
     bool _moving_view_left{false};
 
-    std::string _local_player_name{};
-    std::shared_ptr<NetManager> _network{std::make_shared<NetManager>()};
-
 
     std::shared_ptr<ResourceLoader> _res_loader{
         std::make_shared<ResourceLoader>("resources/")};
 
-    mover::MovementSystem _moving_system{_state};
-    FightingSystem _fight_system{_state};
-
     debug_info::DebugInfoSystem _debug_info{_state};
 
-    std::vector<std::unique_ptr<Action>> _pending_actions{};
-
-    enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };
-    
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
-    StartPrompt _start_prompt{_network, _res_loader};
 
     constexpr static float _view_moving_speed{0.3f};
 };

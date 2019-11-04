@@ -72,7 +72,7 @@ bool ComponentPoll::is_container_present() const {
 
 class UnitManager {
    public:
-    Unit::IdType create(UnitType type, const std::string& name,
+    Unit::IdType create(Unit::KindType type, const std::string& name,
                         bool assign_components = false);
 
     void remove(Unit::IdType id);
@@ -103,7 +103,7 @@ class UnitManager {
     void serialize(Archive& archive);
 
    private:
-    void assign_default_components(Unit::IdType id, UnitType type);
+    void assign_default_components(Unit::IdType id, Unit::KindType type);
 
     ComponentPoll _components{};
 

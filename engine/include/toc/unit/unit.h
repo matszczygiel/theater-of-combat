@@ -6,25 +6,23 @@
 
 #include <cereal/types/string.hpp>
 
-enum class UnitType { heavy, mechanized };
-
 class Unit {
     friend class UnitManager;
-
    public:
     using IdType = int;
+    using KindType = int;
 
     Unit() = default;
 
     const std::string& name() const noexcept;
-    UnitType type() const noexcept;
+    KindType type() const noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
 
    private:
     std::string _name{};
-    UnitType _type{};
+    KindType _type{};
 };
 
 template <class Archive>
@@ -36,7 +34,7 @@ struct ComponentBase {
     friend class UnitManager;
    public:
     constexpr Unit::IdType owner() const noexcept { return _owner; };
-    constexpr UnitType owner_type() const noexcept { return _owner_type; };
+    constexpr Unit::KindType owner_type() const noexcept { return _owner_type; };
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -46,7 +44,7 @@ struct ComponentBase {
 
    private:
     Unit::IdType _owner{};
-    UnitType _owner_type{UnitType::mechanized};
+    Unit::KindType _owner_type{};
 };
 
 template <class Archive>

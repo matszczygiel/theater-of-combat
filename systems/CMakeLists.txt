@@ -4,7 +4,7 @@ file(GLOB_RECURSE toc_systems_sources CONFIGURE_DEPENDS
 
 add_library(toc-systems STATIC ${toc_systems_sources})
 
-target_include_directories(toc-systems PRIVATE source)
+target_include_directories(toc-systems PRIVATE source include include/tsys)
 
 if(UNIX)                        
     target_compile_options(toc-systems PRIVATE 

@@ -30,4 +30,4 @@ else()
 endif()
 
 target_link_libraries(toc-game 
-                        PRIVATE toc-engine)
+                        PRIVATE toc-engine toc-systems)

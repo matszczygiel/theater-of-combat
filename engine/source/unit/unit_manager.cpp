@@ -1,5 +1,13 @@
 #include "unit/unit_manager.h"
 
+#include <tuple>
+
+void ComponentPoll::remove_components(Unit::IdType id) {
+    for (auto& [type, vec] : components) {
+        vec->remove_component(id);
+    }
+}
+
 Unit::IdType UnitManager::create(Unit::KindType type, const std::string& name) {
     const auto id = _id_gen.fetch();
     engine_assert(_units.count(id) == 0,
@@ -19,10 +27,7 @@ void UnitManager::remove(Unit::IdType id) {
                         id);
     engine_assert(_units.erase(id) == 1, "");
     _id_gen.return_to_poll(id);
-    remove_component<PositionComponent>(id);
-    // list all components
-    remove_component<MovementComponent>(id);
-    remove_component<FightComponent>(id);
+    _components.remove_components(id);
 }
 
 UnitManager UnitManager::create_test_manager() {

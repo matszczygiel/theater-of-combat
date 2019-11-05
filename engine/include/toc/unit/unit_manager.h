@@ -4,6 +4,7 @@
 #include <map>
 #include <typeindex>
 #include <vector>
+#include <algorithm>
 
 #include <cereal/types/vector.hpp>
 
@@ -12,15 +13,25 @@
 #include "unit_components.h"
 
 struct ComponentVecBase {
-    virtual ~ComponentVecBase() = default;
+    virtual ~ComponentVecBase()                    = default;
+    virtual void remove_component(Unit::IdType id) = 0;
 };
 
 template <class Component>
 struct ComponentVec : public ComponentVecBase {
     static_assert(std::is_base_of_v<ComponentBase, Component>);
 
+    void remove_component(Unit::IdType id) final;
+
     std::vector<Component> vec;
 };
+
+template <class Component>
+void ComponentVec<Component>::remove_component(Unit::IdType id) {
+    vec.erase(std::remove_if(vec.begin(), vec.end(),
+                              [&id](const auto& com) { return com.owner() == id; }),
+               vec.end());
+}
 
 struct ComponentPoll {
     // Creates the container if needed
@@ -33,6 +44,8 @@ struct ComponentPoll {
 
     template <class Component>
     bool is_container_present() const;
+
+    void remove_components(Unit::IdType id);
 
     std::map<std::type_index, std::unique_ptr<ComponentVecBase>> components{};
 };
@@ -114,7 +127,7 @@ template <class Archive>
 void UnitManager::serialize(Archive& archive) {
     archive(CEREAL_NVP(_id_gen), CEREAL_NVP(_units),
             cereal::make_nvp("PositionComponents",
-                             *_components.get_container<PositionComponent>());
+                             *_components.get_container<PositionComponent>()));
 }
 
 template <class Component, class... Args>

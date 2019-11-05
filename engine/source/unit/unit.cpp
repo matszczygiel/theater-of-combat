@@ -2,4 +2,4 @@
 
 const std::string& Unit::name() const noexcept { return _name; }
 
-UnitType Unit::type() const noexcept { return _type; }
+Unit::KindType Unit::type() const noexcept { return _type; }

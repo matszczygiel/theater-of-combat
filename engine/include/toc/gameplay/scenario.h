@@ -48,7 +48,8 @@ class Scenario {
 template <class Archive>
 void Scenario::serialize(Archive& archive) {
     archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
-            CEREAL_NVP(player_teams), CEREAL_NVP(_current_turn), CEREAL_NVP(_script));
+            CEREAL_NVP(player_teams), CEREAL_NVP(description), CEREAL_NVP(_current_turn),
+            CEREAL_NVP(_script));
 }
 
 #endif

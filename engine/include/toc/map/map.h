@@ -15,17 +15,16 @@ class Map {
    public:
     enum class SiteType {
         hex,
-        river,
+        border,
     };
-
-    using SiteId = int;
+    using SiteId   = int;
 
     const std::map<SiteId, HexSite>& hexes() const noexcept;
-    const std::map<SiteId, RiverSite>& rivers() const noexcept;
+    const std::map<SiteId, BorderSite>& borders() const noexcept;
     const BidirectionalGraph<SiteId>& graph() const noexcept;
 
     Map& insert(HexSite site);
-    Map& insert(RiverSite site);
+    Map& insert(BorderSite site);
 
     SiteType type_of(SiteId id) const;
 
@@ -41,7 +40,7 @@ class Map {
 
    private:
     std::map<SiteId, HexSite> _hexes{};
-    std::map<SiteId, RiverSite> _rivers{};
+    std::map<SiteId, BorderSite> _borders{};
 
     BidirectionalGraph<SiteId> _graph{};
 
@@ -51,7 +50,7 @@ class Map {
 template <class Archive>
 void Map::serialize(Archive& archive) {
     archive(CEREAL_NVP(_id_gen), CEREAL_NVP(_graph), CEREAL_NVP(_hexes),
-            CEREAL_NVP(_rivers));
+            CEREAL_NVP(_borders));
 }
 
 #endif

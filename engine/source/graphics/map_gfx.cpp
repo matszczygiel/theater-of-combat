@@ -8,7 +8,7 @@ MapGfx::MapGfx(std::shared_ptr<Layout>& layout) {
 }
 
 void MapGfx::setup(const Map& map, std::string texture_path,
-                   const std::map<HexType, sf::IntRect>& texture_positions) {
+                   const std::map<HexSite::HexType, sf::IntRect>& texture_positions) {
     _texture_positions = texture_positions;
 
     const auto loaded = _texture.loadFromFile(texture_path);
@@ -31,8 +31,8 @@ void MapGfx::update(const Map& map) {
         }
     }
 
-    for (const auto& [id, site] : map.rivers()) {
-        rivers.emplace_back(RiverShape{_layout, site});
+    for (const auto& [id, site] : map.borders()) {
+        borders.emplace_back(BorderShape{_layout, site});
     }
 }
 
@@ -64,12 +64,12 @@ void MapGfx::draw_coords(sf::RenderTarget& target, const sf::Font& font) const {
 }
 
 void MapGfx::draw_rivers(sf::RenderTarget& target) const {
-    for (const auto& shape : rivers) {
+    for (const auto& shape : borders) {
         target.draw(shape.shape());
     }
 }
 
 void MapGfx::clear() noexcept {
-    rivers.clear();
+    borders.clear();
     hexes.clear();
 }

@@ -2,26 +2,26 @@
 
 #include "core/log.h"
 
-static sf::Color site_color(HexType type) noexcept {
+static sf::Color hex_color(HexSite::HexType type) noexcept {
     switch (type) {
-        case HexType::field:
+        case 0:
             return sf::Color::Green;
-        case HexType::forest:
+        case 1:
             return sf::Color(100, 140, 20);
         default:
-            engine_assert(false, "Unknown HexType.");
+            engine_assert(false, "Unknown HexType {}.", type);
     }
     return sf::Color::Magenta;
 }
 
-static sf::Color site_color(RiverType type) noexcept {
+static sf::Color border_color(BorderSite::BorderType type) noexcept {
     switch (type) {
-        case RiverType::river:
+        case 0:
             return sf::Color::Blue;
-        case RiverType::stream:
+        case 1:
             return sf::Color::Cyan;
         default:
-            engine_assert(false, "Unknown RiverType.");
+            engine_assert(false, "Unknown BorderType {}.", type);
     }
     return sf::Color::Magenta;
 }
@@ -50,7 +50,7 @@ HexShape::HexShape(std::shared_ptr<Layout> layout, const HexSite& site,
         _shape.setTexture(texture);
         _shape.setTextureRect(texture_rect);
     } else {
-        _shape.setFillColor(site_color(site.type()));
+        _shape.setFillColor(hex_color(site.type()));
     }
 }
 
@@ -72,13 +72,13 @@ void HexShape::update(const HexSite& site) noexcept {
     _outline_shape.setOutlineThickness(thickness);
 }
 
-RiverShape::RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site) noexcept
+BorderShape::BorderShape(std::shared_ptr<Layout> layout, const BorderSite& site) noexcept
     : _layout{layout}, _shape{4} {
     _shape.setOutlineThickness(0.0);
     update(site);
 }
 
-void RiverShape::update(const RiverSite& site) noexcept {
+void BorderShape::update(const BorderSite& site) noexcept {
     const auto [coord1, coord2] = site.sides();
 
     const auto vec1 = hex_to_world_point(coord1, *_layout);
@@ -97,7 +97,7 @@ void RiverShape::update(const RiverSite& site) noexcept {
 
     _shape.setPosition(center);
 
-    _shape.setFillColor(site_color(site.type()));
+    _shape.setFillColor(border_color(site.type()));
 }
 
-const sf::ConvexShape& RiverShape::shape() const noexcept { return _shape; }
+const sf::ConvexShape& BorderShape::shape() const noexcept { return _shape; }

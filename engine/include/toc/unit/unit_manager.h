@@ -1,10 +1,10 @@
 #ifndef UNIT_MANAGER_H
 #define UNIT_MANAGER_H
 
+#include <algorithm>
 #include <map>
 #include <typeindex>
 #include <vector>
-#include <algorithm>
 
 #include <cereal/types/vector.hpp>
 
@@ -29,8 +29,8 @@ struct ComponentVec : public ComponentVecBase {
 template <class Component>
 void ComponentVec<Component>::remove_component(Unit::IdType id) {
     vec.erase(std::remove_if(vec.begin(), vec.end(),
-                              [&id](const auto& com) { return com.owner() == id; }),
-               vec.end());
+                             [&id](const auto& com) { return com.owner() == id; }),
+              vec.end());
 }
 
 struct ComponentPoll {
@@ -101,6 +101,14 @@ class UnitManager {
     template <class Component>
     void remove_component(Unit::IdType id);
 
+    // Creates the container if needed
+    template <class Component>
+    std::vector<Component>* get_container();
+
+    // If container doesn't exist, returns nullptr
+    template <class Component>
+    const std::vector<Component>* get_container() const;
+
     const std::map<Unit::IdType, Unit>& units() const noexcept;
 
     template <class Component>
@@ -128,6 +136,16 @@ void UnitManager::serialize(Archive& archive) {
     archive(CEREAL_NVP(_id_gen), CEREAL_NVP(_units),
             cereal::make_nvp("PositionComponents",
                              *_components.get_container<PositionComponent>()));
+}
+
+template <class Component>
+std::vector<Component>* UnitManager::get_container() {
+    return _components.get_container<Component>();
+}
+
+template <class Component>
+const std::vector<Component>* UnitManager::get_container() const {
+    return _components.get_container<Component>();
 }
 
 template <class Component, class... Args>

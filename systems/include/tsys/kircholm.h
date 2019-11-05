@@ -8,16 +8,17 @@
 #include "cereal/optional.hpp"
 
 #include "toc/gameplay/scenario.h"
+#include "toc/gameplay/system_state.h"
 #include "toc/map/hexagons.h"
 #include "toc/unit/unit_components.h"
 
 namespace kirch {
 
-///Basic types
+/// Basic types
 enum class HexType { field, swamp, hillside, hills };
 enum class UnitType { infrantry, cavalary, dragoons, artillery };
 
-///Components
+/// Components
 
 using Movability = int;
 
@@ -26,8 +27,6 @@ struct MovementComponent : public ComponentBase {
     explicit MovementComponent(Movability moving_points);
 
     Movability moving_pts{};
-    std::optional<HexCoordinate> position{};
-    int direction{};
     bool immobilized{false};
 
     constexpr Movability total_moving_pts() const noexcept { return _total_moving_pts; }
@@ -42,8 +41,7 @@ struct MovementComponent : public ComponentBase {
 template <class Archive>
 void MovementComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(_total_moving_pts),
-            CEREAL_NVP(moving_pts), CEREAL_NVP(position), CEREAL_NVP(direction),
-            CEREAL_NVP(immobilized));
+            CEREAL_NVP(moving_pts), CEREAL_NVP(immobilized));
 }
 
 using Strength = int;
@@ -65,8 +63,8 @@ void DirectFightComponent::serialize(Archive& archive) {
             CEREAL_NVP(in_fight));
 }
 
-//Systems
-
+// Systems
+class Action;
 class MovementSystem {
    public:
     explicit MovementSystem(const std::shared_ptr<Scenario>& scenario) noexcept;
@@ -91,6 +89,36 @@ class MovementSystem {
     std::map<Map::SiteId, Movability> _distances{};
     std::map<Map::SiteId, Map::SiteId> _paths{};
 };
+
+/// System
+class SystemKircholm : public SystemState {
+   public:
+    SystemKircholm();
+
+    virtual void start() override;
+    virtual void next_phase() override;
+
+    template <class Archive>
+    void serialize(Archive& archive);
+
+   private:
+    enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
+    StatePhase _current_phase{StatePhase::not_started};
+
+    MovementSystem _movement;
+};
+
+template <class Archive>
+void SystemKircholm::serialize(Archive& archive) {
+    archive(
+        cereal::base_class<SystemState>(this),
+        // list all components
+        cereal::make_nvp("MovementComponents", *scenario->units.get_container<MovementComponent>()),
+        cereal::make_nvp("DirectFightComponents",
+            *scenario->units.get_container<DirectFightComponent>()),
+        // end of list
+        CEREAL_NVP(_current_phase));
+}
 
 }  // namespace kirch
 

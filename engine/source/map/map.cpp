@@ -10,7 +10,9 @@
 
 const std::map<Map::SiteId, HexSite>& Map::hexes() const noexcept { return _hexes; }
 
-const std::map<Map::SiteId, RiverSite>& Map::rivers() const noexcept { return _rivers; }
+const std::map<Map::SiteId, BorderSite>& Map::borders() const noexcept {
+    return _borders;
+}
 
 const BidirectionalGraph<Map::SiteId>& Map::graph() const noexcept { return _graph; }
 
@@ -39,7 +41,7 @@ Map& Map::insert(HexSite site) {
     return *this;
 }
 
-Map& Map::insert(RiverSite site) {
+Map& Map::insert(BorderSite site) {
     const auto [side1, side2] = site.sides();
 
     std::vector<Map::SiteId> found_hexes{};
@@ -58,7 +60,7 @@ Map& Map::insert(RiverSite site) {
         engine_assert(false, "Found to many hexes, indicating deeper logic error");
     }
 
-    if (auto it = std::find_if(_rivers.begin(), _rivers.end(),
+    if (auto it = std::find_if(_borders.begin(), _borders.end(),
                                [side1 = side1, side2 = side2](const auto& riv) {
                                    const auto [s1, s2] = riv.second.sides();
                                    if (s1 == side1 && s2 == side2) {
@@ -68,13 +70,13 @@ Map& Map::insert(RiverSite site) {
                                    }
                                    return false;
                                });
-        it != _rivers.end()) {
+        it != _borders.end()) {
         it->second = site;
         return *this;
     }
 
     const auto id = _id_gen.fetch();
-    engine_assert(_rivers.insert({id, site}).second, "");
+    engine_assert(_borders.insert({id, site}).second, "");
     _graph.insert_node(id, {found_hexes[0], found_hexes[1]})
         .remove_edge(found_hexes[0], found_hexes[1]);
     return *this;
@@ -83,8 +85,8 @@ Map& Map::insert(RiverSite site) {
 Map::SiteType Map::type_of(Map::SiteId id) const {
     if (_hexes.count(id) == 1)
         return SiteType::hex;
-    else if (_rivers.count(id) == 1)
-        return SiteType::river;
+    else if (_borders.count(id) == 1)
+        return SiteType::border;
     engine_assert(false, "Unknown site type.");
     return SiteType::hex;
 }
@@ -98,34 +100,28 @@ Map Map::create_test_map() {
         }
         for (int q = -10; q <= 10; ++q) {
             if (q < 0 && p < 0) {
-                map.insert(HexSite{
-                    HexCoordinate(q + offset_q, p),
-                    HexType::forest,
-                });
+                map.insert(HexSite{HexCoordinate(q + offset_q, p), 1});
             } else {
-                map.insert(HexSite{
-                    HexCoordinate(q + offset_q, p),
-                    HexType::field,
-                });
+                map.insert(HexSite{HexCoordinate(q + offset_q, p), 0});
             }
         }
     }
 
-    map.insert(RiverSite(HexCoordinate(-10, 7), HexCoordinate(-10, 8), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-9, 7), HexCoordinate(-10, 8), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-9, 7), HexCoordinate(-9, 8), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-9, 7), HexCoordinate(-8, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-8, 6), HexCoordinate(-8, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-7, 6), HexCoordinate(-7, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-7, 6), HexCoordinate(-8, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-7, 7), HexCoordinate(-6, 6), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-6, 7), HexCoordinate(-6, 6), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-5, 6), HexCoordinate(-6, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(-5, 7), HexCoordinate(-6, 7), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::stream))
-        .insert(RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
+    map.insert(BorderSite(HexCoordinate(-10, 7), HexCoordinate(-10, 8), 0))
+        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-10, 8), 0))
+        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-9, 8), 0))
+        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-8, 7), 0))
+        .insert(BorderSite(HexCoordinate(-8, 6), HexCoordinate(-8, 7), 0))
+        .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-7, 7), 0))
+        .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-8, 7), 0))
+        .insert(BorderSite(HexCoordinate(-7, 7), HexCoordinate(-6, 6), 0))
+        .insert(BorderSite(HexCoordinate(-6, 7), HexCoordinate(-6, 6), 0))
+        .insert(BorderSite(HexCoordinate(-5, 6), HexCoordinate(-6, 7), 0))
+        .insert(BorderSite(HexCoordinate(-5, 7), HexCoordinate(-6, 7), 0))
+        .insert(BorderSite(HexCoordinate(0, -1), HexCoordinate(1, -1), 0))
+        .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 0))
+        .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 0))
+        .insert(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 0));
 
     return map;
 }
@@ -158,9 +154,9 @@ std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
     auto neighbors = it->second;
     for (const auto& node : it->second) {
         switch (type_of(node)) {
-            case SiteType::river: {
-                auto riv_neighbors = _graph.adjacency_matrix().at(node);
-                neighbors.merge(riv_neighbors);
+            case SiteType::border: {
+                auto bord_neighbors = _graph.adjacency_matrix().at(node);
+                neighbors.merge(bord_neighbors);
             } break;
             default:
                 break;

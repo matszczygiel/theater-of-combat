@@ -27,11 +27,11 @@ class HexShape {
     sf::ConvexShape _outline_shape;
 };
 
-class RiverShape {
+class BorderShape {
    public:
-    RiverShape(std::shared_ptr<Layout> layout, const RiverSite& site) noexcept;
+    BorderShape(std::shared_ptr<Layout> layout, const BorderSite& site) noexcept;
 
-    void update(const RiverSite& site) noexcept;
+    void update(const BorderSite& site) noexcept;
 
     const sf::ConvexShape& shape() const noexcept;
 

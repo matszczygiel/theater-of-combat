@@ -7,15 +7,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include "toc/map/hexagons.h"
 #include "shapes.h"
+#include "toc/map/hexagons.h"
 
 struct MapGfx {
-    MapGfx(std::shared_ptr<Layout>& layout) ;
+    MapGfx(std::shared_ptr<Layout>& layout);
 
     void update(const Map& map);
     void setup(const Map& map, std::string texture_path,
-               const std::map<HexType, sf::IntRect>& texture_positions);
+               const std::map<HexSite::HexType, sf::IntRect>& texture_positions);
 
     void draw_hexes(sf::RenderTarget& target) const;
     void draw_outlines(sf::RenderTarget& target) const;
@@ -24,7 +24,7 @@ struct MapGfx {
 
     void clear() noexcept;
 
-    std::vector<RiverShape> rivers{};
+    std::vector<BorderShape> borders{};
     std::vector<std::pair<HexCoordinate, HexShape>> hexes{};
 
    private:
@@ -32,7 +32,7 @@ struct MapGfx {
         new Layout{Orientation::Pointy, sf::Vector2f{0.f, 0.f}, sf::Vector2f{0.f, 0.f}}};
 
     sf::Texture _texture{};
-    std::map<HexType, sf::IntRect> _texture_positions{};
+    std::map<HexSite::HexType, sf::IntRect> _texture_positions{};
 };
 
 #endif

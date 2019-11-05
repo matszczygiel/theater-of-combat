@@ -56,7 +56,7 @@ void FightComponent::serialize(Archive& archive) {
 struct PositionComponent : public ComponentBase {
     constexpr PositionComponent() = default;
     std::optional<HexCoordinate> position{};
-    int direction{0};
+    std::optional<int> direction{};
 
     template <class Archive>
     void serialize(Archive& archive);

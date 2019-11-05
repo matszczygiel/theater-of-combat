@@ -1,10 +1,10 @@
 file(GLOB_RECURSE toc_engine_sources CONFIGURE_DEPENDS
-    source/map/*.cpp            source/map/*.h
-    source/gui/*.cpp            source/gui/*.h
-    source/graphics/*.cpp       source/graphics/*.h
-    source/core/*.cpp           source/core/*.h
-    source/unit/*.cpp           source/unit/*.h
-    source/gameplay/*.cpp       source/gameplay/*.h
+    source/map/*.cpp            include/toc/map/*.h
+    source/gui/*.cpp            include/toc/gui/*.h
+    source/graphics/*.cpp       include/toc/graphics/*.h
+    source/core/*.cpp           include/toc/core/*.h
+    source/unit/*.cpp           include/toc/unit/*.h
+    source/gameplay/*.cpp       include/toc/gameplay/*.h
     )
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

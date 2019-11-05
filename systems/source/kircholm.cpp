@@ -8,4 +8,6 @@ MovementComponent::MovementComponent(Movability moving_points)
         "MovementComponent should be initialized with positive number ({}) of moving pts.",
         moving_pts);
 }
+
+
 }  // namespace kirch

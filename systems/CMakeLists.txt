@@ -1,5 +1,5 @@
 file(GLOB_RECURSE toc_systems_sources CONFIGURE_DEPENDS
-    source/gameplay/*.cpp       source/gameplay/*.h
+    source/*.cpp       include/tsys/*.h
     )
 
 add_library(toc-systems STATIC ${toc_systems_sources})

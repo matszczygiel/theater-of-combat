@@ -7,18 +7,17 @@
 
 #include "cereal/optional.hpp"
 
+#include "toc/gameplay/scenario.h"
 #include "toc/map/hexagons.h"
 #include "toc/unit/unit_components.h"
-#include "toc/gameplay/scenario.h"
 
 namespace kirch {
 
-enum class UnitType {
-    infrantry,
-    cavalary,
-    dragoons,
-    artillery
-};
+///Basic types
+enum class HexType { field, swamp, hillside, hills };
+enum class UnitType { infrantry, cavalary, dragoons, artillery };
+
+///Components
 
 using Movability = int;
 
@@ -43,14 +42,14 @@ struct MovementComponent : public ComponentBase {
 template <class Archive>
 void MovementComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(_total_moving_pts),
-            CEREAL_NVP(moving_pts), CEREAL_NVP(position), CEREAL_NVP(direction), 
+            CEREAL_NVP(moving_pts), CEREAL_NVP(position), CEREAL_NVP(direction),
             CEREAL_NVP(immobilized));
 }
 
 using Strength = int;
-struct FightComponent : public ComponentBase {
-    constexpr FightComponent() = default;
-    constexpr FightComponent(Strength strength_points) noexcept
+struct DirectFightComponent : public ComponentBase {
+    constexpr DirectFightComponent() = default;
+    constexpr DirectFightComponent(Strength strength_points) noexcept
         : strength_pts{strength_points} {}
 
     Strength strength_pts{};
@@ -61,10 +60,12 @@ struct FightComponent : public ComponentBase {
 };
 
 template <class Archive>
-void FightComponent::serialize(Archive& archive) {
+void DirectFightComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(strength_pts),
             CEREAL_NVP(in_fight));
 }
+
+//Systems
 
 class MovementSystem {
    public:
@@ -78,8 +79,7 @@ class MovementSystem {
     std::vector<Map::SiteId> path_indices(HexCoordinate destination) const;
     std::vector<HexCoordinate> path_preview(HexCoordinate destination) const;
 
-    std::vector<std::unique_ptr<Action>> move_target(
-        HexCoordinate destination);
+    std::vector<std::unique_ptr<Action>> move_target(HexCoordinate destination);
 
    private:
     const MovementComponent* _target_mc{nullptr};

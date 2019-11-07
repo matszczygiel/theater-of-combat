@@ -38,59 +38,6 @@ bool UndoPreviousAction::revert(SystemState* state) {
 CEREAL_REGISTER_TYPE(UndoPreviousAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, UndoPreviousAction);
 
-template <class Component>
-ComponentChangeAction<Component>::ComponentChangeAction(const Component& component)
-    : _new_component{component} {}
-
-template <class Component>
-bool ComponentChangeAction<Component>::execute(SystemState* state) {
-    app_assert(!_old_component, "ComponentChangeAction<{}> executed more than once.",
-               typeid(Component).name());
-    auto& unit_man = state->scenario->units;
-
-    const auto& owner = _new_component.owner();
-    auto cmp          = unit_man.get_component<Component>(owner);
-    app_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
-               typeid(Component).name(), owner);
-    _old_component = *cmp;
-    *cmp           = _new_component;
-    return true;
-}
-
-template <class Component>
-bool ComponentChangeAction<Component>::revert(SystemState* state) {
-    app_assert(_old_component.has_value(),
-               "ComponentChangeAction<{}> reverted before executed.",
-               typeid(Component).name());
-    auto& unit_man = state->scenario->units;
-
-    const auto& owner = _old_component.value().owner();
-    auto cmp          = unit_man.get_component<Component>(owner);
-    app_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
-               typeid(Component).name(), owner);
-    *cmp = _old_component.value();
-    _old_component.reset();
-    return true;
-}
-
-template <class Component>
-template <class Archive>
-void ComponentChangeAction<Component>::serialize(Archive& ar) {
-    ar(CEREAL_NVP(_new_component));
-}
-/*
-TODO do it in a toc-systems
-// List all components
-template class ComponentChangeAction<MovementComponent>;
-
-CEREAL_REGISTER_TYPE(ComponentChangeAction<MovementComponent>);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<MovementComponent>);
-
-template class ComponentChangeAction<FightComponent>;
-
-CEREAL_REGISTER_TYPE(ComponentChangeAction<FightComponent>);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<FightComponent>);
-*/
 bool NextPhaseAction::execute(SystemState* state) {
     state->next_phase();
     return true;
@@ -100,3 +47,6 @@ bool NextPhaseAction::revert(SystemState* ) { return false; }
 
 CEREAL_REGISTER_TYPE(NextPhaseAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, NextPhaseAction);
+
+CEREAL_REGISTER_TYPE(ComponentChangeAction<PositionComponent>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<PositionComponent>);

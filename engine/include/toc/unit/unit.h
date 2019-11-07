@@ -8,8 +8,9 @@
 
 class Unit {
     friend class UnitManager;
+
    public:
-    using IdType = int;
+    using IdType   = int;
     using KindType = int;
 
     Unit() = default;
@@ -32,6 +33,8 @@ void Unit::serialize(Archive& archive) {
 
 struct ComponentBase {
     friend class UnitManager;
+    friend class cereal::access;
+
    public:
     constexpr Unit::IdType owner() const noexcept { return _owner; };
     constexpr Unit::KindType owner_type() const noexcept { return _owner_type; };

@@ -1,9 +1,9 @@
 #include "kircholm.h"
 
+#include <cereal/types/polymorphic.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
 #include <cereal/archives/portable_binary.hpp>
-#include <cereal/types/polymorphic.hpp>
 
 namespace kirch {
 MovementComponent::MovementComponent(Movability moving_points)
@@ -21,4 +21,11 @@ void SystemKircholm::next_phase() {}
 
 CEREAL_REGISTER_TYPE(SystemKircholm);
 
+
+
+CEREAL_REGISTER_TYPE(ComponentChangeAction<MovementComponent>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<MovementComponent>);
+
+CEREAL_REGISTER_TYPE(ComponentChangeAction<FightComponent>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<FightComponent>);
 }  // namespace kirch

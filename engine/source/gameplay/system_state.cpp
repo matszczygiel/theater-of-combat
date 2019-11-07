@@ -2,6 +2,8 @@
 
 #include "core/log.h"
 #include "core/lua_vm.h"
+#include "gameplay/action.h"
+
 
 void SystemState::push_action(std::unique_ptr<Action> action) {
     if (action) {

@@ -1,11 +1,7 @@
 #ifndef KIRCHOLM_H
 #define KIRCHOLM_H
 
-#include <optional>
-
 #include <cereal/types/base_class.hpp>
-
-#include "cereal/optional.hpp"
 
 #include "toc/gameplay/scenario.h"
 #include "toc/gameplay/system_state.h"
@@ -94,6 +90,7 @@ class MovementSystem {
 class SystemKircholm : public SystemState {
    public:
     SystemKircholm();
+    virtual ~SystemKircholm() = default;
 
     virtual void start() override;
     virtual void next_phase() override;
@@ -110,14 +107,14 @@ class SystemKircholm : public SystemState {
 
 template <class Archive>
 void SystemKircholm::serialize(Archive& archive) {
-    archive(
-        cereal::base_class<SystemState>(this),
-        // list all components
-        cereal::make_nvp("MovementComponents", *scenario->units.get_container<MovementComponent>()),
-        cereal::make_nvp("DirectFightComponents",
-            *scenario->units.get_container<DirectFightComponent>()),
-        // end of list
-        CEREAL_NVP(_current_phase));
+    archive(cereal::virtual_base_class<SystemState>(this),
+            // list all components
+            cereal::make_nvp("MovementComponents",
+                             *scenario->units.get_container<MovementComponent>()),
+            cereal::make_nvp("DirectFightComponents",
+                             *scenario->units.get_container<DirectFightComponent>()),
+            // end of list
+            CEREAL_NVP(_current_phase));
 }
 
 }  // namespace kirch

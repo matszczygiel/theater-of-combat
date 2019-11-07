@@ -29,11 +29,11 @@ void UnitGfx::setup(UnitManager& manager, std::string texture_path,
 void UnitGfx::update(UnitManager& manager) {
     clear();
     for (const auto& [id, unit] : manager.units()) {
-        const auto mov_cmp = manager.get_component<MovementComponent>(id);
-        if (!mov_cmp)
+        const auto pos_cmp = manager.get_component<PositionComponent>(id);
+        if (!pos_cmp)
             continue;
 
-        const auto pos = mov_cmp->position;
+        const auto pos = pos_cmp->position;
         if (!pos)
             continue;
 

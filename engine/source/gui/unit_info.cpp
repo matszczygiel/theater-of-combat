@@ -1,5 +1,5 @@
 #include "gui/unit_info.h"
-
+/* TODO
 #include <imgui.h>
 
 static void show_component_tree(const MovementComponent& mc) {
@@ -45,3 +45,4 @@ void show_unit_info(const Unit& unit, const Unit::IdType& id, const UnitManager&
 
     ImGui::End();
 }
+*/

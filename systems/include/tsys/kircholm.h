@@ -2,6 +2,7 @@
 #define KIRCHOLM_H
 
 #include <cereal/types/base_class.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 #include "toc/gameplay/scenario.h"
 #include "toc/gameplay/system_state.h"
@@ -102,7 +103,7 @@ class SystemKircholm : public SystemState {
     enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
     StatePhase _current_phase{StatePhase::not_started};
 
-    MovementSystem _movement;
+  //  MovementSystem _movement;
 };
 
 template <class Archive>
@@ -116,7 +117,6 @@ void SystemKircholm::serialize(Archive& archive) {
             // end of list
             CEREAL_NVP(_current_phase));
 }
-
 }  // namespace kirch
 
 #endif

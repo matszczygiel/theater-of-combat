@@ -33,17 +33,15 @@ void Unit::serialize(Archive& archive) {
 
 struct ComponentBase {
     friend class UnitManager;
-    friend class cereal::access;
 
    public:
+    constexpr ComponentBase() = default;
+
     constexpr Unit::IdType owner() const noexcept { return _owner; };
     constexpr Unit::KindType owner_type() const noexcept { return _owner_type; };
 
     template <class Archive>
     void serialize(Archive& archive);
-
-   protected:
-    constexpr ComponentBase() = default;
 
    private:
     Unit::IdType _owner{};

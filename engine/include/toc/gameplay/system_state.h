@@ -1,11 +1,11 @@
 #ifndef SYSTEM_STATE_H
 #define SYSTEM_STATE_H
 
-#include <cereal/types/memory.hpp>
 #include <cereal/types/array.hpp>
+#include <cereal/types/memory.hpp>
 #include <cereal/types/stack.hpp>
-#include <cereal/types/vector.hpp>
 #include <cereal/types/string.hpp>
+#include <cereal/types/vector.hpp>
 
 #include "scenario.h"
 
@@ -28,6 +28,9 @@ class SystemState {
 
     virtual void start()      = 0;
     virtual void next_phase() = 0;
+
+    enum class HexEvent { selection, info_request, mouse_over };
+    virtual void handle_hex_event(const HexCoordinate& hex, HexEvent ev) = 0;
 
     template <class Archive>
     void serialize(Archive& archive);

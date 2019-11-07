@@ -95,6 +95,8 @@ class SystemKircholm : public SystemState {
 
     virtual void start() override;
     virtual void next_phase() override;
+    virtual void handle_hex_event(const HexCoordinate& hex,
+                                  SystemState::HexEvent ev) override;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -103,7 +105,7 @@ class SystemKircholm : public SystemState {
     enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
     StatePhase _current_phase{StatePhase::not_started};
 
-  //  MovementSystem _movement;
+    MovementSystem _movement;
 };
 
 template <class Archive>

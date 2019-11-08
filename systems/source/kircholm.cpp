@@ -49,18 +49,18 @@ void SystemKircholm::handle_hex_event(const HexCoordinate& hex,
                     case SystemState::HexEvent::selection:
                         if (!_movement.is_moving()) {
                             _movement.init_movement(
-                                hex,
-                                scenario
-                                    ->player_teams[current_player_index()],
-                                scenario
-                                    ->player_teams[opposite_player_index()]);
+                                hex, scenario->player_teams[current_player_index()],
+                                scenario->player_teams[opposite_player_index()]);
                         } else {
-                            auto action = _movement.move_target(hex);
-                            _pending_actions.push_back(std::move(action));
+                            auto actions = _movement.move_target(hex);
+                            for (auto& a : actions)
+                                _accumulated_actions.push_back(std::move(a));
                         }
-
                         break;
-
+                    case SystemState::HexEvent::mouse_over:
+                        break;
+                    case SystemState::HexEvent::info_request:
+                        break;
                     default:
                         break;
                 }

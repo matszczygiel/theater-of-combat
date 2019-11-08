@@ -1,9 +1,10 @@
 #include "gameplay/system_state.h"
 
+#include <memory>
+
 #include "core/log.h"
 #include "core/lua_vm.h"
 #include "gameplay/action.h"
-
 
 void SystemState::push_action(std::unique_ptr<Action> action) {
     if (action) {
@@ -40,3 +41,14 @@ bool SystemState::is_local_player_now() const {
 int SystemState::current_player_index() const { return _current_player_index; }
 
 int SystemState::opposite_player_index() const { return (_current_player_index + 1) % 2; }
+
+const std::vector<std::unique_ptr<Action>>& SystemState::peek_actions() {
+    return _accumulated_actions;
+}
+
+void SystemState::update() {
+    for (auto& action_ptr : _accumulated_actions)
+        push_action(std::move(action_ptr));
+
+    _accumulated_actions.clear();
+}

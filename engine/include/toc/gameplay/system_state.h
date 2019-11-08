@@ -21,6 +21,9 @@ class SystemState {
     void next_player();
     void push_action(std::unique_ptr<Action> action);
 
+    const std::vector<std::unique_ptr<Action>>& peek_actions();
+    void update();
+
     std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
     std::array<std::string, 2> player_names{};
 
@@ -34,6 +37,9 @@ class SystemState {
 
     template <class Archive>
     void serialize(Archive& archive);
+
+   protected:
+    std::vector<std::unique_ptr<Action>> _accumulated_actions{};
 
    private:
     friend class UndoPreviousAction;

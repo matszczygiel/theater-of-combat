@@ -6,6 +6,7 @@
 
 #include "toc/gameplay/scenario.h"
 #include "toc/gameplay/system_state.h"
+#include "toc/gameplay/action.h"
 #include "toc/map/hexagons.h"
 #include "toc/unit/unit_components.h"
 
@@ -61,7 +62,6 @@ void DirectFightComponent::serialize(Archive& archive) {
 }
 
 // Systems
-class Action;
 class MovementSystem {
    public:
     explicit MovementSystem(const std::shared_ptr<Scenario>& scenario) noexcept;

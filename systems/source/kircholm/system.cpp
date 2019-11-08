@@ -8,7 +8,10 @@ namespace kirch {
 
 SystemKircholm::SystemKircholm() : _movement{scenario} {};
 
-void SystemKircholm::start() { _current_phase = StatePhase::movement; }
+void SystemKircholm::start() {
+    SystemState::start();
+    _current_phase = StatePhase::movement;
+}
 
 void SystemKircholm::next_phase() {
     switch (_current_phase) {

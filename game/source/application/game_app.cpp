@@ -78,6 +78,7 @@ void Game::initialize() {
 
     gameplay::lua_push_functions(lua);
     lua["game_scenario"]     = std::ref(*_system->scenario);
+    lua["system"]            = std::ref(_system);
     lua["next_phase_action"] = [&]() {
         _system->push_action(std::make_unique<NextPhaseAction>());
     };

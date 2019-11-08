@@ -7,10 +7,8 @@
 #include "gameplay/action.h"
 
 void SystemState::push_action(std::unique_ptr<Action> action) {
-    if (action) {
-        action->execute(this);
-        _action_stack.push(std::move(action));
-    }
+    if (action)
+        accumulated_actions.push_back(std::move(action));
 }
 
 bool SystemState::set_local_player(std::string name) {
@@ -42,15 +40,13 @@ int SystemState::current_player_index() const { return _current_player_index; }
 
 int SystemState::opposite_player_index() const { return (_current_player_index + 1) % 2; }
 
-const std::vector<std::unique_ptr<Action>>& SystemState::peek_actions() {
-    return _accumulated_actions;
-}
-
 void SystemState::update() {
-    for (auto& action_ptr : _accumulated_actions)
-        push_action(std::move(action_ptr));
+    for (auto& action : accumulated_actions) {
+        action->execute(this);
+        _action_stack.push(std::move(action));
+    }
 
-    _accumulated_actions.clear();
+    accumulated_actions.clear();
 
     gfx.update();
 }

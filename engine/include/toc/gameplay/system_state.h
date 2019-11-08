@@ -22,7 +22,6 @@ class SystemState {
     void next_player();
     void push_action(std::unique_ptr<Action> action);
 
-    const std::vector<std::unique_ptr<Action>>& peek_actions();
     void update();
 
     std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
@@ -35,14 +34,14 @@ class SystemState {
     virtual void start()      = 0;
     virtual void next_phase() = 0;
 
-    enum class HexEvent { selection, info_request, mouse_over };
-    virtual void handle_hex_event(const HexCoordinate& hex, HexEvent ev) = 0;
+    virtual void handle_hex_over(const HexCoordinate& hex)      = 0;
+    virtual void handle_hex_selection(const HexCoordinate& hex) = 0;
+    virtual void handle_hex_info(const HexCoordinate& hex)      = 0;
 
     template <class Archive>
     void serialize(Archive& archive);
 
-   protected:
-    std::vector<std::unique_ptr<Action>> _accumulated_actions{};
+    std::vector<std::unique_ptr<Action>> accumulated_actions{};
 
    private:
     friend class UndoPreviousAction;

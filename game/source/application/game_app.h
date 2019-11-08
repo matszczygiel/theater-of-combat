@@ -10,8 +10,8 @@
 #include "toc/map/map.h"
 #include "toc/unit/unit.h"
 #include "toc/graphics/graphics_state.h"
+#include "toc/gameplay/system_state.h"
 
-#include "gameplay/game_state.h"
 #include "gui/start_prompt.h"
 #include "networking/net_manager.h"
 #include "systems/debug_info.h"
@@ -40,9 +40,6 @@ class Game : public Application {
     void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
-    GameState _state{};
-    GfxState _gfx_state{_state.scenario};
-
     bool _moving_view_up{false};
     bool _moving_view_down{false};
     bool _moving_view_right{false};
@@ -51,16 +48,11 @@ class Game : public Application {
     std::string _local_player_name{};
     std::shared_ptr<NetManager> _network{std::make_shared<NetManager>()};
 
-
     std::shared_ptr<ResourceLoader> _res_loader{
         std::make_shared<ResourceLoader>("resources/")};
 
-    mover::MovementSystem _moving_system{_state};
-    FightingSystem _fight_system{_state};
+    std::unique_ptr<SystemState> _system;
 
-    debug_info::DebugInfoSystem _debug_info{_state};
-
-    std::vector<std::unique_ptr<Action>> _pending_actions{};
 
     enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };
     

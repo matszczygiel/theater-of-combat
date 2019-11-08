@@ -6,7 +6,9 @@ add_library(toc-systems STATIC ${toc_systems_sources})
 
 target_compile_features(toc-systems PRIVATE cxx_std_17)
 
-target_include_directories(toc-systems PRIVATE source include include/tsys)
+target_include_directories(toc-systems 
+                                PUBLIC include 
+                                PRIVATE source include/tsys)
 
 if(UNIX)                        
     target_compile_options(toc-systems PRIVATE 

@@ -4,9 +4,9 @@
 #include <cereal/types/base_class.hpp>
 #include <cereal/types/polymorphic.hpp>
 
+#include "toc/gameplay/action.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/gameplay/system_state.h"
-#include "toc/gameplay/action.h"
 #include "toc/map/hexagons.h"
 #include "toc/unit/unit_components.h"
 
@@ -95,8 +95,9 @@ class SystemKircholm : public SystemState {
 
     virtual void start() override;
     virtual void next_phase() override;
-    virtual void handle_hex_event(const HexCoordinate& hex,
-                                  SystemState::HexEvent ev) override;
+    virtual void handle_hex_over(const HexCoordinate& hex) override;
+    virtual void handle_hex_selection(const HexCoordinate& hex) override;
+    virtual void handle_hex_info(const HexCoordinate& hex) override;
 
     template <class Archive>
     void serialize(Archive& archive);

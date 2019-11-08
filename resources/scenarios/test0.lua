@@ -37,8 +37,8 @@ graphics_config = {
         tiles_file = 'tiles.png',
         tile_size = 256,
         hex_tiles = {
-            [HexType.field] = {x = 0, y = 0},
-            [HexType.forest] = {x = 1, y = 0}
+            [0] = {x = 0, y = 0},
+            [1] = {x = 1, y = 0}
         }
     }
 }

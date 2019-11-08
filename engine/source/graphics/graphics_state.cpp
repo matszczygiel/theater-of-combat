@@ -29,3 +29,14 @@ void GfxState::draw(sf::RenderTarget& target) const {
     if (debug_units)
         units.draw_ids(target, font);
 }
+
+void GfxState::highlight_hex(HexCoordinate coord) {
+    if (!map.hexes.empty()) {
+        if (auto it =
+                std::find_if(map.hexes.cbegin(), map.hexes.cend(),
+                             [&](const auto& hex) { return hex.first == coord; });
+            it != map.hexes.cend()) {
+            highlighted_hexes.push_back(it->second.highlighting_shape());
+        }
+    }
+}

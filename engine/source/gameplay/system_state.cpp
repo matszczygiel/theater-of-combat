@@ -51,4 +51,6 @@ void SystemState::update() {
         push_action(std::move(action_ptr));
 
     _accumulated_actions.clear();
+
+    gfx.update();
 }

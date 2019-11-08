@@ -42,6 +42,9 @@ void SystemKircholm::next_phase() {
 
 void SystemKircholm::handle_hex_event(const HexCoordinate& hex,
                                       SystemState::HexEvent ev) {
+    gfx.highlighted_hexes.clear();
+    gfx.highlight_hex(hex);
+
     if (is_local_player_now()) {
         switch (_current_phase) {
             case StatePhase::movement:
@@ -58,6 +61,11 @@ void SystemKircholm::handle_hex_event(const HexCoordinate& hex,
                         }
                         break;
                     case SystemState::HexEvent::mouse_over:
+                        if (_movement.is_moving()) {
+                            const auto path = _movement.path_preview(hex);
+                            for (const auto h : path)
+                                gfx.highlight_hex(h);
+                        }
                         break;
                     case SystemState::HexEvent::info_request:
                         break;

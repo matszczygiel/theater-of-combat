@@ -13,6 +13,7 @@ class GfxState {
 
     void update();
     void draw(sf::RenderTarget& target) const;
+    void highlight_hex(HexCoordinate coord);
 
     std::shared_ptr<Layout> layout{std::make_shared<Layout>()};
 

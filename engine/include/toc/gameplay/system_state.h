@@ -8,6 +8,7 @@
 #include <cereal/types/vector.hpp>
 
 #include "scenario.h"
+#include "toc/graphics/graphics_state.h"
 
 class Action;
 
@@ -26,6 +27,8 @@ class SystemState {
 
     std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
     std::array<std::string, 2> player_names{};
+
+    GfxState gfx{scenario};
 
     virtual ~SystemState() = default;
 

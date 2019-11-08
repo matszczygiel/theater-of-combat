@@ -5,7 +5,7 @@
 #include <numeric>
 
 #include "toc/core/randomize.h"
-
+/*
 FightingSystem::FightingSystem(const GameState& state) : _scenario{state.scenario} {
     app_assert(_scenario != nullptr, "Scenario is not initialized.");
 }
@@ -178,3 +178,4 @@ std::vector<std::unique_ptr<Action>> FightingSystem::compute_fight_result() {
 }
 
 void FightingSystem::clear() { _fight_stack.clear(); }
+*/

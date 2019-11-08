@@ -17,12 +17,13 @@
 #include "toc/unit/lua_units.h"
 #include "toc/unit/unit_components.h"
 #include "toc/unit/unit_manager.h"
+#include "toc/gameplay/lua_gameplay.h"
+#include "toc/gameplay/action.h"
 
 #include "tsys/kircholm.h"
 
 #include "gui/menu_bar.h"
 #include "gui/network_prompt.h"
-#include "lua/lua_gameplay.h"
 
 Game::Game() {
     auto rot_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -75,7 +76,7 @@ void Game::initialize() {
         _system->push_action(std::make_unique<UndoPreviousAction>());
     };
 
-    gameplay::lua_push_functions();
+    gameplay::lua_push_functions(lua);
     lua["game_scenario"]     = std::ref(*_system->scenario);
     lua["next_phase_action"] = [&]() {
         _system->push_action(std::make_unique<NextPhaseAction>());
@@ -143,7 +144,6 @@ void Game::initialize() {
     lua.script(R"(
     load_scenario_script('test0')
     set_local_player_index(0)
-    game_state:start()
     )");
 }
 

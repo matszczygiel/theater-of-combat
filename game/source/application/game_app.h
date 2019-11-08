@@ -11,12 +11,10 @@
 #include "toc/unit/unit.h"
 #include "toc/graphics/graphics_state.h"
 #include "toc/gameplay/system_state.h"
+#include "toc/gameplay/action.h"
 
 #include "gui/start_prompt.h"
 #include "networking/net_manager.h"
-#include "systems/debug_info.h"
-#include "systems/fighter.h"
-#include "systems/mover.h"
 
 class Game : public Application {
    public:

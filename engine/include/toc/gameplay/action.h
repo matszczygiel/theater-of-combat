@@ -11,8 +11,6 @@
 #include "toc/unit/unit_components.h"
 #include "system_state.h"
 
-class SystemState;
-
 class Action {
    public:
     virtual bool execute(SystemState* state) = 0;

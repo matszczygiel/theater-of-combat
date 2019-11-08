@@ -1,5 +1,5 @@
 #include "debug_info.h"
-
+/*
 #include <memory>
 #include <sstream>
 
@@ -52,3 +52,4 @@ void DebugInfoSystem::set_current_unit_position(HexCoordinate coord) {
 }
 
 }  // namespace debug_info
+*/

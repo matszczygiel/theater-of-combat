@@ -3,7 +3,7 @@
 
 #include <stack>
 #include <vector>
-
+/*
 #include "gameplay/game_state.h"
 
 struct FightData {
@@ -28,5 +28,5 @@ class FightingSystem {
     std::shared_ptr<Scenario> _scenario{nullptr};
     std::vector<FightData> _fight_stack{};
 };
-
+*/
 #endif

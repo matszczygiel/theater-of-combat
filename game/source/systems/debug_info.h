@@ -1,6 +1,6 @@
 #ifndef DEBUG_INFO_H
 #define DEBUG_INFO_H
-
+/*
 #include <memory>
 
 #include "gameplay/game_state.h"
@@ -24,5 +24,5 @@ class DebugInfoSystem {
     bool _show_unit_info{false};
 };
 }  // namespace debug_info
-
+*/
 #endif

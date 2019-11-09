@@ -10,11 +10,14 @@ namespace kirch {
 using Movability = int;
 
 struct MovementComponent : public ComponentBase {
+    enum class FormationType { defence, attack, march };
+
     constexpr MovementComponent() = default;
     explicit MovementComponent(Movability moving_points);
 
     Movability moving_pts{};
     bool immobilized{false};
+    FormationType formation{FormationType::march};
 
     constexpr Movability total_moving_pts() const noexcept { return _total_moving_pts; }
 
@@ -28,7 +31,7 @@ struct MovementComponent : public ComponentBase {
 template <class Archive>
 void MovementComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(_total_moving_pts),
-            CEREAL_NVP(moving_pts), CEREAL_NVP(immobilized));
+            CEREAL_NVP(moving_pts), CEREAL_NVP(immobilized), CEREAL_NVP(formation));
 }
 
 using Strength = int;

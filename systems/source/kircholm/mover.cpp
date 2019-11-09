@@ -3,9 +3,7 @@
 #include "toc/core/log.h"
 
 namespace kirch {
-
-static generate
-
+/*
 static WeightedBidirectionalGraph<Map::SiteId, Movability> make_weighted_graph(
     const Map& map, UnitType type) {
     const auto river_tab = get_river_table(type);
@@ -48,7 +46,7 @@ static WeightedBidirectionalGraph<Map::SiteId, Movability> make_weighted_graph(
     }
     return res;
 }
-
+*/
 MovementSystem::MovementSystem(const std::shared_ptr<Scenario>& scenario) noexcept
     : _scenario{scenario} {}
 

@@ -1,48 +1,53 @@
 #include "gui/unit_info.h"
-/* TODO
+
 #include <imgui.h>
 
-static void show_component_tree(const MovementComponent& mc) {
-    if (ImGui::TreeNode("MovementComponent")) {
-        ImGui::BulletText("moving pts:       %d", mc.moving_pts);
-        ImGui::BulletText("total moving pts: %d", mc.total_moving_pts());
-        if (mc.position)
-            ImGui::BulletText("position:         (%d, %d)", mc.position->q(),
-                              mc.position->p());
+static void show_component_tree(const PositionComponent& pc) {
+    if (ImGui::TreeNode("PositionComponent")) {
+        if (pc.position)
+            ImGui::BulletText("position:         (%d, %d)", pc.position->q(),
+                              pc.position->p());
         else
             ImGui::BulletText("position:         none");
 
-        ImGui::BulletText("immobilized:      %d", mc.immobilized);
+        if (pc.direction)
+            ImGui::BulletText("direction:        %d", *pc.direction);
+        else
+            ImGui::BulletText("direction:        none");
+
         ImGui::TreePop();
     }
 }
 
-static void show_component_tree(const FightComponent& fc) {
-    if (ImGui::TreeNode("FightComponent")) {
-        ImGui::BulletText("strength pts: %d", fc.strength_pts);
-        ImGui::BulletText("in_fight:     %d", fc.in_fight);
-        ImGui::TreePop();
-    }
+UnitInfo::UnitInfo(const std::shared_ptr<Scenario> scenario)
+    : _scenario{scenario} {
+    engine_assert(scenario != nullptr, "Cannot initialize UnitInfo with nullptr.");
 }
 
-void show_unit_info(const Unit& unit, const Unit::IdType& id, const UnitManager& um,
-                    bool* open) {
-    if (!ImGui::Begin("Unit debug", open)) {
+void UnitInfo::draw_component_trees() {}
+
+void UnitInfo::set_current_unit_id(Unit::IdType id) {
+    _current_unit_id = id;
+    _current_unit    = _scenario->units.units().at(_current_unit_id);
+    _open            = true;
+}
+
+void UnitInfo::show() {
+    if (!ImGui::Begin("Unit debug", &_open)) {
         ImGui::End();
         return;
     }
 
-    ImGui::BulletText("Unit id:   %d", id);
-    ImGui::BulletText("Unit name: %s", unit.name().c_str());
-    ImGui::BulletText("Unit type: %d", static_cast<int>(unit.type()));
+    ImGui::BulletText("Unit id:   %d", _current_unit_id);
+    ImGui::BulletText("Unit name: %s", _current_unit.name().c_str());
+    ImGui::BulletText("Unit type: %d", _current_unit.type());
 
-    const auto mc = um.get_component<MovementComponent>(id);
-    if (mc)
-        show_component_tree(*mc);
-    const auto fc = um.get_component<FightComponent>(id);
-    if (mc)
-        show_component_tree(*fc);
+    const auto pc = _scenario->units.get_component<PositionComponent>(_current_unit_id);
+    if (pc)
+        show_component_tree(*pc);
+
+    draw_component_trees();
 
     ImGui::End();
 }
-*/
+

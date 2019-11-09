@@ -1,12 +1,10 @@
 #ifndef DEBUG_INFO_H
 #define DEBUG_INFO_H
-/*
+
 #include <memory>
 
 #include "gameplay/game_state.h"
 #include "toc/graphics/graphics_state.h"
-
-namespace debug_info {
 
 class DebugInfoSystem {
    public:
@@ -23,6 +21,4 @@ class DebugInfoSystem {
     Unit _current_unit{};
     bool _show_unit_info{false};
 };
-}  // namespace debug_info
-*/
 #endif

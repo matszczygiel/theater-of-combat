@@ -52,3 +52,9 @@ void SystemState::update() {
 
     gfx.update();
 }
+
+std::shared_ptr<DebugInfoSystem> SystemState::create_debug_info() {
+    auto dbg = std::make_shared<DebugInfoSystem>();
+    dbg->unit_info = std::make_unique<UnitInfo>(scenario);
+    return dbg;
+}

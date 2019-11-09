@@ -8,7 +8,6 @@
 
 #include "kirch_mover.h"
 
-
 namespace kirch {
 class SystemKircholm : public SystemState {
    public:
@@ -20,6 +19,7 @@ class SystemKircholm : public SystemState {
     virtual void handle_hex_over(const HexCoordinate& hex) override;
     virtual void handle_hex_selection(const HexCoordinate& hex) override;
     virtual void handle_hex_info(const HexCoordinate& hex) override;
+    virtual std::shared_ptr<DebugInfoSystem> create_debug_info() override;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -28,6 +28,7 @@ class SystemKircholm : public SystemState {
     enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
     StatePhase _current_phase{StatePhase::not_started};
 
+    std::shared_ptr<DebugInfoSystem> _debug{nullptr};
     MovementSystem _movement;
 };
 

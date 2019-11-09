@@ -3,22 +3,14 @@
 
 #include <memory>
 
-#include "gameplay/game_state.h"
-#include "toc/graphics/graphics_state.h"
+#include "toc/gui/unit_info.h"
+
+class Action;
 
 class DebugInfoSystem {
    public:
-    explicit DebugInfoSystem(const GameState& state);
+    void log_action(const std::unique_ptr<Action>& action) const;
 
-    void debug_action(const std::unique_ptr<Action>& action) const;
-
-    void debug_unit();
-    void set_current_unit_position(HexCoordinate coord);
-
-   private:
-    const std::shared_ptr<Scenario> _scenario{nullptr};
-    Unit::IdType _current_unit_id{};
-    Unit _current_unit{};
-    bool _show_unit_info{false};
+    std::unique_ptr<UnitInfo> unit_info{nullptr};
 };
 #endif

@@ -8,6 +8,7 @@
 #include <cereal/types/vector.hpp>
 
 #include "scenario.h"
+#include "toc/debug/debug_info.h"
 #include "toc/graphics/graphics_state.h"
 
 class Action;
@@ -29,6 +30,7 @@ class SystemState {
     GfxState gfx{scenario};
 
     virtual ~SystemState() = default;
+    virtual std::shared_ptr<DebugInfoSystem> create_debug_info();
 
     virtual void start();
     virtual void next_phase()                                   = 0;

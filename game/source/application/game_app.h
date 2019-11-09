@@ -5,13 +5,13 @@
 
 #include "toc/core/application.h"
 #include "toc/core/resource_loader.h"
+#include "toc/gameplay/action.h"
+#include "toc/gameplay/system_state.h"
+#include "toc/graphics/graphics_state.h"
 #include "toc/gui/console.h"
 #include "toc/gui/log_window.h"
 #include "toc/map/map.h"
 #include "toc/unit/unit.h"
-#include "toc/graphics/graphics_state.h"
-#include "toc/gameplay/system_state.h"
-#include "toc/gameplay/action.h"
 
 #include "gui/start_prompt.h"
 #include "networking/net_manager.h"
@@ -51,12 +51,13 @@ class Game : public Application {
 
     std::unique_ptr<SystemState> _system;
 
-
     enum class PacketHeader : sf::Int8 { none = 0, action = 1, take_turn = 2 };
-    
+
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
     StartPrompt _start_prompt{_network, _res_loader};
+
+    std::shared_ptr<DebugInfoSystem> _debug{nullptr};
 
     constexpr static float _view_moving_speed{0.3f};
 };

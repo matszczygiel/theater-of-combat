@@ -101,14 +101,20 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
     gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
 
+    const PositionComponent* pc{nullptr};
+    scenario->units.apply_for_each<PositionComponent>([&hex, &pc](const auto& cmp) {
+        if (cmp.position == hex) {
+            pc = std::addressof(cmp);
+            return false;
+        }
+        return true;
+    });
+    if (pc)
+        _debug->unit_info->set_current_unit_id(pc->owner());
+
     if (is_local_player_now()) {
         switch (_current_phase) {
             case StatePhase::movement:
-                if (_movement.is_moving()) {
-                    const auto path = _movement.path_preview(hex);
-                    for (const auto h : path)
-                        gfx.highlight_hex(h);
-                }
                 break;
             case StatePhase::bombardment:
                 break;
@@ -121,6 +127,12 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
                 app_assert(false, "Unknown StatePhase");
         }
     }
+}
+
+std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
+    _debug            = std::make_shared<DebugInfoSystem>();
+    _debug->unit_info = std::make_unique<UnitInfo>(scenario);
+    return _debug;
 }
 
 }  // namespace kirch

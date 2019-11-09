@@ -19,8 +19,7 @@ static void show_component_tree(const PositionComponent& pc) {
     }
 }
 
-UnitInfo::UnitInfo(const std::shared_ptr<Scenario> scenario)
-    : _scenario{scenario} {
+UnitInfo::UnitInfo(const std::shared_ptr<Scenario> scenario) : _scenario{scenario} {
     engine_assert(scenario != nullptr, "Cannot initialize UnitInfo with nullptr.");
 }
 
@@ -33,6 +32,9 @@ void UnitInfo::set_current_unit_id(Unit::IdType id) {
 }
 
 void UnitInfo::show() {
+    if (!_open)
+        return;
+
     if (!ImGui::Begin("Unit debug", &_open)) {
         ImGui::End();
         return;
@@ -50,4 +52,3 @@ void UnitInfo::show() {
 
     ImGui::End();
 }
-

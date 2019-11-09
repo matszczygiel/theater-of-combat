@@ -162,6 +162,7 @@ struct Layout {
     sf::Vector2f origin{0.0, 0.0};
 
     sf::Vector2f cornerr_offset(int corner) const noexcept;
+    float direction_angle(int direction) const noexcept;
 };
 
 sf::Vector2f hex_to_world_point(const HexCoordinate& hex, const Layout& layout) noexcept;

@@ -1,6 +1,6 @@
 #include "graphics/token.h"
 
-Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
+Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site, float rotation,
              const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept
     : _layout{layout}, _shape{4}, _highlighting_shape{4} {
     _highlighting_shape.setOutlineThickness(0.f);
@@ -11,10 +11,10 @@ Token::Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
     } else {
         _shape.setFillColor(sf::Color::Magenta);
     }
-    update(site);
+    update(site, rotation);
 }
 
-void Token::update(const HexCoordinate& site) noexcept {
+void Token::update(const HexCoordinate& site, float rotation) noexcept {
     const auto size = _layout->size;
 
     _shape.setPoint(0, {size.x / 2, -size.y / 2});
@@ -30,6 +30,12 @@ void Token::update(const HexCoordinate& site) noexcept {
     const auto position = hex_to_world_point(site, *_layout);
     _shape.setPosition(position);
     _highlighting_shape.setPosition(position);
+
+    constexpr float pi         = 3.14159265358979323846f;
+    constexpr float rad_to_deg = 360.f / 2.f / pi;
+    const auto angle           = 90.f - rotation * rad_to_deg;
+    _shape.setRotation(angle);
+    _highlighting_shape.setRotation(angle);
 }
 
 const sf::ConvexShape& Token::shape() const noexcept { return _shape; }

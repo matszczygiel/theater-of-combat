@@ -39,6 +39,10 @@ UnitManager UnitManager::create_test_manager() {
     um.get_component<PositionComponent>(u0)->position = HexCoordinate(-1, 1);
     um.get_component<PositionComponent>(u1)->position = HexCoordinate(-3, 0);
     um.get_component<PositionComponent>(u2)->position = HexCoordinate(-2, 2);
+
+    um.get_component<PositionComponent>(u1)->direction = 0;
+    um.get_component<PositionComponent>(u2)->direction = 1;
+
     return um;
 }
 

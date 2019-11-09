@@ -3,6 +3,9 @@
 #include "core/log.h"
 #include "unit/unit_components.h"
 
+constexpr static float pi                  = 3.14159265358979323846f;
+constexpr static float directionless_angle = pi / 2.0f;
+
 UnitGfx::UnitGfx(std::shared_ptr<Layout>& layout) noexcept : _layout{layout} {}
 
 void UnitGfx::setup(UnitManager& manager, std::string texture_path,
@@ -16,11 +19,11 @@ void UnitGfx::setup(UnitManager& manager, std::string texture_path,
     for (const auto& [id, unit] : manager.units()) {
         if (auto it = texture_positions.find(id);
             it != texture_positions.end() && loaded) {
-            _all_tokens.emplace(
-                id, Token(_layout, HexCoordinate::origin(), &_texture, it->second));
+            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
+                                          directionless_angle, &_texture, it->second));
         } else {
-            _all_tokens.emplace(
-                id, Token(_layout, HexCoordinate::origin(), nullptr, sf::IntRect()));
+            _all_tokens.emplace(id, Token(_layout, HexCoordinate::origin(),
+                                          directionless_angle, nullptr, sf::IntRect()));
         }
     }
     update(manager);
@@ -37,7 +40,12 @@ void UnitGfx::update(UnitManager& manager) {
         if (!pos)
             continue;
 
-        _all_tokens.at(id).update(*pos);
+        const auto dir = pos_cmp->direction;
+
+        if (!dir)
+            _all_tokens.at(id).update(*pos, directionless_angle);
+        else
+            _all_tokens.at(id).update(*pos, _layout->direction_angle(*dir));
 
         tokens.emplace_back(std::make_pair(id, _all_tokens.at(id)));
     }

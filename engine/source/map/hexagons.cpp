@@ -11,9 +11,15 @@ const Orientation Orientation::Flat{
     0.f};
 
 sf::Vector2f Layout::cornerr_offset(int cornerr) const noexcept {
-    constexpr float pi = 3.14159265358979323846;
-    const float angle = 2.0 * pi * (orientation.start_angle + cornerr) / 6.0;
+    constexpr float pi = 3.14159265358979323846f;
+    const float angle  = 2.0f * pi * (orientation.start_angle + cornerr) / 6.0f;
     return sf::Vector2f{size.x * std::cos(angle), size.y * std::sin(angle)};
+}
+
+float Layout::direction_angle(int direction) const noexcept {
+    constexpr float pi = 3.14159265358979323846f;
+    const auto edge    = direction % 6;
+    return 2.0f * pi * (edge + orientation.start_angle - 0.5f) / 6.0f;
 }
 
 sf::Vector2f hex_to_world_point(const HexCoordinate& hex, const Layout& layout) noexcept {

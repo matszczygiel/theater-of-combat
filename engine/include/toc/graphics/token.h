@@ -10,10 +10,10 @@
 
 class Token {
    public:
-    Token(std::shared_ptr<Layout> layout, const HexCoordinate& site,
+    Token(std::shared_ptr<Layout> layout, const HexCoordinate& site, float rotation,
           const sf::Texture* texture, const sf::IntRect& texture_rect) noexcept;
 
-    void update(const HexCoordinate& site) noexcept;
+    void update(const HexCoordinate& site, float rotation) noexcept;
 
     const sf::ConvexShape& shape() const noexcept;
     const sf::ConvexShape& highlighting_shape() const noexcept;

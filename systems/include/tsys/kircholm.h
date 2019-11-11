@@ -5,6 +5,7 @@
 #include "kircholm/kirch_mover.h"
 #include "kircholm/kirch_system.h"
 #include "kircholm/kirch_types.h"
+#include "kircholm/kirch_lua.h"
 
 
 

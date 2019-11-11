@@ -4,7 +4,7 @@
 #include <sol/state.hpp>
 
 namespace kirch {
-void lua_push_functions(sol::state& lua) {}
+void lua_push_functions(sol::state& lua);
 }  // namespace kirch
 
 #endif

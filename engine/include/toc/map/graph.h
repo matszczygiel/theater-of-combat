@@ -13,9 +13,6 @@
 
 template <typename Index = int>
 class BidirectionalGraph {
-    static_assert(std::is_integral_v<Index>,
-                  "BidirectionalGraph indexing type should be integral");
-
    public:
     BidirectionalGraph<Index>& insert_node(Index node, const std::set<Index>& neighbors);
     BidirectionalGraph<Index>& insert_node(Index node);
@@ -101,8 +98,6 @@ void BidirectionalGraph<Index>::serialize(Archive& archive) {
 
 template <typename Index = int, class Weight = int>
 class WeightedBidirectionalGraph {
-    static_assert(std::is_integral_v<Index>,
-                  "WeightedBidirectionalGraph indexing type should be integral");
     static_assert(std::is_arithmetic_v<Weight>,
                   "WeightedBidirectionalGraph weight type should be arithmetic");
 
@@ -183,9 +178,9 @@ WeightedBidirectionalGraph<Index, Weight>&
 WeightedBidirectionalGraph<Index, Weight>::change_edge_weight(Index node1, Index node2,
                                                               Weight weight_1to2) {
     engine_assert_throw(_adjacency_matrix.count(node1) == 1,
-                        "Changing weight of nonexistent node {}.", node1);
+                        "Changing weight of nonexistent node");
     engine_assert_throw(_adjacency_matrix[node1].count(node2) == 1,
-                        "Changing weight of nonexistent edge {} -> {}.", node1, node2);
+                        "Changing weight of nonexistent edge.");
 
     _adjacency_matrix[node1][node2] = weight_1to2;
     return *this;

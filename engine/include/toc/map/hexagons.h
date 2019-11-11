@@ -37,6 +37,7 @@ class HexCoordinates {
     constexpr T length() const noexcept;
 
     constexpr static HexCoordinates<T> origin() noexcept;
+    constexpr static int neighbors_count() noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -59,6 +60,11 @@ HexCoordinates<T>::HexCoordinates(T x, T y, T z) : _x{x}, _y{y}, _z{z} {
 template <typename T>
 constexpr HexCoordinates<T> HexCoordinates<T>::origin() noexcept {
     return HexCoordinates<T>();
+}
+
+template <typename T>
+constexpr  int HexCoordinates<T>::neighbors_count() noexcept {
+    return 6;
 }
 
 template <typename T>

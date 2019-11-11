@@ -14,7 +14,9 @@ const std::map<Map::SiteId, BorderSite>& Map::borders() const noexcept {
     return _borders;
 }
 
-const BidirectionalGraph<Map::SiteId>& Map::graph() const noexcept { return _graph; }
+const BidirectionalGraph<std::pair<Map::SiteId, int>>& Map::graph() const noexcept {
+    return _graph;
+}
 
 Map& Map::insert(HexSite site) {
     if (auto it = std::find_if(
@@ -25,19 +27,26 @@ Map& Map::insert(HexSite site) {
         return *this;
     }
 
-    const auto neighors = site.coord().neighbors();
+    const auto id = _id_gen.fetch();
+    engine_assert(_hexes.insert({id, site}).second, "");
 
-    std::set<Map::SiteId> found_neighbors{};
-    for (const auto& [id, hex] : _hexes) {
-        if (std::any_of(neighors.begin(), neighors.end(),
-                        [hex = hex](const auto& x) { return (x == hex.coord()); })) {
-            found_neighbors.insert(id);
+    const auto neighors  = site.coord().neighbors();
+    constexpr int n_size = neighors.size();
+
+    for (int i = 0; i < n_size; ++i) {
+        if (const auto it = std::find_if(
+                _hexes.cbegin(), _hexes.cend(),
+                [&neighors, &i](const auto& x) { return x.second.coord() == neighors[i]; });
+            it != _hexes.cend()) {
+            const auto n_direction = (i + (neighors.size() / 2)) % n_size;
+            _graph.insert_node({id, i}, {{it->first, n_direction}});
         }
     }
 
-    const auto id = _id_gen.fetch();
-    engine_assert(_hexes.insert({id, site}).second, "");
-    _graph.insert_node(id, found_neighbors);
+    for (int i = 0; i < n_size; ++i) {
+        _graph.insert_edge({id, i}, {id, (i + 1) % n_size});
+    }
+
     return *this;
 }
 
@@ -77,8 +86,19 @@ Map& Map::insert(BorderSite site) {
 
     const auto id = _id_gen.fetch();
     engine_assert(_borders.insert({id, site}).second, "");
-    _graph.insert_node(id, {found_hexes[0], found_hexes[1]})
-        .remove_edge(found_hexes[0], found_hexes[1]);
+
+    const auto hex_0         = *get_hex_coord(found_hexes[0]);
+    const auto hex_1         = *get_hex_coord(found_hexes[1]);
+    const auto neigbors_of_0 = hex_0.neighbors();
+    const auto it = std::find(neigbors_of_0.cbegin(), neigbors_of_0.cend(), hex_1);
+    engine_assert(it != neigbors_of_0.cend(), "");
+    const int dir_from_0 = std::distance(neigbors_of_0.cbegin(), it);
+    const int dir_from_1 = (dir_from_0 + neigbors_of_0.size() / 2) % neigbors_of_0.size();
+
+    _graph.insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_0}})
+        .insert_node({id, dir_from_0}, {{found_hexes[1], dir_from_1}})
+        .remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_1});
+
     return *this;
 }
 
@@ -147,30 +167,15 @@ std::optional<HexCoordinate> Map::get_hex_coord(SiteId id) const noexcept {
 }
 
 std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
-    const auto it = _graph.adjacency_matrix().find(id);
-    if (it == _graph.adjacency_matrix().end())
+    const auto hex = get_hex_coord(id);
+    if (!hex)
         return {};
 
-    auto neighbors = it->second;
-    for (const auto& node : it->second) {
-        switch (type_of(node)) {
-            case SiteType::border: {
-                auto bord_neighbors = _graph.adjacency_matrix().at(node);
-                neighbors.merge(bord_neighbors);
-            } break;
-            default:
-                break;
-        }
+    std::set<Map::SiteId> res;
+    for (const auto coord : hex->neighbors()) {
+        const auto n_id = get_hex_id(coord);
+        if (n_id)
+            res.insert(*n_id);
     }
-
-    neighbors.erase(id);
-
-    for (auto i = neighbors.begin(); i != neighbors.end();) {
-        if (type_of(*i) != SiteType::hex) {
-            i = neighbors.erase(i);
-        } else {
-            ++i;
-        }
-    }
-    return neighbors;
+    return res;
 }

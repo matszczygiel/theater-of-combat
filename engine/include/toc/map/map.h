@@ -4,11 +4,12 @@
 #include <map>
 #include <optional>
 #include <set>
+#include <tuple>
 
 #include <cereal/types/map.hpp>
 
-#include "toc/core/id_gen.h"
 #include "graph.h"
+#include "toc/core/id_gen.h"
 #include "types.h"
 
 class Map {
@@ -17,11 +18,11 @@ class Map {
         hex,
         border,
     };
-    using SiteId   = int;
+    using SiteId = int;
 
     const std::map<SiteId, HexSite>& hexes() const noexcept;
     const std::map<SiteId, BorderSite>& borders() const noexcept;
-    const BidirectionalGraph<SiteId>& graph() const noexcept;
+    const BidirectionalGraph<std::pair<SiteId, int>>& graph() const noexcept;
 
     Map& insert(HexSite site);
     Map& insert(BorderSite site);
@@ -42,7 +43,7 @@ class Map {
     std::map<SiteId, HexSite> _hexes{};
     std::map<SiteId, BorderSite> _borders{};
 
-    BidirectionalGraph<SiteId> _graph{};
+    BidirectionalGraph<std::pair<SiteId, int>> _graph{};
 
     IdGenerator<SiteId> _id_gen{0};
 };

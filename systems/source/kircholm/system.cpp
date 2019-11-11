@@ -49,8 +49,8 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
         switch (_current_phase) {
             case StatePhase::movement:
                 if (_movement.is_moving()) {
-                    const auto path = _movement.path_preview(hex);
-                    for (const auto h : path)
+                    const auto path = _movement.path_preview(hex, 0);
+                    for (const auto& [h, dir] : path)
                         gfx.highlight_hex(h);
                 }
                 break;
@@ -71,6 +71,9 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
     gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
 
+    static bool choosing_dir = false;
+    static HexCoordinate target_hex;
+
     if (is_local_player_now()) {
         switch (_current_phase) {
             case StatePhase::movement:
@@ -78,10 +81,19 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
                     _movement.init_movement(
                         hex, scenario->player_teams[current_player_index()],
                         scenario->player_teams[opposite_player_index()]);
+                } else if (!choosing_dir) {
+                    choosing_dir = true;
+                    target_hex   = hex;
                 } else {
-                    auto actions = _movement.move_target(hex);
-                    for (auto& a : actions)
-                        push_action(std::move(a));
+                    const auto neighbors = target_hex.neighbors();
+                    const auto it = std::find(neighbors.cbegin(), neighbors.cend(), hex);
+                    if (it != neighbors.cend()) {
+                        auto actions = _movement.move_target(
+                            target_hex, std::distance(neighbors.cbegin(), it));
+                        for (auto& a : actions)
+                            push_action(std::move(a));
+                    }
+                    choosing_dir = false;
                 }
                 break;
             case StatePhase::bombardment:

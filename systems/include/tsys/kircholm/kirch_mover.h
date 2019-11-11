@@ -1,13 +1,13 @@
 #ifndef KIRCH_MOVER_H
 #define KIRCH_MOVER_H
 
+#include <map>
 #include <memory>
 #include <vector>
-#include <map>
 
-#include "toc/map/hexagons.h"
-#include "toc/gameplay/scenario.h"
 #include "toc/gameplay/action.h"
+#include "toc/gameplay/scenario.h"
+#include "toc/map/hexagons.h"
 
 #include "kirch_components.h"
 
@@ -21,10 +21,11 @@ class MovementSystem {
 
     bool is_moving() const noexcept;
     void reset() noexcept;
-    std::vector<Map::SiteId> path_indices(HexCoordinate destination) const;
-    std::vector<HexCoordinate> path_preview(HexCoordinate destination) const;
+    std::vector<std::pair<Map::SiteId, int>> path_indices(HexCoordinate destination, int direction) const;
+    std::vector<std::pair<HexCoordinate, int>> path_preview(HexCoordinate destination, int direction) const;
 
-    std::vector<std::unique_ptr<Action>> move_target(HexCoordinate destination);
+    std::vector<std::unique_ptr<Action>> move_target(HexCoordinate destination,
+                                                     int direction);
 
    private:
     const MovementComponent* _target_mc{nullptr};
@@ -33,8 +34,8 @@ class MovementSystem {
     const std::shared_ptr<Scenario> _scenario{nullptr};
 
     std::set<Map::SiteId> _sticky_sites{};
-    std::map<Map::SiteId, Movability> _distances{};
-    std::map<Map::SiteId, Map::SiteId> _paths{};
+    std::map<std::pair<Map::SiteId, int>, Movability> _distances{};
+    std::map<std::pair<Map::SiteId, int>, std::pair<Map::SiteId, int>> _paths{};
 };
 
 }  // namespace kirch

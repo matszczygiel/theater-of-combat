@@ -52,6 +52,21 @@ void DirectFightComponent::serialize(Archive& archive) {
     archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(strength_pts),
             CEREAL_NVP(in_fight));
 }
+
+struct DragoonComponent : public ComponentBase {
+    constexpr DragoonComponent() = default;
+
+    bool on_foot{false};
+
+    template <class Archive>
+    void serialize(Archive& archive);
+};
+
+template <class Archive>
+void DragoonComponent::serialize(Archive& archive) {
+    archive(cereal::base_class<ComponentBase>(this), CEREAL_NVP(on_foot));
+}
+
 }  // namespace kirch
 
 #endif

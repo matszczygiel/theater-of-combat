@@ -83,6 +83,9 @@ void Game::initialize() {
     lua["next_phase_action"] = [&]() {
         _system->push_action(std::make_unique<NextPhaseAction>());
     };
+
+    _system->prepare_lua(lua);
+    
     lua["load_scenario_script"] = [&](std::string name) {
         std::ifstream lua_script(_res_loader->resources_path().string() + "/scenarios/" +
                                  name + ".lua");

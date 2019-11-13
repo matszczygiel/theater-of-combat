@@ -4,8 +4,7 @@
 #include <imgui_stdlib.h>
 
 #include "toc/core/log.h"
-
-#include "gameplay/game_state.h"
+#include "toc/gameplay/scenario.h"
 
 StartPrompt::StartPrompt(std::shared_ptr<NetManager>& ptr,
                          std::shared_ptr<ResourceLoader>& loader) noexcept

@@ -16,6 +16,7 @@ class SystemKircholm : public SystemState {
 
     virtual void start() override;
     virtual void next_phase() override;
+    virtual void prepare_lua(sol::state& lua) override;
     virtual void handle_hex_over(const HexCoordinate& hex) override;
     virtual void handle_hex_selection(const HexCoordinate& hex) override;
     virtual void handle_hex_info(const HexCoordinate& hex) override;

@@ -4,6 +4,8 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/polymorphic.hpp>
 
+#include "kircholm/kirch_lua.h"
+
 namespace kirch {
 
 SystemKircholm::SystemKircholm() : _movement{scenario} {};
@@ -40,6 +42,8 @@ void SystemKircholm::next_phase() {
             app_assert(false, "Unknown StatePhase");
     }
 }
+
+void SystemKircholm::prepare_lua(sol::state& lua) { lua_push_functions(lua); }
 
 void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
     gfx.highlighted_hexes.clear();

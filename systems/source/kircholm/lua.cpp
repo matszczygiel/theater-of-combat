@@ -13,7 +13,13 @@ void lua_push_functions(sol::state& lua) {
                      HexType::hillside_1, "hillside_1", HexType::hillside_2, "hillside_2",
                      HexType::hillside_3, "hillside_3", HexType::hillside_4, "hillside_4",
                      HexType::hillside_5, "hillside_5", HexType::hills, "hills");
-    auto unit_type = lua.new_enum("", );
+    auto unit_type = lua.new_enum("UnitType", UnitType::infrantry, "infrantry",
+                                  UnitType::artillery, "artillery", UnitType::cavalary,
+                                  "cavalary", UnitType::dragoons, "dragoons");
+    auto fighting_performance = lua.new_enum("FightingPerformance", 
+    FightingPerformance::level_1, "level_1",
+    FightingPerformance::level_2, "level_2"
+    );
 
     auto movement = lua.new_usertype<MovementComponent>(
         "MovementComponent",
@@ -22,5 +28,6 @@ void lua_push_functions(sol::state& lua) {
     movement["moving_pts"]  = &MovementComponent::moving_pts;
     movement["immobilized"] = &MovementComponent::immobilized;
     movement["formation"]   = &MovementComponent::formation;
+
 }
 }  // namespace kirch

@@ -6,6 +6,7 @@
 #include <cereal/types/stack.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
+#include <sol/state.hpp>
 
 #include "scenario.h"
 #include "toc/debug/debug_info.h"
@@ -34,6 +35,7 @@ class SystemState {
 
     virtual void start();
     virtual void next_phase()                                   = 0;
+    virtual void prepare_lua(sol::state& lua)                   = 0;
     virtual void handle_hex_over(const HexCoordinate& hex)      = 0;
     virtual void handle_hex_selection(const HexCoordinate& hex) = 0;
     virtual void handle_hex_info(const HexCoordinate& hex)      = 0;

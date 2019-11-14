@@ -6,7 +6,7 @@
 
 class UnitInfo {
    public:
-    UnitInfo(const std::shared_ptr<Scenario> scenario);
+    UnitInfo(const std::shared_ptr<Scenario>& scenario);
     virtual ~UnitInfo() = default;
 
     void set_current_unit_id(Unit::IdType id);
@@ -16,9 +16,9 @@ class UnitInfo {
     virtual void draw_component_trees();
 
     const std::shared_ptr<Scenario> _scenario{nullptr};
+    Unit::IdType _current_unit_id{};
 
    private:
-    Unit::IdType _current_unit_id{};
     Unit _current_unit{};
     bool _open{false};
 };

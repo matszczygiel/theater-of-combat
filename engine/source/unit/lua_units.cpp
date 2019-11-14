@@ -19,7 +19,8 @@ void lua_push_functions(sol::state& lua) {
 
     unit_man["create"] = &UnitManager::create;
 
-    unit_man["assign_position_cmp"] = &UnitManager::assign_component<PositionComponent>;
+    unit_man["assign_position_cmp"] =
+        &UnitManager::assign_component<PositionComponent, PositionComponent&>;
 
     unit_man["remove_position_cmp"] = &UnitManager::remove_component<PositionComponent>;
 }

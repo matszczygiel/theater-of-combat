@@ -2,6 +2,8 @@
 
 #include <sol/sol.hpp>
 
+#include "toc/unit/unit_manager.h"
+
 #include "kircholm/kirch_components.h"
 #include "kircholm/kirch_types.h"
 
@@ -16,10 +18,9 @@ void lua_push_functions(sol::state& lua) {
     auto unit_type = lua.new_enum("UnitType", UnitType::infrantry, "infrantry",
                                   UnitType::artillery, "artillery", UnitType::cavalary,
                                   "cavalary", UnitType::dragoons, "dragoons");
-    auto fighting_performance = lua.new_enum("FightingPerformance", 
-    FightingPerformance::level_1, "level_1",
-    FightingPerformance::level_2, "level_2"
-    );
+    auto fighting_performance =
+        lua.new_enum("FightingPerformance", FightingPerformance::level_1, "level_1",
+                     FightingPerformance::level_2, "level_2");
 
     auto movement = lua.new_usertype<MovementComponent>(
         "MovementComponent",
@@ -29,5 +30,11 @@ void lua_push_functions(sol::state& lua) {
     movement["immobilized"] = &MovementComponent::immobilized;
     movement["formation"]   = &MovementComponent::formation;
 
+    if (lua["UnitManager"] != sol::lua_nil) {
+        lua["UnitManager"]["assign_movement_cmp"] =
+            &UnitManager::assign_component<MovementComponent, MovementComponent&>;
+        lua["UnitManager"]["remove_movement_cmp"] =
+            &UnitManager::remove_component<MovementComponent>;
+    }
 }
 }  // namespace kirch

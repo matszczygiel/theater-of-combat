@@ -126,7 +126,7 @@ Map Map::create_test_map() {
             }
         }
     }
-
+/*
     map.insert(BorderSite(HexCoordinate(-10, 7), HexCoordinate(-10, 8), 0))
         .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-10, 8), 0))
         .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-9, 8), 0))
@@ -142,7 +142,7 @@ Map Map::create_test_map() {
         .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 0))
         .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 0))
         .insert(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 0));
-
+*/
     return map;
 }
 

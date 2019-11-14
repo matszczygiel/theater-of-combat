@@ -5,6 +5,7 @@
 #include <cereal/types/polymorphic.hpp>
 
 #include "kircholm/kirch_lua.h"
+#include "kircholm/kirch_gui.h"
 
 namespace kirch {
 
@@ -147,7 +148,7 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
 
 std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
     _debug            = std::make_shared<DebugInfoSystem>();
-    _debug->unit_info = std::make_unique<UnitInfo>(scenario);
+    _debug->unit_info = std::make_unique<KircholmUnitInfo>(scenario);
     return _debug;
 }
 

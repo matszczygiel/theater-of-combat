@@ -148,6 +148,8 @@ void Game::initialize() {
 
     lua.script(R"(
     load_scenario_script('test0')
+    game_units:assign_movement_cmp(1, MovementComponent.new(15))
+    game_units:assign_movement_cmp(2, MovementComponent.new(10))
     set_local_player_index(0)
     system:start()
     )");

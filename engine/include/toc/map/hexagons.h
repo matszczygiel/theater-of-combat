@@ -21,8 +21,8 @@ class HexCoordinates {
 
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
-    constexpr explicit HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
-    explicit HexCoordinates(T x, T y, T z);
+    constexpr HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
+    HexCoordinates(T x, T y, T z);
 
     const HexCoordinates<T> neighbor(int direction) const;
     const std::array<HexCoordinates<T>, 6> neighbors() const noexcept;

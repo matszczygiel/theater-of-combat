@@ -9,34 +9,32 @@
 static Map simple_test_map() {
     Map res;
     // hexes
-    res.insert(HexSite(HexCoordinate(-1, -1), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, -1), HexType::forest));
-    res.insert(HexSite(HexCoordinate(1, -1), HexType::forest));
-    res.insert(HexSite(HexCoordinate(-2, 0), HexType::field));
-    res.insert(HexSite(HexCoordinate(-1, 0), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, 0), HexType::forest));
-    res.insert(HexSite(HexCoordinate(1, 0), HexType::forest));
-    res.insert(HexSite(HexCoordinate(-2, 1), HexType::field));
-    res.insert(HexSite(HexCoordinate(-1, 1), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, 1), HexType::field));
+    res.insert(HexSite(HexCoordinate(-1, -1), 0));
+    res.insert(HexSite(HexCoordinate(0, -1), 1));
+    res.insert(HexSite(HexCoordinate(1, -1), 1));
+    res.insert(HexSite(HexCoordinate(-2, 0), 0));
+    res.insert(HexSite(HexCoordinate(-1, 0), 0));
+    res.insert(HexSite(HexCoordinate(0, 0), 1));
+    res.insert(HexSite(HexCoordinate(1, 0), 1));
+    res.insert(HexSite(HexCoordinate(-2, 1), 0));
+    res.insert(HexSite(HexCoordinate(-1, 1), 0));
+    res.insert(HexSite(HexCoordinate(0, 1), 0));
 
-    // rivers
-    res.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::river));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::river));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), RiverType::stream));
-    res.insert(RiverSite(HexCoordinate(-1, 1), HexCoordinate(0, 1), RiverType::stream));
+    // borders
+    res.insert(BorderSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), 0));
+    res.insert(BorderSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), 0));
+    res.insert(BorderSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), 1));
+    res.insert(BorderSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), 1));
+    res.insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), 1));
+    res.insert(BorderSite(HexCoordinate(-1, 1), HexCoordinate(0, 1), 1));
     return res;
 }
 
 TEST_CASE("hexagons") {
     SUBCASE("equality") {
-        HexCoordinate coord1(1, 0, -1);
-        HexCoordinate coord2(1, 0, -1);
-        HexCoordinate coord3(2, -1, -1);
+        HexCoordinate coord1(1, -1);
+        HexCoordinate coord3(2, -1);
 
-        CHECK_EQ(coord1, coord2);
         CHECK_NE(coord1, coord3);
     }
 
@@ -56,16 +54,16 @@ TEST_CASE("hexagons") {
     }
 
     SUBCASE("neighbors") {
-        HexCoordinate coord(2, -1, -1);
+        HexCoordinate coord(2, -1);
         HexCoordinate coord_n = coord.neighbor(3);
-        HexCoordinate coord_n_corect(1, 0, -1);
+        HexCoordinate coord_n_corect(1, -1);
 
         CHECK_EQ(coord_n, coord_n_corect);
     }
 
     SUBCASE("distance") {
-        HexCoordinate coord1(1, 0, -1);
-        HexCoordinate coord2(3, -2, -1);
+        HexCoordinate coord1(1, -1);
+        HexCoordinate coord2(3, -1);
 
         CHECK_EQ(distance(coord1, coord2), 2);
     }
@@ -183,15 +181,11 @@ TEST_CASE("graph") {
 }
 
 TEST_CASE("site types") {
-    SUBCASE("river") {
-        CHECK_NOTHROW(
-            RiverSite(HexCoordinate(1, -1), HexCoordinate(0, 0), RiverType::stream));
-        CHECK_NOTHROW(
-            RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
-        CHECK_THROWS(
-            RiverSite(HexCoordinate(1, -1), HexCoordinate(-1, 0), RiverType::stream));
-        CHECK_THROWS(
-            RiverSite(HexCoordinate(0, -1), HexCoordinate(0, 1), RiverType::stream));
+    SUBCASE("border") {
+        CHECK_NOTHROW(BorderSite(HexCoordinate(1, -1), HexCoordinate(0, 0), 1));
+        CHECK_NOTHROW(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 1));
+        CHECK_THROWS(BorderSite(HexCoordinate(1, -1), HexCoordinate(-1, 0), 1));
+        CHECK_THROWS(BorderSite(HexCoordinate(0, -1), HexCoordinate(0, 1), 1));
     }
 }
 
@@ -200,7 +194,7 @@ TEST_CASE("map") {
         Map map{};
         for (int r = -1; r <= 1; ++r) {
             for (int q = -1; q <= 1; ++q) {
-                map.insert(HexSite(HexCoordinate(q, r), HexType::field));
+                map.insert(HexSite(HexCoordinate(q, r), 0));
             }
         }
         BidirectionalGraph<int> graph{};
@@ -217,17 +211,13 @@ TEST_CASE("map") {
 
         CHECK_EQ(map.graph(), graph);
 
-        map.insert(
-               RiverSite(HexCoordinate(0, -1), HexCoordinate(1, -1), RiverType::stream))
-            .insert(
-                RiverSite(HexCoordinate(0, 0), HexCoordinate(1, -1), RiverType::stream))
-            .insert(
-                RiverSite(HexCoordinate(0, 0), HexCoordinate(1, 0), RiverType::stream))
-            .insert(
-                RiverSite(HexCoordinate(1, 0), HexCoordinate(0, 1), RiverType::stream));
+        map.insert(BorderSite(HexCoordinate(0, -1), HexCoordinate(1, -1), 1))
+            .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 1))
+            .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 1))
+            .insert(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 1));
 
-        CHECK_THROWS(map.insert(
-            RiverSite(HexCoordinate(8, -1), HexCoordinate(9, -1), RiverType::stream)));
+        CHECK_THROWS(
+            map.insert(BorderSite(HexCoordinate(8, -1), HexCoordinate(9, -1), 1)));
 
         graph.remove_edge(1, 2)
             .remove_edge(2, 4)

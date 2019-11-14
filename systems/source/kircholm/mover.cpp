@@ -89,20 +89,9 @@ make_weighted_graph(const Map& map, const UnitManager& um, Unit::IdType id) {
                     }
                 }
             } break;
-            case Map::SiteType::border: {
-                engine_assert(neighbors.size() == 2, "River should have 2 neighbors.");
-                const auto site0 = *neighbors.begin();
-                const auto site1 = *(++neighbors.begin());
-
-                const auto w01 = res.weight(site0, node) + res.weight(node, site1);
-                const auto w10 = res.weight(site1, node) + res.weight(node, site0);
-
-                res.remove_node(node);
-                res.insert_edge(site0, site1, w01, w10);
-            } break;
-
             default:
-                engine_assert(false, "Unknown site type in computing weighted graph.");
+                app_critical("Kircholm only supports hex sites on map.");
+                app_assert(false, "Unknown site type in computing weighted graph.");
                 break;
         }
     }

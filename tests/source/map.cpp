@@ -192,22 +192,58 @@ TEST_CASE("site types") {
 TEST_CASE("map") {
     SUBCASE("insertions") {
         Map map{};
-        for (int r = -1; r <= 1; ++r) {
-            for (int q = -1; q <= 1; ++q) {
-                map.insert(HexSite(HexCoordinate(q, r), 0));
-            }
-        }
-        BidirectionalGraph<int> graph{};
+        map.insert(HexSite(HexCoordinate(0, -1), 0));
+        map.insert(HexSite(HexCoordinate(1, -1), 0));
+        map.insert(HexSite(HexCoordinate(-1, 0), 0));
+        map.insert(HexSite(HexCoordinate(0, 0), 0));
+        map.insert(HexSite(HexCoordinate(1, 0), 0));
+        map.insert(HexSite(HexCoordinate(-1, 1), 0));
+        map.insert(HexSite(HexCoordinate(0, 1), 0));
 
-        graph.insert_node(0)
-            .insert_node(1, {0})
-            .insert_node(2, {1})
-            .insert_node(3, {0, 1})
-            .insert_node(4, {3, 1, 2})
-            .insert_node(5, {4, 2})
-            .insert_node(6, {3, 4})
-            .insert_node(7, {6, 4, 5})
-            .insert_node(8, {5, 7});
+        BidirectionalGraph<std::pair<Map::SiteId, int>> graph{};
+
+        graph.insert_node({0, 0})
+            .insert_node({0, 1})
+            .insert_node({0, 2})
+            .insert_node({0, 3})
+            .insert_node({0, 4})
+            .insert_node({0, 5})
+            .insert_node({1, 0})
+            .insert_node({1, 1})
+            .insert_node({1, 2})
+            .insert_node({1, 3}, {{0, 0}})
+            .insert_node({1, 4})
+            .insert_node({1, 5})
+            .insert_node({2, 0})
+            .insert_node({2, 1}, {{0, 4}})
+            .insert_node({2, 2})
+            .insert_node({2, 3})
+            .insert_node({2, 4})
+            .insert_node({2, 5})
+            .insert_node({3, 0})
+            .insert_node({3, 1}, {{1, 4}})
+            .insert_node({3, 2}, {{0, 5}})
+            .insert_node({3, 3}, {{2, 0}})
+            .insert_node({3, 4})
+            .insert_node({3, 5})
+            .insert_node({4, 0})
+            .insert_node({4, 1})
+            .insert_node({4, 2}, {{1, 5}})
+            .insert_node({4, 3}, {{3, 0}})
+            .insert_node({4, 4})
+            .insert_node({4, 5})
+            .insert_node({5, 0})
+            .insert_node({5, 1}, {{3, 4}})
+            .insert_node({5, 2}, {{2, 5}})
+            .insert_node({5, 3})
+            .insert_node({5, 4})
+            .insert_node({5, 5})
+            .insert_node({6, 0})
+            .insert_node({6, 1}, {{4, 4}})
+            .insert_node({6, 2}, {{3, 5}})
+            .insert_node({6, 3}, {{5, 0}})
+            .insert_node({6, 4})
+            .insert_node({6, 5});
 
         CHECK_EQ(map.graph(), graph);
 

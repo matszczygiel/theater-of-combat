@@ -34,9 +34,10 @@ Map& Map::insert(HexSite site) {
     constexpr int n_size = neighors.size();
 
     for (int i = 0; i < n_size; ++i) {
-        if (const auto it = std::find_if(
-                _hexes.cbegin(), _hexes.cend(),
-                [&neighors, &i](const auto& x) { return x.second.coord() == neighors[i]; });
+        if (const auto it = std::find_if(_hexes.cbegin(), _hexes.cend(),
+                                         [&neighors, &i](const auto& x) {
+                                             return x.second.coord() == neighors[i];
+                                         });
             it != _hexes.cend()) {
             const auto n_direction = (i + (n_size / 2)) % n_size;
             _graph.insert_node({id, i}, {{it->first, n_direction}});
@@ -95,9 +96,9 @@ Map& Map::insert(BorderSite site) {
     const int dir_from_0 = std::distance(neigbors_of_0.cbegin(), it);
     const int dir_from_1 = (dir_from_0 + neigbors_of_0.size() / 2) % neigbors_of_0.size();
 
-    _graph.insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_0}})
-        .insert_node({id, dir_from_0}, {{found_hexes[1], dir_from_1}})
-        .remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_1});
+    _graph.remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_1})
+        .insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_0}})
+        .insert_node({id, dir_from_0}, {{found_hexes[1], dir_from_1}, {id, dir_from_1}});
 
     return *this;
 }
@@ -126,23 +127,23 @@ Map Map::create_test_map() {
             }
         }
     }
-/*
-    map.insert(BorderSite(HexCoordinate(-10, 7), HexCoordinate(-10, 8), 0))
-        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-10, 8), 0))
-        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-9, 8), 0))
-        .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-8, 7), 0))
-        .insert(BorderSite(HexCoordinate(-8, 6), HexCoordinate(-8, 7), 0))
-        .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-7, 7), 0))
-        .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-8, 7), 0))
-        .insert(BorderSite(HexCoordinate(-7, 7), HexCoordinate(-6, 6), 0))
-        .insert(BorderSite(HexCoordinate(-6, 7), HexCoordinate(-6, 6), 0))
-        .insert(BorderSite(HexCoordinate(-5, 6), HexCoordinate(-6, 7), 0))
-        .insert(BorderSite(HexCoordinate(-5, 7), HexCoordinate(-6, 7), 0))
-        .insert(BorderSite(HexCoordinate(0, -1), HexCoordinate(1, -1), 0))
-        .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 0))
-        .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 0))
-        .insert(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 0));
-*/
+    /*
+        map.insert(BorderSite(HexCoordinate(-10, 7), HexCoordinate(-10, 8), 0))
+            .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-10, 8), 0))
+            .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-9, 8), 0))
+            .insert(BorderSite(HexCoordinate(-9, 7), HexCoordinate(-8, 7), 0))
+            .insert(BorderSite(HexCoordinate(-8, 6), HexCoordinate(-8, 7), 0))
+            .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-7, 7), 0))
+            .insert(BorderSite(HexCoordinate(-7, 6), HexCoordinate(-8, 7), 0))
+            .insert(BorderSite(HexCoordinate(-7, 7), HexCoordinate(-6, 6), 0))
+            .insert(BorderSite(HexCoordinate(-6, 7), HexCoordinate(-6, 6), 0))
+            .insert(BorderSite(HexCoordinate(-5, 6), HexCoordinate(-6, 7), 0))
+            .insert(BorderSite(HexCoordinate(-5, 7), HexCoordinate(-6, 7), 0))
+            .insert(BorderSite(HexCoordinate(0, -1), HexCoordinate(1, -1), 0))
+            .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 0))
+            .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 0))
+            .insert(BorderSite(HexCoordinate(1, 0), HexCoordinate(0, 1), 0));
+    */
     return map;
 }
 

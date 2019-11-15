@@ -6,6 +6,24 @@
 #include "toc/map/map.h"
 #include "toc/map/types.h"
 
+std::ostream& operator<<(std::ostream& os, const std::pair<int, int>& value) {
+    os << "( " << value.first << ", " << value.second << ')';
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         const BidirectionalGraph<std::pair<Map::SiteId, int>>& value) {
+    os << '{';
+    for (const auto& [node, neighbors] : value.adjacency_matrix()) {
+        os << "{ " << node << ", {";
+        for (const auto& n : neighbors)
+            os << ' ' << n;
+        os << " }}\n";
+    }
+    os << '}';
+    return os;
+}
+
 static Map simple_test_map() {
     Map res;
     // hexes
@@ -190,8 +208,10 @@ TEST_CASE("site types") {
 }
 
 TEST_CASE("map") {
-    SUBCASE("insertions") {
-        Map map{};
+    Map map{};
+    BidirectionalGraph<std::pair<Map::SiteId, int>> graph{};
+
+    SUBCASE("hex insertions") {
         map.insert(HexSite(HexCoordinate(0, -1), 0));
         map.insert(HexSite(HexCoordinate(1, -1), 0));
         map.insert(HexSite(HexCoordinate(-1, 0), 0));
@@ -200,53 +220,52 @@ TEST_CASE("map") {
         map.insert(HexSite(HexCoordinate(-1, 1), 0));
         map.insert(HexSite(HexCoordinate(0, 1), 0));
 
-        BidirectionalGraph<std::pair<Map::SiteId, int>> graph{};
-
         graph.insert_node({0, 0})
-            .insert_node({0, 1})
-            .insert_node({0, 2})
-            .insert_node({0, 3})
-            .insert_node({0, 4})
-            .insert_node({0, 5})
+            .insert_node({0, 1}, {{0, 0}})
+            .insert_node({0, 2}, {{0, 1}})
+            .insert_node({0, 3}, {{0, 2}})
+            .insert_node({0, 4}, {{0, 3}})
+            .insert_node({0, 5}, {{0, 4}, {0, 0}})
             .insert_node({1, 0})
-            .insert_node({1, 1})
-            .insert_node({1, 2})
-            .insert_node({1, 3}, {{0, 0}})
-            .insert_node({1, 4})
-            .insert_node({1, 5})
+            .insert_node({1, 1}, {{1, 0}})
+            .insert_node({1, 2}, {{1, 1}})
+            .insert_node({1, 3}, {{1, 2}, {0, 0}})
+            .insert_node({1, 4}, {{1, 3}})
+            .insert_node({1, 5}, {{1, 4}, {1, 0}})
             .insert_node({2, 0})
-            .insert_node({2, 1}, {{0, 4}})
-            .insert_node({2, 2})
-            .insert_node({2, 3})
-            .insert_node({2, 4})
-            .insert_node({2, 5})
+            .insert_node({2, 1}, {{2, 0}, {0, 4}})
+            .insert_node({2, 2}, {{2, 1}})
+            .insert_node({2, 3}, {{2, 2}})
+            .insert_node({2, 4}, {{2, 3}})
+            .insert_node({2, 5}, {{2, 4}, {2, 0}})
             .insert_node({3, 0})
-            .insert_node({3, 1}, {{1, 4}})
-            .insert_node({3, 2}, {{0, 5}})
-            .insert_node({3, 3}, {{2, 0}})
-            .insert_node({3, 4})
-            .insert_node({3, 5})
+            .insert_node({3, 1}, {{3, 0}, {1, 4}})
+            .insert_node({3, 2}, {{3, 1}, {0, 5}})
+            .insert_node({3, 3}, {{3, 2}, {2, 0}})
+            .insert_node({3, 4}, {{3, 3}})
+            .insert_node({3, 5}, {{3, 4}, {3, 0}})
             .insert_node({4, 0})
-            .insert_node({4, 1})
-            .insert_node({4, 2}, {{1, 5}})
-            .insert_node({4, 3}, {{3, 0}})
-            .insert_node({4, 4})
-            .insert_node({4, 5})
+            .insert_node({4, 1}, {{4, 0}})
+            .insert_node({4, 2}, {{4, 1}, {1, 5}})
+            .insert_node({4, 3}, {{4, 2}, {3, 0}})
+            .insert_node({4, 4}, {{4, 3}})
+            .insert_node({4, 5}, {{4, 4}, {4, 0}})
             .insert_node({5, 0})
-            .insert_node({5, 1}, {{3, 4}})
-            .insert_node({5, 2}, {{2, 5}})
-            .insert_node({5, 3})
-            .insert_node({5, 4})
-            .insert_node({5, 5})
+            .insert_node({5, 1}, {{5, 0}, {3, 4}})
+            .insert_node({5, 2}, {{5, 1}, {2, 5}})
+            .insert_node({5, 3}, {{5, 2}})
+            .insert_node({5, 4}, {{5, 3}})
+            .insert_node({5, 5}, {{5, 4}, {5, 0}})
             .insert_node({6, 0})
-            .insert_node({6, 1}, {{4, 4}})
-            .insert_node({6, 2}, {{3, 5}})
-            .insert_node({6, 3}, {{5, 0}})
-            .insert_node({6, 4})
-            .insert_node({6, 5});
+            .insert_node({6, 1}, {{6, 0}, {4, 4}})
+            .insert_node({6, 2}, {{6, 1}, {3, 5}})
+            .insert_node({6, 3}, {{6, 2}, {5, 0}})
+            .insert_node({6, 4}, {{6, 3}})
+            .insert_node({6, 5}, {{6, 4}, {6, 0}});
 
         CHECK_EQ(map.graph(), graph);
-
+    }
+    SUBCASE("borders insertions") {
         map.insert(BorderSite(HexCoordinate(0, -1), HexCoordinate(1, -1), 1))
             .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, -1), 1))
             .insert(BorderSite(HexCoordinate(0, 0), HexCoordinate(1, 0), 1))
@@ -255,14 +274,18 @@ TEST_CASE("map") {
         CHECK_THROWS(
             map.insert(BorderSite(HexCoordinate(8, -1), HexCoordinate(9, -1), 1)));
 
-        graph.remove_edge(1, 2)
-            .remove_edge(2, 4)
-            .remove_edge(4, 5)
-            .remove_edge(5, 7)
-            .insert_node(9, {1, 2})
-            .insert_node(10, {2, 4})
-            .insert_node(11, {4, 5})
-            .insert_node(12, {5, 7});
+        graph.remove_edge({1, 3}, {0, 0})
+            .remove_edge({3, 1}, {1, 4})
+            .remove_edge({3, 0}, {4, 3})
+            .remove_edge({6, 1}, {4, 4})
+            .insert_node({7, 0}, {{1, 3}})
+            .insert_node({7, 3}, {{0, 0}, {7, 0}})
+            .insert_node({8, 1}, {{1, 4}})
+            .insert_node({8, 4}, {{3, 1}, {8, 1}})
+            .insert_node({9, 0}, {{4, 3}})
+            .insert_node({9, 3}, {{3, 0}, {9, 0}})
+            .insert_node({10, 1}, {{4, 4}})
+            .insert_node({10, 4}, {{6, 1}, {10, 1}});
 
         CHECK_EQ(map.graph(), graph);
     }

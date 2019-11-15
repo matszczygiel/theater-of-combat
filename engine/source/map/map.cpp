@@ -38,7 +38,7 @@ Map& Map::insert(HexSite site) {
                 _hexes.cbegin(), _hexes.cend(),
                 [&neighors, &i](const auto& x) { return x.second.coord() == neighors[i]; });
             it != _hexes.cend()) {
-            const auto n_direction = (i + (neighors.size() / 2)) % n_size;
+            const auto n_direction = (i + (n_size / 2)) % n_size;
             _graph.insert_node({id, i}, {{it->first, n_direction}});
         }
     }

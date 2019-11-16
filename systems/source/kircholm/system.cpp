@@ -4,8 +4,8 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-#include "kircholm/kirch_lua.h"
 #include "kircholm/kirch_gui.h"
+#include "kircholm/kirch_lua.h"
 
 namespace kirch {
 
@@ -54,7 +54,13 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
         switch (_current_phase) {
             case StatePhase::movement:
                 if (_movement.is_moving()) {
-                    const auto path = _movement.path_preview(hex, 0);
+                    auto path = _movement.path_preview(hex, 0);
+                    const auto last =
+                        std::unique(path.begin(), path.end(),
+                                    [](const auto& site1, const auto& site2) {
+                                        return std::get<0>(site1) == std::get<0>(site2);
+                                    });
+                    path.erase(last, path.end());
                     for (const auto& [h, dir, cost] : path)
                         gfx.highlight_hex(h);
                 }

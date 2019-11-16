@@ -55,7 +55,7 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
             case StatePhase::movement:
                 if (_movement.is_moving()) {
                     const auto path = _movement.path_preview(hex, 0);
-                    for (const auto& [h, dir] : path)
+                    for (const auto& [h, dir, cost] : path)
                         gfx.highlight_hex(h);
                 }
                 break;

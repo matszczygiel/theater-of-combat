@@ -63,10 +63,12 @@ static std::map<HexType, Movability> get_rotation_table() {
     };
 }
 
-static WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
-make_weighted_graph(const Map& map, const UnitManager& um, Unit::IdType id) {
-    const auto hex_tab = get_movability_table(um, id);
+WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
+MovementSystem::make_weighted_graph(Unit::IdType id) const {
+    const auto hex_tab = get_movability_table(_scenario->units, id);
     const auto rot_tab = get_rotation_table();
+
+    const auto& map = _scenario->map;
 
     WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability> res(map.graph(),
                                                                             0);
@@ -81,11 +83,10 @@ make_weighted_graph(const Map& map, const UnitManager& um, Unit::IdType id) {
                     static_cast<HexType>(map.hexes().at(node_id).type());
 
                 for (const auto& neighbor : neighbors) {
-                    const auto w = res.weight(neighbor, node);
                     if (neighbor.first == node_id) {
-                        res.change_edge_weight(neighbor, node, w + rot_tab.at(hex_type));
+                        res.change_edge_weight(neighbor, node, rot_tab.at(hex_type));
                     } else {
-                        res.change_edge_weight(neighbor, node, w + hex_tab.at(hex_type));
+                        res.change_edge_weight(neighbor, node, hex_tab.at(hex_type));
                     }
                 }
             } break;
@@ -152,8 +153,7 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     _sticky_sites.erase(_scenario->map.get_hex_id(coord).value());
 
-    const auto graph =
-        make_weighted_graph(_scenario->map, _scenario->units, _target_pc->owner());
+    const auto graph = make_weighted_graph(_target_pc->owner());
 
     const auto start_hex = _scenario->map.get_hex_id(coord);
     engine_assert_throw(start_hex.has_value(),
@@ -199,15 +199,15 @@ std::vector<std::unique_ptr<Action>> MovementSystem::move_target(
 
     const auto find = std::find_first_of(
         path.begin(), path.end(), _sticky_sites.begin(), _sticky_sites.end(),
-        [](const auto& p, const auto& s) { return p.first == s; });
+        [](const auto& p, const auto& s) { return std::get<0>(p) == s; });
 
-    const bool immobilized  = find != path.end();
-    const auto true_dest_id = immobilized ? *find : path.back();
+    const bool immobilized              = find != path.end();
+    const auto true_dest_id             = immobilized ? *find : path.back();
+    const auto& [td_id, td_dir, td_mov] = true_dest_id;
 
     std::vector<std::unique_ptr<Action>> res;
-    const auto cost = _distances.at(true_dest_id);
-    auto new_mc     = *_target_mc;
-    new_mc.moving_pts -= cost;
+    auto new_mc = *_target_mc;
+    new_mc.moving_pts -= td_mov;
     engine_assert(new_mc.moving_pts >= 0, "Unit {} has negative number of moving pts.",
                   new_mc.owner());
     new_mc.immobilized = immobilized;
@@ -215,8 +215,8 @@ std::vector<std::unique_ptr<Action>> MovementSystem::move_target(
         std::make_unique<ComponentChangeAction<MovementComponent>>(std::move(new_mc)));
 
     auto new_pc      = *_target_pc;
-    new_pc.position  = _scenario->map.get_hex_coord(true_dest_id.first);
-    new_pc.direction = true_dest_id.second;
+    new_pc.position  = _scenario->map.get_hex_coord(td_id);
+    new_pc.direction = td_dir;
     res.push_back(
         std::make_unique<ComponentChangeAction<PositionComponent>>(std::move(new_pc)));
 
@@ -224,7 +224,7 @@ std::vector<std::unique_ptr<Action>> MovementSystem::move_target(
     return res;
 }
 
-std::vector<std::pair<Map::SiteId, int>> MovementSystem::path_indices(
+std::vector<std::tuple<Map::SiteId, int, Movability>> MovementSystem::path_indices(
     HexCoordinate destination, int direction) const {
     engine_assert_throw(is_moving(), "No unit to preview path.");
     const auto dest_hex = _scenario->map.get_hex_id(destination);
@@ -237,24 +237,27 @@ std::vector<std::pair<Map::SiteId, int>> MovementSystem::path_indices(
     if (it == _distances.end())
         return {};
 
-    std::vector<std::pair<Map::SiteId, int>> res = {dest};
-    auto i                                       = _paths.find(dest);
+    std::vector<std::tuple<Map::SiteId, int, Movability>> res = {
+        {dest.first, dest.second, it->second}};
+
+    auto i = _paths.find(dest);
     while (i != _paths.end()) {
-        res.push_back(i->second);
-        i = _paths.find(res.back());
+        const auto& [hex, dir] = i->second;
+        res.push_back({hex, dir, _distances.at(i->second)});
+        i = _paths.find(i->second);
     }
 
     std::reverse(res.begin(), res.end());
     return res;
 }
 
-std::vector<std::pair<HexCoordinate, int>> MovementSystem::path_preview(
+std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::path_preview(
     HexCoordinate destination, int direction) const {
     const auto ids = path_indices(destination, direction);
-    std::vector<std::pair<HexCoordinate, int>> res;
+    std::vector<std::tuple<HexCoordinate, int, Movability>> res;
     res.reserve(ids.size());
-    for (const auto& id : ids) {
-        res.push_back({_scenario->map.get_hex_coord(id.first).value(), id.second});
+    for (const auto& [id, dir, mov] : ids) {
+        res.push_back({_scenario->map.get_hex_coord(id).value(), dir, mov});
     }
 
     return res;

@@ -1,85 +1,81 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 
-#include "systems/mover.h"
+#include "tsys/kircholm.h"
 
-static Map simple_test_map() {
+using namespace kirch;
+
+static Map simple_map() {
     Map res;
-    res.insert(HexSite(HexCoordinate(-1, -1), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, -1), HexType::forest));
-    res.insert(HexSite(HexCoordinate(1, -1), HexType::forest));
-    res.insert(HexSite(HexCoordinate(-2, 0), HexType::field));
-    res.insert(HexSite(HexCoordinate(-1, 0), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, 0), HexType::forest));
-    res.insert(HexSite(HexCoordinate(1, 0), HexType::forest));
-    res.insert(HexSite(HexCoordinate(-2, 1), HexType::field));
-    res.insert(HexSite(HexCoordinate(-1, 1), HexType::field));
-    res.insert(HexSite(HexCoordinate(0, 1), HexType::field));
+    res.insert(HexSite(HexCoordinate(-1, -1), static_cast<int>(HexType::field)));
+    res.insert(HexSite(HexCoordinate(0, -1), static_cast<int>(HexType::forest)));
+    res.insert(HexSite(HexCoordinate(1, -1), static_cast<int>(HexType::forest)));
+    res.insert(HexSite(HexCoordinate(-2, 0), static_cast<int>(HexType::field)));
+    res.insert(HexSite(HexCoordinate(-1, 0), static_cast<int>(HexType::field)));
+    res.insert(HexSite(HexCoordinate(0, 0), static_cast<int>(HexType::forest)));
+    res.insert(HexSite(HexCoordinate(1, 0), static_cast<int>(HexType::forest)));
+    res.insert(HexSite(HexCoordinate(-2, 1), static_cast<int>(HexType::field)));
+    res.insert(HexSite(HexCoordinate(-1, 1), static_cast<int>(HexType::field)));
+    res.insert(HexSite(HexCoordinate(0, 1), static_cast<int>(HexType::field)));
     return res;
 }
 
-TEST_CASE("creating graph") {
-    SUBCASE("only hexes") {
-        const Map map             = simple_test_map();
-        const auto type           = UnitType::heavy;
-        const auto weighted_graph = mover::make_weighted_graph(map, type);
-        WeightedBidirectionalGraph ref;
-        ref.insert_edge(0, 1, 6, 2)
-            .insert_edge(0, 3, 2, 2)
-            .insert_edge(0, 4, 2, 2)
-            .insert_edge(1, 2, 6, 6)
-            .insert_edge(1, 4, 2, 6)
-            .insert_edge(1, 5, 6, 6)
-            .insert_edge(2, 5, 6, 6)
-            .insert_edge(2, 6, 6, 6)
-            .insert_edge(3, 4, 2, 2)
-            .insert_edge(3, 7, 2, 2)
-            .insert_edge(4, 5, 6, 2)
-            .insert_edge(4, 7, 2, 2)
-            .insert_edge(4, 8, 2, 2)
-            .insert_edge(5, 6, 6, 6)
-            .insert_edge(5, 8, 2, 6)
-            .insert_edge(5, 9, 2, 6)
-            .insert_edge(6, 9, 2, 6)
-            .insert_edge(7, 8, 2, 2)
-            .insert_edge(8, 9, 2, 2);
+static UnitManager simple_unit_manager() {
+    UnitManager um;
+    const auto u0  = um.create(static_cast<int>(UnitType::infrantry), "test unit 0");
+    const auto& mc = um.assign_component<MovementComponent>(u0, 10);
+    auto& pc       = *um.get_component<PositionComponent>(u0);
+    pc.position    = HexCoordinate(1, -1);
+    pc.direction   = 1;
+    return um;
+}
 
-        CHECK_EQ(weighted_graph, ref);
+static std::shared_ptr<Scenario> simple_scenario() {
+    auto sc                  = std::make_shared<Scenario>();
+    sc->map                  = simple_map();
+    sc->units                = simple_unit_manager();
+    sc->teams["test team 0"] = {0};
+    sc->teams["test team 1"] = {};
+    return sc;
+}
+
+TEST_CASE("creating graph") {
+    const auto sc = simple_scenario();
+    kirch::MovementSystem mov(sc);
+
+    SUBCASE("hexes") {
+        const auto wg = mov.make_weighted_graph(0);
+
+        WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability> ref(
+            sc->map.graph(), 1);
+
+        ref.change_edge_weight({0, 0}, {1, 3}, 2)
+            .change_edge_weight({4, 1}, {1, 4}, 2)
+            .change_edge_weight({4, 0}, {5, 3}, 2)
+            .change_edge_weight({8, 1}, {5, 4}, 2)
+            .change_edge_weight({9, 2}, {5, 5}, 2)
+            .change_edge_weight({9, 1}, {6, 4}, 2)
+            .change_edge_weight({4, 1}, {1, 4}, 2)
+            .change_edge_weight({1, 0}, {2, 3}, 2)
+            .change_edge_weight({1, 5}, {5, 2}, 2)
+            .change_edge_weight({5, 0}, {6, 3}, 2)
+            .change_edge_weight({5, 1}, {2, 4}, 2)
+            .change_edge_weight({5, 2}, {1, 5}, 2)
+            .change_edge_weight({2, 3}, {1, 0}, 2)
+            .change_edge_weight({2, 4}, {5, 1}, 2)
+            .change_edge_weight({2, 5}, {6, 2}, 2)
+            .change_edge_weight({6, 2}, {2, 5}, 2)
+            .change_edge_weight({6, 3}, {5, 0}, 2);
+
+        CHECK_EQ(wg, ref);
     }
 
-    SUBCASE("rivers") {
-        Map map = simple_test_map();
-        map.insert(RiverSite(HexCoordinate(-1, -1), HexCoordinate(-2, 0), RiverType::river));
-        map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 0), RiverType::river));
-        map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-2, 1), RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(-1, 0), HexCoordinate(-1, 1), RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(0, 0), HexCoordinate(-1, 1), RiverType::stream));
-        map.insert(RiverSite(HexCoordinate(-1, 1), HexCoordinate(0, 1), RiverType::stream));
-
-        const auto type           = UnitType::heavy;
-        const auto weighted_graph = mover::make_weighted_graph(map, type);
-
-        WeightedBidirectionalGraph ref;
-        ref.insert_edge(0, 1, 6, 2)
-            .insert_edge(0, 3, 5, 5)
-            .insert_edge(0, 4, 2, 2)
-            .insert_edge(1, 2, 6, 6)
-            .insert_edge(1, 4, 2, 6)
-            .insert_edge(1, 5, 6, 6)
-            .insert_edge(2, 5, 6, 6)
-            .insert_edge(2, 6, 6, 6)
-            .insert_edge(3, 4, 5, 5)
-            .insert_edge(3, 7, 2, 2)
-            .insert_edge(4, 5, 6, 2)
-            .insert_edge(4, 7, 6, 6)
-            .insert_edge(4, 8, 6, 6)
-            .insert_edge(5, 6, 6, 6)
-            .insert_edge(5, 8, 6, 10)
-            .insert_edge(5, 9, 2, 6)
-            .insert_edge(6, 9, 2, 6)
-            .insert_edge(7, 8, 2, 2)
-            .insert_edge(8, 9, 6, 6);
-
-        CHECK_EQ(weighted_graph, ref);
+    SUBCASE("path finding") {
+        CHECK(mov.init_movement(HexCoordinate(1, -1), {"test team 0"}, {"test team 1"}));
+        CHECK(mov.is_moving());
+        mov.reset();
+        CHECK_FALSE(mov.is_moving());
+        CHECK(mov.init_movement(HexCoordinate(1, -1), {"test team 0"}, {"test team 1"}));
+        CHECK(mov.is_moving());
     }
 }

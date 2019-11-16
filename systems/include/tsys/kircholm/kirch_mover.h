@@ -21,11 +21,16 @@ class MovementSystem {
 
     bool is_moving() const noexcept;
     void reset() noexcept;
-    std::vector<std::pair<Map::SiteId, int>> path_indices(HexCoordinate destination, int direction) const;
-    std::vector<std::pair<HexCoordinate, int>> path_preview(HexCoordinate destination, int direction) const;
+    std::vector<std::tuple<Map::SiteId, int, Movability>> path_indices(
+        HexCoordinate destination, int direction) const;
+    std::vector<std::tuple<HexCoordinate, int, Movability>> path_preview(
+        HexCoordinate destination, int direction) const;
 
     std::vector<std::unique_ptr<Action>> move_target(HexCoordinate destination,
                                                      int direction);
+
+    WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
+    make_weighted_graph(Unit::IdType id) const;
 
    private:
     const MovementComponent* _target_mc{nullptr};

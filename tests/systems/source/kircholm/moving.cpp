@@ -77,5 +77,19 @@ TEST_CASE("creating graph") {
         CHECK_FALSE(mov.is_moving());
         CHECK(mov.init_movement(HexCoordinate(1, -1), {"test team 0"}, {"test team 1"}));
         CHECK(mov.is_moving());
+
+        const auto prev1 = mov.path_preview(HexCoordinate(1, -1), 3);
+        std::vector<std::tuple<HexCoordinate, int, Movability>> ref1 = {
+            {HexCoordinate(1, -1), 1, 0},
+            {HexCoordinate(1, -1), 2, 1},
+            {HexCoordinate(1, -1), 3, 2}};
+
+        CHECK_EQ(prev1, ref1);
+
+        const auto prev2 = mov.path_preview(HexCoordinate(-1, 0), 2);
+        const auto& [hex, dir, cost] = prev2.back();
+        CHECK_EQ(hex, HexCoordinate(-1, 0));
+        CHECK_EQ(dir, 2);
+        CHECK_EQ(cost, 8);
     }
 }

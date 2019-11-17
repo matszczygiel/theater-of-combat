@@ -99,6 +99,7 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
                     const auto neighbors = target_hex.neighbors();
                     const auto it = std::find(neighbors.cbegin(), neighbors.cend(), hex);
                     if (it != neighbors.cend()) {
+                        const auto direction = std::distance(neighbors.cbegin(), it);
                         auto actions = _movement.move_target(
                             target_hex, std::distance(neighbors.cbegin(), it));
                         for (auto& a : actions)

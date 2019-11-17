@@ -86,10 +86,27 @@ TEST_CASE("creating graph") {
 
         CHECK_EQ(prev1, ref1);
 
-        const auto prev2 = mov.path_preview(HexCoordinate(-1, 0), 2);
+        const auto prev2             = mov.path_preview(HexCoordinate(-1, 0), 2);
         const auto& [hex, dir, cost] = prev2.back();
         CHECK_EQ(hex, HexCoordinate(-1, 0));
         CHECK_EQ(dir, 2);
         CHECK_EQ(cost, 8);
+
+        for (int i = 1; i < prev2.size(); ++i) {
+            const auto& [hex0, dir0, cost0] = prev2.at(i - 1);
+            const auto& [hex1, dir1, cost1] = prev2.at(i);
+            auto diff                       = std::abs(dir0 - dir1);
+            diff                            = (diff < 3) ? diff : 6 - diff;
+            const auto cost                 = cost1 - cost0;
+            if (hex0 == hex1) {
+                CHECK_EQ(diff, 1);
+                CHECK_EQ(cost, 1);
+            } else {
+                const auto neighbors = hex0.neighbors();
+                CHECK_EQ(std::count(neighbors.cbegin(), neighbors.cend(), hex1), 1);
+                CHECK_EQ(dir0, dir1);
+                CHECK_NE(cost, 0);
+            }
+        }
     }
 }

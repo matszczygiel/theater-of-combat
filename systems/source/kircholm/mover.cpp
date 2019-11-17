@@ -190,7 +190,7 @@ void MovementSystem::reset() noexcept {
 
 std::vector<std::unique_ptr<Action>> MovementSystem::move_target(
     HexCoordinate destination, int direction) {
-    const auto path = path_indices(destination, direction);
+    auto path = path_indices(destination, direction);
 
     if (path.empty()) {
         reset();
@@ -201,9 +201,18 @@ std::vector<std::unique_ptr<Action>> MovementSystem::move_target(
         path.begin(), path.end(), _sticky_sites.begin(), _sticky_sites.end(),
         [](const auto& p, const auto& s) { return std::get<0>(p) == s; });
 
-    const bool immobilized              = find != path.end();
-    const auto true_dest_id             = immobilized ? *find : path.back();
-    const auto& [td_id, td_dir, td_mov] = true_dest_id;
+    const bool immobilized = find != path.end();
+    if (immobilized)
+        path.erase(find, path.end());
+
+    app_debug("Moving through path:");
+    for (const auto& [hex, dir, cost] : path) {
+        const auto hex_c = *_scenario->map.get_hex_coord(hex);
+        app_debug("hex: ({}, {}), dir: {}, cost: {}", hex_c.q(), hex_c.p(), dir, cost);
+    }
+    app_debug(" ");
+
+    const auto& [td_id, td_dir, td_mov] = path.back();
 
     std::vector<std::unique_ptr<Action>> res;
     auto new_mc = *_target_mc;

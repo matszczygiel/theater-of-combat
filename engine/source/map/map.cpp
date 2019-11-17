@@ -39,8 +39,9 @@ Map& Map::insert(HexSite site) {
                                              return x.second.coord() == neighors[i];
                                          });
             it != _hexes.cend()) {
-            const auto n_direction = (i + (n_size / 2)) % n_size;
-            _graph.insert_node({id, i}, {{it->first, n_direction}});
+            _graph.insert_node({id, i}, {{it->first, i}});
+            const auto opp_dir = (i + neighors.size() / 2) % neighors.size();
+            _graph.insert_node({id, opp_dir}, {{it->first, opp_dir}});
         }
     }
 
@@ -96,9 +97,13 @@ Map& Map::insert(BorderSite site) {
     const int dir_from_0 = std::distance(neigbors_of_0.cbegin(), it);
     const int dir_from_1 = (dir_from_0 + neigbors_of_0.size() / 2) % neigbors_of_0.size();
 
-    _graph.remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_1})
-        .insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_0}})
-        .insert_node({id, dir_from_0}, {{found_hexes[1], dir_from_1}, {id, dir_from_1}});
+    _graph.remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_0})
+        .remove_edge({found_hexes[1], dir_from_1}, {found_hexes[0], dir_from_1})
+        .insert_node({id, dir_from_0},
+                     {{found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_0}})
+        .insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_1},
+                                        {found_hexes[1], dir_from_1},
+                                        {id, dir_from_0}});
 
     return *this;
 }

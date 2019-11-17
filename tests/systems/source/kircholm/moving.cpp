@@ -3,6 +3,25 @@
 
 #include "tsys/kircholm.h"
 
+std::ostream& operator<<(std::ostream& os, const std::pair<int, int>& value) {
+    os << "( " << value.first << ", " << value.second << ')';
+    return os;
+}
+
+std::ostream& operator<<(
+    std::ostream& os,
+    WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability>& value) {
+    os << '{';
+    for (const auto& [node, neighbors] : value.adjacency_matrix()) {
+        os << "{ " << node << ", {";
+        for (const auto& [n, w] : neighbors)
+            os << " [" << n << " -> " << w << " ]";
+        os << " }}\n";
+    }
+    os << '}';
+    return os;
+}
+
 using namespace kirch;
 
 static Map simple_map() {
@@ -49,23 +68,23 @@ TEST_CASE("creating graph") {
         WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability> ref(
             sc->map.graph(), 1);
 
-        ref.change_edge_weight({0, 0}, {1, 3}, 2)
-            .change_edge_weight({4, 1}, {1, 4}, 2)
-            .change_edge_weight({4, 0}, {5, 3}, 2)
-            .change_edge_weight({8, 1}, {5, 4}, 2)
-            .change_edge_weight({9, 2}, {5, 5}, 2)
-            .change_edge_weight({9, 1}, {6, 4}, 2)
-            .change_edge_weight({4, 1}, {1, 4}, 2)
-            .change_edge_weight({1, 0}, {2, 3}, 2)
-            .change_edge_weight({1, 5}, {5, 2}, 2)
-            .change_edge_weight({5, 0}, {6, 3}, 2)
-            .change_edge_weight({5, 1}, {2, 4}, 2)
-            .change_edge_weight({5, 2}, {1, 5}, 2)
-            .change_edge_weight({2, 3}, {1, 0}, 2)
-            .change_edge_weight({2, 4}, {5, 1}, 2)
-            .change_edge_weight({2, 5}, {6, 2}, 2)
-            .change_edge_weight({6, 2}, {2, 5}, 2)
-            .change_edge_weight({6, 3}, {5, 0}, 2);
+        ref.change_edge_weight({0, 0}, {1, 0}, 2)
+            .change_edge_weight({4, 1}, {1, 1}, 2)
+            .change_edge_weight({4, 0}, {5, 0}, 2)
+            .change_edge_weight({8, 1}, {5, 1}, 2)
+            .change_edge_weight({9, 2}, {5, 2}, 2)
+            .change_edge_weight({9, 1}, {6, 1}, 2)
+            .change_edge_weight({4, 1}, {1, 1}, 2)
+            .change_edge_weight({1, 0}, {2, 0}, 2)
+            .change_edge_weight({1, 5}, {5, 5}, 2)
+            .change_edge_weight({5, 0}, {6, 0}, 2)
+            .change_edge_weight({5, 1}, {2, 1}, 2)
+            .change_edge_weight({5, 2}, {1, 2}, 2)
+            .change_edge_weight({2, 3}, {1, 3}, 2)
+            .change_edge_weight({2, 4}, {5, 4}, 2)
+            .change_edge_weight({2, 5}, {6, 5}, 2)
+            .change_edge_weight({6, 2}, {2, 2}, 2)
+            .change_edge_weight({6, 3}, {5, 3}, 2);
 
         CHECK_EQ(wg, ref);
     }

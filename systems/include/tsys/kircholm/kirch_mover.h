@@ -29,7 +29,7 @@ class MovementSystem {
     std::vector<std::unique_ptr<Action>> move_target(HexCoordinate destination,
                                                      int direction);
 
-    WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
+    WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
     make_weighted_graph(Unit::IdType id) const;
 
    private:

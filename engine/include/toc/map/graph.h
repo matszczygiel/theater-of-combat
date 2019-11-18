@@ -246,6 +246,7 @@ bool operator!=(const WeightedBidirectionalGraph<Index, Weight>& lhs,
 template <typename Index = int>
 class UnidirectionalGraph {
    public:
+    UnidirectionalGraph() = default;
     UnidirectionalGraph(const BidirectionalGraph<Index>& other) noexcept;
 
     UnidirectionalGraph<Index>& insert_node(Index node_start,
@@ -272,8 +273,8 @@ UnidirectionalGraph<Index>::UnidirectionalGraph(
 template <typename Index>
 UnidirectionalGraph<Index>& UnidirectionalGraph<Index>::insert_node(
     Index node_start, const std::set<Index>& neighbors_end) {
-    for (const auto& n : neighbors) {
-        insert_edge(node, n);
+    for (const auto& n : neighbors_end) {
+        insert_edge(node_start, n);
     }
     return *this;
 }
@@ -295,7 +296,7 @@ template <typename Index>
 UnidirectionalGraph<Index>& UnidirectionalGraph<Index>::remove_node(Index node) {
     _adjacency_matrix.erase(node);
 
-    for (auto& [std::ignore, n] : _adjacency_matrix)
+    for (auto& [_, n] : _adjacency_matrix)
         n.erase(node);
 
     return *this;
@@ -448,7 +449,7 @@ WeightedUnidirectionalGraph<Index, Weight>::dijkstra(Index src) const {
     constexpr auto infinity = std::numeric_limits<Weight>::max();
 
     std::map<Index, Weight> dist{};
-    for (const auto& [node, std::ignore] : _adjacency_matrix) {
+    for (const auto& [node, _] : _adjacency_matrix) {
         dist[node] = infinity;
     }
     dist[src] = 0;

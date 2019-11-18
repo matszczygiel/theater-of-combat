@@ -22,7 +22,7 @@ class Map {
 
     const std::map<SiteId, HexSite>& hexes() const noexcept;
     const std::map<SiteId, BorderSite>& borders() const noexcept;
-    const BidirectionalGraph<std::pair<SiteId, int>>& graph() const noexcept;
+    const UnidirectionalGraph<std::pair<SiteId, int>>& graph() const noexcept;
 
     Map& insert(HexSite site);
     Map& insert(BorderSite site);
@@ -43,7 +43,7 @@ class Map {
     std::map<SiteId, HexSite> _hexes{};
     std::map<SiteId, BorderSite> _borders{};
 
-    BidirectionalGraph<std::pair<SiteId, int>> _graph{};
+    UnidirectionalGraph<std::pair<SiteId, int>> _graph{};
 
     IdGenerator<SiteId> _id_gen{0};
 };

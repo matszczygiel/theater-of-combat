@@ -63,14 +63,14 @@ static std::map<HexType, Movability> get_rotation_table() {
     };
 }
 
-WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
+WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
 MovementSystem::make_weighted_graph(Unit::IdType id) const {
     const auto hex_tab = get_movability_table(_scenario->units, id);
     const auto rot_tab = get_rotation_table();
 
     const auto& map = _scenario->map;
 
-    WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, Movability> res(map.graph(),
+    WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability> res(map.graph(),
                                                                             0);
 
     for (const auto& [node, neighbors] : map.graph().adjacency_matrix()) {

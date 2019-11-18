@@ -113,29 +113,29 @@ TEST_CASE("graph") {
         CHECK_EQ(bg.adjacency_matrix(), expected);
     }
 
-    SUBCASE("UniidirectionalGraph") {
-        BidirectionalGraph<int> bg;
-        bg.insert_node(0)
+    SUBCASE("UnidirectionalGraph") {
+        UnidirectionalGraph<int> ug;
+        ug.insert_node(0)
             .insert_node(1)
             .insert_node(2, {1})
             .insert_node(3, {1, 2})
             .insert_node(4, {0, 3})
             .insert_edge(3, 5);
 
-        std::map<int, std::set<int>> expected = {
-            {0, {4}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 4, 5}}, {4, {0, 3}}, {5, {3}}};
+        std::map<int, std::set<int>> expected = {{0, {}},        {1, {}},     {2, {1}},
+                                                 {3, {1, 2, 5}}, {4, {0, 3}}, {5, {}}};
 
-        CHECK_EQ(bg.adjacency_matrix(), expected);
+        CHECK_EQ(ug.adjacency_matrix(), expected);
 
-        bg.remove_node(4);
-        expected = {{0, {}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 5}}, {5, {3}}};
+        ug.remove_node(2);
+        expected = {{0, {}}, {1, {}}, {3, {1, 5}}, {4, {0, 3}}, {5, {}}};
 
-        CHECK_EQ(bg.adjacency_matrix(), expected);
+        CHECK_EQ(ug.adjacency_matrix(), expected);
 
-        bg.remove_edge(1, 3);
-        expected = {{0, {}}, {1, {2}}, {2, {1, 3}}, {3, {2, 5}}, {5, {3}}};
+        ug.remove_edge(3, 1);
+        expected = {{0, {}}, {1, {}}, {3, {5}}, {4, {0, 3}}, {5, {}}};
 
-        CHECK_EQ(bg.adjacency_matrix(), expected);
+        CHECK_EQ(ug.adjacency_matrix(), expected);
     }
 
     SUBCASE("WeightedBidirectionalGraph") {
@@ -205,6 +205,68 @@ TEST_CASE("graph") {
         CHECK_EQ(wbg, wbg_expected);
     }
 
+    SUBCASE("WeightedUnidirectionalGraph") {
+        UnidirectionalGraph<int> bg;
+        bg.insert_node(0)
+            .insert_node(1)
+            .insert_node(2, {1})
+            .insert_node(3, {1, 2})
+            .insert_node(4, {0, 3})
+            .insert_edge(3, 5);
+
+        WeightedUnidirectionalGraph<int, int> wbg_expected(bg, 1);
+
+        WeightedUnidirectionalGraph<int, int> wbg;
+        wbg.insert_edge(2, 1, 1)
+            .insert_edge(3, 1, 1)
+            .insert_edge(4, 0, 1)
+            .insert_edge(3, 2, 1)
+            .insert_edge(4, 3, 1)
+            .insert_edge(3, 5, 1);
+        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
+        auto expected_adj = wbg.adjacency_matrix();
+        wbg.insert_node(6);
+        expected_adj[6] = {};
+        CHECK_EQ(wbg.adjacency_matrix(), expected_adj);
+
+        wbg = WeightedUnidirectionalGraph(bg, 1);
+        bg.remove_node(4);
+        wbg_expected = WeightedUnidirectionalGraph(bg, 1);
+        wbg.remove_node(4);
+        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
+        wbg = WeightedUnidirectionalGraph(bg, 1);
+        bg.remove_edge(1, 2);
+        wbg_expected = WeightedUnidirectionalGraph(bg, 1);
+        wbg.remove_edge(1, 2);
+        CHECK_EQ(wbg.adjacency_matrix(), wbg_expected.adjacency_matrix());
+
+        bg = BidirectionalGraph();
+        bg.insert_node(0)
+            .insert_node(1)
+            .insert_node(2, {1})
+            .insert_node(3, {1, 2})
+            .insert_node(4, {0, 3});
+
+        wbg_expected = WeightedUnidirectionalGraph(bg, 0);
+
+        wbg_expected.change_edge_weight(2, 1, 3)
+            .change_edge_weight(3, 1, 0)
+            .change_edge_weight(4, 0, 1)
+            .change_edge_weight(3, 2, 0)
+            .change_edge_weight(4, 3, 1);
+
+        wbg = WeightedUnidirectionalGraph();
+        wbg.insert_edge(2, 1, 3)
+            .insert_edge(3, 1, 0)
+            .insert_edge(4, 0, 1)
+            .insert_edge(3, 2, 0)
+            .insert_edge(4, 3, 1);
+
+        CHECK_EQ(wbg, wbg_expected);
+    }
+
     SUBCASE("dijkstra") {
         WeightedBidirectionalGraph<int, int> wbg;
         wbg.insert_edge(1, 2, 3, 4)
@@ -213,7 +275,7 @@ TEST_CASE("graph") {
             .insert_edge(2, 3, 0, 3)
             .insert_edge(3, 4, 1, 0);
 
-        auto [dist, prev] = wbg.dijkstra(3);
+        const auto [dist, prev] = wbg.dijkstra(3);
 
         std::map<int, int> dist_expected = {{0, 4}, {1, 4}, {2, 3}, {3, 0}, {4, 1}};
         std::map<int, int> prev_expected = {{0, 4}, {1, 3}, {2, 3}, {4, 3}};
@@ -234,7 +296,7 @@ TEST_CASE("site types") {
 
 TEST_CASE("map") {
     Map map{};
-    BidirectionalGraph<std::pair<Map::SiteId, int>> graph{};
+    UnidirectionalGraph<std::pair<Map::SiteId, int>> graph{};
 
     map.insert(HexSite(HexCoordinate(0, -1), 0));
     map.insert(HexSite(HexCoordinate(1, -1), 0));
@@ -244,48 +306,45 @@ TEST_CASE("map") {
     map.insert(HexSite(HexCoordinate(-1, 1), 0));
     map.insert(HexSite(HexCoordinate(0, 1), 0));
 
-    graph.insert_node({0, 0})
-        .insert_node({0, 1}, {{0, 0}})
-        .insert_node({0, 2}, {{0, 1}})
-        .insert_node({0, 3}, {{0, 2}})
-        .insert_node({0, 4}, {{0, 3}})
-        .insert_node({0, 5}, {{0, 4}, {0, 0}})
-        .insert_node({1, 0}, {{0, 0}})
-        .insert_node({1, 1}, {{1, 0}})
-        .insert_node({1, 2}, {{1, 1}})
-        .insert_node({1, 3}, {{1, 2}, {0, 3}})
-        .insert_node({1, 4}, {{1, 3}})
-        .insert_node({1, 5}, {{1, 4}, {1, 0}})
-        .insert_node({2, 0})
-        .insert_node({2, 1}, {{2, 0}, {0, 1}})
-        .insert_node({2, 2}, {{2, 1}})
-        .insert_node({2, 3}, {{2, 2}})
-        .insert_node({2, 4}, {{2, 3}, {0, 4}})
-        .insert_node({2, 5}, {{2, 4}, {2, 0}})
-        .insert_node({3, 0}, {{2, 0}})
-        .insert_node({3, 1}, {{3, 0}, {1, 1}})
-        .insert_node({3, 2}, {{3, 1}, {0, 2}})
-        .insert_node({3, 3}, {{3, 2}, {2, 3}})
-        .insert_node({3, 4}, {{3, 3}, {1, 4}})
-        .insert_node({3, 5}, {{3, 4}, {3, 0}, {0, 5}})
-        .insert_node({4, 0}, {{3, 0}})
-        .insert_node({4, 1}, {{4, 0}})
-        .insert_node({4, 2}, {{4, 1}, {1, 2}})
-        .insert_node({4, 3}, {{4, 2}, {3, 3}})
-        .insert_node({4, 4}, {{4, 3}})
-        .insert_node({4, 5}, {{4, 4}, {4, 0}, {1, 5}})
-        .insert_node({5, 0})
-        .insert_node({5, 1}, {{5, 0}, {3, 1}})
-        .insert_node({5, 2}, {{5, 1}, {2, 2}})
-        .insert_node({5, 3}, {{5, 2}})
-        .insert_node({5, 4}, {{5, 3}, {3, 4}})
-        .insert_node({5, 5}, {{5, 4}, {5, 0}, {2, 5}})
-        .insert_node({6, 0}, {{5, 0}})
-        .insert_node({6, 1}, {{6, 0}, {4, 1}})
-        .insert_node({6, 2}, {{6, 1}, {3, 2}})
-        .insert_node({6, 3}, {{6, 2}, {5, 3}})
-        .insert_node({6, 4}, {{6, 3}, {4, 4}})
-        .insert_node({6, 5}, {{6, 4}, {6, 0}, {3, 5}});
+    for (int i = 0; i <= 6; ++i) {
+        graph.insert_edge({i, 0}, {i, 1})
+            .insert_edge({i, 1}, {i, 0})
+            .insert_edge({i, 1}, {i, 2})
+            .insert_edge({i, 2}, {i, 1})
+            .insert_edge({i, 2}, {i, 3})
+            .insert_edge({i, 3}, {i, 2})
+            .insert_edge({i, 3}, {i, 4})
+            .insert_edge({i, 4}, {i, 3})
+            .insert_edge({i, 4}, {i, 5})
+            .insert_edge({i, 5}, {i, 4})
+            .insert_edge({i, 5}, {i, 0})
+            .insert_edge({i, 0}, {i, 5});
+    }
+
+    graph.insert_edge({0, 0}, {1, 0})
+        .insert_edge({0, 5}, {3, 5})
+        .insert_edge({0, 4}, {2, 4})
+        .insert_edge({1, 3}, {0, 3})
+        .insert_edge({1, 4}, {3, 4})
+        .insert_edge({1, 5}, {4, 5})
+        .insert_edge({2, 0}, {3, 0})
+        .insert_edge({2, 1}, {0, 1})
+        .insert_edge({2, 5}, {5, 5})
+        .insert_edge({3, 0}, {4, 0})
+        .insert_edge({3, 1}, {1, 1})
+        .insert_edge({3, 2}, {0, 2})
+        .insert_edge({3, 3}, {2, 3})
+        .insert_edge({3, 4}, {5, 4})
+        .insert_edge({3, 5}, {6, 5})
+        .insert_edge({4, 2}, {1, 2})
+        .insert_edge({4, 3}, {3, 3})
+        .insert_edge({4, 4}, {6, 4})
+        .insert_edge({5, 0}, {6, 0})
+        .insert_edge({5, 1}, {3, 1})
+        .insert_edge({5, 2}, {2, 2})
+        .insert_edge({6, 1}, {4, 1})
+        .insert_edge({6, 2}, {3, 2})
+        .insert_edge({6, 3}, {5, 3});
 
     SUBCASE("hex insertions") { CHECK_EQ(map.graph(), graph); }
 
@@ -298,22 +357,30 @@ TEST_CASE("map") {
         CHECK_THROWS(
             map.insert(BorderSite(HexCoordinate(8, -1), HexCoordinate(9, -1), 1)));
 
-        graph.remove_edge({1, 3}, {0, 3})
-            .remove_edge({1, 0}, {0, 0})
+        graph.remove_edge({0, 0}, {1, 0})
+            .remove_edge({1, 3}, {0, 3})
+            .insert_edge({0, 0}, {7, 0})
+            .insert_edge({7, 0}, {1, 0})
+            .insert_edge({1, 3}, {7, 3})
+            .insert_edge({7, 3}, {0, 3})
             .remove_edge({3, 1}, {1, 1})
-            .remove_edge({3, 4}, {1, 4})
+            .remove_edge({1, 4}, {3, 4})
+            .insert_edge({3, 1}, {8, 1})
+            .insert_edge({8, 1}, {1, 1})
+            .insert_edge({1, 4}, {8, 4})
+            .insert_edge({8, 4}, {3, 4})
             .remove_edge({3, 0}, {4, 0})
-            .remove_edge({3, 3}, {4, 3})
+            .remove_edge({4, 3}, {3, 3})
+            .insert_edge({3, 0}, {9, 0})
+            .insert_edge({9, 0}, {4, 0})
+            .insert_edge({4, 3}, {9, 3})
+            .insert_edge({9, 3}, {3, 3})
             .remove_edge({6, 1}, {4, 1})
-            .remove_edge({6, 4}, {4, 4})
-            .insert_node({7, 0}, {{1, 0}, {0, 0}})
-            .insert_node({7, 3}, {{1, 3}, {0, 3}, {7, 0}})
-            .insert_node({8, 1}, {{1, 1}, {3, 1}})
-            .insert_node({8, 4}, {{1, 4}, {3, 4}, {8, 1}})
-            .insert_node({9, 0}, {{4, 0}, {3, 0}})
-            .insert_node({9, 3}, {{4, 3}, {3, 3}, {9, 0}})
-            .insert_node({10, 1}, {{4, 1}, {6, 1}})
-            .insert_node({10, 4}, {{4, 4}, {6, 4}, {10, 1}});
+            .remove_edge({4, 4}, {6, 4})
+            .insert_edge({6, 1}, {10, 1})
+            .insert_edge({10, 1}, {4, 1})
+            .insert_edge({4, 4}, {10, 4})
+            .insert_edge({10, 4}, {6, 4});
 
         CHECK_EQ(map.graph(), graph);
     }

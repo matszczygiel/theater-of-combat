@@ -14,7 +14,7 @@ const std::map<Map::SiteId, BorderSite>& Map::borders() const noexcept {
     return _borders;
 }
 
-const BidirectionalGraph<std::pair<Map::SiteId, int>>& Map::graph() const noexcept {
+const UnidirectionalGraph<std::pair<Map::SiteId, int>>& Map::graph() const noexcept {
     return _graph;
 }
 
@@ -41,12 +41,13 @@ Map& Map::insert(HexSite site) {
             it != _hexes.cend()) {
             _graph.insert_node({id, i}, {{it->first, i}});
             const auto opp_dir = (i + neighors.size() / 2) % neighors.size();
-            _graph.insert_node({id, opp_dir}, {{it->first, opp_dir}});
+            _graph.insert_edge({it->first, opp_dir}, {id, opp_dir});
         }
     }
 
     for (int i = 0; i < n_size; ++i) {
         _graph.insert_edge({id, i}, {id, (i + 1) % n_size});
+        _graph.insert_edge({id, (i + 1) % n_size}, {id, i});
     }
 
     return *this;
@@ -99,12 +100,10 @@ Map& Map::insert(BorderSite site) {
 
     _graph.remove_edge({found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_0})
         .remove_edge({found_hexes[1], dir_from_1}, {found_hexes[0], dir_from_1})
-        .insert_node({id, dir_from_0},
-                     {{found_hexes[0], dir_from_0}, {found_hexes[1], dir_from_0}})
-        .insert_node({id, dir_from_1}, {{found_hexes[0], dir_from_1},
-                                        {found_hexes[1], dir_from_1},
-                                        {id, dir_from_0}});
-
+        .insert_edge({found_hexes[0], dir_from_0}, {id, dir_from_0})
+        .insert_edge({id, dir_from_0}, {found_hexes[1], dir_from_0})
+        .insert_edge({found_hexes[1], dir_from_1}, {id, dir_from_1})
+        .insert_edge({id, dir_from_1}, {found_hexes[0], dir_from_1});
     return *this;
 }
 

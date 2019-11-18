@@ -86,6 +86,9 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
                     if (neighbor.first == node_id) {
                         res.change_edge_weight(neighbor, node, rot_tab.at(hex_type));
                     } else {
+                        app_assert(
+                            neighbor.second == dir,
+                            "in kirch system, direction cannot be changed by non-rotation.");
                         res.change_edge_weight(neighbor, node, hex_tab.at(hex_type));
                     }
                 }

@@ -113,6 +113,31 @@ TEST_CASE("graph") {
         CHECK_EQ(bg.adjacency_matrix(), expected);
     }
 
+    SUBCASE("UniidirectionalGraph") {
+        BidirectionalGraph<int> bg;
+        bg.insert_node(0)
+            .insert_node(1)
+            .insert_node(2, {1})
+            .insert_node(3, {1, 2})
+            .insert_node(4, {0, 3})
+            .insert_edge(3, 5);
+
+        std::map<int, std::set<int>> expected = {
+            {0, {4}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 4, 5}}, {4, {0, 3}}, {5, {3}}};
+
+        CHECK_EQ(bg.adjacency_matrix(), expected);
+
+        bg.remove_node(4);
+        expected = {{0, {}}, {1, {2, 3}}, {2, {1, 3}}, {3, {1, 2, 5}}, {5, {3}}};
+
+        CHECK_EQ(bg.adjacency_matrix(), expected);
+
+        bg.remove_edge(1, 3);
+        expected = {{0, {}}, {1, {2}}, {2, {1, 3}}, {3, {2, 5}}, {5, {3}}};
+
+        CHECK_EQ(bg.adjacency_matrix(), expected);
+    }
+
     SUBCASE("WeightedBidirectionalGraph") {
         BidirectionalGraph<int> bg;
         bg.insert_node(0)

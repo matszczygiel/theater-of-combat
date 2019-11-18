@@ -3,14 +3,15 @@
 
 #include "tsys/kircholm.h"
 
-std::ostream& operator<<(std::ostream& os, const std::pair<int, int>& value) {
+template <class T, class U>
+std::ostream& operator<<(std::ostream& os, const std::pair<T, U>& value) {
     os << "( " << value.first << ", " << value.second << ')';
     return os;
 }
 
-std::ostream& operator<<(
-    std::ostream& os,
-    WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability>& value) {
+template <class T, class W>
+std::ostream& operator<<(std::ostream& os,
+                         const WeightedBidirectionalGraph<T, W>& value) {
     os << '{';
     for (const auto& [node, neighbors] : value.adjacency_matrix()) {
         os << "{ " << node << ", {";

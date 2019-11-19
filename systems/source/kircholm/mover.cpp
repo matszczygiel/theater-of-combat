@@ -71,7 +71,7 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
     const auto& map = _scenario->map;
 
     WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability> res(map.graph(),
-                                                                            0);
+                                                                             0);
 
     for (const auto& [node, neighbors] : map.graph().adjacency_matrix()) {
         const auto& [node_id, dir] = node;
@@ -89,7 +89,9 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
                         app_assert(
                             neighbor.second == dir,
                             "in kirch system, direction cannot be changed by non-rotation.");
-                        res.change_edge_weight(neighbor, node, hex_tab.at(hex_type));
+                        const auto op_dir = HexCoordinate::opposite_direction(dir);
+                        res.change_edge_weight({neighbor.first, op_dir},
+                                               {node_id, op_dir}, hex_tab.at(hex_type));
                     }
                 }
             } break;

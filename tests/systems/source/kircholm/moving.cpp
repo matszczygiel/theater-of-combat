@@ -66,26 +66,25 @@ TEST_CASE("creating graph") {
     SUBCASE("hexes") {
         const auto wg = mov.make_weighted_graph(0);
 
-        WeightedBidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability> ref(
+        WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, kirch::Movability> ref(
             sc->map.graph(), 1);
 
         ref.change_edge_weight({0, 0}, {1, 0}, 2)
-            .change_edge_weight({4, 1}, {1, 1}, 2)
-            .change_edge_weight({4, 0}, {5, 0}, 2)
-            .change_edge_weight({8, 1}, {5, 1}, 2)
-            .change_edge_weight({9, 2}, {5, 2}, 2)
-            .change_edge_weight({9, 1}, {6, 1}, 2)
-            .change_edge_weight({4, 1}, {1, 1}, 2)
             .change_edge_weight({1, 0}, {2, 0}, 2)
             .change_edge_weight({1, 5}, {5, 5}, 2)
-            .change_edge_weight({5, 0}, {6, 0}, 2)
-            .change_edge_weight({5, 1}, {2, 1}, 2)
-            .change_edge_weight({5, 2}, {1, 2}, 2)
             .change_edge_weight({2, 3}, {1, 3}, 2)
             .change_edge_weight({2, 4}, {5, 4}, 2)
             .change_edge_weight({2, 5}, {6, 5}, 2)
+            .change_edge_weight({4, 0}, {5, 0}, 2)
+            .change_edge_weight({4, 1}, {1, 1}, 2)
+            .change_edge_weight({5, 0}, {6, 0}, 2)
+            .change_edge_weight({5, 1}, {2, 1}, 2)
+            .change_edge_weight({5, 2}, {1, 2}, 2)
             .change_edge_weight({6, 2}, {2, 2}, 2)
-            .change_edge_weight({6, 3}, {5, 3}, 2);
+            .change_edge_weight({6, 3}, {5, 3}, 2)
+            .change_edge_weight({8, 1}, {5, 1}, 2)
+            .change_edge_weight({9, 1}, {6, 1}, 2)
+            .change_edge_weight({9, 2}, {5, 2}, 2);
 
         CHECK_EQ(wg, ref);
     }

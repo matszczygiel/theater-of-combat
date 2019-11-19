@@ -38,6 +38,7 @@ class HexCoordinates {
 
     constexpr static HexCoordinates<T> origin() noexcept;
     constexpr static int neighbors_count() noexcept;
+    constexpr static int opposite_direction(int dir) noexcept;
 
     template <class Archive>
     void serialize(Archive& archive);
@@ -65,6 +66,12 @@ constexpr HexCoordinates<T> HexCoordinates<T>::origin() noexcept {
 template <typename T>
 constexpr  int HexCoordinates<T>::neighbors_count() noexcept {
     return 6;
+}
+
+template <typename T>
+constexpr  int HexCoordinates<T>::opposite_direction(int dir) noexcept {
+    constexpr auto n = neighbors_count();
+    return ((dir % n) + n / 2) % n;
 }
 
 template <typename T>

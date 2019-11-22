@@ -47,7 +47,6 @@ void SystemKircholm::next_phase() {
 void SystemKircholm::prepare_lua(sol::state& lua) { lua_push_functions(lua); }
 
 void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
-    gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
 
     if (is_local_player_now()) {
@@ -79,11 +78,7 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
 }
 
 void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
-    gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
-
-    static bool choosing_dir = false;
-    static HexCoordinate target_hex;
 
     if (is_local_player_now()) {
         switch (_current_phase) {
@@ -92,20 +87,9 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
                     _movement.init_movement(
                         hex, scenario->player_teams[current_player_index()],
                         scenario->player_teams[opposite_player_index()]);
-                } else if (!choosing_dir) {
-                    choosing_dir = true;
-                    target_hex   = hex;
+                    _tmp_move_target = {};
                 } else {
-                    const auto neighbors = target_hex.neighbors();
-                    const auto it = std::find(neighbors.cbegin(), neighbors.cend(), hex);
-                    if (it != neighbors.cend()) {
-                        const auto direction = std::distance(neighbors.cbegin(), it);
-                        auto actions = _movement.move_target(
-                            target_hex, std::distance(neighbors.cbegin(), it));
-                        for (auto& a : actions)
-                            push_action(std::move(a));
-                    }
-                    choosing_dir = false;
+                    _tmp_move_target = hex;
                 }
                 break;
             case StatePhase::bombardment:
@@ -122,7 +106,6 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
 }
 
 void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
-    gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
 
     const PositionComponent* pc{nullptr};
@@ -152,6 +135,49 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
         }
     }
 }
+
+void SystemKircholm::handle_hex_release(const HexCoordinate& hex) {
+    if (is_local_player_now()) {
+        switch (_current_phase) {
+            case StatePhase::movement:
+                if (_movement.is_moving() && _tmp_move_target) {
+                    const auto& target   = *_tmp_move_target;
+                    const auto neighbors = target.neighbors();
+                    const auto it = std::find(neighbors.cbegin(), neighbors.cend(), hex);
+                    if (it != neighbors.cend()) {
+                        const auto direction = std::distance(neighbors.cbegin(), it);
+                        auto actions         = _movement.move_target(target, direction);
+                        for (auto& a : actions)
+                            push_action(std::move(a));
+                    } else if (_tmp_move_target == hex) {
+                        auto path       = _movement.path_preview(hex, 0);
+                        const auto last = std::unique(
+                            path.begin(), path.end(),
+                            [](const auto& site1, const auto& site2) {
+                                return std::get<0>(site1) == std::get<0>(site2);
+                            });
+                        path.erase(last, path.end());
+                        const auto [h, dir, cost] = path.back();
+                        auto actions              = _movement.move_target(h, dir);
+                        for (auto& a : actions)
+                            push_action(std::move(a));
+                    }
+                    _tmp_move_target = {};
+                }
+                break;
+            case StatePhase::bombardment:
+                break;
+            case StatePhase::attack:
+                break;
+            case StatePhase::counterattack:
+                break;
+
+            default:
+                app_assert(false, "Unknown StatePhase");
+        }
+    }
+
+}  // namespace kirch
 
 std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
     _debug            = std::make_shared<DebugInfoSystem>();

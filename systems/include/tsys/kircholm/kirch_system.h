@@ -20,6 +20,7 @@ class SystemKircholm : public SystemState {
     virtual void handle_hex_over(const HexCoordinate& hex) override;
     virtual void handle_hex_selection(const HexCoordinate& hex) override;
     virtual void handle_hex_info(const HexCoordinate& hex) override;
+    virtual void handle_hex_release(const HexCoordinate& hex) override;
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info() override;
 
     template <class Archive>
@@ -31,6 +32,7 @@ class SystemKircholm : public SystemState {
 
     std::shared_ptr<DebugInfoSystem> _debug{nullptr};
     MovementSystem _movement;
+    std::optional<HexCoordinate> _tmp_move_target{};
 };
 
 template <class Archive>

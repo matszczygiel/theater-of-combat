@@ -29,6 +29,9 @@ class Application {
     virtual void window_resize_event(const unsigned& width, const unsigned& height) = 0;
     virtual void mouse_moved_event(const sf::Vector2f& position)                    = 0;
 
+    bool imgui_want_mouse();
+    bool imgui_want_keyboard();
+
     sf::RenderWindow _window{};
 
     bool _running{false};

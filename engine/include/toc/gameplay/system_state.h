@@ -24,6 +24,7 @@ class SystemState {
     void next_player();
     void push_action(std::unique_ptr<Action> action);
     void update();
+    void clear();
 
     std::shared_ptr<Scenario> scenario{std::make_shared<Scenario>()};
     std::array<std::string, 2> player_names{};
@@ -39,6 +40,7 @@ class SystemState {
     virtual void handle_hex_over(const HexCoordinate& hex)      = 0;
     virtual void handle_hex_selection(const HexCoordinate& hex) = 0;
     virtual void handle_hex_info(const HexCoordinate& hex)      = 0;
+    virtual void handle_hex_release(const HexCoordinate& hex)   = 0;
 
     template <class Archive>
     void serialize(Archive& archive);

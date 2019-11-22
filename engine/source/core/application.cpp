@@ -79,27 +79,25 @@ void Application::run() {
 }
 
 void Application::handle_event(const sf::Event& event) {
-    const auto& io = ImGui::GetIO();
-
     switch (event.type) {
         case sf::Event::Closed:
             _running = false;
             break;
 
         case sf::Event::KeyPressed:
-            if (io.WantCaptureKeyboard)
+            if (imgui_want_keyboard())
                 break;
             key_pressed_event(event.key.code);
             break;
 
         case sf::Event::KeyReleased:
-            if (io.WantCaptureKeyboard)
+            if (imgui_want_keyboard())
                 break;
             key_released_event(event.key.code);
             break;
 
         case sf::Event::MouseButtonPressed:
-            if (io.WantCaptureMouse)
+            if (imgui_want_mouse())
                 break;
             mouse_button_pressed_event(event.mouseButton.button,
                                        _window.mapPixelToCoords(sf::Vector2i(
@@ -107,7 +105,7 @@ void Application::handle_event(const sf::Event& event) {
             break;
 
         case sf::Event::MouseButtonReleased:
-            if (io.WantCaptureMouse)
+            if (imgui_want_mouse())
                 break;
             mouse_button_released_event(event.mouseButton.button,
                                         _window.mapPixelToCoords(sf::Vector2i(
@@ -119,12 +117,12 @@ void Application::handle_event(const sf::Event& event) {
             break;
 
         case sf::Event::MouseWheelScrolled:
-            if (io.WantCaptureMouse)
+            if (imgui_want_mouse())
                 break;
             mouse_wheel_scrolled_event(event.mouseWheelScroll.delta);
 
         case sf::Event::MouseMoved:
-            if (io.WantCaptureMouse)
+            if (imgui_want_mouse())
                 break;
             mouse_moved_event(_window.mapPixelToCoords(
                 sf::Vector2i(event.mouseMove.x, event.mouseMove.y)));
@@ -132,4 +130,14 @@ void Application::handle_event(const sf::Event& event) {
         default:
             break;
     }
+}
+
+bool Application::imgui_want_mouse() {
+    const auto& io = ImGui::GetIO();
+    return io.WantCaptureMouse;
+}
+
+bool Application::imgui_want_keyboard() {
+    const auto& io = ImGui::GetIO();
+    return io.WantCaptureKeyboard;
 }

@@ -85,7 +85,7 @@ void Game::initialize() {
     };
 
     _system->prepare_lua(lua);
-    
+
     lua["load_scenario_script"] = [&](std::string name) {
         std::ifstream lua_script(_res_loader->resources_path().string() + "/scenarios/" +
                                  name + ".lua");
@@ -207,7 +207,7 @@ void Game::update(const sf::Time& elapsed_time) {
         }
     }
 
-    for(const auto& ac : _system->accumulated_actions)
+    for (const auto& ac : _system->accumulated_actions)
         _debug->log_action(ac);
 
     _system->update();
@@ -255,7 +255,7 @@ void Game::update(const sf::Time& elapsed_time) {
 
 void Game::render() { _system->gfx.draw(_window); }
 
-void Game::clear_loop() {}
+void Game::clear_loop() { _system->clear(); }
 
 void Game::finalize() {}
 
@@ -326,7 +326,20 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     }
 }
 
-void Game::mouse_button_released_event(const sf::Mouse::Button&, const sf::Vector2f&) {}
+void Game::mouse_button_released_event(const sf::Mouse::Button& button,
+                                       const sf::Vector2f& position) {
+    const auto coord = world_point_to_hex(position, *_system->gfx.layout);
+    switch (button) {
+        case sf::Mouse::Left:
+            _system->handle_hex_release(coord);
+            break;
+        case sf::Mouse::Right:
+            break;
+
+        default:
+            break;
+    }
+}
 
 void Game::mouse_wheel_scrolled_event(const float& delta) {
     auto view                   = _window.getView();

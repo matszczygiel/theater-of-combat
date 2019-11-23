@@ -13,7 +13,6 @@ void lua_push_functions(sol::state& lua) {
 
     scenario["teams"]        = &Scenario::teams;
     scenario["player_teams"] = &Scenario::player_teams;
-    scenario["description"]  = &Scenario::description;
     scenario["system_name"]       = &Scenario::system;
     scenario["current_turn"] = &Scenario::current_turn;
 

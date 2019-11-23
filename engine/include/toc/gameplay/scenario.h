@@ -39,6 +39,8 @@ class Scenario {
     Map map{};
     std::array<std::vector<std::string>, 2> player_teams{};
 
+    std::string system{};
+
     bool load_script(sol::state& lua, const std::string& script);
 
     void next_turn(sol::state& lua);
@@ -63,7 +65,8 @@ void ScenarioDescription::serialize(Archive& archive) {
 template <class Archive>
 void Scenario::serialize(Archive& archive) {
     archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
-            CEREAL_NVP(player_teams), CEREAL_NVP(_current_turn), CEREAL_NVP(_script));
+            CEREAL_NVP(player_teams), CEREAL_NVP(system), CEREAL_NVP(_current_turn),
+            CEREAL_NVP(_script));
 }
 
 #endif

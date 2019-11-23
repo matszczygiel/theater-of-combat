@@ -1,6 +1,6 @@
 file(GLOB_RECURSE toc_systems_sources CONFIGURE_DEPENDS
+    source/*.cpp                include/tsys/*.h
     source/kircholm/*.cpp       include/tsys/kircholm/*.h
-                                include/tsys/*.h
     )
 
 add_library(toc-systems STATIC ${toc_systems_sources})

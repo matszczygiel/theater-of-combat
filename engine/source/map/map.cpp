@@ -184,3 +184,24 @@ std::set<Map::SiteId> Map::get_controlable_hexes_from(SiteId id) const {
     }
     return res;
 }
+
+Map Map::create_plain_map(int width, int height) {
+    engine_assert(width > 0 && height > 0, "Plain map dimesions should be > 0.");
+    const int h_low  = -height / 2;
+    const int h_high = height + h_low;
+    const int w_low  = -width / 2;
+    const int w_high = width + w_low;
+
+    Map map{};
+    
+    int offset_q = w_high;
+    for (int p = h_low; p < h_high; ++p) {
+        if (p % 2 == 0) {
+            offset_q -= 1;
+        }
+        for (int q = w_low; q < w_high; ++q) {
+            map.insert(HexSite{HexCoordinate(q + offset_q, p), 0});
+        }
+    }
+    return map;
+}

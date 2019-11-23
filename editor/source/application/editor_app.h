@@ -3,18 +3,17 @@
 
 #include "toc/core/application.h"
 #include "toc/core/resource_loader.h"
+#include "toc/gameplay/action.h"
+#include "toc/gameplay/scenario.h"
+#include "toc/gameplay/system_state.h"
+#include "toc/graphics/graphics_state.h"
 #include "toc/gui/console.h"
 #include "toc/gui/log_window.h"
 #include "toc/map/map.h"
 #include "toc/unit/unit.h"
 
-#include "gameplay/game_state.h"
-#include "graphics/graphics_state.h"
-#include "gui/start_prompt.h"
-#include "networking/net_manager.h"
-#include "systems/debug_info.h"
-#include "systems/fighter.h"
-#include "systems/mover.h"
+#include "gui/map_creator.h"
+#include "gui/system_select.h"
 
 class Editor : public Application {
    public:
@@ -38,23 +37,24 @@ class Editor : public Application {
     void mouse_moved_event(const sf::Vector2f& position) final;
 
    private:
-    Scenario _scenario{};
+    ScenarioDescription _scenario_desc{};
 
     bool _moving_view_up{false};
     bool _moving_view_down{false};
     bool _moving_view_right{false};
     bool _moving_view_left{false};
-
+    constexpr static float _view_moving_speed{0.3f};
 
     std::shared_ptr<ResourceLoader> _res_loader{
         std::make_shared<ResourceLoader>("resources/")};
 
-    debug_info::DebugInfoSystem _debug_info{_state};
+    std::unique_ptr<SystemState> _system{nullptr};
+    std::shared_ptr<DebugInfoSystem> _debug{nullptr};
 
     LogWindow _log{"Log console"};
     ConsoleWindow _console{"Lua console"};
-
-    constexpr static float _view_moving_speed{0.3f};
+    SystemSelector _sys_selector{"System selector"};
+    MapCreator _map_creator{"Map creator"};
 };
 
 #endif

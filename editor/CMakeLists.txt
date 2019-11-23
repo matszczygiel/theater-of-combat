@@ -1,5 +1,6 @@
 file(GLOB_RECURSE editor_sources CONFIGURE_DEPENDS 
     source/application/*.cpp    source/application/*.h
+    source/gui/*.cpp            source/gui/*.h
     source/main.cpp
     )
 
@@ -22,4 +23,4 @@ else()
 endif()
 
 target_link_libraries(toc-editor 
-                        PRIVATE toc-engine)
+                        PRIVATE toc-engine toc-systems)

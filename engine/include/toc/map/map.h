@@ -38,6 +38,7 @@ class Map {
     void serialize(Archive& archive);
 
     static Map create_test_map();
+    static Map create_plain_map(int width, int height);
 
    private:
     std::map<SiteId, HexSite> _hexes{};

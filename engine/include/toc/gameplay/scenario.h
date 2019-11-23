@@ -21,15 +21,23 @@
 #include "toc/unit/unit.h"
 #include "toc/unit/unit_manager.h"
 
+struct ScenarioDescription {
+    std::string name{};
+    std::string description{};
+    std::string system{};
+    std::string map_name{};
+    std::string filename{};
+
+    template <class Archive>
+    void serialize(Archive& archive);
+};
+
 class Scenario {
    public:
     std::map<std::string, std::set<Unit::IdType>> teams{};
     UnitManager units{};
     Map map{};
     std::array<std::vector<std::string>, 2> player_teams{};
-
-    std::string description{};
-    std::string system{};
 
     bool load_script(sol::state& lua, const std::string& script);
 
@@ -47,10 +55,15 @@ class Scenario {
 };
 
 template <class Archive>
+void ScenarioDescription::serialize(Archive& archive) {
+    archive(CEREAL_NVP(name), CEREAL_NVP(description), CEREAL_NVP(system),
+            CEREAL_NVP(map_name), CEREAL_NVP(filename));
+}
+
+template <class Archive>
 void Scenario::serialize(Archive& archive) {
     archive(CEREAL_NVP(teams), CEREAL_NVP(units), CEREAL_NVP(map),
-            CEREAL_NVP(player_teams), CEREAL_NVP(description), CEREAL_NVP(description),
-            CEREAL_NVP(_current_turn), CEREAL_NVP(_script));
+            CEREAL_NVP(player_teams), CEREAL_NVP(_current_turn), CEREAL_NVP(_script));
 }
 
 #endif

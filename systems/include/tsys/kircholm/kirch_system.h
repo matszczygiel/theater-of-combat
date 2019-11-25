@@ -32,7 +32,6 @@ class SystemKircholm : public SystemState {
 
     std::shared_ptr<DebugInfoSystem> _debug{nullptr};
     MovementSystem _movement;
-    std::optional<HexCoordinate> _tmp_move_target{};
 };
 
 template <class Archive>

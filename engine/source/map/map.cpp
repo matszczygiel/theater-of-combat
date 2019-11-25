@@ -194,7 +194,7 @@ Map Map::create_plain_map(int width, int height) {
 
     Map map{};
     
-    int offset_q = w_high;
+    int offset_q = w_high / 2;
     for (int p = h_low; p < h_high; ++p) {
         if (p % 2 == 0) {
             offset_q -= 1;

@@ -52,6 +52,7 @@ void MapCreator::show(bool* open) {
 bool MapCreator::retrieve(std::unique_ptr<SystemState>& system) {
     if (!_ready || !system) {
         _ready = false;
+        _create_test = false;
         return false;
     }
     _ready = false;

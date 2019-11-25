@@ -59,4 +59,4 @@ std::shared_ptr<DebugInfoSystem> SystemState::create_debug_info() {
     return dbg;
 }
 
-void SystemState::clear() { gfx.highlighted_hexes.clear(); }
+void SystemState::clear() {}

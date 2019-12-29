@@ -35,7 +35,7 @@ class PathSearcher {
 };
 class MovementSystem {
    public:
-    explicit MovementSystem(const std::shared_ptr<Scenario>& scenario,
+    MovementSystem(const std::shared_ptr<Scenario>& scenario,
                             SystemState* system) noexcept;
 
     bool init_movement(HexCoordinate coord, std::vector<std::string> teams,

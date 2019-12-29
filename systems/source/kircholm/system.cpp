@@ -118,6 +118,8 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
     if (is_local_player_now()) {
         switch (_current_phase) {
             case StatePhase::movement:
+                if(_movement.is_moving())
+                    _movement.reset();
                 break;
             case StatePhase::bombardment:
                 break;

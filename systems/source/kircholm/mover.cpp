@@ -150,6 +150,10 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
         reset();
         return false;
     }
+    if (_target_mc->moving_pts == 0) {
+        reset();
+        return false;
+    }
 
     _scenario->units.apply_for_each<PositionComponent>([this, &hostile](auto& cmp) {
         if (hostile.count(cmp.owner()) == 1 && cmp.position) {
@@ -180,6 +184,7 @@ bool MovementSystem::is_moving() const noexcept {
 }
 
 void MovementSystem::reset() noexcept {
+    app_debug("Restting MovementSystem");
     _target_mc   = nullptr;
     _target_pc   = nullptr;
     _immobilized = false;
@@ -189,7 +194,7 @@ void MovementSystem::reset() noexcept {
 
 std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::path_preview(
     HexCoordinate destination) const {
-    engine_assert_throw(is_moving(), "No unit to preview path.");
+    app_assert_throw(is_moving(), "No unit to preview path.");
     const auto dest_hex = _scenario->map.get_hex_id(destination);
     if (!dest_hex)
         return {};

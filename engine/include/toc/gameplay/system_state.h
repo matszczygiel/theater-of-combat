@@ -31,7 +31,7 @@ class SystemState {
     std::vector<std::unique_ptr<Action>> accumulated_actions{};
     GfxState gfx{scenario};
 
-    virtual ~SystemState() = default;
+    virtual ~SystemState();
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info();
 
     virtual void start();

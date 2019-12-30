@@ -64,12 +64,12 @@ constexpr HexCoordinates<T> HexCoordinates<T>::origin() noexcept {
 }
 
 template <typename T>
-constexpr  int HexCoordinates<T>::neighbors_count() noexcept {
+constexpr int HexCoordinates<T>::neighbors_count() noexcept {
     return 6;
 }
 
 template <typename T>
-constexpr  int HexCoordinates<T>::opposite_direction(int dir) noexcept {
+constexpr int HexCoordinates<T>::opposite_direction(int dir) noexcept {
     constexpr auto n = neighbors_count();
     return ((dir % n) + n / 2) % n;
 }
@@ -116,6 +116,18 @@ template <typename T>
 constexpr bool operator!=(const HexCoordinates<T>& lhs,
                           const HexCoordinates<T>& rhs) noexcept {
     return !(lhs == rhs);
+}
+
+template <typename T>
+constexpr bool operator<(const HexCoordinates<T>& lhs,
+                         const HexCoordinates<T>& rhs) noexcept {
+    if (lhs.q() < rhs.q()) {
+        return true;
+    } else if (lhs.q() == rhs.q() && lhs.p() < rhs.p()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 template <typename T, typename U>

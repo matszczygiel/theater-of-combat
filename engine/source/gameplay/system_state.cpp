@@ -6,6 +6,8 @@
 #include "core/lua_vm.h"
 #include "gameplay/action.h"
 
+SystemState::~SystemState() {}
+
 void SystemState::start() { _current_player_index = 0; }
 
 void SystemState::push_action(std::unique_ptr<Action> action) {

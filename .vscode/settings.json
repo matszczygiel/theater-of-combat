@@ -89,7 +89,8 @@
         "queue": "cpp",
         "stack": "cpp",
         "regex": "cpp",
-        "source_location": "cpp"
+        "source_location": "cpp",
+        "*.ipp": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

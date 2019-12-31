@@ -9,13 +9,20 @@
 #include "toc/gameplay/system_state.h"
 #include "toc/unit/unit.h"
 
+#include "kirch_components.h"
+
 namespace kirch {
 struct DirectFightResult {
-    
+    std::set<Unit::IdType> units_destroyed;
+    //does not cout destroyed
+    std::map<Unit::IdType, Strength> losses;
+    //negative value means attackers loose, 0 nobody wins
+    int break_through;
 };
 
 struct DirectFightData {
-    std::array<std::set<Unit::IdType>, 2> ids{};
+    std::set<Unit::IdType> attacker_units;
+    std::set<Unit::IdType> deffender_units;
 };
 
 class FightSystem {
@@ -34,8 +41,11 @@ class FightSystem {
     get_positions(const std::set<Unit::IdType>& units) const;
 
     std::vector<DirectFightData> generate_data_vec() const;
+    Strength accumulate_strength(const std::set<Unit::IdType>& units) const;
 
     DirectFightResult process_fight(const DirectFightData& data) const;
+
+
 };
 }  // namespace kirch
 

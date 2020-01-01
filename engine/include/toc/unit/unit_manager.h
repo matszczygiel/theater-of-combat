@@ -117,6 +117,13 @@ class UnitManager {
     template <class Component>
     void apply_for_each(const std::function<bool(const Component&)>& operation);
 
+    template <class Component>
+    Component* find_first(const std::function<bool(const Component&)>& predicate);
+
+    template <class Component>
+    std::vector<Component*> find_all(
+        const std::function<bool(const Component&)>& predicate);
+
     static UnitManager create_test_manager();
 
     template <class Archive>
@@ -235,6 +242,39 @@ void UnitManager::apply_for_each(const std::function<bool(const Component&)>& op
     for (const auto& cmp : *vec)
         if (!operation(cmp))
             break;
+}
+
+template <class Component>
+Component* UnitManager::find_first(
+    const std::function<bool(const Component&)>& predicate) {
+    static_assert(std::is_base_of_v<ComponentBase, Component>);
+
+    const auto vec = _components.get_container<Component>();
+    if (vec == nullptr)
+        return nullptr;
+
+    for (auto& cmp : *vec)
+        if (predicate(cmp))
+            return std::addressof(cmp);
+
+    return nullptr;
+}
+
+template <class Component>
+std::vector<Component*> UnitManager::find_all(
+    const std::function<bool(const Component&)>& predicate) {
+    static_assert(std::is_base_of_v<ComponentBase, Component>);
+
+    std::vector<Component*> res;
+    const auto vec = _components.get_container<Component>();
+    if (vec == nullptr)
+        return res;
+
+    for (auto& cmp : *vec)
+        if (predicate(cmp))
+            res.emplace_back(std::addressof(cmp));
+
+    return res;
 }
 
 #endif

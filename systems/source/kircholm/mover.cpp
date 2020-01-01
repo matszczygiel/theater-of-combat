@@ -108,34 +108,19 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
 MovementSystem::MovementSystem(SystemKircholm* system) noexcept
     : ComponentSystem{system} {}
 
-bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string> teams,
-                                   std::vector<std::string> hostile_teams) {
-    engine_assert_throw(!is_moving(), "Already moving unit.");
-    engine_info("Initiating MovementSystem.");
+bool MovementSystem::init_movement(HexCoordinate coord) {
+    app_assert_throw(!is_moving(), "Already moving unit.");
+    app_info("Initiating MovementSystem.");
 
-    std::set<Unit::IdType> friendly;
-    for (const auto& t : teams) {
-        if (auto it = scenario().teams.find(t); it != scenario().teams.end()) {
-            auto set = it->second;
-            friendly.merge(set);
-        }
-    }
+    const auto friendly = get_player_units(sys->current_player_index());
+    const auto hostile  = get_player_units(sys->opposite_player_index());
 
-    std::set<Unit::IdType> hostile;
-    for (const auto& t : hostile_teams) {
-        if (auto it = scenario().teams.find(t); it != scenario().teams.end()) {
-            auto set = it->second;
-            hostile.merge(set);
-        }
-    }
-
-    units().apply_for_each<PositionComponent>(
-        [this, &coord, &friendly](auto& cmp) {
+    _target_pc =
+        units().find_first<PositionComponent>([&coord, &friendly](auto& cmp) {
             if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
-                _target_pc = std::addressof(cmp);
-                return false;
+                return true;
             }
-            return true;
+            return false;
         });
 
     if (!_target_pc) {
@@ -155,10 +140,10 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     units().apply_for_each<PositionComponent>([this, &hostile](auto& cmp) {
         if (hostile.count(cmp.owner()) == 1 && cmp.position) {
-            const auto id = scenario().map.get_hex_id(cmp.position.value()).value();
-            const auto controlable = scenario().map.get_controlable_hexes_from(id);
+            const auto id = map().get_hex_id(cmp.position.value()).value();
+            const auto controlable = map().get_controlable_hexes_from(id);
             for (const auto& c : controlable) {
-                _sticky_sites.push_back(scenario().map.get_hex_coord(c).value());
+                _sticky_sites.push_back(map().get_hex_coord(c).value());
             }
         }
         return true;
@@ -166,7 +151,7 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     _searcher.reset(make_weighted_graph(_target_pc->owner()));
 
-    const auto start_hex = scenario().map.get_hex_id(coord);
+    const auto start_hex = map().get_hex_id(coord);
     engine_assert_throw(start_hex.has_value(),
                         "Initializing movement with nonexistent hex on this map.");
 
@@ -221,7 +206,7 @@ bool MovementSystem::set_target_hex(HexCoordinate hex) {
     }
 
     const auto find = std::find_first_of(
-        _path.begin(), _path.end(), _sticky_sites.begin(), _sticky_sites.end(),
+        _path.begin(), _path.end(), _sticky_sites.cbegin(), _sticky_sites.cend(),
         [](const auto& p, const auto& s) { return std::get<0>(p) == s; });
 
     _immobilized = find != _path.end();

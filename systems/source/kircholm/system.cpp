@@ -80,9 +80,7 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
         switch (_current_phase) {
             case StatePhase::movement:
                 if (!_movement.is_moving()) {
-                    _movement.init_movement(
-                        hex, scenario->player_teams[current_player_index()],
-                        scenario->player_teams[opposite_player_index()]);
+                    _movement.init_movement(hex);
                 } else {
                     _movement.set_target_hex(hex);
                 }
@@ -118,7 +116,7 @@ void SystemKircholm::handle_hex_info(const HexCoordinate& hex) {
     if (is_local_player_now()) {
         switch (_current_phase) {
             case StatePhase::movement:
-                if(_movement.is_moving())
+                if (_movement.is_moving())
                     _movement.reset();
                 break;
             case StatePhase::bombardment:

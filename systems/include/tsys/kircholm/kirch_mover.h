@@ -41,8 +41,7 @@ class MovementSystem : public ComponentSystem {
    public:
     explicit MovementSystem(SystemKircholm* system) noexcept;
 
-    bool init_movement(HexCoordinate coord, std::vector<std::string> teams,
-                       std::vector<std::string> hostile_teams);
+    bool init_movement(HexCoordinate coord);
 
     bool is_moving() const noexcept;
     bool is_hex_set() const noexcept;

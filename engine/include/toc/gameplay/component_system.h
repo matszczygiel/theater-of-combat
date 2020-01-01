@@ -1,6 +1,8 @@
 #ifndef COMPONENT_SYSTEM_H
 #define COMPONENT_SYSTEM_H
 
+#include <set>
+
 #include "system.h"
 
 class ComponentSystem {
@@ -15,6 +17,8 @@ class ComponentSystem {
     const UnitManager& units() const noexcept;
     const Map& map() const noexcept;
     const Scenario& scenario() const noexcept;
+
+    std::set<Unit::IdType> get_player_units(int player_index) const;
 
     template <class Action, typename... Args>
     void push_action(Args&&... args);

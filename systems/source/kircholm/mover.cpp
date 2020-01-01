@@ -1,4 +1,5 @@
 #include "kircholm/kirch_mover.h"
+#include "kircholm/kirch_system.h"
 #include "kircholm/kirch_types.h"
 
 #include "toc/core/log.h"
@@ -65,10 +66,10 @@ static std::map<HexType, Movability> get_rotation_table() {
 
 WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability>
 MovementSystem::make_weighted_graph(Unit::IdType id) const {
-    const auto hex_tab = get_movability_table(_scenario->units, id);
+    const auto hex_tab = get_movability_table(units(), id);
     const auto rot_tab = get_rotation_table();
 
-    const auto& map = _scenario->map;
+    const auto& map = scenario().map;
 
     WeightedUnidirectionalGraph<std::pair<Map::SiteId, int>, Movability> res(map.graph(),
                                                                              0);
@@ -104,11 +105,8 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
     return res;
 }
 
-MovementSystem::MovementSystem(const std::shared_ptr<Scenario>& scenario,
-                               SystemState* system) noexcept
-    : _scenario{scenario}, _system{system} {
-    app_assert(_system != nullptr, "Invalid system");
-}
+MovementSystem::MovementSystem(SystemKircholm* system) noexcept
+    : ComponentSystem{system} {}
 
 bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string> teams,
                                    std::vector<std::string> hostile_teams) {
@@ -117,7 +115,7 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     std::set<Unit::IdType> friendly;
     for (const auto& t : teams) {
-        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
+        if (auto it = scenario().teams.find(t); it != scenario().teams.end()) {
             auto set = it->second;
             friendly.merge(set);
         }
@@ -125,13 +123,13 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     std::set<Unit::IdType> hostile;
     for (const auto& t : hostile_teams) {
-        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
+        if (auto it = scenario().teams.find(t); it != scenario().teams.end()) {
             auto set = it->second;
             hostile.merge(set);
         }
     }
 
-    _scenario->units.apply_for_each<PositionComponent>(
+    units().apply_for_each<PositionComponent>(
         [this, &coord, &friendly](auto& cmp) {
             if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
                 _target_pc = std::addressof(cmp);
@@ -145,7 +143,7 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
         return false;
     }
 
-    _target_mc = _scenario->units.get_component<MovementComponent>(_target_pc->owner());
+    _target_mc = units().get_component<MovementComponent>(_target_pc->owner());
     if (!_target_mc) {
         reset();
         return false;
@@ -155,12 +153,12 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
         return false;
     }
 
-    _scenario->units.apply_for_each<PositionComponent>([this, &hostile](auto& cmp) {
+    units().apply_for_each<PositionComponent>([this, &hostile](auto& cmp) {
         if (hostile.count(cmp.owner()) == 1 && cmp.position) {
-            const auto id = _scenario->map.get_hex_id(cmp.position.value()).value();
-            const auto controlable = _scenario->map.get_controlable_hexes_from(id);
+            const auto id = scenario().map.get_hex_id(cmp.position.value()).value();
+            const auto controlable = scenario().map.get_controlable_hexes_from(id);
             for (const auto& c : controlable) {
-                _sticky_sites.push_back(_scenario->map.get_hex_coord(c).value());
+                _sticky_sites.push_back(scenario().map.get_hex_coord(c).value());
             }
         }
         return true;
@@ -168,7 +166,7 @@ bool MovementSystem::init_movement(HexCoordinate coord, std::vector<std::string>
 
     _searcher.reset(make_weighted_graph(_target_pc->owner()));
 
-    const auto start_hex = _scenario->map.get_hex_id(coord);
+    const auto start_hex = scenario().map.get_hex_id(coord);
     engine_assert_throw(start_hex.has_value(),
                         "Initializing movement with nonexistent hex on this map.");
 
@@ -195,7 +193,7 @@ void MovementSystem::reset() noexcept {
 std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::path_preview(
     HexCoordinate destination) const {
     app_assert_throw(is_moving(), "No unit to preview path.");
-    const auto dest_hex = _scenario->map.get_hex_id(destination);
+    const auto dest_hex = scenario().map.get_hex_id(destination);
     if (!dest_hex)
         return {};
 
@@ -206,7 +204,7 @@ std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::path_pre
     for (const auto& [id, dir, mov] : ids) {
         if (res.size() != 0 && prev_id == id)
             continue;
-        res.push_back({_scenario->map.get_hex_coord(id).value(), dir, mov});
+        res.push_back({scenario().map.get_hex_coord(id).value(), dir, mov});
         prev_id = id;
     }
     return res;
@@ -237,7 +235,7 @@ bool MovementSystem::set_target_hex(HexCoordinate hex) {
 std::map<int, Movability> MovementSystem::get_avaliable_dirs() {
     app_assert(is_hex_set(), "Hex must be set.");
     const auto& [site, dir, cost] = _path.back();
-    const auto site_id            = _scenario->map.get_hex_id(site).value();
+    const auto site_id            = scenario().map.get_hex_id(site).value();
     _searcher.search_rotation(site_id, dir, _target_mc->moving_pts - cost);
     std::map<int, Movability> res;
     for (const auto& [dir, d_cost] : _searcher.distances())
@@ -271,14 +269,12 @@ bool MovementSystem::move() {
     engine_assert(new_mc.moving_pts >= 0, "Unit {} has negative number of moving pts.",
                   new_mc.owner());
     new_mc.immobilized = _immobilized;
-    _system->push_action(
-        std::make_unique<ComponentChangeAction<MovementComponent>>(std::move(new_mc)));
+    push_action<ComponentChangeAction<MovementComponent>>(std::move(new_mc));
 
     auto new_pc      = *_target_pc;
     new_pc.position  = td_coord;
     new_pc.direction = td_dir;
-    _system->push_action(
-        std::make_unique<ComponentChangeAction<PositionComponent>>(std::move(new_pc)));
+    push_action<ComponentChangeAction<PositionComponent>>(std::move(new_pc));
 
     reset();
     return true;

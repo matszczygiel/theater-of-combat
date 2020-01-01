@@ -1,5 +1,5 @@
-#ifndef SYSTEM_STATE_H
-#define SYSTEM_STATE_H
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
 #include <cereal/types/array.hpp>
 #include <cereal/types/memory.hpp>
@@ -12,9 +12,17 @@
 #include "toc/debug/debug_info.h"
 #include "toc/graphics/graphics_state.h"
 
-class Action;
+class System;
 
-class SystemState {
+class Action {
+   public:
+    virtual bool execute(System* state) = 0;
+    virtual bool revert(System* state)  = 0;
+
+    virtual ~Action() = default;
+};
+
+class System {
    public:
     bool set_local_player(std::string name);
     void set_local_player(int index);
@@ -31,7 +39,7 @@ class SystemState {
     std::vector<std::unique_ptr<Action>> accumulated_actions{};
     GfxState gfx{scenario};
 
-    virtual ~SystemState();
+    virtual ~System() = default;
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info();
 
     virtual void start();
@@ -56,7 +64,7 @@ class SystemState {
 };
 
 template <class Archive>
-void SystemState::serialize(Archive& archive) {
+void System::serialize(Archive& archive) {
     archive(CEREAL_NVP(*scenario), CEREAL_NVP(player_names),
             CEREAL_NVP(_current_player_index), CEREAL_NVP(_action_stack));
 }

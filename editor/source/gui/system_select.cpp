@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 
 #include "tsys/systems.h"
 
@@ -42,7 +42,7 @@ void SystemSelector::show(bool* open) {
 
 bool SystemSelector::is_ready() const { return _ready; }
 
-bool SystemSelector::retrieve(std::unique_ptr<SystemState>& system) {
+bool SystemSelector::retrieve(std::unique_ptr<System>& system) {
     if (!_ready) {
         return false;
     }

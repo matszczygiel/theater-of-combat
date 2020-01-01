@@ -9,7 +9,7 @@
 
 #include "toc/core/log.h"
 #include "toc/core/lua_vm.h"
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 #include "toc/gameplay/lua_gameplay.h"
 #include "toc/gui/dock_space.h"
 #include "toc/gui/log_window.h"

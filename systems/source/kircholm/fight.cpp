@@ -10,7 +10,7 @@
 namespace kirch {
 
 FightSystem::FightSystem(const std::shared_ptr<Scenario>& scenario,
-                         SystemState* system) noexcept
+                         System* system) noexcept
     : _scenario{scenario}, _system{system} {
     app_assert(_system != nullptr, "Invalid system");
 }

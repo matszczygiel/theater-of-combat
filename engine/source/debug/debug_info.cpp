@@ -6,7 +6,7 @@
 #include <cereal/types/memory.hpp>
 
 #include "toc/core/log.h"
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 
 void DebugInfoSystem::log_action(const std::unique_ptr<Action>& action) const {
     engine_info("Debugging action.");

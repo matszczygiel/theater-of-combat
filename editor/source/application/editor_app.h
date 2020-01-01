@@ -3,9 +3,9 @@
 
 #include "toc/core/application.h"
 #include "toc/core/resource_loader.h"
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 #include "toc/gameplay/scenario.h"
-#include "toc/gameplay/system_state.h"
+#include "toc/gameplay/system.h"
 #include "toc/graphics/graphics_state.h"
 #include "toc/gui/console.h"
 #include "toc/gui/log_window.h"
@@ -48,7 +48,7 @@ class Editor : public Application {
     std::shared_ptr<ResourceLoader> _res_loader{
         std::make_shared<ResourceLoader>("resources/")};
 
-    std::unique_ptr<SystemState> _system{nullptr};
+    std::unique_ptr<System> _system{nullptr};
     std::shared_ptr<DebugInfoSystem> _debug{nullptr};
 
     LogWindow _log{"Log console"};

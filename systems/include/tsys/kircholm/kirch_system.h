@@ -4,12 +4,12 @@
 #include <cereal/types/polymorphic.hpp>
 #include <cereal/types/vector.hpp>
 
-#include "toc/gameplay/system_state.h"
+#include "toc/gameplay/system.h"
 
 #include "kirch_mover.h"
 
 namespace kirch {
-class SystemKircholm : public SystemState {
+class SystemKircholm : public System {
    public:
     SystemKircholm();
     virtual ~SystemKircholm() = default;
@@ -36,7 +36,7 @@ class SystemKircholm : public SystemState {
 
 template <class Archive>
 void SystemKircholm::serialize(Archive& archive) {
-    archive(cereal::virtual_base_class<SystemState>(this),
+    archive(cereal::virtual_base_class<System>(this),
             // list all components
             cereal::make_nvp("MovementComponents",
                              *scenario->units.get_container<MovementComponent>()),

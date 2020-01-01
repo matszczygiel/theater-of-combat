@@ -4,13 +4,13 @@
 #include <string>
 
 #include "toc/map/map.h"
-#include "toc/gameplay/system_state.h"
+#include "toc/gameplay/system.h"
 
 class MapCreator {
    public:
     MapCreator(const std::string name) noexcept;
 
-    bool retrieve(std::unique_ptr<SystemState>& system);
+    bool retrieve(std::unique_ptr<System>& system);
 
     void show(bool* open);
     bool is_ready() const;

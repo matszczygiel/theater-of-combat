@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 
 MapCreator::MapCreator(const std::string name) noexcept : _name{name} {}
 
@@ -49,7 +49,7 @@ void MapCreator::show(bool* open) {
     ImGui::End();
 }
 
-bool MapCreator::retrieve(std::unique_ptr<SystemState>& system) {
+bool MapCreator::retrieve(std::unique_ptr<System>& system) {
     if (!_ready || !system) {
         _ready = false;
         _create_test = false;

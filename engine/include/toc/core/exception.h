@@ -6,12 +6,12 @@
 
 class EngineException : public std::runtime_error {
    public:
-    EngineException(const std::string& msg);
+    explicit EngineException(const std::string& msg);
 };
 
 class ClientException : public std::runtime_error {
    public:
-    ClientException(const std::string& msg);
+    explicit ClientException(const std::string& msg);
 };
 
 #endif

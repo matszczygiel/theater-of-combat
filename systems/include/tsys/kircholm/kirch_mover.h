@@ -5,7 +5,8 @@
 #include <memory>
 #include <vector>
 
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
+#include "toc/gameplay/component_system.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/map/hexagons.h"
 
@@ -33,10 +34,12 @@ class PathSearcher {
     std::map<std::pair<Map::SiteId, int>, Movability> _distances{};
     std::map<std::pair<Map::SiteId, int>, std::pair<Map::SiteId, int>> _paths{};
 };
-class MovementSystem {
+
+class SystemKircholm;
+
+class MovementSystem : public ComponentSystem {
    public:
-    MovementSystem(const std::shared_ptr<Scenario>& scenario,
-                            SystemState* system) noexcept;
+    explicit MovementSystem(SystemKircholm* system) noexcept;
 
     bool init_movement(HexCoordinate coord, std::vector<std::string> teams,
                        std::vector<std::string> hostile_teams);
@@ -65,12 +68,8 @@ class MovementSystem {
     const MovementComponent* _target_mc{nullptr};
     const PositionComponent* _target_pc{nullptr};
 
-    const std::shared_ptr<Scenario> _scenario{nullptr};
-
     std::vector<HexCoordinate> _sticky_sites{};
     PathSearcher _searcher{};
-
-    SystemState* _system{nullptr};
 };
 
 }  // namespace kirch

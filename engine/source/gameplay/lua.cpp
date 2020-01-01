@@ -3,8 +3,8 @@
 #include <sol/state.hpp>
 
 #include "gameplay/scenario.h"
-#include "gameplay/action.h"
-#include "gameplay/system_state.h"
+#include "gameplay/actions.h"
+#include "gameplay/system.h"
 
 namespace gameplay {
 void lua_push_functions(sol::state& lua) {
@@ -17,21 +17,21 @@ void lua_push_functions(sol::state& lua) {
     scenario["current_turn"] = &Scenario::current_turn;
 
     auto system =
-        lua.new_usertype<SystemState>("SystemState");
+        lua.new_usertype<System>("System");
 
     system["set_local_player_name"] =
-        sol::resolve<bool(std::string)>(&SystemState::set_local_player);
+        sol::resolve<bool(std::string)>(&System::set_local_player);
     system["set_local_player_index"] =
-        sol::resolve<void(int)>(&SystemState::set_local_player);
-    system["is_local_player_now"]   = &SystemState::is_local_player_now;
-    system["current_player_index"]  = &SystemState::current_player_index;
-    system["opposite_player_index"] = &SystemState::opposite_player_index;
-    system["next_player"]           = &SystemState::next_player;
+        sol::resolve<void(int)>(&System::set_local_player);
+    system["is_local_player_now"]   = &System::is_local_player_now;
+    system["current_player_index"]  = &System::current_player_index;
+    system["opposite_player_index"] = &System::opposite_player_index;
+    system["next_player"]           = &System::next_player;
 
-    system["start"]      = &SystemState::start;
-    system["next_phase"] = &SystemState::next_phase;
+    system["start"]      = &System::start;
+    system["next_phase"] = &System::next_phase;
 
-    system["scenario"]     = &SystemState::scenario;
-    system["player_names"] = &SystemState::player_names;
+    system["scenario"]     = &System::scenario;
+    system["player_names"] = &System::player_names;
 }
 }  // namespace gameplay

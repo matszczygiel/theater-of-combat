@@ -4,7 +4,7 @@
 #include <cereal/archives/portable_binary.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 
 namespace kirch {
     MovementComponent::MovementComponent(Movability moving_points)

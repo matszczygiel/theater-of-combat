@@ -4,15 +4,15 @@
 #include <memory>
 #include <string>
 
-#include "toc/gameplay/system_state.h"
+#include "toc/gameplay/system.h"
 
-class SystemState;
+class System;
 
 class SystemSelector {
    public:
     SystemSelector(const std::string name) noexcept;
 
-    bool retrieve(std::unique_ptr<SystemState>& system);
+    bool retrieve(std::unique_ptr<System>& system);
 
     void show(bool* open);
     bool is_ready() const;

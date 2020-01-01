@@ -9,10 +9,10 @@
 
 namespace kirch {
 
-SystemKircholm::SystemKircholm() : _movement{scenario, this} {};
+SystemKircholm::SystemKircholm() : _movement{this} {};
 
 void SystemKircholm::start() {
-    SystemState::start();
+    System::start();
     _current_phase = StatePhase::movement;
 }
 

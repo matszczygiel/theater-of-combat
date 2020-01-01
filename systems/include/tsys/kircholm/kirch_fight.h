@@ -4,9 +4,9 @@
 #include <array>
 #include <set>
 
-#include "toc/gameplay/action.h"
+#include "toc/gameplay/actions.h"
 #include "toc/gameplay/scenario.h"
-#include "toc/gameplay/system_state.h"
+#include "toc/gameplay/system.h"
 #include "toc/unit/unit.h"
 
 #include "kirch_components.h"
@@ -27,13 +27,13 @@ struct DirectFightData {
 
 class FightSystem {
    public:
-    FightSystem(const std::shared_ptr<Scenario>& scenario, SystemState* system) noexcept;
+    FightSystem(const std::shared_ptr<Scenario>& scenario, System* system) noexcept;
 
     std::vector<DirectFightResult> process_fights() const;
 
    private:
     std::shared_ptr<Scenario> _scenario{nullptr};
-    SystemState* _system{nullptr};
+    System* _system{nullptr};
 
     // < unit -> site, site -> units controling >
     std::pair<std::map<Unit::IdType, HexCoordinate>,

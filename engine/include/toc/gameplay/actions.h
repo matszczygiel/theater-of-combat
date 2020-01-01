@@ -1,5 +1,5 @@
-#ifndef ACTION_H
-#define ACTION_H
+#ifndef ACTIONS_H
+#define ACTIONS_H
 
 #include <optional>
 #include <type_traits>
@@ -9,20 +9,12 @@
 #include "cereal/optional.hpp"
 
 #include "toc/unit/unit_components.h"
-#include "system_state.h"
-
-class Action {
-   public:
-    virtual bool execute(SystemState* state) = 0;
-    virtual bool revert(SystemState* state)  = 0;
-
-    virtual ~Action() = default;
-};
+#include "system.h"
 
 class UndoPreviousAction : public Action {
    public:
-    virtual bool execute(SystemState* state) override;
-    virtual bool revert(SystemState* state) override;
+    virtual bool execute(System* state) override;
+    virtual bool revert(System* state) override;
 
     template <class Archive>
     void serialize(Archive& ar);
@@ -44,8 +36,8 @@ class ComponentChangeAction : public Action {
     ComponentChangeAction() = default;
     ComponentChangeAction(const Component& component);
 
-    virtual bool execute(SystemState* state) override;
-    virtual bool revert(SystemState* state) override;
+    virtual bool execute(System* state) override;
+    virtual bool revert(System* state) override;
 
     template <class Archive>
     void serialize(Archive& ar);
@@ -61,7 +53,7 @@ ComponentChangeAction<Component>::ComponentChangeAction(const Component& compone
     : _new_component{component} {}
 
 template <class Component>
-bool ComponentChangeAction<Component>::execute(SystemState* state) {
+bool ComponentChangeAction<Component>::execute(System* state) {
     engine_assert(!_old_component, "ComponentChangeAction<{}> executed more than once.",
                typeid(Component).name());
     auto& unit_man = state->scenario->units;
@@ -76,7 +68,7 @@ bool ComponentChangeAction<Component>::execute(SystemState* state) {
 }
 
 template <class Component>
-bool ComponentChangeAction<Component>::revert(SystemState* state) {
+bool ComponentChangeAction<Component>::revert(System* state) {
     engine_assert(_old_component.has_value(),
                "ComponentChangeAction<{}> reverted before executed.",
                typeid(Component).name());
@@ -98,8 +90,8 @@ void ComponentChangeAction<Component>::serialize(Archive& ar) {
 }
 class NextPhaseAction : public Action {
    public:
-    virtual bool execute(SystemState* state) override;
-    virtual bool revert(SystemState* state) override;
+    virtual bool execute(System* state) override;
+    virtual bool revert(System* state) override;
 
     template <class Archive>
     void serialize(Archive& ar);

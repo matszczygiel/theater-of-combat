@@ -5,7 +5,7 @@
 #include "kircholm.h"
 
 namespace tsys {
-std::unique_ptr<SystemState> create_system(const std::string_view name) {
+std::unique_ptr<System> create_system(const std::string_view name) {
     constexpr auto systems_list = list_available_systems();
 
     const auto it = std::find(std::cbegin(systems_list), std::cend(systems_list), name);

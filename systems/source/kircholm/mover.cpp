@@ -112,8 +112,8 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
     app_assert_throw(!is_moving(), "Already moving unit.");
     app_info("Initiating MovementSystem.");
 
-    const auto friendly = get_player_units(sys->current_player_index());
-    const auto hostile  = get_player_units(sys->opposite_player_index());
+    const auto friendly = get_player_units(_sys->current_player_index());
+    const auto hostile  = get_player_units(_sys->opposite_player_index());
 
     _target_pc = units().find_first<PositionComponent>([&coord, &friendly](auto& cmp) {
         if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
@@ -340,6 +340,13 @@ std::vector<std::tuple<Map::SiteId, int, Movability>> PathSearcher::path_indices
 
     std::reverse(res.begin(), res.end());
     return res;
+}
+
+void MovementSystem::reset_moving_pts() {
+    units().apply_for_each<MovementComponent>([](MovementComponent& mc) {
+        mc.moving_pts = mc.total_moving_pts();
+        return true;
+    });
 }
 
 }  // namespace kirch

@@ -36,5 +36,19 @@ void lua_push_functions(sol::state& lua) {
         lua["UnitManager"]["remove_movement_cmp"] =
             &UnitManager::remove_component<MovementComponent>;
     }
+
+    auto direct_fight = lua.new_usertype<DirectFightComponent>(
+        "DirectFightComponent",
+        sol::constructors<DirectFightComponent(), DirectFightComponent(Strength)>());
+
+    direct_fight["strength_pts"] = &DirectFightComponent::strength_pts;
+    direct_fight["in_fight"]     = &DirectFightComponent::in_fight;
+
+    if (lua["UnitManager"] != sol::lua_nil) {
+        lua["UnitManager"]["assign_direct_fight_cmp"] =
+            &UnitManager::assign_component<DirectFightComponent, DirectFightComponent&>;
+        lua["UnitManager"]["remove_direct_fight_cmp"] =
+            &UnitManager::remove_component<DirectFightComponent>;
+    }
 }
 }  // namespace kirch

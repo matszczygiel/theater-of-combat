@@ -115,7 +115,7 @@ class UnitManager {
     void apply_for_each(const std::function<bool(Component&)>& operation);
 
     template <class Component>
-    void apply_for_each(const std::function<bool(const Component&)>& operation);
+    void apply_for_each(const std::function<bool(const Component&)>& operation) const;
 
     template <class Component>
     Component* find_first(const std::function<bool(const Component&)>& predicate);
@@ -232,7 +232,7 @@ void UnitManager::apply_for_each(const std::function<bool(Component&)>& operatio
 }
 
 template <class Component>
-void UnitManager::apply_for_each(const std::function<bool(const Component&)>& operation) {
+void UnitManager::apply_for_each(const std::function<bool(const Component&)>& operation) const {
     static_assert(std::is_base_of_v<ComponentBase, Component>);
 
     const auto vec = _components.get_container<Component>();

@@ -7,6 +7,8 @@
 #include "toc/gameplay/actions.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/gameplay/system.h"
+#include "toc/gameplay/component_system.h"
+
 #include "toc/unit/unit.h"
 
 #include "kirch_components.h"
@@ -18,6 +20,7 @@ struct DirectFightResult {
     std::map<Unit::IdType, Strength> losses;
     //negative value means attackers loose, 0 nobody wins
     int break_through;
+    bool disorganisation;
 };
 
 struct DirectFightData {
@@ -25,16 +28,16 @@ struct DirectFightData {
     std::set<Unit::IdType> deffender_units;
 };
 
-class FightSystem {
-   public:
-    FightSystem(const std::shared_ptr<Scenario>& scenario, System* system) noexcept;
+class SystemKircholm;
 
-    std::vector<DirectFightResult> process_fights() const;
+class DirectFightSystem : public ComponentSystem {
+   public:
+    DirectFightSystem(SystemKircholm* system) noexcept;
+
+    void init_direct_fights();
+    bool is_done() const;
 
    private:
-    std::shared_ptr<Scenario> _scenario{nullptr};
-    System* _system{nullptr};
-
     // < unit -> site, site -> units controling >
     std::pair<std::map<Unit::IdType, HexCoordinate>,
               std::map<HexCoordinate, std::set<Unit::IdType>>>
@@ -44,6 +47,8 @@ class FightSystem {
     Strength accumulate_strength(const std::set<Unit::IdType>& units) const;
 
     DirectFightResult process_fight(const DirectFightData& data) const;
+
+    std::vector<DirectFightResult> _current_results{};
 
 
 };

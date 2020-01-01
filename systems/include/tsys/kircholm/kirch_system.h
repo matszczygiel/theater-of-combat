@@ -6,6 +6,7 @@
 
 #include "toc/gameplay/system.h"
 
+#include "kirch_fight.h"
 #include "kirch_mover.h"
 
 namespace kirch {
@@ -32,6 +33,7 @@ class SystemKircholm : public System {
 
     std::shared_ptr<DebugInfoSystem> _debug{nullptr};
     MovementSystem _movement;
+    DirectFightSystem _direct_fight;
 };
 
 template <class Archive>

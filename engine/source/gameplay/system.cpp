@@ -43,13 +43,13 @@ int System::current_player_index() const { return _current_player_index; }
 int System::opposite_player_index() const { return (_current_player_index + 1) % 2; }
 
 void System::update() {
-    for (auto& action : accumulated_actions) {
+    decltype(accumulated_actions) actions{};
+    actions.swap(accumulated_actions);
+
+    for (auto& action : actions) {
         action->execute(this);
         _action_stack.push(std::move(action));
     }
-
-    accumulated_actions.clear();
-
     gfx.update();
 }
 

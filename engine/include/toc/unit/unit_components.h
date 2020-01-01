@@ -12,6 +12,10 @@
 
 struct PositionComponent : public ComponentBase {
     constexpr PositionComponent() = default;
+    constexpr explicit PositionComponent(const HexCoordinate& coord) : position{coord} {}
+    constexpr PositionComponent(const HexCoordinate& coord, int dir)
+        : position{coord}, direction{dir % HexCoordinate::neighbors_count()} {}
+
     std::optional<HexCoordinate> position{};
     std::optional<int> direction{};
 

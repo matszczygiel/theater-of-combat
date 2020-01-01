@@ -8,14 +8,16 @@
 
 namespace units {
 void lua_push_functions(sol::state& lua) {
-    auto position =
-        lua.new_usertype<PositionComponent>("PositionComponent", sol::no_constructor);
+    auto position = lua.new_usertype<PositionComponent>(
+        "PositionComponent",
+        sol::constructors<PositionComponent(), PositionComponent(const HexCoordinate&),
+                          PositionComponent(const HexCoordinate&, int)>());
 
     position["position"]  = &PositionComponent::position;
     position["direction"] = &PositionComponent::direction;
 
     auto unit_man =
-        lua.new_usertype<UnitManager>("UnitManager", sol::constructors<UnitManager>());
+        lua.new_usertype<UnitManager>("UnitManager", sol::constructors<UnitManager()>());
 
     unit_man["create"] = &UnitManager::create;
 

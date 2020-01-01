@@ -50,6 +50,7 @@ class MovementSystem : public ComponentSystem {
     std::map<int, Movability> get_avaliable_dirs();
     bool set_target_dir(int dir);
     bool move();
+    void reset_moving_pts();
 
     void reset() noexcept;
     std::vector<std::tuple<HexCoordinate, int, Movability>> path_preview(

@@ -15,7 +15,7 @@ static void push_coordinates(sol::state& lua) {
     auto coord = lua.new_usertype<HexCoordinate>(
         "Coord", sol::constructors<HexCoordinate(), HexCoordinate(int, int)>());
     coord["q"] = &HexCoordinate::q;
-    coord["p"] = &HexCoordinate::r;
+    coord["r"] = &HexCoordinate::r;
 }
 
 static void push_map(sol::state& lua) {

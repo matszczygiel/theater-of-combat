@@ -6,32 +6,30 @@
 #include "toc/core/randomize.h"
 
 #include "kircholm/kirch_components.h"
+#include "kircholm/kirch_system.h"
 
 namespace kirch {
 
-FightSystem::FightSystem(const std::shared_ptr<Scenario>& scenario,
-                         System* system) noexcept
-    : _scenario{scenario}, _system{system} {
-    app_assert(_system != nullptr, "Invalid system");
-}
+DirectFightSystem::DirectFightSystem(SystemKircholm* system) noexcept
+    : ComponentSystem{system} {}
 
 std::pair<std::map<Unit::IdType, HexCoordinate>,
           std::map<HexCoordinate, std::set<Unit::IdType>>>
-FightSystem::get_positions(const std::set<Unit::IdType>& units) const {
+DirectFightSystem::get_positions(const std::set<Unit::IdType>& unit_set) const {
     std::map<Unit::IdType, HexCoordinate> res0;
     std::map<HexCoordinate, std::set<Unit::IdType>> res1;
-    _scenario->units.apply_for_each<PositionComponent>(
-        [&units, &res0, &res1](const auto& cmp) {
-            if (units.find(cmp.owner()) != units.cend() && cmp.position.has_value()) {
-                const auto pos    = *cmp.position;
-                res0[cmp.owner()] = pos;
-                res1[pos].insert(cmp.owner());
-                const auto neighbors = pos.neighbors();
-                for (const auto& n : neighbors)
-                    res1[n].insert(cmp.owner());
-            }
-            return true;
-        });
+
+    units().apply_for_each<PositionComponent>([&unit_set, &res0, &res1](const auto& cmp) {
+        if (unit_set.find(cmp.owner()) != unit_set.cend() && cmp.position.has_value()) {
+            const auto pos    = *cmp.position;
+            res0[cmp.owner()] = pos;
+            res1[pos].insert(cmp.owner());
+            const auto neighbors = pos.neighbors();
+            for (const auto& n : neighbors)
+                res1[n].insert(cmp.owner());
+        }
+        return true;
+    });
     return {res0, res1};
 }
 
@@ -52,25 +50,9 @@ static std::set<HexCoordinate> get_control_zone_of(
     return res;
 }
 
-std::vector<DirectFightData> FightSystem::generate_data_vec() const {
-    const auto& attacker_teams = _scenario->player_teams[_system->current_player_index()];
-    std::set<Unit::IdType> attackers;
-    for (const auto& t : attacker_teams) {
-        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
-            auto set = it->second;
-            attackers.merge(set);
-        }
-    }
-
-    const auto& defender_teams =
-        _scenario->player_teams[_system->opposite_player_index()];
-    std::set<Unit::IdType> defenders;
-    for (const auto& t : defender_teams) {
-        if (auto it = _scenario->teams.find(t); it != _scenario->teams.end()) {
-            auto set = it->second;
-            defenders.merge(set);
-        }
-    }
+std::vector<DirectFightData> DirectFightSystem::generate_data_vec() const {
+    auto attackers = get_player_units(_sys->current_player_index());
+    auto defenders = get_player_units(_sys->opposite_player_index());
 
     auto [d_positions, d_zone] = get_positions(defenders);
     auto [a_positions, a_zone] = get_positions(attackers);
@@ -138,7 +120,7 @@ std::vector<DirectFightData> FightSystem::generate_data_vec() const {
     }
     return data_vec;
 }
-enum class FightSide { attack, defence, none };
+
 struct FightTableEntry {
     int realtive_probability{10};
     Strength att_loss{0};
@@ -192,10 +174,11 @@ static int get_modifier_from_strength(const Strength& attackers,
         return deffenders / attackers - 2;
 }
 
-Strength FightSystem::accumulate_strength(const std::set<Unit::IdType>& units) const {
+Strength DirectFightSystem::accumulate_strength(
+    const std::set<Unit::IdType>& units_set) const {
     Strength res = 0;
-    for (const auto& id : units) {
-        const auto cmp = _scenario->units.get_component<DirectFightComponent>(id);
+    for (const auto& id : units_set) {
+        const auto cmp = units().get_component<DirectFightComponent>(id);
         if (cmp == nullptr)
             continue;
         res += cmp->strength_pts;
@@ -203,7 +186,7 @@ Strength FightSystem::accumulate_strength(const std::set<Unit::IdType>& units) c
     return res;
 }
 
-DirectFightResult FightSystem::process_fight(const DirectFightData& data) const {
+DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) const {
     const auto attackers = accumulate_strength(data.attacker_units);
     const auto defenders = accumulate_strength(data.deffender_units);
 
@@ -216,8 +199,8 @@ DirectFightResult FightSystem::process_fight(const DirectFightData& data) const 
                                  [&ref_strength, &mod](const auto& element) {
                                      if (element.first.modifier != mod)
                                          return false;
-                                     if (element.first.def_min_strength >= ref_strength &&
-                                         element.first.def_max_strength <= ref_strength) {
+                                     if (element.first.def_min_strength <= ref_strength &&
+                                         element.first.def_max_strength >= ref_strength) {
                                          return true;
                                      }
                                      return false;
@@ -255,7 +238,7 @@ DirectFightResult FightSystem::process_fight(const DirectFightData& data) const 
     } else {
         std::vector<std::tuple<Unit::IdType, Strength, Strength>> def;
         for (const auto& u : data.deffender_units) {
-            const auto cmp = _scenario->units.get_component<DirectFightComponent>(u);
+            const auto cmp = units().get_component<DirectFightComponent>(u);
             app_assert(cmp != nullptr,
                        "Unit involved in direct fight should have apropiate component.");
             def.emplace_back(std::make_tuple(u, cmp->strength_pts, 0));
@@ -285,7 +268,7 @@ DirectFightResult FightSystem::process_fight(const DirectFightData& data) const 
     } else {
         std::vector<std::tuple<Unit::IdType, Strength, Strength>> att;
         for (const auto& u : data.attacker_units) {
-            const auto cmp = _scenario->units.get_component<DirectFightComponent>(u);
+            const auto cmp = units().get_component<DirectFightComponent>(u);
             app_assert(cmp != nullptr,
                        "Unit involved in direct fight should have apropiate component.");
             att.emplace_back(std::make_tuple(u, cmp->strength_pts, 0));
@@ -308,15 +291,37 @@ DirectFightResult FightSystem::process_fight(const DirectFightData& data) const 
         for (const auto& [u, s, l] : att)
             res.losses[u] = l;
     }
+
+    std::uniform_real_distribution disorganisation_dist;
+    res.disorganisation =
+        disorganisation_dist(randomize::engine()) < res_entry.disorganization_abs_prob;
     return res;
 }
 
-std::vector<DirectFightResult> FightSystem::process_fights() const {
+void DirectFightSystem::init_direct_fights() {
     const auto data = generate_data_vec();
-    std::vector<DirectFightResult> v{data.size()};
-    std::generate(v.begin(), v.end(),
-                  [i = 0, this, &data]() mutable { return process_fight(data[i++]); });
-    return v;
+    _current_results.resize(data.size());
+    if (is_done())
+        return;
+
+    std::generate(_current_results.begin(), _current_results.end(),
+                  [i = 0, this, &data]() mutable {
+                      const auto res = process_fight(data[i]);
+                      app_debug("Fight result [{}]", i++);
+                      app_debug("    Units destroyed:");
+                      for (const auto& u : res.units_destroyed)
+                          app_debug("        {}", u);
+                      app_debug("    Losses:");
+                      for (const auto& [u, s] : res.losses)
+                          app_debug("        unit {} lost {} ", u, s);
+                      app_debug("    Break through: {}", res.break_through);
+                      app_debug("    Disorganization: {}", res.disorganisation);
+
+                      app_debug("Fight result ");
+                      return res;
+                  });
 }
+
+bool DirectFightSystem::is_done() const { return _current_results.empty(); }
 
 }  // namespace kirch

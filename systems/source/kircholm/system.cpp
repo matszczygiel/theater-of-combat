@@ -9,34 +9,37 @@
 
 namespace kirch {
 
-SystemKircholm::SystemKircholm() : _movement{this} {};
+SystemKircholm::SystemKircholm() : _movement{this}, _direct_fight{this} {};
 
 void SystemKircholm::start() {
     System::start();
     _current_phase = StatePhase::movement;
+    app_info("SystemKircholm started. Current phase: movement");
 }
 
 void SystemKircholm::next_phase() {
     switch (_current_phase) {
         case StatePhase::movement:
             _current_phase = StatePhase::bombardment;
+            app_info("SystemKircholm changed phase to bombardment");
             break;
         case StatePhase::bombardment:
             _current_phase = StatePhase::attack;
+            app_info("SystemKircholm changed phase to attack");
+            _direct_fight.init_direct_fights();
+            if (_direct_fight.is_done())
+                push_action(std::make_unique<NextPhaseAction>());
             break;
         case StatePhase::attack:
             _current_phase = StatePhase::counterattack;
+            app_info("SystemKircholm changed phase to counterattack");
             next_player();
-            if (current_player_index() == 0) {
-                scenario->units.apply_for_each<MovementComponent>(
-                    [](MovementComponent& mc) {
-                        mc.moving_pts = mc.total_moving_pts();
-                        return true;
-                    });
-            }
+            if (current_player_index() == 0)
+                _movement.reset_moving_pts();
             break;
         case StatePhase::counterattack:
             _current_phase = StatePhase::movement;
+            app_info("SystemKircholm changed phase to movement");
             break;
 
         default:

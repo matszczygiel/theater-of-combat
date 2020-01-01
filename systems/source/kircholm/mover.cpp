@@ -243,7 +243,7 @@ bool MovementSystem::set_target_dir(int dir) {
 bool MovementSystem::move() {
     app_debug("Moving through path:");
     for (const auto& [hex, dir, cost] : _path) {
-        app_debug("hex: ({}, {}), dir: {}, cost: {}", hex.q(), hex.p(), dir, cost);
+        app_debug("hex: ({}, {}), dir: {}, cost: {}", hex.q(), hex.r(), dir, cost);
     }
     app_debug(" ");
 

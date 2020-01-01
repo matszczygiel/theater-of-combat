@@ -21,14 +21,14 @@ class HexCoordinates {
 
    public:
     constexpr HexCoordinates() noexcept : _x(0), _y(0), _z(0) {}
-    constexpr HexCoordinates(T q, T p) noexcept : _x{q}, _y{-p - q}, _z{p} {}
+    constexpr HexCoordinates(T q, T r) noexcept : _x{q}, _y{-r - q}, _z{r} {}
     HexCoordinates(T x, T y, T z);
 
     const HexCoordinates<T> neighbor(int direction) const;
     const std::array<HexCoordinates<T>, 6> neighbors() const noexcept;
 
-    constexpr const T& p() const noexcept { return _z; }
     constexpr const T& q() const noexcept { return _x; }
+    constexpr const T& r() const noexcept { return _z; }
 
     constexpr const T& x() const noexcept { return _x; }
     constexpr const T& y() const noexcept { return _y; }
@@ -123,11 +123,29 @@ constexpr bool operator<(const HexCoordinates<T>& lhs,
                          const HexCoordinates<T>& rhs) noexcept {
     if (lhs.q() < rhs.q()) {
         return true;
-    } else if (lhs.q() == rhs.q() && lhs.p() < rhs.p()) {
+    } else if (lhs.q() == rhs.q() && lhs.r() < rhs.r()) {
         return true;
     } else {
         return false;
     }
+}
+
+template <typename T>
+constexpr bool operator>(const HexCoordinates<T>& lhs,
+                         const HexCoordinates<T>& rhs) noexcept {
+    return rhs < lhs;
+}
+
+template <typename T>
+constexpr bool operator<=(const HexCoordinates<T>& lhs,
+                          const HexCoordinates<T>& rhs) noexcept {
+    return !(rhs > lhs);
+}
+
+template <typename T>
+constexpr bool operator>=(const HexCoordinates<T>& lhs,
+                          const HexCoordinates<T>& rhs) noexcept {
+    return !(rhs < lhs);
 }
 
 template <typename T, typename U>
@@ -165,7 +183,7 @@ void HexCoordinates<T>::serialize(Archive& archive) {
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const HexCoordinates<T>& h) {
-    return os << "(" << h.q() << "," << h.p() << ")";
+    return os << "(" << h.q() << "," << h.r() << ")";
 }
 
 struct Orientation {

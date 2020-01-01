@@ -115,13 +115,12 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
     const auto friendly = get_player_units(sys->current_player_index());
     const auto hostile  = get_player_units(sys->opposite_player_index());
 
-    _target_pc =
-        units().find_first<PositionComponent>([&coord, &friendly](auto& cmp) {
-            if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
-                return true;
-            }
-            return false;
-        });
+    _target_pc = units().find_first<PositionComponent>([&coord, &friendly](auto& cmp) {
+        if (cmp.position == coord && friendly.count(cmp.owner()) == 1) {
+            return true;
+        }
+        return false;
+    });
 
     if (!_target_pc) {
         reset();
@@ -133,14 +132,14 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
         reset();
         return false;
     }
-    if (_target_mc->moving_pts == 0) {
+    if (_target_mc->moving_pts == 0 || _target_mc->immobilized) {
         reset();
         return false;
     }
 
     units().apply_for_each<PositionComponent>([this, &hostile](auto& cmp) {
         if (hostile.count(cmp.owner()) == 1 && cmp.position) {
-            const auto id = map().get_hex_id(cmp.position.value()).value();
+            const auto id          = map().get_hex_id(cmp.position.value()).value();
             const auto controlable = map().get_controlable_hexes_from(id);
             for (const auto& c : controlable) {
                 _sticky_sites.push_back(map().get_hex_coord(c).value());
@@ -211,7 +210,7 @@ bool MovementSystem::set_target_hex(HexCoordinate hex) {
 
     _immobilized = find != _path.end();
     if (_immobilized) {
-        _path.erase(find, _path.end());
+        _path.erase(find + 1, _path.end());
         return move();
     }
     return true;
@@ -220,7 +219,7 @@ bool MovementSystem::set_target_hex(HexCoordinate hex) {
 std::map<int, Movability> MovementSystem::get_avaliable_dirs() {
     app_assert(is_hex_set(), "Hex must be set.");
     const auto& [site, dir, cost] = _path.back();
-    const auto site_id            = scenario().map.get_hex_id(site).value();
+    const auto site_id            = map().get_hex_id(site).value();
     _searcher.search_rotation(site_id, dir, _target_mc->moving_pts - cost);
     std::map<int, Movability> res;
     for (const auto& [dir, d_cost] : _searcher.distances())

@@ -6,7 +6,7 @@ static void show_component_tree(const PositionComponent& pc) {
     if (ImGui::TreeNode("PositionComponent")) {
         if (pc.position)
             ImGui::BulletText("position:         (%d, %d)", pc.position->q(),
-                              pc.position->p());
+                              pc.position->r());
         else
             ImGui::BulletText("position:         none");
 

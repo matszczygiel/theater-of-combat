@@ -106,7 +106,7 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
 }
 
 MovementSystem::MovementSystem(SystemKircholm* system) noexcept
-    : ComponentSystem{system} {}
+    : ComponentSystemKircholm{system} {}
 
 bool MovementSystem::init_movement(HexCoordinate coord) {
     app_assert_throw(!is_moving(), "Already moving unit.");

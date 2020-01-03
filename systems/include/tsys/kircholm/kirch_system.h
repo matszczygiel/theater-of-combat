@@ -30,11 +30,11 @@ class SystemKircholm : public System {
 
    private:
     enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
-    StatePhase _current_phase{StatePhase::not_started};
+    StatePhase current_phase{StatePhase::not_started};
 
-    std::shared_ptr<DebugInfoSystem> _debug{nullptr};
-    MovementSystem _movement;
-    DirectFightSystem _direct_fight;
+    std::shared_ptr<DebugInfoSystem> debug{nullptr};
+    MovementSystem movement;
+    DirectFightSystem direct_fight;
 };
 
 template <class Archive>
@@ -46,7 +46,7 @@ void SystemKircholm::serialize(Archive& archive) {
             cereal::make_nvp("DirectFightComponents",
                              *scenario->units.get_container<DirectFightComponent>()),
             // end of list
-            CEREAL_NVP(_current_phase));
+            CEREAL_NVP(current_phase));
 }
 }  // namespace kirch
 

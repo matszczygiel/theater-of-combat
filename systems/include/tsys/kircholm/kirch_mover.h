@@ -6,11 +6,11 @@
 #include <vector>
 
 #include "toc/gameplay/actions.h"
-#include "toc/gameplay/component_system.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/map/hexagons.h"
 
 #include "kirch_components.h"
+#include "kirch_component_system.h"
 
 namespace kirch {
 
@@ -37,7 +37,7 @@ class PathSearcher {
 
 class SystemKircholm;
 
-class MovementSystem : public ComponentSystem {
+class MovementSystem : public ComponentSystemKircholm {
    public:
     explicit MovementSystem(SystemKircholm* system) noexcept;
 

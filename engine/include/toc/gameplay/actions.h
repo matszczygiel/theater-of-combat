@@ -8,8 +8,8 @@
 
 #include "cereal/optional.hpp"
 
-#include "toc/unit/unit_components.h"
 #include "system.h"
+#include "toc/unit/unit_components.h"
 
 class UndoPreviousAction : public Action {
    public:
@@ -47,7 +47,6 @@ class ComponentChangeAction : public Action {
     std::optional<Component> _old_component{};
 };
 
-
 template <class Component>
 ComponentChangeAction<Component>::ComponentChangeAction(const Component& component)
     : _new_component{component} {}
@@ -55,13 +54,13 @@ ComponentChangeAction<Component>::ComponentChangeAction(const Component& compone
 template <class Component>
 bool ComponentChangeAction<Component>::execute(System* state) {
     engine_assert(!_old_component, "ComponentChangeAction<{}> executed more than once.",
-               typeid(Component).name());
+                  typeid(Component).name());
     auto& unit_man = state->scenario->units;
 
     const auto& owner = _new_component.owner();
     auto cmp          = unit_man.get_component<Component>(owner);
     engine_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
-               typeid(Component).name(), owner);
+                  typeid(Component).name(), owner);
     _old_component = *cmp;
     *cmp           = _new_component;
     return true;
@@ -70,14 +69,14 @@ bool ComponentChangeAction<Component>::execute(System* state) {
 template <class Component>
 bool ComponentChangeAction<Component>::revert(System* state) {
     engine_assert(_old_component.has_value(),
-               "ComponentChangeAction<{}> reverted before executed.",
-               typeid(Component).name());
+                  "ComponentChangeAction<{}> reverted before executed.",
+                  typeid(Component).name());
     auto& unit_man = state->scenario->units;
 
     const auto& owner = _old_component.value().owner();
     auto cmp          = unit_man.get_component<Component>(owner);
     engine_assert(cmp, "Procesing nonexistent ComponentChangeAction<{}>. Owner: {}.",
-               typeid(Component).name(), owner);
+                  typeid(Component).name(), owner);
     *cmp = _old_component.value();
     _old_component.reset();
     return true;
@@ -99,5 +98,25 @@ class NextPhaseAction : public Action {
 
 template <class Archive>
 void NextPhaseAction::serialize(Archive&) {}
+
+class UnitDestroyedAction : public Action {
+   public:
+    UnitDestroyedAction() = default;
+    explicit UnitDestroyedAction(Unit::IdType id);
+
+    virtual bool execute(System* state) override;
+    virtual bool revert(System* state) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
+
+   private:
+    Unit::IdType _id;
+};
+
+template <class Archive>
+void UnitDestroyedAction::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_id));
+}
 
 #endif

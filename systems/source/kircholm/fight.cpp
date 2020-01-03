@@ -2,6 +2,8 @@
 
 #include <numeric>
 
+#include <imgui.h>
+
 #include "toc/core/log.h"
 #include "toc/core/randomize.h"
 
@@ -258,8 +260,10 @@ DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) 
             }
         }
 
-        for (const auto& [u, s, l] : def)
-            res.losses[u] = l;
+        for (const auto& [u, s, l] : def) {
+            if (l != 0)
+                res.losses[u] = l;
+        }
     }
     // attackers
     if (res_entry.att_loss >= attackers) {
@@ -288,13 +292,16 @@ DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) 
             }
         }
 
-        for (const auto& [u, s, l] : att)
-            res.losses[u] = l;
+        for (const auto& [u, s, l] : att) {
+            if (l != 0)
+                res.losses[u] = l;
+        }
     }
 
     std::uniform_real_distribution disorganisation_dist;
     res.disorganisation =
         disorganisation_dist(randomize::engine()) < res_entry.disorganization_abs_prob;
+    res.ids = data;
     return res;
 }
 
@@ -308,6 +315,12 @@ void DirectFightSystem::init_direct_fights() {
                   [i = 0, this, &data]() mutable {
                       const auto res = process_fight(data[i]);
                       app_debug("Fight result [{}]", i++);
+                      app_debug("    Attacker units:");
+                      for (const auto& u : res.ids.attacker_units)
+                          app_debug("        {}", u);
+                      app_debug("    Deffender units:");
+                      for (const auto& u : res.ids.deffender_units)
+                          app_debug("        {}", u);
                       app_debug("    Units destroyed:");
                       for (const auto& u : res.units_destroyed)
                           app_debug("        {}", u);
@@ -323,5 +336,57 @@ void DirectFightSystem::init_direct_fights() {
 }
 
 bool DirectFightSystem::is_done() const { return _current_results.empty(); }
+
+void DirectFightSystem::process_retreats() {
+    if (_request_retreat)
+        return;
+    if (!ImGui::Begin("Fight results", nullptr)) {
+        ImGui::End();
+        return;
+    }
+
+    int counter = 0;
+    for (const auto& res : _current_results) {
+        ImGui::BulletText("Result %d", counter);
+        if (ImGui::Button("Retreat", ImVec2(200, 100))) {
+            _request_retreat = counter++;
+            fetch_handled_retreat();
+        }
+        ImGui::Separator();
+    }
+    ImGui::End();
+}
+
+void DirectFightSystem::fetch_handled_retreat() {
+    if (!_request_retreat)
+        return;
+
+    auto& res = _current_results[*_request_retreat];
+    _current_results.erase(_current_results.begin() + *_request_retreat);
+    for (const auto& u : res.units_destroyed)
+        push_action<UnitDestroyedAction>(u);
+    for (const auto& [u, l] : res.losses) {
+        auto cmp_old = units().get_component<DirectFightComponent>(u);
+        app_assert(cmp_old != nullptr, "");
+        DirectFightComponent cmp = *cmp_old;
+        cmp.strength_pts -= l;
+        push_action<ComponentChangeAction<DirectFightComponent>>(cmp);
+    }
+    if (res.break_through > 0) {
+        for (const auto& u : res.ids.deffender_units) {
+            auto cmp = units().get_component<MovementComponent>(u);
+            app_assert(cmp != nullptr, "");
+            cmp->moving_pts = res.break_through;
+        }
+    } else if (res.break_through < 0) {
+        for (const auto& u : res.ids.attacker_units) {
+            auto cmp = units().get_component<MovementComponent>(u);
+            app_assert(cmp != nullptr, "");
+            cmp->moving_pts = -res.break_through;
+        }
+    }
+}
+
+bool DirectFightSystem::is_retreating() const { return _request_retreat.has_value(); }
 
 }  // namespace kirch

@@ -23,6 +23,7 @@ class SystemKircholm : public System {
     virtual void handle_hex_info(const HexCoordinate& hex) override;
     virtual void handle_hex_release(const HexCoordinate& hex) override;
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info() override;
+    virtual void update_system() override;
 
     template <class Archive>
     void serialize(Archive& archive);

@@ -50,6 +50,8 @@ void System::update() {
         action->execute(this);
         _action_stack.push(std::move(action));
     }
+
+    update_system();
     gfx.update();
 }
 
@@ -60,3 +62,5 @@ std::shared_ptr<DebugInfoSystem> System::create_debug_info() {
 }
 
 void System::clear() {}
+
+void System::update_system() {}

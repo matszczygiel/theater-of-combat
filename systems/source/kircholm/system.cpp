@@ -27,8 +27,6 @@ void SystemKircholm::next_phase() {
             _current_phase = StatePhase::attack;
             app_info("SystemKircholm changed phase to attack");
             _direct_fight.init_direct_fights();
-            if (_direct_fight.is_done())
-                push_action(std::make_unique<NextPhaseAction>());
             break;
         case StatePhase::attack:
             _current_phase = StatePhase::counterattack;
@@ -169,6 +167,21 @@ std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
     _debug            = std::make_shared<DebugInfoSystem>();
     _debug->unit_info = std::make_unique<KircholmUnitInfo>(scenario);
     return _debug;
+}
+
+void SystemKircholm::update_system() {
+    if (_current_phase == StatePhase::attack) {
+        if (_direct_fight.is_done()) {
+            push_action(std::make_unique<NextPhaseAction>());
+            return;
+        }
+        _direct_fight.process_retreats();
+        const auto res = _direct_fight.fetch_handled_retreat();
+        res.has_value();
+        if(!res)
+            return;
+        
+    }
 }
 
 }  // namespace kirch

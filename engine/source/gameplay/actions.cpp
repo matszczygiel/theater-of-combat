@@ -13,7 +13,7 @@ bool UndoPreviousAction::execute(System* state) {
 
     auto& actions = state->_action_stack;
     engine_assert(actions.size() > 0,
-               "UndoPreviousAction cannot be executed on empty _action_stack.");
+                  "UndoPreviousAction cannot be executed on empty _action_stack.");
     _executed = actions.top()->revert(state);
     if (!_executed)
         return false;
@@ -43,10 +43,22 @@ bool NextPhaseAction::execute(System* state) {
     return true;
 }
 
-bool NextPhaseAction::revert(System* ) { return false; }
+bool NextPhaseAction::revert(System*) { return false; }
 
 CEREAL_REGISTER_TYPE(NextPhaseAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, NextPhaseAction);
 
 CEREAL_REGISTER_TYPE(ComponentChangeAction<PositionComponent>);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, ComponentChangeAction<PositionComponent>);
+
+UnitDestroyedAction::UnitDestroyedAction(Unit::IdType id) : _id{id} {}
+
+bool UnitDestroyedAction::execute(System* state) {
+    state->scenario->units.remove(_id);
+    return true;
+}
+
+bool UnitDestroyedAction::revert(System* state) { return false; }
+
+CEREAL_REGISTER_TYPE(UnitDestroyedAction);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, UnitDestroyedAction);

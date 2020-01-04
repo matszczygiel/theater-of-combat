@@ -146,23 +146,7 @@ void Game::initialize() {
     };
     lua["set_local_player_index"] = [&](int i) { _system->set_local_player(i); };
 
-    lua.script(R"(
-    load_scenario_script('test0')
-
-    game_units:assign_movement_cmp(0, MovementComponent.new(10))
-    game_units:assign_movement_cmp(1, MovementComponent.new(15))
-    game_units:assign_movement_cmp(2, MovementComponent.new(10))
-
-    game_units:assign_direct_fight_cmp(0, DirectFightComponent.new(2))
-    game_units:assign_direct_fight_cmp(1, DirectFightComponent.new(3))
-    game_units:assign_direct_fight_cmp(2, DirectFightComponent.new(3))
-
-    game_units:remove_position_cmp(0)
-    game_units:assign_position_cmp(0, PositionComponent.new(Coord.new(-1, 1), 4))
-    
-    set_local_player_index(0)
-    system:start()
-    )");
+    lua.script_file("game_tests.lua");
 }
 
 void Game::update(const sf::Time& elapsed_time) {

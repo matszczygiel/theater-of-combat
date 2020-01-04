@@ -27,6 +27,7 @@ void SystemKircholm::next_phase() {
             current_phase = StatePhase::attack;
             app_info("SystemKircholm changed phase to attack");
             direct_fight.init_direct_fights();
+            retreat.prepare_for_retreating();
             break;
         case StatePhase::attack:
             current_phase = StatePhase::counterattack;
@@ -54,11 +55,6 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
     if (is_local_player_now()) {
         switch (current_phase) {
             case StatePhase::movement:
-                if (movement.is_moving() && !movement.is_hex_set()) {
-                    auto path = movement.path_preview(hex);
-                    for (const auto& [h, dir, cost] : path)
-                        gfx.highlight_hex(h);
-                }
                 break;
             case StatePhase::bombardment:
                 break;
@@ -70,6 +66,11 @@ void SystemKircholm::handle_hex_over(const HexCoordinate& hex) {
             default:
                 app_assert(false, "Unknown StatePhase");
         }
+    }
+    if (movement.is_moving() && !movement.is_hex_set()) {
+        auto path = movement.path_preview(hex);
+        for (const auto& [h, dir, cost] : path)
+            gfx.highlight_hex(h);
     }
 }
 
@@ -89,6 +90,9 @@ void SystemKircholm::handle_hex_selection(const HexCoordinate& hex) {
             case StatePhase::bombardment:
                 break;
             case StatePhase::attack:
+                if (movement.is_moving()) {
+                    movement.set_target_hex(hex);
+                }
                 break;
             case StatePhase::counterattack:
                 break;
@@ -137,17 +141,6 @@ void SystemKircholm::handle_hex_release(const HexCoordinate& hex) {
     if (is_local_player_now()) {
         switch (current_phase) {
             case StatePhase::movement:
-                if (movement.is_moving() && movement.is_hex_set()) {
-                    const auto& target   = std::get<0>(movement.path().back());
-                    const auto neighbors = target.neighbors();
-                    const auto it = std::find(neighbors.cbegin(), neighbors.cend(), hex);
-                    if (it != neighbors.cend()) {
-                        const auto direction = std::distance(neighbors.cbegin(), it);
-                        movement.set_target_dir(direction);
-                    } else if (target == hex) {
-                        movement.move();
-                    }
-                }
                 break;
             case StatePhase::bombardment:
                 break;
@@ -158,6 +151,17 @@ void SystemKircholm::handle_hex_release(const HexCoordinate& hex) {
 
             default:
                 app_assert(false, "Unknown StatePhase");
+        }
+    }
+    if (movement.is_moving() && movement.is_hex_set()) {
+        const auto& target   = std::get<0>(movement.path().back());
+        const auto neighbors = target.neighbors();
+        const auto it        = std::find(neighbors.cbegin(), neighbors.cend(), hex);
+        if (it != neighbors.cend()) {
+            const auto direction = std::distance(neighbors.cbegin(), it);
+            movement.set_target_dir(direction);
+        } else if (target == hex) {
+            movement.move();
         }
     }
 
@@ -172,10 +176,11 @@ std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
 void SystemKircholm::update_system() {
     if (current_phase == StatePhase::attack) {
         if (retreat.is_done()) {
-            push_action(std::make_unique<NextPhaseAction>());
+           // push_action(std::make_unique<NextPhaseAction>());
             return;
         }
-        retreat.process_retreats();
+        if (!movement.is_moving())
+            retreat.process_retreats();
     }
 }
 

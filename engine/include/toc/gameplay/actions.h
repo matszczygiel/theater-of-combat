@@ -119,4 +119,28 @@ void UnitDestroyedAction::serialize(Archive& ar) {
     ar(CEREAL_NVP(_id));
 }
 
+template <class T>
+class SystemAction : public Action {
+    static_assert(std::is_base_of_v<System, T>);
+
+   public:
+    virtual ~SystemAction() = default;
+
+    bool execute(System* state) final;
+    bool revert(System* state) final;
+
+    virtual bool sys_execute(T* state) = 0;
+    virtual bool sys_revert(T* state)  = 0;
+};
+
+template <class T>
+bool SystemAction<T>::execute(System* state) {
+    return sys_execute(static_cast<T*>(state));
+}
+
+template <class T>
+bool SystemAction<T>::revert(System* state) {
+    return sys_revert(static_cast<T*>(state));
+}
+
 #endif

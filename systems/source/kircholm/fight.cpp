@@ -2,11 +2,10 @@
 
 #include <numeric>
 
-#include <imgui.h>
-
 #include "toc/core/log.h"
 #include "toc/core/randomize.h"
 
+#include "kircholm/kirch_actions.h"
 #include "kircholm/kirch_components.h"
 #include "kircholm/kirch_system.h"
 
@@ -307,62 +306,38 @@ DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) 
 
 void DirectFightSystem::init_direct_fights() {
     const auto data = generate_data_vec();
-    _current_results.resize(data.size());
-    if (is_done())
+    if (data.empty())
         return;
 
-    std::generate(_current_results.begin(), _current_results.end(),
-                  [i = 0, this, &data]() mutable {
-                      const auto res = process_fight(data[i]);
-                      app_debug("Fight result [{}]", i++);
-                      app_debug("    Attacker units:");
-                      for (const auto& u : res.ids.attacker_units)
-                          app_debug("        {}", u);
-                      app_debug("    Deffender units:");
-                      for (const auto& u : res.ids.deffender_units)
-                          app_debug("        {}", u);
-                      app_debug("    Units destroyed:");
-                      for (const auto& u : res.units_destroyed)
-                          app_debug("        {}", u);
-                      app_debug("    Losses:");
-                      for (const auto& [u, s] : res.losses)
-                          app_debug("        unit {} lost {} ", u, s);
-                      app_debug("    Break through: {}", res.break_through);
-                      app_debug("    Disorganization: {}", res.disorganisation);
+    std::vector<DirectFightResult> results{data.size()};
+    std::generate(results.begin(), results.end(), [i = 0, this, &data]() mutable {
+        const auto res = process_fight(data[i]);
+        app_debug("Fight result [{}]", i++);
+        app_debug("    Attacker units:");
+        for (const auto& u : res.ids.attacker_units)
+            app_debug("        {}", u);
+        app_debug("    Deffender units:");
+        for (const auto& u : res.ids.deffender_units)
+            app_debug("        {}", u);
+        app_debug("    Units destroyed:");
+        for (const auto& u : res.units_destroyed)
+            app_debug("        {}", u);
+        app_debug("    Losses:");
+        for (const auto& [u, s] : res.losses)
+            app_debug("        unit {} lost {} ", u, s);
+        app_debug("    Break through: {}", res.break_through);
+        app_debug("    Disorganization: {}", res.disorganisation);
 
-                      app_debug("Fight result ");
-                      return res;
-                  });
+        app_debug("Fight result ");
+        return res;
+    });
+    for (const auto& res : results)
+        send_actions(res);
+
+    push_action<DirectFightResultComputed>(results);
 }
 
-bool DirectFightSystem::is_done() const { return _current_results.empty(); }
-
-void DirectFightSystem::process_retreats() {
-    if (_request_retreat)
-        return;
-    if (!ImGui::Begin("Fight results", nullptr)) {
-        ImGui::End();
-        return;
-    }
-
-    int counter = 0;
-    for (const auto& res : _current_results) {
-        ImGui::BulletText("Result %d", counter);
-        if (ImGui::Button("Retreat", ImVec2(200, 100))) {
-            _request_retreat = counter++;
-            fetch_handled_retreat();
-        }
-        ImGui::Separator();
-    }
-    ImGui::End();
-}
-
-void DirectFightSystem::fetch_handled_retreat() {
-    if (!_request_retreat)
-        return;
-
-    auto& res = _current_results[*_request_retreat];
-    _current_results.erase(_current_results.begin() + *_request_retreat);
+void DirectFightSystem::send_actions(const DirectFightResult& res) {
     for (const auto& u : res.units_destroyed)
         push_action<UnitDestroyedAction>(u);
     for (const auto& [u, l] : res.losses) {
@@ -386,7 +361,5 @@ void DirectFightSystem::fetch_handled_retreat() {
         }
     }
 }
-
-bool DirectFightSystem::is_retreating() const { return _request_retreat.has_value(); }
 
 }  // namespace kirch

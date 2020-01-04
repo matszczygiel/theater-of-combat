@@ -35,8 +35,6 @@ class PathSearcher {
     std::map<std::pair<Map::SiteId, int>, std::pair<Map::SiteId, int>> _paths{};
 };
 
-class SystemKircholm;
-
 class MovementSystem : public ComponentSystemKircholm {
    public:
     explicit MovementSystem(SystemKircholm* system) noexcept;

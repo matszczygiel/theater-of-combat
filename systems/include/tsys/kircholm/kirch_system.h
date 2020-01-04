@@ -8,6 +8,7 @@
 
 #include "kirch_fight.h"
 #include "kirch_mover.h"
+#include "kirch_retreat.h"
 
 namespace kirch {
 class SystemKircholm : public System {
@@ -28,13 +29,14 @@ class SystemKircholm : public System {
     template <class Archive>
     void serialize(Archive& archive);
 
-   private:
     enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
     StatePhase current_phase{StatePhase::not_started};
 
     std::shared_ptr<DebugInfoSystem> debug{nullptr};
+
     MovementSystem movement;
     DirectFightSystem direct_fight;
+    RetreatSystem retreat;
 };
 
 template <class Archive>

@@ -12,13 +12,24 @@
 
 #include "toc/unit/unit.h"
 
+#include <cereal/types/map.hpp>
+#include <cereal/types/set.hpp>
+
 #include "kirch_components.h"
 
 namespace kirch {
 struct DirectFightData {
     std::set<Unit::IdType> attacker_units;
     std::set<Unit::IdType> deffender_units;
+
+    template <class Archive>
+    void serialize(Archive& ar);
 };
+
+template <class Archive>
+void DirectFightData::serialize(Archive& ar) {
+    ar(CEREAL_NVP(attacker_units), CEREAL_NVP(deffender_units));
+}
 
 struct DirectFightResult {
     std::set<Unit::IdType> units_destroyed;
@@ -28,21 +39,23 @@ struct DirectFightResult {
     int break_through;
     bool disorganisation;
     DirectFightData ids;
+
+    template <class Archive>
+    void serialize(Archive& ar);
 };
+
+template <class Archive>
+void DirectFightResult::serialize(Archive& ar) {
+    ar(CEREAL_NVP(units_destroyed), CEREAL_NVP(losses), CEREAL_NVP(break_through),
+       CEREAL_NVP(disorganisation), CEREAL_NVP(ids));
+}
 
 class SystemKircholm;
 
 class DirectFightSystem : public ComponentSystem {
    public:
     DirectFightSystem(SystemKircholm* system) noexcept;
-
     void init_direct_fights();
-    bool is_done() const;
-
-    void process_retreats();
-    bool is_retreating() const;
-
-    std::set<HexCoordinate> get_positions_of_retreating_units() const;
 
    private:
     // < unit -> site, site -> units controling >
@@ -52,12 +65,8 @@ class DirectFightSystem : public ComponentSystem {
 
     std::vector<DirectFightData> generate_data_vec() const;
     Strength accumulate_strength(const std::set<Unit::IdType>& units) const;
-
     DirectFightResult process_fight(const DirectFightData& data) const;
-    void fetch_handled_retreat();
-
-    std::vector<DirectFightResult> _current_results{};
-    std::optional<int> _request_retreat{};
+    void send_actions(const DirectFightResult& res);
 };
 }  // namespace kirch
 

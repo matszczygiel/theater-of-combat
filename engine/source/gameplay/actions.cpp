@@ -58,7 +58,7 @@ bool UnitDestroyedAction::execute(System* state) {
     return true;
 }
 
-bool UnitDestroyedAction::revert(System* state) { return false; }
+bool UnitDestroyedAction::revert(System*) { return false; }
 
 CEREAL_REGISTER_TYPE(UnitDestroyedAction);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, UnitDestroyedAction);

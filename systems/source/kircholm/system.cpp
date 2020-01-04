@@ -9,7 +9,7 @@
 
 namespace kirch {
 
-SystemKircholm::SystemKircholm() : movement{this}, direct_fight{this} {};
+SystemKircholm::SystemKircholm() : movement{this}, direct_fight{this}, retreat{this} {};
 
 void SystemKircholm::start() {
     System::start();
@@ -171,11 +171,11 @@ std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
 
 void SystemKircholm::update_system() {
     if (current_phase == StatePhase::attack) {
-        if (direct_fight.is_done()) {
+        if (retreat.is_done()) {
             push_action(std::make_unique<NextPhaseAction>());
             return;
         }
-        direct_fight.process_retreats();
+        retreat.process_retreats();
     }
 }
 

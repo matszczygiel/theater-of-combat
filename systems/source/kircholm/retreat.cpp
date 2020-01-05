@@ -36,7 +36,7 @@ void RetreatSystem::process_retreats() {
     int counter = 0;
     for (const auto& res : _results) {
         ImGui::BulletText("Result %d", counter);
-        if (ImGui::Button("Retreat", ImVec2(200, 100))) {
+        if (ImGui::Button("Retreat", ImVec2(100, 50))) {
             _current = res;
             _results.erase(_results.begin() + counter);
         }

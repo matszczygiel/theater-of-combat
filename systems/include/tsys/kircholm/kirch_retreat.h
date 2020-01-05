@@ -13,17 +13,21 @@ class RetreatSystem : public ComponentSystemKircholm {
    public:
     explicit RetreatSystem(SystemKircholm* system) noexcept;
     void set_results(const std::vector<DirectFightResult>& results);
-    void prepare_for_retreating() noexcept;
+    void prepare() noexcept;
     bool is_done();
 
     void process_retreats();
+    void defence_finished() noexcept;
+    void attack_finished() noexcept;
 
    private:
     bool fetch_retreat();
 
     std::vector<DirectFightResult> _results{};
     std::optional<DirectFightResult> _current{};
-    bool _prepared{false};
+    bool _deffenders_done{true};
+    bool _attackers_done{true};
+    bool _vec_not_set{false};
 };
 }  // namespace kirch
 

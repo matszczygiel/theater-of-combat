@@ -25,9 +25,10 @@ void SystemKircholm::next_phase() {
             break;
         case StatePhase::bombardment:
             current_phase = StatePhase::attack;
+            if (is_local_player_now())
+                direct_fight.init_direct_fights();
+            retreat.prepare();
             app_info("SystemKircholm changed phase to attack");
-            direct_fight.init_direct_fights();
-            retreat.prepare_for_retreating();
             break;
         case StatePhase::attack:
             current_phase = StatePhase::counterattack;
@@ -174,13 +175,23 @@ std::shared_ptr<DebugInfoSystem> SystemKircholm::create_debug_info() {
 }
 
 void SystemKircholm::update_system() {
-    if (current_phase == StatePhase::attack) {
-        if (retreat.is_done()) {
-           // push_action(std::make_unique<NextPhaseAction>());
-            return;
-        }
-        if (!movement.is_moving())
-            retreat.process_retreats();
+    switch (current_phase) {
+        case StatePhase::movement:
+            break;
+        case StatePhase::bombardment:
+            break;
+        case StatePhase::attack:
+            if (retreat.is_done() && is_local_player_now()) {
+                push_action(std::make_unique<NextPhaseAction>());
+            }
+            if (!movement.is_moving())
+                retreat.process_retreats();
+            break;
+        case StatePhase::counterattack:
+            break;
+
+        default:
+            app_assert(false, "Unknown StatePhase");
     }
 }
 

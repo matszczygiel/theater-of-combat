@@ -357,7 +357,7 @@ void DirectFightSystem::send_actions(const DirectFightResult& res) {
         for (const auto& u : res.ids.attacker_units) {
             auto cmp = units().get_component<MovementComponent>(u);
             app_assert(cmp != nullptr, "");
-            cmp->moving_pts = -res.break_through;
+            cmp->moving_pts = -res.break_through * 10;
         }
     }
 }

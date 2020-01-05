@@ -66,7 +66,7 @@ class MovementSystem : public ComponentSystemKircholm {
     const MovementComponent* _target_mc{nullptr};
     const PositionComponent* _target_pc{nullptr};
 
-    std::vector<HexCoordinate> _sticky_sites{};
+    std::set<HexCoordinate> _sticky_sites{};
     PathSearcher _searcher{};
 };
 

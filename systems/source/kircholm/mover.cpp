@@ -142,11 +142,13 @@ bool MovementSystem::init_movement(HexCoordinate coord) {
             const auto id          = map().get_hex_id(cmp.position.value()).value();
             const auto controlable = map().get_controlable_hexes_from(id);
             for (const auto& c : controlable) {
-                _sticky_sites.push_back(map().get_hex_coord(c).value());
+                _sticky_sites.insert(map().get_hex_coord(c).value());
             }
         }
         return true;
     });
+
+    _sticky_sites.erase(_target_pc->position.value());
 
     _searcher.reset(make_weighted_graph(_target_pc->owner()));
 

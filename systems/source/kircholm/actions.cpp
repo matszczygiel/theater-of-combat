@@ -32,8 +32,24 @@ bool DirectFightResultComputed::sys_execute(SystemKircholm* system) {
 
 bool DirectFightResultComputed::sys_revert(SystemKircholm*) { return false; }
 
+RetreatsDone::RetreatsDone(bool send_by_local) noexcept : _send_by_local{send_by_local} {}
+
+bool RetreatsDone::sys_execute(SystemKircholm* system) {
+    if (_send_by_local)
+        system->retreat.attack_finished();
+    else
+        system->retreat.defence_finished();
+    return true;
+}
+
+bool RetreatsDone::sys_revert(SystemKircholm*) { return false; }
+
 }  // namespace kirch
 
 CEREAL_REGISTER_TYPE(kirch::DirectFightResultComputed);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
                                      kirch::DirectFightResultComputed);
+
+CEREAL_REGISTER_TYPE(kirch::RetreatsDone);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
+                                     kirch::RetreatsDone);

@@ -28,5 +28,24 @@ void DirectFightResultComputed::serialize(Archive& ar) {
     ar(CEREAL_NVP(_results));
 }
 
+class RetreatsDone : public SystemAction<SystemKircholm> {
+   public:
+    RetreatsDone() = default;
+    explicit RetreatsDone(bool send_by_local) noexcept;
+    bool sys_execute(SystemKircholm* system) override;
+    bool sys_revert(SystemKircholm* system) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
+
+   private:
+    bool _send_by_local{false};
+};
+
+template <class Archive>
+void RetreatsDone::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_send_by_local));
+}
+
 }  // namespace kirch
 #endif /* KIRCH_ACTIONS_H */

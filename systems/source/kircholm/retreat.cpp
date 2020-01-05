@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "kircholm/kirch_actions.h"
 #include "kircholm/kirch_system.h"
 
 namespace kirch {
@@ -9,15 +10,24 @@ RetreatSystem::RetreatSystem(SystemKircholm* system) noexcept
     : ComponentSystemKircholm{system} {}
 
 void RetreatSystem::set_results(const std::vector<DirectFightResult>& results) {
-    _results  = results;
-    _prepared = false;
+    _results     = results;
+    _vec_not_set = false;
 }
 
-bool RetreatSystem::is_done() { return _results.empty() && !_current && !_prepared; }
+bool RetreatSystem::is_done() { return _attackers_done && _deffenders_done; }
 
 void RetreatSystem::process_retreats() {
+    if (system()->is_local_player_now()) {
+        if (_attackers_done)
+            return;
+    } else {
+        if (_deffenders_done)
+            return;
+    }
+
     if (fetch_retreat())
         return;
+
     if (!ImGui::Begin("Fight results", nullptr)) {
         ImGui::End();
         return;
@@ -29,7 +39,6 @@ void RetreatSystem::process_retreats() {
         if (ImGui::Button("Retreat", ImVec2(200, 100))) {
             _current = res;
             _results.erase(_results.begin() + counter);
-            app_assert(fetch_retreat(), "");
         }
         ++counter;
         ImGui::Separator();
@@ -38,28 +47,35 @@ void RetreatSystem::process_retreats() {
 }
 
 bool RetreatSystem::fetch_retreat() {
-    if (!_current)
+    if (!_current) {
+        if (_results.empty() && !_vec_not_set)
+            push_action<RetreatsDone>(system()->is_local_player_now());
         return false;
-    if (system()->movement.is_moving())
-        return false;
-
-    auto& res = *_current;
-    Unit::IdType u;
-    if (res.break_through < 0) {
-        if (res.ids.attacker_units.empty()) {
-            _current = {};
-            return false;
-        }
-        u = *res.ids.attacker_units.begin();
-        res.ids.attacker_units.erase(u);
-    } else {
-        if (res.ids.deffender_units.empty()) {
-            _current = {};
-            return false;
-        }
-        u = *res.ids.deffender_units.begin();
-        res.ids.deffender_units.erase(u);
     }
+    if (system()->movement.is_moving())
+        return true;
+
+    auto& res             = *_current;
+    auto process_unit_set = [this](std::set<Unit::IdType>& units) -> Unit::IdType {
+        if (units.empty()) {
+            _current = {};
+        }
+        const auto u = *units.begin();
+        units.erase(u);
+        return u;
+    };
+
+    Unit::IdType u;
+    do {
+        if (res.break_through < 0) {
+            u = process_unit_set(res.ids.attacker_units);
+        } else {
+            u = process_unit_set(res.ids.deffender_units);
+        }
+        if (!_current)
+            return false;
+    } while (res.units_destroyed.count(u) != 0);
+
     const auto cmp = units().get_component<PositionComponent>(u);
     app_assert(cmp, "");
     app_assert(cmp->position.has_value(), "");
@@ -71,6 +87,13 @@ bool RetreatSystem::fetch_retreat() {
     return true;
 }
 
-void RetreatSystem::prepare_for_retreating() noexcept { _prepared = true; }
+void RetreatSystem::prepare() noexcept {
+    _attackers_done  = false;
+    _deffenders_done = false;
+    _vec_not_set     = true;
+}
+
+void RetreatSystem::defence_finished() noexcept { _deffenders_done = true; }
+void RetreatSystem::attack_finished() noexcept { _attackers_done = true; }
 
 }  // namespace kirch

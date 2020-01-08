@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <optional>
 #include <ostream>
 #include <stdexcept>
 
@@ -24,8 +25,9 @@ class HexCoordinates {
     constexpr HexCoordinates(T q, T r) noexcept : _x{q}, _y{-r - q}, _z{r} {}
     HexCoordinates(T x, T y, T z);
 
-    const HexCoordinates<T> neighbor(int direction) const;
+    HexCoordinates<T> neighbor(int direction) const;
     const std::array<HexCoordinates<T>, 6> neighbors() const noexcept;
+    std::optional<int> neighbor_direction(const HexCoordinates<T>& neighbor) const;
 
     constexpr const T& q() const noexcept { return _x; }
     constexpr const T& r() const noexcept { return _z; }
@@ -86,7 +88,7 @@ constexpr T HexCoordinates<T>::length() const noexcept {
 }
 
 template <typename T>
-const HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
+HexCoordinates<T> HexCoordinates<T>::neighbor(int direction) const {
     return *this + directions.at(direction);
 }
 
@@ -96,6 +98,16 @@ const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noex
     std::generate(res.begin(), res.end(),
                   [i = 0, this]() mutable { return neighbor(i++); });
     return res;
+}
+
+template <typename T>
+std::optional<int> HexCoordinates<T> neighbor_direction(
+    const HexCoordinates<T>& neighbor) const {
+    for (int i = 0; i < neighbors_count; ++i) {
+        if (neighbor(i) == neighbor)
+            return i;
+    }
+    return {};
 }
 
 HexCoordinate round(const HexCoordinateFractional& hex) noexcept;

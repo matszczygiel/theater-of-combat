@@ -180,15 +180,20 @@ std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::make_pat
     dir = dir % HexCoordinate::neighbors_count();
 
     const auto ids = _searcher.path_indices({*dest_hex, dir});
+    if (ids.empty())
+        return {};
     std::vector<std::tuple<HexCoordinate, int, Movability>> res;
     res.reserve(ids.size());
     int prev_id;
     for (const auto& [site, mov] : ids) {
         if (res.size() != 0 && prev_id == site.first)
             continue;
+        if (site.first == *dest_hex)
+            break;
         res.push_back({map().get_hex_coord(site.first).value(), site.second, mov});
         prev_id = site.first;
     }
+    res.push_back({destination, dir, ids.back().second});
     return res;
 }
 
@@ -240,21 +245,20 @@ std::map<int, Movability> MovementSystem::get_avaliable_dirs() {
 }
 
 MovementSystem::State MovementSystem::set_target_dir(HexCoordinate hex) {
-    const auto dir = hex.neighbor_direction(hex);
-    if (dir) {
-        const auto dirs = get_avaliable_dirs();
-        return set_target_dir(*dir);
-    } else
+    const auto dir = _target_hex.neighbor_direction(hex);
+    if (!dir)
         return State::paths_calculated;
+
+    return set_target_dir(*dir);
 }
 
 MovementSystem::State MovementSystem::set_target_dir(int dir) {
     const auto t_dir = dir % HexCoordinate::neighbors_count();
     const auto dirs  = get_avaliable_dirs();
     const auto it    = dirs.find(t_dir);
-    if (it == dirs.end()) {
+    if (it == dirs.end())
         return State::paths_calculated;
-    }
+
     _target_direction = it->first;
     _path             = make_path_preview(_target_hex, _target_direction);
     return State::target_dir_set;

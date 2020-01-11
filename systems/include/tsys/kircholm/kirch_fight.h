@@ -5,6 +5,8 @@
 #include <optional>
 #include <set>
 
+#include <cereal/types/set.hpp>
+
 #include "toc/gameplay/actions.h"
 #include "toc/gameplay/component_system.h"
 #include "toc/gameplay/scenario.h"
@@ -16,6 +18,7 @@
 #include <cereal/types/set.hpp>
 
 #include "kirch_components.h"
+#include "kirch_component_system.h"
 
 namespace kirch {
 struct DirectFightData {
@@ -40,6 +43,9 @@ struct DirectFightResult {
     bool disorganisation;
     DirectFightData ids;
 
+    //For winner to chase
+    std::set<HexCoordinate> avaliable;
+
     template <class Archive>
     void serialize(Archive& ar);
 };
@@ -47,22 +53,17 @@ struct DirectFightResult {
 template <class Archive>
 void DirectFightResult::serialize(Archive& ar) {
     ar(CEREAL_NVP(units_destroyed), CEREAL_NVP(losses), CEREAL_NVP(break_through),
-       CEREAL_NVP(disorganisation), CEREAL_NVP(ids));
+       CEREAL_NVP(disorganisation), CEREAL_NVP(ids), CEREAL_NVP(avaliable));
 }
 
 class SystemKircholm;
 
-class DirectFightSystem : public ComponentSystem {
+class DirectFightSystem : public ComponentSystemKircholm {
    public:
-    DirectFightSystem(SystemKircholm* system) noexcept;
-    void init_direct_fights();
+    explicit DirectFightSystem(SystemKircholm* system) noexcept;
+    void on_init();
 
    private:
-    // < unit -> site, site -> units controling >
-    std::pair<std::map<Unit::IdType, HexCoordinate>,
-              std::map<HexCoordinate, std::set<Unit::IdType>>>
-    get_positions(const std::set<Unit::IdType>& units) const;
-
     std::vector<DirectFightData> generate_data_vec() const;
     Strength accumulate_strength(const std::set<Unit::IdType>& units) const;
     DirectFightResult process_fight(const DirectFightData& data) const;

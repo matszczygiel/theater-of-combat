@@ -39,6 +39,7 @@ class MovementSystem : public ComponentSystemKircholm {
 
     explicit MovementSystem(SystemKircholm* system) noexcept;
 
+    void on_init();
     void on_left_click(HexCoordinate coord);
     void on_right_click(HexCoordinate coord);
     void on_over(HexCoordinate coord);
@@ -47,13 +48,15 @@ class MovementSystem : public ComponentSystemKircholm {
 
     void update();
 
+    void reset_moving_pts();
+
+private:
     State init_movement(HexCoordinate coord);
     State set_target_hex(HexCoordinate hex);
     State set_target_dir(int dir);
     State set_target_dir(HexCoordinate hex);
     State move();
 
-    void reset_moving_pts();
 
     std::map<int, Movability> get_avaliable_dirs();
     std::vector<std::tuple<HexCoordinate, int, Movability>> make_path_preview(

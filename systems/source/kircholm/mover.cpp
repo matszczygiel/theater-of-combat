@@ -450,4 +450,8 @@ bool MovementSystem::unit_can_enter_hostile_zone(Unit::IdType unit) const {
     return false;
 }
 
+void MovementSystem::on_init() {
+    _state = State::idle;
+}
+
 }  // namespace kirch

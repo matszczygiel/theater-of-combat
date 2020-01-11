@@ -12,27 +12,7 @@
 namespace kirch {
 
 DirectFightSystem::DirectFightSystem(SystemKircholm* system) noexcept
-    : ComponentSystem{system} {}
-
-std::pair<std::map<Unit::IdType, HexCoordinate>,
-          std::map<HexCoordinate, std::set<Unit::IdType>>>
-DirectFightSystem::get_positions(const std::set<Unit::IdType>& unit_set) const {
-    std::map<Unit::IdType, HexCoordinate> res0;
-    std::map<HexCoordinate, std::set<Unit::IdType>> res1;
-
-    units().apply_for_each<PositionComponent>([&unit_set, &res0, &res1](const auto& cmp) {
-        if (unit_set.find(cmp.owner()) != unit_set.cend() && cmp.position.has_value()) {
-            const auto pos    = *cmp.position;
-            res0[cmp.owner()] = pos;
-            res1[pos].insert(cmp.owner());
-            const auto neighbors = pos.neighbors();
-            for (const auto& n : neighbors)
-                res1[n].insert(cmp.owner());
-        }
-        return true;
-    });
-    return {res0, res1};
-}
+    : ComponentSystemKircholm{system} {}
 
 static std::set<HexCoordinate> get_control_zone_of(
     const std::set<Unit::IdType>& units,
@@ -55,8 +35,8 @@ std::vector<DirectFightData> DirectFightSystem::generate_data_vec() const {
     auto attackers = get_player_units(_sys->current_player_index());
     auto defenders = get_player_units(_sys->opposite_player_index());
 
-    auto [d_positions, d_zone] = get_positions(defenders);
-    auto [a_positions, a_zone] = get_positions(attackers);
+    auto [d_positions, d_zone] = system()->organization.get_positions_and_zone(defenders);
+    auto [a_positions, a_zone] = system()->organization.get_positions_and_zone(attackers);
 
     for (auto it = attackers.begin(); it != attackers.end();) {
         if (a_positions.find(*it) == a_positions.cend())
@@ -304,7 +284,7 @@ DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) 
     return res;
 }
 
-void DirectFightSystem::init_direct_fights() {
+void DirectFightSystem::on_init() {
     const auto data = generate_data_vec();
     if (data.empty())
         return;
@@ -333,6 +313,10 @@ void DirectFightSystem::init_direct_fights() {
     });
     for (const auto& res : results)
         send_actions(res);
+
+    results.erase(std::remove_if(results.begin(), results.end(),
+                                 [](const auto& val) { return val.break_through == 0; }),
+                  results.end());
 
     push_action<DirectFightResultComputed>(results);
 }

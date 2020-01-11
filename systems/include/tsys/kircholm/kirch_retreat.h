@@ -6,28 +6,46 @@
 
 #include "kirch_component_system.h"
 #include "kirch_fight.h"
+#include "kirch_mover.h"
+#include "kirch_components.h"
 
 namespace kirch {
 
 class RetreatSystem : public ComponentSystemKircholm {
    public:
-    explicit RetreatSystem(SystemKircholm* system) noexcept;
-    void set_results(const std::vector<DirectFightResult>& results);
-    void prepare() noexcept;
-    bool is_done();
+    enum class State { done, data_set, selected_data, selected_unit, waiting };
 
-    void process_retreats();
+    explicit RetreatSystem(SystemKircholm* system) noexcept;
+
+    void on_left_click(HexCoordinate coord);
+    void on_right_click(HexCoordinate coord);
+    void on_over(HexCoordinate coord);
+    void on_left_realease(HexCoordinate coord);
+    void on_right_realease(HexCoordinate coord);
+    void update();
+
+    void set_results(const std::vector<DirectFightResult>& results);
     void defence_finished() noexcept;
     void attack_finished() noexcept;
 
    private:
-    bool fetch_retreat();
+    void render_ui();
+    WeightedUnidirectionalGraph<Map::SiteTypeId, Movability> make_weighted_graph() const;
+    
+    State select_data(int index);
+    State select_unit_to_retreat(HexCoordinate coord);
 
+   private:
     std::vector<DirectFightResult> _results{};
-    std::optional<DirectFightResult> _current{};
-    bool _deffenders_done{true};
-    bool _attackers_done{true};
-    bool _vec_not_set{false};
+    int _current_data{};
+    std::set<int> _fights_to_process{};
+
+    std::map<HexCoordinate, const PositionComponent*> _units_to_move{};
+    const PositionComponent* _current_pc{nullptr};
+    PathSearcher _searcher{};
+    std::set<HexCoordinate> _destinations{};
+
+    State _state{done};
 };
 }  // namespace kirch
 

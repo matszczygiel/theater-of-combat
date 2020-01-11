@@ -19,7 +19,7 @@ class Map {
         border,
     };
     using SiteId   = int;
-    using SiteType = std::pair<SiteId, int>;
+    using SiteTypeId = std::pair<SiteId, int>;
 
     const std::map<SiteId, HexSite>& hexes() const noexcept;
     const std::map<SiteId, BorderSite>& borders() const noexcept;
@@ -45,7 +45,7 @@ class Map {
     std::map<SiteId, HexSite> _hexes{};
     std::map<SiteId, BorderSite> _borders{};
 
-    UnidirectionalGraph<SiteType> _graph{};
+    UnidirectionalGraph<SiteTypeId> _graph{};
 
     IdGenerator<SiteId> _id_gen{0};
 };

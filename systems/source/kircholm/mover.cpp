@@ -64,55 +64,21 @@ static std::map<HexType, Movability> get_rotation_table() {
     };
 }
 
-WeightedUnidirectionalGraph<Map::SiteType, Movability>
-MovementSystem::make_weighted_graph(Unit::IdType id) const {
-    WeightedUnidirectionalGraph<Map::SiteType, Movability> graph(scenario().map.graph(),
-                                                                 0);
-
-    const auto hostile    = get_player_units(system()->opposite_player_index());
-    auto [postions, zone] = system()->organization.get_positions_and_zone(hostile);
-
-    for (const auto& [u, pos] : postions) {
-        const auto pos_id = map().get_hex_id(pos).value();
-        graph.remove_node(pos_id);
-    }
-    _hostile_zone.clear();
-    const auto can_enter = unit_can_enter_hostile_zone(id);
-    if (can_enter) {
-        for (const auto& [pos, uts] : zone) {
-            auto set&         = _hostile_zone[pos];
-            const auto pos_id = map().get_hex_id(pos).value();
-            for (const auto& u : uts) {
-                const auto cmp = units().get_component<PositionComponent>(u);
-                app_assert(cmp, "Position component cannot be null.");
-                const auto dir = pos.neighbor_direction(cmp->position.value());
-                if (dir) {
-                    set.insert(*dir);
-                }
-            }
-            for (int i = 0; i < HexCoordinate::neighbors_cout; ++i)
-                if (set.count(i) == 0)
-                    graph.remove_node({pos_id, i});
-        }
-    } else {
-        for (const auto& [pos, uts] : zone) {
-            const auto pos_id = map().get_hex_id(pos).value();
-            for (int i = 0; i < HexCoordinate::neighbors_cout; ++i)
-                graph.remove_node({pos_id, i});
-        }
-    }
+WeightedUnidirectionalGraph<Map::SiteTypeId, Movability>
+MovementSystem::make_weighted_graph(Unit::IdType id) {
+    WeightedUnidirectionalGraph graph(map().graph(), 0);
 
     const auto hex_tab = get_movability_table(units(), id);
     const auto rot_tab = get_rotation_table();
 
-    for (const auto& [node, neighbors] : map.graph().adjacency_matrix()) {
+    for (const auto& [node, neighbors] : map().graph().adjacency_matrix()) {
         const auto& [node_id, dir] = node;
-        const auto site_type       = map.type_of(node_id);
+        const auto site_type       = map().type_of(node_id);
 
         switch (site_type) {
             case Map::SiteType::hex: {
                 const auto hex_type =
-                    static_cast<HexType>(map.hexes().at(node_id).type());
+                    static_cast<HexType>(map().hexes().at(node_id).type());
 
                 for (const auto& neighbor : neighbors) {
                     if (neighbor.first == node_id) {
@@ -133,13 +99,43 @@ MovementSystem::make_weighted_graph(Unit::IdType id) const {
                 break;
         }
     }
+
+    const auto hostile    = get_player_units(system()->opposite_player_index());
+    auto [postions, zone] = system()->organization.get_positions_and_zone(hostile);
+
+    _hostile_zone.clear();
+
+    if (unit_can_enter_hostile_zone(id)) {
+        for (const auto& [pos, uts] : zone) {
+            auto& set         = _hostile_zone[pos];
+            const auto pos_id = map().get_hex_id(pos).value();
+            for (const auto& u : uts) {
+                const auto cmp = units().get_component<PositionComponent>(u);
+                app_assert(cmp, "Position component cannot be null.");
+                const auto dir = pos.neighbor_direction(cmp->position.value());
+                if (dir) {
+                    set.insert(*dir);
+                }
+            }
+            for (int i = 0; i < HexCoordinate::neighbors_count(); ++i)
+                if (set.count(i) == 0)
+                    graph.remove_node({pos_id, i});
+        }
+    } else {
+        for (const auto& [pos, uts] : zone) {
+            const auto pos_id = map().get_hex_id(pos).value();
+            for (int i = 0; i < HexCoordinate::neighbors_count(); ++i)
+                graph.remove_node({pos_id, i});
+        }
+    }
+
     return graph;
 }
 
 MovementSystem::MovementSystem(SystemKircholm* system) noexcept
     : ComponentSystemKircholm{system} {}
 
-void MovementSystem::init_movement(HexCoordinate coord) {
+MovementSystem::State MovementSystem::init_movement(HexCoordinate coord) {
     app_info("Initiating MovementSystem.");
 
     const auto friendly = get_player_units(system()->current_player_index());
@@ -171,94 +167,100 @@ void MovementSystem::init_movement(HexCoordinate coord) {
     engine_assert_throw(start_hex.has_value(),
                         "Initializing movement with nonexistent hex on this map.");
 
-    _searcher.search_path({*start_hex, _target_pc->direction.value()},
+    _searcher.search_path({start_hex.value(), _target_pc->direction.value()},
                           _target_mc->moving_pts);
     return State::paths_calculated;
 }
 
 std::vector<std::tuple<HexCoordinate, int, Movability>> MovementSystem::make_path_preview(
     HexCoordinate destination, int dir) const {
-    app_assert_throw(is_moving(), "No unit to preview path.");
-    const auto dest_hex = scenario().map.get_hex_id(destination);
+    const auto dest_hex = map().get_hex_id(destination);
     if (!dest_hex)
         return {};
-    dir = dir % HexCoordinate::neighbors_count;
+    dir = dir % HexCoordinate::neighbors_count();
 
-    const auto ids = _searcher.path_indices(*dest_hex, dir);
+    const auto ids = _searcher.path_indices({*dest_hex, dir});
     std::vector<std::tuple<HexCoordinate, int, Movability>> res;
     res.reserve(ids.size());
     int prev_id;
-    for (const auto& [id, dir, mov] : ids) {
-        if (res.size() != 0 && prev_id == id)
+    for (const auto& [site, mov] : ids) {
+        if (res.size() != 0 && prev_id == site.first)
             continue;
-        res.push_back({scenario().map.get_hex_coord(id).value(), dir, mov});
-        prev_id = id;
+        res.push_back({map().get_hex_coord(site.first).value(), site.second, mov});
+        prev_id = site.first;
     }
     return res;
 }
 
-State MovementSystem::set_target_hex(HexCoordinate hex) {
-    if (hex == _target_mc->position.value()) {
-        _path = {};
+MovementSystem::State MovementSystem::set_target_hex(HexCoordinate hex) {
+    _target_hex = hex;
+    if (hex == _target_pc->position.value()) {
+        _path             = {{hex, _target_pc->direction.value(), 0}};
+        _target_direction = _target_pc->direction.value();
         return State::target_hex_set;
     }
-    const auto dest_hex = scenario().map.get_hex_id(destination);
+    const auto dest_hex = map().get_hex_id(_target_hex);
     if (!dest_hex)
         return State::idle;
 
-    const auto it =std::min_element(_searcher.distances().cbegin(), _searcher.distances().cend(), [](const  auto& val1, const auto& val2){
-        return val1.second < val2.second
-    });
-
-    _path = path_preview(hex);
-
-    if (_path.empty()) {
+    const auto dirs = get_avaliable_dirs();
+    if (dirs.empty())
         return State::idle;
-    }
+
+    const auto it_min = std::min_element(
+        dirs.cbegin(), dirs.cend(),
+        [](const auto& val1, const auto& val2) { return val1.second < val2.second; });
+    _target_direction = it_min->first;
+    _path             = make_path_preview(_target_hex, _target_direction);
+    app_assert(!_path.empty(), "");
+
     if (_hostile_zone.empty())
         return State::target_hex_set;
 
     const auto it = _hostile_zone.find(hex);
     _immobilized  = it != _hostile_zone.end();
     if (_immobilized) {
-        if (it->second.size() == 1)
-            return set_target_dir(*it->second.begin());
+        return set_target_dir(*it->second.begin());
     }
+    if (dirs.size() == 1)
+        return set_target_dir(dirs.begin()->first);
+
     return State::target_hex_set;
 }
 
 std::map<int, Movability> MovementSystem::get_avaliable_dirs() {
-    app_assert(is_hex_set(), "Hex must be set.");
-    const auto& [site, dir, cost] = _path.back();
-    const auto site_id            = map().get_hex_id(site).value();
-    _searcher.search_rotation({site_id, dir}, _target_mc->moving_pts - cost);
-    std::map<int, Movability> res;
-    for (const auto& [dir, d_cost] : _searcher.distances())
-        res[dir.second] = d_cost;
+    const auto site_id = map().get_hex_id(_target_hex).value();
+    std::map<int, Movability> res{};
+    for (const auto& [site, dist] : _searcher.distances()) {
+        if (site.first != site_id)
+            continue;
+        res[site.second] = dist;
+    }
     return res;
 }
 
-State MovementSystem::set_target_dir(HexCoordinate hex) {
+MovementSystem::State MovementSystem::set_target_dir(HexCoordinate hex) {
     const auto dir = hex.neighbor_direction(hex);
-    if (dir)
+    if (dir) {
+        const auto dirs = get_avaliable_dirs();
         return set_target_dir(*dir);
-    else
+    } else
         return State::paths_calculated;
 }
 
-State MovementSystem::set_target_dir(int dir) {
+MovementSystem::State MovementSystem::set_target_dir(int dir) {
     const auto t_dir = dir % HexCoordinate::neighbors_count();
     const auto dirs  = get_avaliable_dirs();
     const auto it    = dirs.find(t_dir);
     if (it == dirs.end()) {
-        reset();
-        return false;
+        return State::paths_calculated;
     }
-    _path.push_back({std::get<0>(_path.back()), it->first, it->second});
-    return move();
+    _target_direction = it->first;
+    _path             = make_path_preview(_target_hex, _target_direction);
+    return State::target_dir_set;
 }
 
-bool MovementSystem::move() {
+MovementSystem::State MovementSystem::move() {
     app_debug("Moving through path:");
     for (const auto& [hex, dir, cost] : _path) {
         app_debug("hex: ({}, {}), dir: {}, cost: {}", hex.q(), hex.r(), dir, cost);
@@ -279,20 +281,14 @@ bool MovementSystem::move() {
     new_pc.direction = td_dir;
     push_action<ComponentChangeAction<PositionComponent>>(std::move(new_pc));
 
-    reset();
-    return true;
-}
-
-const std::vector<std::tuple<HexCoordinate, int, Movability>>& MovementSystem::path()
-    const {
-    return _path;
+    return State::idle;
 }
 
 PathSearcher::PathSearcher(
-    const WeightedUnidirectionalGraph<Map::SiteType, Movability>& graph)
+    const WeightedUnidirectionalGraph<Map::SiteTypeId, Movability>& graph)
     : _graph{graph} {}
 
-void PathSearcher::search_path(Map::SiteType start, Movability max_cost) {
+void PathSearcher::search_path(Map::SiteTypeId start, Movability max_cost) {
     std::tie(_distances, _paths) = _graph.dijkstra(start);
     for (auto i = _distances.begin(); i != _distances.end();) {
         if (i->second > max_cost) {
@@ -306,21 +302,21 @@ void PathSearcher::search_path(Map::SiteType start, Movability max_cost) {
     }
 }
 
-const std::map<Map::SiteType, Movability>& PathSearcher::distances() const {
+const std::map<Map::SiteTypeId, Movability>& PathSearcher::distances() const {
     return _distances;
 }
 
-const std::map<Map::SiteType, Map::SiteType>& PathSearcher::paths() const {
+const std::map<Map::SiteTypeId, Map::SiteTypeId>& PathSearcher::paths() const {
     return _paths;
 }
 
-std::vector<std::pair<Map::SiteType, Movability>> PathSearcher::path_indices(
-    Map::SiteType destination) const {
+std::vector<std::pair<Map::SiteTypeId, Movability>> PathSearcher::path_indices(
+    Map::SiteTypeId destination) const {
     auto it = _distances.find(destination);
     if (it == _distances.end())
         return {};
 
-    std::vector<std::pair<Map::SiteType, Movability>> res = {{destination, it->second}};
+    std::vector<std::pair<Map::SiteTypeId, Movability>> res = {{destination, it->second}};
 
     auto i = _paths.find(destination);
     while (i != _paths.end()) {
@@ -343,10 +339,10 @@ void MovementSystem::reset_moving_pts() {
 void MovementSystem::on_left_click(HexCoordinate coord) {
     switch (_state) {
         case State::idle:
-            _state = init_movement(hex);
+            _state = init_movement(coord);
             break;
         case State::paths_calculated:
-            _state = set_target_hex(hex);
+            _state = set_target_hex(coord);
             break;
         case State::target_hex_set:
             break;
@@ -410,6 +406,7 @@ void MovementSystem::on_over(HexCoordinate coord) {
         case State::idle:
             break;
         case State::paths_calculated:
+            set_target_hex(coord);
             break;
         case State::target_hex_set:
             break;
@@ -425,6 +422,8 @@ void MovementSystem::update() {
         case State::idle:
             break;
         case State::paths_calculated:
+            for (const auto& [hex, dir, mp] : _path)
+                system()->gfx.highlight_hex(hex);
             break;
         case State::target_hex_set:
             break;

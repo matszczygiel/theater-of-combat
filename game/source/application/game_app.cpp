@@ -310,10 +310,10 @@ void Game::mouse_button_pressed_event(const sf::Mouse::Button& button,
     const auto coord = world_point_to_hex(position, *_system->gfx.layout);
     switch (button) {
         case sf::Mouse::Left:
-            _system->handle_hex_selection(coord);
+            _system->on_left_click(coord);
             break;
         case sf::Mouse::Right:
-            _system->handle_hex_info(coord);
+            _system->on_right_click(coord);
 
         default:
             break;
@@ -325,9 +325,10 @@ void Game::mouse_button_released_event(const sf::Mouse::Button& button,
     const auto coord = world_point_to_hex(position, *_system->gfx.layout);
     switch (button) {
         case sf::Mouse::Left:
-            _system->handle_hex_release(coord);
+            _system->on_left_realease(coord);
             break;
         case sf::Mouse::Right:
+            _system->on_right_realease(coord);
             break;
 
         default:
@@ -354,5 +355,5 @@ void Game::window_resize_event(const unsigned& width, const unsigned& height) {
 
 void Game::mouse_moved_event(const sf::Vector2f& position) {
     const auto coord = world_point_to_hex(position, *_system->gfx.layout);
-    _system->handle_hex_over(coord);
+    _system->on_over(coord);
 }

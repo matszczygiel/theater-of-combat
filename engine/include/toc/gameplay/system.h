@@ -42,13 +42,19 @@ class System {
     virtual ~System() = default;
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info();
 
+    // general functions
     virtual void start();
-    virtual void next_phase()                                   = 0;
-    virtual void prepare_lua(sol::state& lua)                   = 0;
-    virtual void handle_hex_over(const HexCoordinate& hex)      = 0;
-    virtual void handle_hex_selection(const HexCoordinate& hex) = 0;
-    virtual void handle_hex_info(const HexCoordinate& hex)      = 0;
-    virtual void handle_hex_release(const HexCoordinate& hex)   = 0;
+    virtual void next_phase()                 = 0;
+    virtual void prepare_lua(sol::state& lua) = 0;
+
+    // event handlers
+    virtual void on_over(const HexCoordinate& hex)           = 0;
+    virtual void on_left_click(const HexCoordinate& hex)     = 0;
+    virtual void on_right_click(const HexCoordinate& hex)    = 0;
+    virtual void on_left_realease(const HexCoordinate& hex)  = 0;
+    virtual void on_right_realease(const HexCoordinate& hex) = 0;
+
+    // update
     virtual void update_system();
 
     template <class Archive>

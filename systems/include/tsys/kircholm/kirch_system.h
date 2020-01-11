@@ -8,8 +8,8 @@
 
 #include "kirch_fight.h"
 #include "kirch_mover.h"
+#include "kirch_organization.h"
 #include "kirch_retreat.h"
-#include "kirch_organization.h.h"
 
 namespace kirch {
 class SystemKircholm : public System {
@@ -20,10 +20,13 @@ class SystemKircholm : public System {
     virtual void start() override;
     virtual void next_phase() override;
     virtual void prepare_lua(sol::state& lua) override;
-    virtual void handle_hex_over(const HexCoordinate& hex) override;
-    virtual void handle_hex_selection(const HexCoordinate& hex) override;
-    virtual void handle_hex_info(const HexCoordinate& hex) override;
-    virtual void handle_hex_release(const HexCoordinate& hex) override;
+
+    virtual void on_over(const HexCoordinate& hex) override;
+    virtual void on_left_click(const HexCoordinate& hex) override;
+    virtual void on_right_click(const HexCoordinate& hex) override;
+    virtual void on_left_realease(const HexCoordinate& hex) override;
+    virtual void on_right_realease(const HexCoordinate& hex) override;
+
     virtual std::shared_ptr<DebugInfoSystem> create_debug_info() override;
     virtual void update_system() override;
 

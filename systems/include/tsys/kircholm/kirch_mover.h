@@ -5,7 +5,6 @@
 #include <memory>
 #include <vector>
 
-#include "toc/gameplay/actions.h"
 #include "toc/gameplay/scenario.h"
 #include "toc/map/hexagons.h"
 
@@ -18,20 +17,20 @@ class PathSearcher {
    public:
     PathSearcher() = default;
     explicit PathSearcher(
-        const WeightedUnidirectionalGraph<Map::SiteType, Movability>& graph);
+        const WeightedUnidirectionalGraph<Map::SiteTypeId, Movability>& graph);
 
-    void search_path(Map::SiteType start, Movability max_cost);
+    void search_path(Map::SiteTypeId start, Movability max_cost);
 
-    std::vector<std::pair<Map::SiteType, Movability>> path_indices(
-        Map::SiteType destination) const;
+    std::vector<std::pair<Map::SiteTypeId, Movability>> path_indices(
+        Map::SiteTypeId destination) const;
 
-    const std::map<Map::SiteType, Movability>& distances() const;
-    const std::map<Map::SiteType, Map::SiteType>& paths() const;
+    const std::map<Map::SiteTypeId, Movability>& distances() const;
+    const std::map<Map::SiteTypeId, Map::SiteTypeId>& paths() const;
 
    private:
-    WeightedUnidirectionalGraph<Map::SiteType, Movability> _graph{};
-    std::map<Map::SiteType, Movability> _distances{};
-    std::map<Map::SiteType, Map::SiteType> _paths{};
+    WeightedUnidirectionalGraph<Map::SiteTypeId, Movability> _graph{};
+    std::map<Map::SiteTypeId, Movability> _distances{};
+    std::map<Map::SiteTypeId, Map::SiteTypeId> _paths{};
 };
 
 class MovementSystem : public ComponentSystemKircholm {
@@ -60,25 +59,24 @@ class MovementSystem : public ComponentSystemKircholm {
     std::vector<std::tuple<HexCoordinate, int, Movability>> make_path_preview(
         HexCoordinate destination, int dir) const;
 
-    const std::vector<std::tuple<HexCoordinate, int, Movability>>& path() const;
-
-    WeightedUnidirectionalGraph<Map::SiteType, Movability> make_weighted_graph(
-        Unit::IdType id) const;
+    WeightedUnidirectionalGraph<Map::SiteTypeId, Movability> make_weighted_graph(
+        Unit::IdType id);
 
     bool unit_can_enter_hostile_zone(Unit::IdType unit) const;
 
    private:
     std::vector<std::tuple<HexCoordinate, int, Movability>> _path{};
-    bool _immobilized{false};
 
     const MovementComponent* _target_mc{nullptr};
     const PositionComponent* _target_pc{nullptr};
-    State _state{State::idle};
+
+    bool _immobilized{false};
     HexCoordinate _target_hex{};
     int _target_direction{};
-
     std::map<HexCoordinate, std::set<int>> _hostile_zone{};
     PathSearcher _searcher{};
+
+    State _state{State::idle};
 };
 
 }  // namespace kirch

@@ -101,10 +101,10 @@ const std::array<HexCoordinates<T>, 6> HexCoordinates<T>::neighbors() const noex
 }
 
 template <typename T>
-std::optional<int> HexCoordinates<T> neighbor_direction(
+std::optional<int> HexCoordinates<T>::neighbor_direction(
     const HexCoordinates<T>& neighbor) const {
-    for (int i = 0; i < neighbors_count; ++i) {
-        if (neighbor(i) == neighbor)
+    for (int i = 0; i < neighbors_count(); ++i) {
+        if (HexCoordinates<T>::neighbor(i) == neighbor)
             return i;
     }
     return {};

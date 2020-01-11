@@ -52,8 +52,6 @@ bool RetreatSystem::fetch_retreat() {
             push_action<RetreatsDone>(system()->is_local_player_now());
         return false;
     }
-    if (system()->movement.is_moving())
-        return true;
 
     auto& res             = *_current;
     auto process_unit_set = [this](std::set<Unit::IdType>& units) -> Unit::IdType {
@@ -82,7 +80,7 @@ bool RetreatSystem::fetch_retreat() {
 
     app_info("Initiating retreat for unit {}", u);
     const auto ret = system()->movement.init_movement(cmp->position.value());
-    if (!ret)
+    if (ret == MovementSystem::State::idle)
         app_info("Initiating failed");
     return true;
 }

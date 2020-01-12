@@ -1,7 +1,6 @@
 #ifndef KIRCH_CHASE_H
 #define KIRCH_CHASE_H
 
-
 #include <optional>
 #include <vector>
 
@@ -19,38 +18,28 @@ class ChaseSystem : public ComponentSystemKircholm {
         data_set,
         data_selected,
         unit_selected,
+        destination_selected,
         waiting,
-        chasing_set,
-        chasing_data,
-        chasing_unit
     };
 
     explicit ChaseSystem(SystemKircholm* system) noexcept;
 
     void on_left_click(HexCoordinate coord);
     void on_right_click(HexCoordinate coord);
-    void on_over(HexCoordinate coord);
     void on_left_realease(HexCoordinate coord);
-    void on_right_realease(HexCoordinate coord);
     void update();
 
     void set_results(const std::vector<DirectFightResult>& results);
-    void set_result_change(const DirectFightResult& result, int index);
+    void set_chase_done(int index);
 
    private:
     void render_ui();
     void render_done_button();
-    WeightedUnidirectionalGraph<Map::SiteTypeId, Movability> make_weighted_graph() const;
 
     State select_data(int index);
-    State select_unit_to_retreat(HexCoordinate coord);
+    State select_unit(HexCoordinate coord);
     State unit_selected(HexCoordinate coord);
-
-    State select_chase(int index);
-    State select_unit_to_chase(HexCoordinate coord);
-    State chase_unit(HexCoordinate coord);
-
-    State init_chases();
+    State select_direction(HexCoordinate coord);
 
    private:
     std::vector<DirectFightResult> _results{};
@@ -60,11 +49,10 @@ class ChaseSystem : public ComponentSystemKircholm {
 
     std::map<HexCoordinate, const PositionComponent*> _units_to_move{};
     const PositionComponent* _current_pc{nullptr};
-    PathSearcher _searcher{};
-    std::set<HexCoordinate> _destinations{};
+    HexCoordinate _destination{};
 
     State _state{State::done};
 };
-}
+}  // namespace kirch
 
 #endif /* KIRCH_CHASE_H */

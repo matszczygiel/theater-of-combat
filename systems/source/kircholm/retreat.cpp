@@ -23,6 +23,9 @@ void RetreatSystem::set_results(const std::vector<DirectFightResult>& results) {
     }
 
     _state = State::data_set;
+
+    if (_fights_to_process.empty())
+        _state = State::waiting;
 }
 
 void RetreatSystem::on_left_click(HexCoordinate coord) {
@@ -60,7 +63,10 @@ void RetreatSystem::update() {
             break;
         case State::waiting:
             if (_fights_to_wait.empty()) {
-                push_action<RetretsPerformed>(_results);
+                if (system()->is_local_player_now()) {
+                    push_action<RetretsPerformed>(_results);
+                    push_action<NextPhaseAction>();
+                }
                 _state = State::done;
             }
         default:
@@ -76,8 +82,10 @@ void RetreatSystem::render_ui() {
 
     for (const auto& index : _fights_to_process) {
         ImGui::BulletText("Result %d", index);
-        if (ImGui::Button("Select", ImVec2(100, 50)))
+        if (ImGui::Button("Select", ImVec2(100, 50))) {
             _state = select_data(index);
+            break;
+        }
         ImGui::Separator();
     }
     ImGui::End();
@@ -126,7 +134,6 @@ RetreatSystem::make_weighted_graph() const {
 
 RetreatSystem::State RetreatSystem::select_data(int index) {
     _current_data = index;
-    _fights_to_process.erase(_current_data);
 
     _units_to_move.clear();
 
@@ -205,6 +212,7 @@ RetreatSystem::State RetreatSystem::select_unit(HexCoordinate coord) {
     _units_to_move.erase(_current_pc->position.value());
     push_action<ComponentChangeAction<PositionComponent>>(cmp);
     if (_units_to_move.empty()) {
+        _fights_to_process.erase(_current_data);
         push_action<DirectFightResultChanged>(_results, _current_data);
 
         if (_fights_to_process.empty())

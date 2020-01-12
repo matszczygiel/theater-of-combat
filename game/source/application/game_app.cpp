@@ -222,28 +222,6 @@ void Game::update(const sf::Time& elapsed_time) {
 
     _start_prompt.show_window();
     _debug->unit_info->show();
-    /*
-        if (_system->phase == GamePhase::battles && _system->is_local_player_now()) {
-            _fight_system.make_fight_stack(_system->current_player_index());
-            auto actions = _fight_system.compute_fight_result();
-            _fight_system.clear();
-            std::move(std::begin(actions), std::end(actions),
-                      std::back_inserter(_pending_actions));
-            _pending_actions.push_back(std::make_unique<NextPhaseAction>());
-        }
-
-        if (_system->phase == GamePhase::new_day && _system->is_local_player_now()) {
-            _system->scenario->units.apply_for_each<MovementComponent>([&](auto& mc) {
-                MovementComponent new_mc = mc;
-                new_mc.moving_pts        = new_mc.total_moving_pts();
-                _pending_actions.push_back(
-                    std::make_unique<ComponentChangeAction<MovementComponent>>(new_mc));
-
-                return true;
-            });
-            _pending_actions.push_back(std::make_unique<NextPhaseAction>());
-        }
-    */
     _network->update();
 }
 

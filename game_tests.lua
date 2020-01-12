@@ -17,8 +17,8 @@ game_units:remove_position_cmp(2)
 game_units:assign_position_cmp(2, PositionComponent.new(Coord.new(-3, 1), 2))
 
 
-set_local_player_index(0)
-system:start()
+--set_local_player_index(0)
+--system:start()
 
-next_phase_action()
-next_phase_action()
+--next_phase_action()
+--next_phase_action()

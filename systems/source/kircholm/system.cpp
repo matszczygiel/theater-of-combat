@@ -10,7 +10,11 @@
 namespace kirch {
 
 SystemKircholm::SystemKircholm()
-    : movement{this}, direct_fight{this}, retreat{this}, organization{this} {};
+    : movement{this},
+      direct_fight{this},
+      retreat{this},
+      organization{this},
+      chase{this} {};
 
 void SystemKircholm::start() {
     System::start();
@@ -30,19 +34,16 @@ void SystemKircholm::next_phase() {
             app_info("SystemKircholm changed phase to attack");
             break;
         case StatePhase::attack:
-            current_phase = StatePhase::counterattack;
-            app_info("SystemKircholm changed phase to counterattack");
-            next_player();
+            current_phase = StatePhase::chase;
+            app_info("SystemKircholm changed phase to chase");
             if (current_player_index() == 0)
                 movement.reset_moving_pts();
             break;
-        case StatePhase::counterattack:
+        case StatePhase::chase:
+            next_player();
             current_phase = StatePhase::movement;
             app_info("SystemKircholm changed phase to movement");
             break;
-
-        default:
-            app_assert(false, "Unknown StatePhase");
     }
 }
 
@@ -61,11 +62,8 @@ void SystemKircholm::on_over(const HexCoordinate& hex) {
                 break;
             case StatePhase::attack:
                 break;
-            case StatePhase::counterattack:
+            case StatePhase::chase:
                 break;
-
-            default:
-                app_assert(false, "Unknown StatePhase");
         }
     }
 }
@@ -84,11 +82,9 @@ void SystemKircholm::on_left_click(const HexCoordinate& hex) {
         case StatePhase::attack:
             retreat.on_left_click(hex);
             break;
-        case StatePhase::counterattack:
+        case StatePhase::chase:
+            chase.on_left_click(hex);
             break;
-
-        default:
-            app_assert(false, "Unknown StatePhase");
     }
 }
 
@@ -107,59 +103,52 @@ void SystemKircholm::on_right_click(const HexCoordinate& hex) {
     if (pc)
         debug->unit_info->set_current_unit_id(pc->owner());
 
-    if (is_local_player_now()) {
-        switch (current_phase) {
-            case StatePhase::movement:
+    switch (current_phase) {
+        case StatePhase::movement:
+            if (is_local_player_now()) {
                 movement.on_right_click(hex);
-                break;
-            case StatePhase::bombardment:
-                break;
-            case StatePhase::attack:
-                break;
-            case StatePhase::counterattack:
-                break;
-
-            default:
-                app_assert(false, "Unknown StatePhase");
-        }
+            }
+            break;
+        case StatePhase::bombardment:
+            break;
+        case StatePhase::attack:
+            break;
+        case StatePhase::chase:
+            chase.on_right_click(hex);
+            break;
     }
 }
 
 void SystemKircholm::on_left_realease(const HexCoordinate& hex) {
-    if (is_local_player_now()) {
-        switch (current_phase) {
-            case StatePhase::movement:
+    switch (current_phase) {
+        case StatePhase::movement:
+            if (is_local_player_now()) {
                 movement.on_left_realease(hex);
-                break;
-            case StatePhase::bombardment:
-                break;
-            case StatePhase::attack:
-                break;
-            case StatePhase::counterattack:
-                break;
-
-            default:
-                app_assert(false, "Unknown StatePhase");
-        }
+            }
+            break;
+        case StatePhase::bombardment:
+            break;
+        case StatePhase::attack:
+            break;
+        case StatePhase::chase:
+            chase.on_left_realease(hex);
+            break;
     }
 }
 
 void SystemKircholm::on_right_realease(const HexCoordinate& hex) {
-    if (is_local_player_now()) {
-        switch (current_phase) {
-            case StatePhase::movement:
+    switch (current_phase) {
+        case StatePhase::movement:
+            if (is_local_player_now()) {
                 movement.on_right_realease(hex);
-                break;
-            case StatePhase::bombardment:
-                break;
-            case StatePhase::attack:
-                break;
-            case StatePhase::counterattack:
-                break;
-
-            default:
-                app_assert(false, "Unknown StatePhase");
-        }
+            }
+            break;
+        case StatePhase::bombardment:
+            break;
+        case StatePhase::attack:
+            break;
+        case StatePhase::chase:
+            break;
     }
 }
 
@@ -179,11 +168,11 @@ void SystemKircholm::update_system() {
         case StatePhase::attack:
             retreat.update();
             break;
-        case StatePhase::counterattack:
+        case StatePhase::chase:
+            chase.update();
             break;
-
         default:
-            app_assert(false, "Unknown StatePhase");
+            break;
     }
 }
 

@@ -18,7 +18,7 @@ DirectFightResultsComputed::DirectFightResultsComputed(
 }
 
 bool DirectFightResultsComputed::sys_execute(SystemKircholm* system) {
-    system->retreat.set_results(to_insert);
+    system->retreat.set_results(_results);
     return true;
 }
 
@@ -45,6 +45,15 @@ bool RetretsPerformed::sys_execute(SystemKircholm* system) {
 
 bool RetretsPerformed::sys_revert(SystemKircholm* system) { return false; }
 
+DirectFightChaseDone::DirectFightChaseDone(int index) : _index{index} {}
+
+bool DirectFightChaseDone::sys_execute(SystemKircholm* system) {
+    system->chase.set_chase_done(_index);
+    return true;
+}
+
+bool DirectFightChaseDone::sys_revert(SystemKircholm* system) { return false; }
+
 }  // namespace kirch
 
 CEREAL_REGISTER_TYPE(kirch::DirectFightResultsComputed);
@@ -58,3 +67,7 @@ CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
 CEREAL_REGISTER_TYPE(kirch::RetretsPerformed);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
                                      kirch::RetretsPerformed);
+
+CEREAL_REGISTER_TYPE(kirch::DirectFightChaseDone);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
+                                     kirch::DirectFightChaseDone);

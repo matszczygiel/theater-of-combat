@@ -34,7 +34,7 @@ class SystemKircholm : public System {
     template <class Archive>
     void serialize(Archive& archive);
 
-    enum class StatePhase { not_started, movement, bombardment, attack, counterattack };
+    enum class StatePhase { not_started, movement, bombardment, attack, chase };
     StatePhase current_phase{StatePhase::not_started};
 
     std::shared_ptr<DebugInfoSystem> debug{nullptr};

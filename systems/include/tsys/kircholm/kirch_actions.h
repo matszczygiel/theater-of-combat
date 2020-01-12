@@ -68,6 +68,25 @@ void RetretsPerformed::serialize(Archive& ar) {
     ar(CEREAL_NVP(_results));
 }
 
+class DirectFightChaseDone : public SystemAction<SystemKircholm> {
+   public:
+    DirectFightChaseDone() = default;
+    explicit DirectFightChaseDone(int index);
+    bool sys_execute(SystemKircholm* system) override;
+    bool sys_revert(SystemKircholm* system) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
+
+   private:
+    int _index{};
+};
+
+template <class Archive>
+void DirectFightChaseDone::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_index));
+}
+
 }  // namespace kirch
 
 #endif /* KIRCH_ACTIONS_H */

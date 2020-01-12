@@ -9,10 +9,10 @@
 #include "kirch_system.h"
 
 namespace kirch {
-class DirectFightResultComputed : public SystemAction<SystemKircholm> {
+class DirectFightResultsComputed : public SystemAction<SystemKircholm> {
    public:
-    DirectFightResultComputed() = default;
-    explicit DirectFightResultComputed(const std::vector<DirectFightResult>& results);
+    DirectFightResultsComputed() = default;
+    explicit DirectFightResultsComputed(const std::vector<DirectFightResult>& results);
     bool sys_execute(SystemKircholm* system) override;
     bool sys_revert(SystemKircholm* system) override;
 
@@ -24,14 +24,15 @@ class DirectFightResultComputed : public SystemAction<SystemKircholm> {
 };
 
 template <class Archive>
-void DirectFightResultComputed::serialize(Archive& ar) {
+void DirectFightResultsComputed::serialize(Archive& ar) {
     ar(CEREAL_NVP(_results));
 }
 
-class RetreatsDone : public SystemAction<SystemKircholm> {
+class DirectFightResultChanged : public SystemAction<SystemKircholm> {
    public:
-    RetreatsDone() = default;
-    explicit RetreatsDone(bool send_by_local) noexcept;
+    DirectFightResultChanged() = default;
+    explicit DirectFightResultChanged(const std::vector<DirectFightResult>& results,
+                                      int index);
     bool sys_execute(SystemKircholm* system) override;
     bool sys_revert(SystemKircholm* system) override;
 
@@ -39,13 +40,34 @@ class RetreatsDone : public SystemAction<SystemKircholm> {
     void serialize(Archive& ar);
 
    private:
-    bool _send_by_local{false};
+    DirectFightResult _result{};
+    int _index{};
 };
 
 template <class Archive>
-void RetreatsDone::serialize(Archive& ar) {
-    ar(CEREAL_NVP(_send_by_local));
+void DirectFightResultChanged::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_result), CEREAL_NVP(_index));
+}
+
+class RetretsPerformed : public SystemAction<SystemKircholm> {
+   public:
+    RetretsPerformed() = default;
+    explicit RetretsPerformed(const std::vector<DirectFightResult>& results);
+    bool sys_execute(SystemKircholm* system) override;
+    bool sys_revert(SystemKircholm* system) override;
+
+    template <class Archive>
+    void serialize(Archive& ar);
+
+   private:
+    std::vector<DirectFightResult> _results{};
+};
+
+template <class Archive>
+void RetretsPerformed::serialize(Archive& ar) {
+    ar(CEREAL_NVP(_results));
 }
 
 }  // namespace kirch
+
 #endif /* KIRCH_ACTIONS_H */

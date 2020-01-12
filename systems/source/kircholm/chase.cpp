@@ -1,54 +1,59 @@
-#include "kircholm/kirch_retreat.h"
-
-#include <imgui.h>
-
-#include "kircholm/kirch_actions.h"
-#include "kircholm/kirch_system.h"
+#include "kircholm/kirch_chase.h"
 
 namespace kirch {
-RetreatSystem::RetreatSystem(SystemKircholm* system) noexcept
+
+ChaseSystem::ChaseSystem(SystemKircholm* system) noexcept
     : ComponentSystemKircholm{system} {}
 
-void RetreatSystem::set_results(const std::vector<DirectFightResult>& results) {
+void ChaseSystem::set_results(const std::vector<DirectFightResult>& results) {
     _results = results;
 
     _fights_to_process.clear();
     _fights_to_wait.clear();
     for (int i = 0; i < static_cast<int>(_results.size()); ++i) {
         const bool attack_ret = _results[i].break_through < 0;
-        if (attack_ret == system()->is_local_player_now())
+        if (attack_ret != system()->is_local_player_now())
             _fights_to_process.insert(i);
         else
             _fights_to_wait.insert(i);
     }
-
-    _state = State::data_set;
+    _state = State::chasing_set;
 }
 
-void RetreatSystem::on_left_click(HexCoordinate coord) {
+void ChaseSystem::on_left_click(HexCoordinate coord) {
     switch (_state) {
         case State::data_selected:
             _state = select_unit_to_retreat(coord);
             break;
         case State::unit_selected:
-            _state = select_unit(coord);
+            _state = unit_selected(coord);
+        case State::chasing_data:
+            _state = select_unit_to_chase();
+            break;
+        case State::chasing_unit:
+            for (const auto& hex : _destinations)
+                system()->gfx.highlight_hex(hex);
+            break;
         default:
             break;
     }
 }
 
-void RetreatSystem::on_right_click(HexCoordinate coord) {}
+void ChaseSystem::on_right_click(HexCoordinate coord) {}
 
-void RetreatSystem::on_over(HexCoordinate coord) {}
+void ChaseSystem::on_over(HexCoordinate coord) {}
 
-void RetreatSystem::on_left_realease(HexCoordinate coord) {}
+void ChaseSystem::on_left_realease(HexCoordinate coord) {}
 
-void RetreatSystem::on_right_realease(HexCoordinate coord) {}
+void ChaseSystem::on_right_realease(HexCoordinate coord) {}
 
-void RetreatSystem::update() {
+void ChaseSystem::update() {
     switch (_state) {
         case State::data_set:
-            render_ui();
+            if (_fights_to_process.empty())
+                _state = State::waiting;
+            else
+                render_ui();
             break;
         case State::data_selected:
             for (const auto& [hex, cmp] : _units_to_move)
@@ -58,17 +63,21 @@ void RetreatSystem::update() {
             for (const auto& hex : _destinations)
                 system()->gfx.highlight_hex(hex);
             break;
-        case State::waiting:
-            if (_fights_to_wait.empty()) {
-                push_action<RetretsPerformed>(_results);
-                _state = State::done;
-            }
+        case State::chasing_data:
+            render_done_button();
+            for (const auto& [hex, cmp] : _units_to_move)
+                system()->gfx.highlight_hex(hex);
+            break;
+        case State::chasing_unit:
+            for (const auto& hex : _destinations)
+                system()->gfx.highlight_hex(hex);
+            break;
         default:
             break;
     }
 }
 
-void RetreatSystem::render_ui() {
+void ChaseSystem::render_ui() {
     if (!ImGui::Begin("Fight results", nullptr)) {
         ImGui::End();
         return;
@@ -76,15 +85,32 @@ void RetreatSystem::render_ui() {
 
     for (const auto& index : _fights_to_process) {
         ImGui::BulletText("Result %d", index);
-        if (ImGui::Button("Select", ImVec2(100, 50)))
-            _state = select_data(index);
+        if (ImGui::Button("Select", ImVec2(100, 50))) {
+            if (_state == State::data_set)
+                _state = select_data(index);
+            else if (_state == State::chasing_set)
+                _state = select_chase(index);
+        }
         ImGui::Separator();
     }
     ImGui::End();
 }
 
+void ChaseSystem::render_done_button() {
+    if (!ImGui::Begin("Press when done", nullptr)) {
+        ImGui::End();
+        return;
+    }
+
+    if (ImGui::Button("Done", ImVec2(150, 100))) {
+        _state = State::chasing_set;
+    }
+
+    ImGui::End();
+}
+
 WeightedUnidirectionalGraph<Map::SiteTypeId, Movability>
-RetreatSystem::make_weighted_graph() const {
+ChaseSystem::make_weighted_graph() const {
     WeightedUnidirectionalGraph graph(map().graph(), 0);
 
     auto hostile  = get_player_units(system()->opposite_player_index());
@@ -124,7 +150,7 @@ RetreatSystem::make_weighted_graph() const {
     return graph;
 }
 
-RetreatSystem::State RetreatSystem::select_data(int index) {
+ChaseSystem::State ChaseSystem::select_data(int index) {
     _current_data = index;
     _fights_to_process.erase(_current_data);
 
@@ -148,7 +174,7 @@ RetreatSystem::State RetreatSystem::select_data(int index) {
     return State::data_selected;
 }
 
-RetreatSystem::State RetreatSystem::select_unit_to_retreat(HexCoordinate coord) {
+ChaseSystem::State ChaseSystem::select_unit_to_retreat(HexCoordinate coord) {
     const auto it = _units_to_move.find(coord);
     if (it == _units_to_move.cend())
         return State::data_selected;
@@ -174,7 +200,7 @@ RetreatSystem::State RetreatSystem::select_unit_to_retreat(HexCoordinate coord) 
     return State::unit_selected;
 }
 
-RetreatSystem::State RetreatSystem::select_unit(HexCoordinate coord) {
+ChaseSystem::State ChaseSystem::unit_selected(HexCoordinate coord) {
     if (_destinations.count(coord) == 0)
         return State::unit_selected;
 
@@ -207,7 +233,9 @@ RetreatSystem::State RetreatSystem::select_unit(HexCoordinate coord) {
     if (_units_to_move.empty()) {
         push_action<DirectFightResultChanged>(_results, _current_data);
 
-        if (_fights_to_process.empty())
+        if (_fights_to_process.empty() && _fights_to_wait.empty())
+            return init_chases();
+        else if (_fights_to_process.empty())
             return State::waiting;
         else
             return State::data_set;
@@ -216,9 +244,66 @@ RetreatSystem::State RetreatSystem::select_unit(HexCoordinate coord) {
     return State::data_selected;
 }
 
-void RetreatSystem::set_result_change(const DirectFightResult& result, int index) {
+void ChaseSystem::set_result_change(const DirectFightResult& result, int index) {
     _results.at(index) = result;
     _fights_to_wait.erase(index);
+    if (_state == State::waiting && _fights_to_wait.empty())
+        _state = init_chases();
 }
 
+ChaseSystem::State ChaseSystem::init_chases() {
+    _fights_to_process.clear();
+    _fights_to_wait.clear();
+    for (int i = 0; i < static_cast<int>(_results.size()); ++i) {
+        const bool attack_ret = _results[i].break_through < 0;
+        if (attack_ret != system()->is_local_player_now())
+            _fights_to_process.insert(i);
+        else
+            _fights_to_wait.insert(i);
+    }
+    return State::chasing_set;
+}
+
+ChaseSystem::State ChaseSystem::select_chase(int index) {
+    _current_data = index;
+    _fights_to_process.erase(_current_data);
+
+    _units_to_move.clear();
+
+    auto make_unit_map = [this](const std::set<Unit::IdType>& unit_set) {
+        for (const auto& u : unit_set) {
+            if (_results.at(_current_data).units_destroyed.count(u) == 1)
+                continue;
+            const auto cmp = units().get_component<PositionComponent>(u);
+            app_assert(cmp != nullptr, "");
+            _units_to_move[cmp->position.value()] = cmp;
+        }
+    };
+
+    if (system()->is_local_player_now())
+        make_unit_map(_results.at(_current_data).ids.deffender_units);
+    else
+        make_unit_map(_results.at(_current_data).ids.attacker_units);
+
+    return State::chasing_data;
+}
+
+ChaseSystem::State ChaseSystem::select_unit_to_chase(HexCoordinate coord) {
+    const auto it = _units_to_move.find(coord);
+    if (it == _units_to_move.cend())
+        return State::chasing_data;
+
+    _current_pc   = it->second;
+    _destinations = _results.at(_current_data).area;
+
+    if (_destinations.empty()) {
+        app_debug("Destinations are empty for unit: {} in fight_data: {}",
+                  _current_pc->owner(), _current_data);
+        _units_to_move.erase(coord);
+        return State::chasing_data;
+    }
+    return State::chasing_unit;
+}
+
+ChaseSystem::State ChaseSystem::chase_unit(HexCoordinate coord) {}
 }  // namespace kirch

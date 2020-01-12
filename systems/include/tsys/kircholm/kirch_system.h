@@ -10,6 +10,7 @@
 #include "kirch_mover.h"
 #include "kirch_organization.h"
 #include "kirch_retreat.h"
+#include "kirch_chase.h"
 
 namespace kirch {
 class SystemKircholm : public System {
@@ -42,6 +43,7 @@ class SystemKircholm : public System {
     DirectFightSystem direct_fight;
     RetreatSystem retreat;
     OrganizationSystem organization;
+    ChaseSystem chase;
 };
 
 template <class Archive>

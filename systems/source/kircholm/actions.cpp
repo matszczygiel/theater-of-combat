@@ -9,47 +9,52 @@ CEREAL_REGISTER_POLYMORPHIC_RELATION(Action, SystemAction<kirch::SystemKircholm>
 
 namespace kirch {
 
-DirectFightResultComputed::DirectFightResultComputed(
+DirectFightResultsComputed::DirectFightResultsComputed(
     const std::vector<DirectFightResult>& results)
-    : _results{results} {}
+    : _results{results} {
+    _results.erase(std::remove_if(_results.begin(), _results.end(),
+                                  [](const auto& val) { return val.break_through == 0; }),
+                   _results.end());
+}
 
-bool DirectFightResultComputed::sys_execute(SystemKircholm* system) {
-    const bool keep_negative = system->is_local_player_now();
-    decltype(_results) to_insert;
-    to_insert.reserve(_results.size());
-    for (const auto& res : _results) {
-        if (res.break_through == 0)
-            continue;
-        const bool neg = res.break_through < 0;
-        if (keep_negative == neg) {
-            to_insert.push_back(res);
-        }
-    }
-
+bool DirectFightResultsComputed::sys_execute(SystemKircholm* system) {
     system->retreat.set_results(to_insert);
     return true;
 }
 
-bool DirectFightResultComputed::sys_revert(SystemKircholm*) { return false; }
+bool DirectFightResultsComputed::sys_revert(SystemKircholm*) { return false; }
 
-RetreatsDone::RetreatsDone(bool send_by_local) noexcept : _send_by_local{send_by_local} {}
+DirectFightResultChanged::DirectFightResultChanged(
+    const std::vector<DirectFightResult>& results, int index)
+    : _result{results.at(index)}, _index{index} {}
 
-bool RetreatsDone::sys_execute(SystemKircholm* system) {
-    if (_send_by_local)
-        system->retreat.attack_finished();
-    else
-        system->retreat.defence_finished();
+bool DirectFightResultChanged::sys_execute(SystemKircholm* system) {
+    system->retreat.set_result_change(_result, _index);
     return true;
 }
 
-bool RetreatsDone::sys_revert(SystemKircholm*) { return false; }
+bool DirectFightResultChanged::sys_revert(SystemKircholm* system) { return false; }
+
+RetretsPerformed::RetretsPerformed(const std::vector<DirectFightResult>& results)
+    : _results{results} {}
+
+bool RetretsPerformed::sys_execute(SystemKircholm* system) {
+    system->chase.set_results(_results);
+    return true;
+}
+
+bool RetretsPerformed::sys_revert(SystemKircholm* system) { return false; }
 
 }  // namespace kirch
 
-CEREAL_REGISTER_TYPE(kirch::DirectFightResultComputed);
+CEREAL_REGISTER_TYPE(kirch::DirectFightResultsComputed);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
-                                     kirch::DirectFightResultComputed);
+                                     kirch::DirectFightResultsComputed);
 
-CEREAL_REGISTER_TYPE(kirch::RetreatsDone);
+CEREAL_REGISTER_TYPE(kirch::DirectFightResultChanged);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
-                                     kirch::RetreatsDone);
+                                     kirch::DirectFightResultChanged);
+
+CEREAL_REGISTER_TYPE(kirch::RetretsPerformed);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(SystemAction<kirch::SystemKircholm>,
+                                     kirch::RetretsPerformed);

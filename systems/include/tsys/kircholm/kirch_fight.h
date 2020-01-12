@@ -44,7 +44,7 @@ struct DirectFightResult {
     DirectFightData ids;
 
     //For winner to chase
-    std::set<HexCoordinate> avaliable;
+    std::set<HexCoordinate> area;
 
     template <class Archive>
     void serialize(Archive& ar);
@@ -53,7 +53,7 @@ struct DirectFightResult {
 template <class Archive>
 void DirectFightResult::serialize(Archive& ar) {
     ar(CEREAL_NVP(units_destroyed), CEREAL_NVP(losses), CEREAL_NVP(break_through),
-       CEREAL_NVP(disorganisation), CEREAL_NVP(ids), CEREAL_NVP(avaliable));
+       CEREAL_NVP(disorganisation), CEREAL_NVP(ids), CEREAL_NVP(area));
 }
 
 class SystemKircholm;

@@ -26,9 +26,7 @@ void SystemKircholm::next_phase() {
             break;
         case StatePhase::bombardment:
             current_phase = StatePhase::attack;
-            if (is_local_player_now())
-                direct_fight.init_direct_fights();
-            retreat.prepare();
+            direct_fight.on_init();
             app_info("SystemKircholm changed phase to attack");
             break;
         case StatePhase::attack:
@@ -76,21 +74,21 @@ void SystemKircholm::on_left_click(const HexCoordinate& hex) {
     gfx.highlighted_hexes.clear();
     gfx.highlight_hex(hex);
 
-    if (is_local_player_now()) {
-        switch (current_phase) {
-            case StatePhase::movement:
+    switch (current_phase) {
+        case StatePhase::movement:
+            if (is_local_player_now())
                 movement.on_left_click(hex);
-                break;
-            case StatePhase::bombardment:
-                break;
-            case StatePhase::attack:
-                break;
-            case StatePhase::counterattack:
-                break;
+            break;
+        case StatePhase::bombardment:
+            break;
+        case StatePhase::attack:
+            retreat.on_left_click(hex);
+            break;
+        case StatePhase::counterattack:
+            break;
 
-            default:
-                app_assert(false, "Unknown StatePhase");
-        }
+        default:
+            app_assert(false, "Unknown StatePhase");
     }
 }
 
@@ -179,9 +177,7 @@ void SystemKircholm::update_system() {
         case StatePhase::bombardment:
             break;
         case StatePhase::attack:
-            if (retreat.is_done() && is_local_player_now()) {
-                push_action(std::make_unique<NextPhaseAction>());
-            }
+            retreat.update();
             break;
         case StatePhase::counterattack:
             break;

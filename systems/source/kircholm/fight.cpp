@@ -281,10 +281,30 @@ DirectFightResult DirectFightSystem::process_fight(const DirectFightData& data) 
     res.disorganisation =
         disorganisation_dist(randomize::engine()) < res_entry.disorganization_abs_prob;
     res.ids = data;
+
+    auto area_func = [this](const std::set<Unit::IdType>& unit_set) {
+        std::set<HexCoordinate> res;
+        for (const auto& u : unit_set) {
+            const auto cmp = units().get_component<PositionComponent>(u);
+            if (!cmp)
+                continue;
+            res.insert(cmp->position.value());
+        }
+        return res;
+    };
+
+    if (res.break_through > 0)
+        res.area = area_func(res.ids.deffender_units);
+    else if (res.break_through < 0)
+        res.area = area_func(res.ids.attacker_units);
+
     return res;
 }
 
 void DirectFightSystem::on_init() {
+    if (!system()->is_local_player_now())
+        return;
+
     const auto data = generate_data_vec();
     if (data.empty())
         return;
@@ -318,7 +338,7 @@ void DirectFightSystem::on_init() {
                                  [](const auto& val) { return val.break_through == 0; }),
                   results.end());
 
-    push_action<DirectFightResultComputed>(results);
+    push_action<DirectFightResultsComputed>(results);
 }
 
 void DirectFightSystem::send_actions(const DirectFightResult& res) {

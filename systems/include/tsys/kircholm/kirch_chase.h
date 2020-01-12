@@ -1,5 +1,6 @@
-#ifndef KIRCH_RETREAT_H
-#define KIRCH_RETREAT_H
+#ifndef KIRCH_CHASE_H
+#define KIRCH_CHASE_H
+
 
 #include <optional>
 #include <vector>
@@ -11,11 +12,20 @@
 
 namespace kirch {
 
-class RetreatSystem : public ComponentSystemKircholm {
+class ChaseSystem : public ComponentSystemKircholm {
    public:
-    enum class State { done, data_set, data_selected, unit_selected, waiting };
+    enum class State {
+        done,
+        data_set,
+        data_selected,
+        unit_selected,
+        waiting,
+        chasing_set,
+        chasing_data,
+        chasing_unit
+    };
 
-    explicit RetreatSystem(SystemKircholm* system) noexcept;
+    explicit ChaseSystem(SystemKircholm* system) noexcept;
 
     void on_left_click(HexCoordinate coord);
     void on_right_click(HexCoordinate coord);
@@ -29,11 +39,18 @@ class RetreatSystem : public ComponentSystemKircholm {
 
    private:
     void render_ui();
+    void render_done_button();
     WeightedUnidirectionalGraph<Map::SiteTypeId, Movability> make_weighted_graph() const;
 
     State select_data(int index);
     State select_unit_to_retreat(HexCoordinate coord);
-    State select_unit(HexCoordinate coord);
+    State unit_selected(HexCoordinate coord);
+
+    State select_chase(int index);
+    State select_unit_to_chase(HexCoordinate coord);
+    State chase_unit(HexCoordinate coord);
+
+    State init_chases();
 
    private:
     std::vector<DirectFightResult> _results{};
@@ -48,6 +65,6 @@ class RetreatSystem : public ComponentSystemKircholm {
 
     State _state{State::done};
 };
-}  // namespace kirch
+}
 
-#endif /* KIRCH_RETREAT_H */
+#endif /* KIRCH_CHASE_H */

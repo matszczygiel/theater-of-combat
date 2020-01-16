@@ -15,7 +15,14 @@ void RetreatSystem::set_results(const std::vector<DirectFightResult>& results) {
     _fights_to_process.clear();
     _fights_to_wait.clear();
     for (int i = 0; i < static_cast<int>(_results.size()); ++i) {
-        const bool attack_ret = _results[i].break_through < 0;
+        const auto& res       = _results[i];
+        const bool attack_ret = res.break_through < 0;
+        const auto& units_to_check =
+            attack_ret ? res.ids.attacker_units : res.ids.deffender_units;
+        if (std::all_of(
+                units_to_check.cbegin(), units_to_check.cend(),
+                [&res](const auto& u) { return res.units_destroyed.count(u) == 1; }))
+            continue;
         if (attack_ret == system()->is_local_player_now())
             _fights_to_process.insert(i);
         else

@@ -166,29 +166,29 @@ void Game::update(const sf::Time& elapsed_time) {
     view.move(moving_view);
     _window.setView(view);
 
-    if (_system->is_local_player_now()) {
-        for (const auto& a : _system->accumulated_actions) {
-            auto header = static_cast<sf::Int8>(PacketHeader::action);
-            std::ostringstream ss{std::ios::out | std::ios::binary};
-            {
-                cereal::PortableBinaryOutputArchive ar(ss);
-                ar(a);
-            }
-            sf::Packet p;
-            p << header << ss.str();
-            app_debug("Sending packet...");
-            std::visit([&](auto&& net) { net.send(p); }, _network->net);
-            app_debug("Done");
+    for (const auto& a : _system->accumulated_actions) {
+        auto header = static_cast<sf::Int8>(PacketHeader::action);
+        std::ostringstream ss{std::ios::out | std::ios::binary};
+        {
+            cereal::PortableBinaryOutputArchive ar(ss);
+            ar(a);
         }
+        sf::Packet p;
+        p << header << ss.str();
+        app_debug("Sending packet...");
+        std::visit([&](auto&& net) { net.send(p); }, _network->net);
+        app_debug("Done. Message sent:");
+        _debug->log_action(a);
+    }
 
-    } else {
-        _system->accumulated_actions.clear();
+    {
         sf::Int8 header = 0;
         std::string str;
         sf::Packet p;
         std::visit([&](auto&& net) { net.receive(p); }, _network->net);
         p >> header >> str;
-        if (header == 1) {
+        const auto head = static_cast<PacketHeader>(header);
+        if (head == PacketHeader::action) {
             app_debug("Received packet");
             std::unique_ptr<Action> a{nullptr};
             std::istringstream ss{str, std::ios::in | std::ios::binary};
@@ -196,14 +196,10 @@ void Game::update(const sf::Time& elapsed_time) {
                 cereal::PortableBinaryInputArchive ar(ss);
                 ar(a);
             }
-
+            _debug->log_action(a);
             _system->push_action(std::move(a));
         }
     }
-
-    for (const auto& ac : _system->accumulated_actions)
-        _debug->log_action(ac);
-
     _system->update();
 
     static MenuOptions menu_opts{};

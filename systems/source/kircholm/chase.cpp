@@ -118,6 +118,7 @@ void ChaseSystem::render_done_button() {
 
     if (ImGui::Button("Done", ImVec2(150, 100))) {
         _state = State::data_set;
+        _fights_to_process.erase(_current_data);
         push_action<DirectFightChaseDone>(_current_data);
         if (_fights_to_process.empty())
             _state = State::waiting;
@@ -128,8 +129,6 @@ void ChaseSystem::render_done_button() {
 
 ChaseSystem::State ChaseSystem::select_data(int index) {
     _current_data = index;
-    _fights_to_process.erase(_current_data);
-
     _units_to_move.clear();
 
     auto make_unit_map = [this](const std::set<Unit::IdType>& unit_set) {

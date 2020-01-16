@@ -103,6 +103,12 @@ MovementSystem::make_weighted_graph(Unit::IdType id) {
     const auto hostile    = get_player_units(system()->opposite_player_index());
     auto [postions, zone] = system()->organization.get_positions_and_zone(hostile);
 
+    const auto friendly       = get_player_units(system()->current_player_index());
+    auto [f_postions, f_zone] = system()->organization.get_positions_and_zone(friendly);
+
+    for (const auto& [u, pos] : f_postions)
+        zone.erase(pos);
+
     _hostile_zone.clear();
 
     if (unit_can_enter_hostile_zone(id)) {
@@ -450,8 +456,6 @@ bool MovementSystem::unit_can_enter_hostile_zone(Unit::IdType unit) const {
     return false;
 }
 
-void MovementSystem::on_init() {
-    _state = State::idle;
-}
+void MovementSystem::on_init() { _state = State::idle; }
 
 }  // namespace kirch

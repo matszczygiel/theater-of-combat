@@ -9,11 +9,10 @@ class Messenger {
    public:
     sf::IpAddress get_remote_ip() const;
     unsigned short get_remote_port() const;
+    void disconnect();
 
     bool send(sf::Packet& packet);
     bool receive(sf::Packet& packet);
-
-    void disconnect();
     
    protected:
     sf::TcpSocket _socket{};
@@ -21,12 +20,11 @@ class Messenger {
 
 class Server : public Messenger {
    public:
-    bool listen_at_port(const unsigned short& port);
+    bool listen(const unsigned short& port);
     bool accept_client();
+    unsigned short get_port();
 
     static sf::IpAddress get_local_ip();
-
-    unsigned short get_port();
 
    private:
     sf::TcpListener _listener;
@@ -34,7 +32,7 @@ class Server : public Messenger {
 
 class Client : public Messenger {
    public:
-    bool connect_to_server(const sf::IpAddress& ip, const unsigned short& port);
+    bool connect(const sf::IpAddress& ip, const unsigned short& port);
 };
 
 #endif

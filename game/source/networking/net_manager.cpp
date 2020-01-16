@@ -2,26 +2,25 @@
 
 #include "toc/core/log.h"
 
-bool NetManager::setup_server(sf::IpAddress& ip, int& port) {
+bool NetManager::setup_server() {
+    engine_assert(port >= 0 && port < 65536, "Invalid port number");
     if (!is_server()) {
         net.emplace<Server>();
     }
 
     auto& server = std::get<Server>(net);
-    _need_update = server.listen_at_port(sf::Socket::AnyPort);
-    ip           = Server::get_local_ip();
-    port         = server.get_port();
+    _need_update = server.listen(port);
     return _need_update;
 }
 
-bool NetManager::setup_client(const sf::IpAddress& ip, const int& port) {
+bool NetManager::setup_client(const sf::IpAddress& ip) {
     engine_assert(port >= 0 && port < 65536, "Invalid port number");
     if (!is_client()) {
         net.emplace<Client>();
     }
     auto& client = std::get<Client>(net);
     _need_update = false;
-    return client.connect_to_server(ip, port);
+    return client.connect(ip, port);
 }
 
 void NetManager::update() {
@@ -35,7 +34,7 @@ void NetManager::update() {
 }
 
 void NetManager::close_connection() {
-    _need_update      = false;
+    _need_update = false;
     std::visit([](auto&& v) { v.disconnect(); }, net);
 }
 

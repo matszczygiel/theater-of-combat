@@ -30,14 +30,14 @@ bool Messenger::receive(sf::Packet& packet) {
 
 void Messenger::disconnect() { _socket.disconnect(); }
 
-bool Server::listen_at_port(const unsigned short& port) {
+bool Server::listen(const unsigned short& port) {
     engine_info("Server listening port: {0}", port);
     _listener.setBlocking(true);
     if (_listener.listen(port) != sf::Socket::Status::Done) {
         engine_warn("Listener failed.");
         return false;
     }
-    engine_info("Server bound to port: {}", get_port());
+    engine_info("Server bound: {}", _listener.getLocalPort());
     _listener.setBlocking(false);
     return true;
 }
@@ -54,10 +54,8 @@ bool Server::accept_client() {
 
 sf::IpAddress Server::get_local_ip() { return sf::IpAddress::getLocalAddress(); }
 
-unsigned short Server::get_port() { return _listener.getLocalPort(); }
-
-bool Client::connect_to_server(const sf::IpAddress& ip, const unsigned short& port) {
-    engine_info("Conncecting to server, ip: {0}, port: {1}", ip.toString(), port);
+bool Client::connect(const sf::IpAddress& ip, const unsigned short& port) {
+    engine_info("Connecting to server, ip: {0}, port: {1}", ip.toString(), port);
 
     const auto timeout = sf::milliseconds(1000);
     _socket.setBlocking(true);

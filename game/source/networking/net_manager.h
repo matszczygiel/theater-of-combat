@@ -7,8 +7,8 @@
 
 class NetManager {
    public:
-    bool setup_server(sf::IpAddress& ip, int& port);
-    bool setup_client(const sf::IpAddress& ip, const int& port);
+    bool setup_server();
+    bool setup_client(const sf::IpAddress& ip);
 
     void update();
     void close_connection();
@@ -17,7 +17,9 @@ class NetManager {
     bool is_client() const;
     bool is_done() const;
 
-    std::variant<Server, Client> net;
+    constexpr static unsigned short port = 28008;
+
+    std::variant<Server, Client> net{};
 
    private:
     bool _need_update{false};

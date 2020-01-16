@@ -28,8 +28,7 @@ class StartPrompt {
 
     std::string _player_name{};
     ConnectionType _connection_t{ConnectionType::none};
-    int _server_port{0};
-    std::string _server_ip{};
+    std::string _server_ip{Server::get_local_ip().toString()};
     Stage _stage{Stage::setup};
     std::vector<std::string> _scenarios{};
 };
